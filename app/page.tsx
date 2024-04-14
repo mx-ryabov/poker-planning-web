@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Color } from "./_common/constants/colors";
+import { Color } from "@ui/colors";
 import { Inter } from "next/font/google";
 import { SettingsIcon } from "@ui/icon";
 

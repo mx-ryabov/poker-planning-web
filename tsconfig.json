@@ -19,7 +19,7 @@
 		],
 		"paths": {
 			"@/*": ["./*"],
-			"@ui/*": ["./app/_common/components/*"]
+			"@ui/*": ["./_src/shared/ui/*"]
 		}
 	},
 	"include": ["svgr.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -1,11 +1,10 @@
 import type { Config } from "tailwindcss";
-import { Color } from "./app/_common/constants/colors";
+import { Color } from "./_src/shared/ui/colors";
 
 const config: Config = {
 	content: [
-		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
+		"./_src/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
 		fontFamily: {
@@ -87,6 +86,7 @@ const config: Config = {
 				800: Color.Neutral800,
 				900: Color.Neutral900,
 			},
+			white: "#ffffff",
 		},
 	},
 	plugins: [],
