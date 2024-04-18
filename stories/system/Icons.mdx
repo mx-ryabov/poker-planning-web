@@ -1,0 +1,12 @@
+import {Meta, IconGallery, IconItem} from "@storybook/blocks";
+import * as Icons from "../../_src/shared/ui/icon";
+
+<Meta title="System/Icons" />
+
+<IconGallery>
+    {Object.entries(Icons).map(([name, Icon]) => (
+        <IconItem name={name}>
+            <Icon />
+        </IconItem>
+    ))}
+</IconGallery>
