@@ -10,15 +10,6 @@ const config: Config = {
 		fontFamily: {
 			sans: ["var(--font-inter)"],
 		},
-		fontSize: {
-			sm: "0.857rem",
-			base: "1rem",
-			xl: "1.143rem",
-			"2xl": "1.286rem",
-			"3xl": "1.714rem",
-			"4xl": "2.571rem",
-			"5xl": "4.286rem",
-		},
 		colors: {
 			primary: {
 				100: Color.Primary100,

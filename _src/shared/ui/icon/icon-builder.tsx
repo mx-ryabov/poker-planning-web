@@ -8,10 +8,12 @@ interface Props {
 	size?: number;
 }
 
+export type IconType = (props: Props) => React.ReactNode;
+
 export function iconBuilder(
 	iconComponent: (svgProps: SvgProps) => React.ReactNode,
-): (props: Props) => React.ReactNode {
-	return ({ color = Color.Neutral500, size = 24, thikness = "regular" }) => {
+): IconType {
+	return ({ color, size = 24, thikness = "regular" }) => {
 		const svgProps: SvgProps = {
 			color: color,
 			width: size,
