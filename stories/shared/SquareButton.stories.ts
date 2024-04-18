@@ -1,11 +1,11 @@
-import { ArrowRightIcon, Button, SettingsIcon } from "@/_src/shared/ui";
+import { ButtonSquare, SettingsIcon } from "@/_src/shared/ui";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-	title: "Shared/Button",
-	component: Button,
+	title: "Shared/ButtonSquare",
+	component: ButtonSquare,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
 		layout: "centered",
@@ -16,15 +16,14 @@ const meta = {
 	argTypes: {},
 	// Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
 	args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof ButtonSquare>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Default: Story = {
 	args: {
-		title: "Button",
-		form: "default",
+		icon: SettingsIcon,
 	},
 };
 
@@ -33,8 +32,6 @@ export const DefaultLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		disabled: true,
-		iconLeft: SettingsIcon,
-		iconRight: ArrowRightIcon,
 	},
 };
 
@@ -73,7 +70,6 @@ export const OutlineLarge: Story = {
 		...Default.args,
 		size: "large",
 		styleType: "outline",
-		iconLeft: SettingsIcon,
 	},
 };
 
@@ -140,7 +136,6 @@ export const GrayedOutLarge: Story = {
 		...Default.args,
 		size: "large",
 		styleType: "grayed-out",
-		iconRight: ArrowRightIcon,
 	},
 };
 

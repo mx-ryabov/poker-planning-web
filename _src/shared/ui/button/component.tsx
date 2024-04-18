@@ -1,21 +1,24 @@
 import { cva } from "class-variance-authority";
 import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 import { IconType } from "../icon/icon-builder";
-import { Color } from "../colors";
 
 type HtmlButtonProps = DetailedHTMLProps<
 	ButtonHTMLAttributes<HTMLButtonElement>,
 	HTMLButtonElement
 >;
-type Props = HtmlButtonProps & {
-	title: string;
+
+type BaseButtonProps = HtmlButtonProps & {
 	size?: "small" | "medium" | "large";
-	disabled?: boolean;
 	styleType?: "default" | "outline" | "ghost" | "grayed-out";
-	form?: "default" | "square";
+};
+
+type DefaultButtonProps = BaseButtonProps & {
+	title: string;
 	iconLeft?: IconType;
 	iconRight?: IconType;
 };
+
+type SquareButtonProps = BaseButtonProps & { icon: IconType };
 
 const button = cva(
 	[
@@ -34,7 +37,6 @@ const button = cva(
 				small: [
 					"text-xs",
 					"h-8",
-					"px-2",
 					"rounded-md",
 					"text-xs",
 					"enabled:active:scale-95",
@@ -42,14 +44,12 @@ const button = cva(
 				medium: [
 					"text-sm",
 					"h-10",
-					"px-4",
 					"rounded-lg",
 					"enabled:active:scale-95",
 				],
 				large: [
 					"text-base",
 					"h-14",
-					"px-8",
 					"rounded-lg",
 					"enabled:active:scale-95",
 				],
@@ -117,17 +117,30 @@ const button = cva(
 				form: "square",
 				className: ["w-14", "rounded-xl"],
 			},
+			{
+				size: "small",
+				form: "default",
+				className: ["px-2"],
+			},
+			{
+				size: "medium",
+				form: "default",
+				className: ["px-4"],
+			},
+			{
+				size: "large",
+				form: "default",
+				className: ["px-8"],
+			},
 		],
 	},
 );
 
-export function Button(props: Props) {
+export function Button(props: DefaultButtonProps) {
 	const {
 		title,
 		size = "medium",
-		disabled = false,
 		styleType = "default",
-		form = "default",
 		iconLeft,
 		iconRight,
 		...htmlButtonProps
@@ -135,15 +148,30 @@ export function Button(props: Props) {
 
 	return (
 		<button
-			className={button({ size, styleType, form })}
-			disabled={disabled}
+			className={button({ size, styleType, form: "default" })}
 			{...htmlButtonProps}
 		>
 			{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
-			{form === "default" ? title : null}
-			{form === "default" &&
-				iconRight &&
-				iconRight({ size: ButtonIconSize[size] })}
+			{title}
+			{iconRight && iconRight({ size: ButtonIconSize[size] })}
+		</button>
+	);
+}
+
+export function ButtonSquare(props: SquareButtonProps) {
+	const {
+		size = "medium",
+		styleType = "default",
+		icon,
+		...htmlButtonProps
+	} = props;
+
+	return (
+		<button
+			className={button({ size, styleType, form: "square" })}
+			{...htmlButtonProps}
+		>
+			{icon({ size: ButtonIconSize[size] })}
 		</button>
 	);
 }
