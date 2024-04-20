@@ -3,10 +3,16 @@ import { SvgProps } from "./types";
 import { Color } from "../colors";
 
 interface Props {
-	thikness?: "regular" | "light";
+	thikness?: "bold" | "regular" | "light";
 	color?: Color;
 	size?: number;
 }
+
+const StrokeWidth = {
+	bold: 2.5,
+	regular: 1.5,
+	light: 1,
+};
 
 export type IconType = (props: Props) => React.ReactNode;
 
@@ -18,7 +24,7 @@ export function iconBuilder(
 			color: color,
 			width: size,
 			height: size,
-			strokeWidth: thikness === "regular" ? 1.5 : 1,
+			strokeWidth: StrokeWidth[thikness],
 		};
 
 		return (
