@@ -2,7 +2,11 @@ import React from "react";
 import { SvgProps } from "./types";
 import { Color } from "../colors";
 
-interface Props {
+interface Props
+	extends React.DetailedHTMLProps<
+		React.HTMLAttributes<HTMLElement>,
+		HTMLElement
+	> {
 	thikness?: "bold" | "regular" | "light";
 	color?: Color;
 	size?: number;

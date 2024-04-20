@@ -4,3 +4,4 @@ export * from "./icon";
 export * from "./logo";
 export * from "./link";
 export * from "./input";
+export * from "./tag";
