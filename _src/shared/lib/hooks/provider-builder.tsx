@@ -7,10 +7,8 @@ type ProviderBuilder<TState> = [
 	(props: ProviderProps<TState>) => JSX.Element,
 ];
 
-export function useProviderBuilder<TState>(
-	defaultState: TState,
-): ProviderBuilder<TState> {
-	const Context = createContext<TState>(defaultState);
+export function buildProvider<TState>(): ProviderBuilder<TState> {
+	const Context = createContext<TState | undefined>(undefined);
 
 	const Provider = (props: ProviderProps<TState>) => {
 		return (
@@ -20,7 +18,13 @@ export function useProviderBuilder<TState>(
 		);
 	};
 
-	const useProviderData = () => useContext(Context);
+	const useProviderData = () => {
+		const context = useContext(Context);
+		if (context === undefined) {
+			throw new Error("this context must be within provider");
+		}
+		return context;
+	};
 
 	return [useProviderData, Provider];
 }

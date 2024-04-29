@@ -14,8 +14,8 @@ export const CheckIcon = iconBuilder((props: SvgProps) => {
 				d="M5 12L9.66118 17L19 7"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);

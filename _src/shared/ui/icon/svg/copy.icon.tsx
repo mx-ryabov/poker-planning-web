@@ -15,16 +15,16 @@ export const CopyIcon = iconBuilder((props: SvgProps) => {
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
 				stroke-miterlimit="10"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M16 4.01999C19.33 4.19999 21 5.42999 21 9.99999V16C21 20 20 22 15 22H9C4 22 3 20 3 16V9.99999C3 5.43999 4.67 4.19999 8 4.01999"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
 				stroke-miterlimit="10"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);

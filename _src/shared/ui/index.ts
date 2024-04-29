@@ -6,3 +6,5 @@ export * from "./link";
 export * from "./input";
 export * from "./tag";
 export * from "./switch";
+export * from "./dropdown";
+export * from "./popover";

@@ -14,15 +14,15 @@ export const CloseIcon = iconBuilder((props: SvgProps) => {
 				d="M7 17L17 7"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M17 17L7 7"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);

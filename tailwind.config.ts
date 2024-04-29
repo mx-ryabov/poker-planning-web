@@ -5,6 +5,7 @@ const config: Config = {
 	content: [
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 		"./_src/**/*.{js,ts,jsx,tsx,mdx}",
+		"./stories/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
 		fontFamily: {
@@ -78,6 +79,23 @@ const config: Config = {
 				900: Color.Neutral900,
 			},
 			white: "#ffffff",
+		},
+		extend: {
+			keyframes: {
+				popup: {
+					"0%": {
+						opacity: "0",
+						transform: "translateY(-6px)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateY(0px)",
+					},
+				},
+			},
+			animation: {
+				popup: "popup 0.2s",
+			},
 		},
 	},
 	plugins: [],
