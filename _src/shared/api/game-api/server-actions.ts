@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import appFetch from "../../lib/app-fetch";
+import appFetch from "../../lib/utils/app-fetch";
 import { CreateGameRequest, CreateGameResponse } from "./dto";
 import { redirect } from "next/navigation";
 

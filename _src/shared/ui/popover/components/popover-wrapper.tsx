@@ -47,7 +47,9 @@ export default function PopoverWrapper({
 					hideContentOnTriggerClick,
 				}}
 			>
-				<PublicPopoverProvider value={{ isOpened }}>
+				<PublicPopoverProvider
+					value={{ isOpened, close: () => setOpened(false) }}
+				>
 					<div className="relative w-fit h-fit">
 						{cloneElement(Trigger, { ref: triggerRef })}
 						{Content}

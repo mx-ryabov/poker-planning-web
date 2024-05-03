@@ -1,7 +1,7 @@
 import { usePopoverDispatch } from "../providers/internal-popover-provider";
 
 type PopoverCloseButtonProps = {
-	children: React.ReactNode;
+	children: JSX.Element;
 };
 
 const PopoverCloseButton = ({ children }: PopoverCloseButtonProps) => {

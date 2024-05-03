@@ -48,7 +48,7 @@ const PopoverContent: FC<PopoverContentProps> = ({
 		<div>
 			<div
 				ref={setContentElement}
-				className={`fixed top-0 left-0 z-10 ${getContentMarginClass(calculatedPosition)}`}
+				className={`fixed top-0 left-0 z-50 ${getContentMarginClass(calculatedPosition)}`}
 			>
 				<div {...animatedContainerProps}>{children}</div>
 			</div>

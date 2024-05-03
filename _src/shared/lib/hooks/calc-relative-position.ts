@@ -58,17 +58,29 @@ export function useCalcRelativePosition(
 
 		calcAndSetNewTranslate();
 
-		document?.addEventListener("scroll", calcAndSetNewTranslate, true);
+		document?.addEventListener(
+			"scroll",
+			calcAndSetNewTranslate,
+			listenerOptions,
+		);
 		// TODO: avoid recalc when resizing?
-		//window?.addEventListener("resize", calcAndSetNewTranslate, true);
+		window?.addEventListener(
+			"resize",
+			calcAndSetNewTranslate,
+			listenerOptions,
+		);
 
 		return () => {
 			document?.removeEventListener(
 				"scroll",
 				calcAndSetNewTranslate,
-				true,
+				listenerOptions,
 			);
-			//window?.removeEventListener("resize", calcAndSetNewTranslate, true);
+			window?.removeEventListener(
+				"resize",
+				calcAndSetNewTranslate,
+				listenerOptions,
+			);
 		};
 	}, [
 		contentElement,
@@ -298,3 +310,5 @@ const PositionBasedOnIntersection = {
 		[ContentPosition.BottomEnd]: ContentPosition.TopEnd,
 	},
 };
+
+const listenerOptions = { passive: true, capture: true };

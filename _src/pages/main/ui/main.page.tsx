@@ -4,7 +4,7 @@ import { Button, Popover } from "@/_src/shared/ui";
 
 export function MainPage() {
 	return (
-		<div className="flex w-1/3 h-screen pl-[500px] pt-[300px]">
+		<div className="flex h-screen items-center justify-center">
 			<Popover position={ContentPosition.RightStart}>
 				<Popover.Trigger>
 					<Button title={"Click!"} />

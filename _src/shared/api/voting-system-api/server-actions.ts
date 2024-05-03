@@ -1,4 +1,4 @@
-import appFetch from "../../lib/app-fetch";
+import appFetch from "../../lib/utils/app-fetch";
 import { VotingSystem } from "./dto/voting-system";
 
 export async function getVotingSystems(): Promise<VotingSystem[]> {

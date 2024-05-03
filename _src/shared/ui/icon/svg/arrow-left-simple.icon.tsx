@@ -14,7 +14,7 @@ export const ArrowLeftSimpleIcon = iconBuilder((props: SvgProps) => {
 				d="M15 19.92L8.48003 13.4C7.71003 12.63 7.71003 11.37 8.48003 10.6L15 4.08"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
-				stroke-miterlimit="10"
+				strokeMiterlimit="10"
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>

@@ -14,7 +14,7 @@ export const ArrowUpIcon = iconBuilder((props: SvgProps) => {
 				d="M19.92 15.05L13.4 8.53C12.63 7.76 11.37 7.76 10.6 8.53L4.08002 15.05"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
-				stroke-miterlimit="10"
+				strokeMiterlimit="10"
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
