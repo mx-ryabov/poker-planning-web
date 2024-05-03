@@ -15,3 +15,4 @@ export * from "./switch";
 export * from "./dropdown";
 export * from "./popover";
 export * from "./list";
+export * from "./select";

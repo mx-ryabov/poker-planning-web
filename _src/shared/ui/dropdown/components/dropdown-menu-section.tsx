@@ -1,4 +1,5 @@
 import { RenderFnType } from "@/_src/shared/lib";
+import { List } from "../../list";
 
 type DropdownMenuSectionProps<TItem> = {
 	title?: string;
@@ -13,35 +14,17 @@ export function DropdownMenuSection<TItem>({
 	items,
 	showDivider = false,
 }: DropdownMenuSectionProps<TItem>) {
-	const renderTitle = () => {
-		return title ? (
-			<div className="text-neutral-500 text-xs font-medium px-3 py-1 scale-100">
-				{title}
-			</div>
-		) : null;
-	};
-
-	const renderContent = () => {
-		if (typeof children === "function") {
-			if (!items) return null;
-
-			return items.map((item) => children(item));
-		} else {
-			return children;
-		}
-	};
-
-	const renderDivider = () => {
-		return showDivider ? (
-			<div className="w-full h-[1px] bg-neutral-100 my-[2px]"></div>
-		) : null;
-	};
-
 	return (
-		<div className="flex flex-col">
-			{renderTitle()}
-			{renderContent()}
-			{renderDivider()}
-		</div>
+		<List.Section
+			title={title}
+			items={items}
+			showDivider={showDivider}
+			className={{
+				wrapper: "flex flex-col",
+				title: "text-neutral-500 text-xs font-medium px-3 py-1 scale-100",
+			}}
+		>
+			{children}
+		</List.Section>
 	);
 }
