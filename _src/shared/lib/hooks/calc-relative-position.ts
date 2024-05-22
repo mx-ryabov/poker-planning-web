@@ -113,6 +113,11 @@ function useContentElementForIntersection(
 
 		contentElement.parentElement?.appendChild(elementForIntersection);
 		setContentElementForIntersection(elementForIntersection);
+
+		return () => {
+			elementForIntersection.remove();
+			setContentElementForIntersection(null);
+		};
 	}, [contentElement]);
 
 	return contentElementForIntersection;
@@ -167,7 +172,7 @@ function calcAndSetNewTranslateFn(
 	const point = calculateTranslatePoint(position, triggerRect, contentRect);
 
 	if (point) {
-		contentElement.style.transform = `translate(${point.x}px, ${point.y}px)`;
+		contentElement.style.transform = `translate(${point.x.toFixed(0)}px, ${point.y.toFixed(0)}px)`;
 	} else {
 		console.error(
 			`Position ${position} doesn't exist in calculateTranslatePoint`,

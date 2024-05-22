@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import { ButtonHTMLAttributes, DetailedHTMLProps, forwardRef } from "react";
 import { IconType } from "../icon/icon-builder";
 
 type HtmlButtonProps = DetailedHTMLProps<
@@ -136,45 +136,51 @@ const button = cva(
 	},
 );
 
-export function Button(props: DefaultButtonProps) {
-	const {
-		title,
-		size = "medium",
-		styleType = "default",
-		iconLeft,
-		iconRight,
-		...htmlButtonProps
-	} = props;
+export const Button = forwardRef<HTMLButtonElement, DefaultButtonProps>(
+	(props, ref) => {
+		const {
+			title,
+			size = "medium",
+			styleType = "default",
+			iconLeft,
+			iconRight,
+			...htmlButtonProps
+		} = props;
 
-	return (
-		<button
-			className={button({ size, styleType, form: "default" })}
-			{...htmlButtonProps}
-		>
-			{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
-			{title}
-			{iconRight && iconRight({ size: ButtonIconSize[size] })}
-		</button>
-	);
-}
+		return (
+			<button
+				className={button({ size, styleType, form: "default" })}
+				ref={ref}
+				{...htmlButtonProps}
+			>
+				{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
+				{title}
+				{iconRight && iconRight({ size: ButtonIconSize[size] })}
+			</button>
+		);
+	},
+);
 
-export function ButtonSquare(props: SquareButtonProps) {
-	const {
-		size = "medium",
-		styleType = "default",
-		icon,
-		...htmlButtonProps
-	} = props;
+export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
+	(props, ref) => {
+		const {
+			size = "medium",
+			styleType = "default",
+			icon,
+			...htmlButtonProps
+		} = props;
 
-	return (
-		<button
-			className={button({ size, styleType, form: "square" })}
-			{...htmlButtonProps}
-		>
-			{icon({ size: ButtonIconSize[size] })}
-		</button>
-	);
-}
+		return (
+			<button
+				className={button({ size, styleType, form: "square" })}
+				ref={ref}
+				{...htmlButtonProps}
+			>
+				{icon({ size: ButtonIconSize[size] })}
+			</button>
+		);
+	},
+);
 
 const ButtonIconSize = {
 	small: 16,

@@ -10,7 +10,7 @@ export * from "./icon";
 export * from "./logo";
 export * from "./link";
 export * from "./input";
-export * from "./tag";
+export * from "./chip";
 export * from "./switch";
 export * from "./dropdown";
 export * from "./popover";

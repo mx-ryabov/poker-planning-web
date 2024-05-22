@@ -21,7 +21,7 @@ const data = [
 	{ textValue: "List Item 5" },
 ];
 
-const itemClassName = `pl-3 pr-5 py-2 items-center cursor-pointer transition-colors gap-2
+const itemClassName = `pl-3 py-2 items-center cursor-pointer transition-colors gap-2
                             text-neutral-500 text-sm font-normal
                             hover:bg-neutral-100
                             active:bg-neutral-200
@@ -29,7 +29,14 @@ const itemClassName = `pl-3 pr-5 py-2 items-center cursor-pointer transition-col
 
 export const ListDefault: Story = {
 	render: () => (
-		<List onAction={(id) => console.log(id)}>
+		<List
+			onAction={(id) => console.log(id)}
+			selectedItems={["List Item 1", "List Item 2"]}
+			selectionMode="multiple"
+			onSelectionChange={(items) =>
+				console.log("onSelectionChange", items)
+			}
+		>
 			<List.Section
 				title="Dropdown Title"
 				showDivider

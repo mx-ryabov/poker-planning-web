@@ -1,11 +1,11 @@
-import { Tag } from "@/_src/shared/ui";
+import { Chip } from "@/_src/shared/ui";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-	title: "Shared/Tag",
-	component: Tag,
+	title: "Shared/Chip",
+	component: Chip,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
 		layout: "centered",
@@ -16,36 +16,36 @@ const meta = {
 	argTypes: {},
 	// Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
 	args: { onClick: fn() },
-} satisfies Meta<typeof Tag>;
+} satisfies Meta<typeof Chip>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TagDefault: Story = {
+export const ChipDefault: Story = {
 	args: {
-		text: "Tag",
+		text: "Chip",
 		onClose() {},
 	},
 };
 
-export const TagOutlined: Story = {
+export const ChipOutlined: Story = {
 	args: {
-		text: "Tag",
+		text: "Chip",
 		outlined: true,
 		onClose() {},
 	},
 };
 
-export const TagDisabled: Story = {
+export const ChipDisabled: Story = {
 	args: {
-		text: "Tag",
+		text: "Chip",
 		disabled: true,
 	},
 };
 
-export const TagOutlinedDisabled: Story = {
+export const ChipOutlinedDisabled: Story = {
 	args: {
-		text: "Tag",
+		text: "Chip",
 		outlined: true,
 		disabled: true,
 	},

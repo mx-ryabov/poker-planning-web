@@ -9,56 +9,107 @@ import {
 	usePopoverDispatch,
 	usePopoverState,
 } from "../providers/internal-popover-provider";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import {
+	MutableRefObject,
+	forwardRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { PopoverCompoundComponentType } from "./popover-wrapper";
 
 type PopoverContentProps = {
 	children: React.ReactNode;
 };
 
-const PopoverContent: FC<PopoverContentProps> = ({
-	children,
-}: PopoverContentProps) => {
-	const { open } = usePopoverDispatch();
-	const {
-		isOpened,
-		triggerRef,
-		position: preferredPosition,
-	} = usePopoverState();
+const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
+	(props, ref) => {
+		const { children } = props;
+		const { open } = usePopoverDispatch();
+		const {
+			isOpened,
+			triggerRef,
+			position: preferredPosition,
+			contentWidth,
+		} = usePopoverState();
 
-	const [contentElement, setContentElement] = useElement<HTMLDivElement>();
+		const [contentElement, setContentElement] =
+			useElement<HTMLDivElement>();
 
-	const { isContentVisible, animatedContainerProps } =
-		useContentAnimation(isOpened);
+		useContentWidth(contentWidth, triggerRef, contentElement);
 
-	useClickOutside([contentElement, triggerRef?.current || null], () =>
-		open(false),
-	);
-	const calculatedPosition = useCalcRelativePosition(
-		preferredPosition,
-		contentElement,
-		triggerRef,
-	);
+		useEffect(() => {
+			if (ref === null) return;
 
-	if (!isContentVisible) {
-		return null;
-	}
+			if (typeof ref === "function") {
+				ref(contentElement);
+			} else {
+				ref.current = contentElement;
+			}
+		}, [contentElement, ref]);
 
-	return createPortal(
-		<div>
+		const { isContentVisible, animatedContainerProps } =
+			useContentAnimation(isOpened);
+
+		const popoverElements = useMemo(() => {
+			return [contentElement, triggerRef?.current || null];
+		}, [contentElement, triggerRef?.current]);
+
+		const clickOutsideCb = useCallback(() => {
+			open(false);
+		}, [open]);
+
+		useClickOutside(popoverElements, clickOutsideCb);
+
+		const calculatedPosition = useCalcRelativePosition(
+			preferredPosition,
+			contentElement,
+			triggerRef,
+		);
+
+		if (!isContentVisible) {
+			return null;
+		}
+
+		return createPortal(
 			<div
 				ref={setContentElement}
 				className={`fixed top-0 left-0 z-50 ${getContentMarginClass(calculatedPosition)}`}
 			>
 				<div {...animatedContainerProps}>{children}</div>
-			</div>
-		</div>,
-		document.body,
-	);
-};
+			</div>,
+			document.body,
+		);
+	},
+);
 
 export const PopoverContentDN: PopoverCompoundComponentType = "PopoverContent";
 PopoverContent.displayName = PopoverContentDN;
+
+function useContentWidth(
+	contentWidth: "fit-content" | "equal-to-trigger" | undefined,
+	triggerRef: MutableRefObject<HTMLElement | null> | null,
+	contentElement: HTMLDivElement | null,
+) {
+	useEffect(() => {
+		const triggerElement = triggerRef?.current;
+		if (!contentElement || !triggerElement || !contentWidth) return;
+
+		switch (contentWidth) {
+			case "equal-to-trigger":
+				contentElement.style.width = `${triggerElement.getBoundingClientRect().width}px`;
+				break;
+			case "fit-content":
+				contentElement.style.width = "fit-content";
+				break;
+
+			default:
+				break;
+		}
+	}, [contentWidth, triggerRef, contentElement]);
+}
 
 function useContentAnimation(isPopoverOpened: boolean) {
 	const animatedContentRef = useRef<HTMLDivElement | null>(null);

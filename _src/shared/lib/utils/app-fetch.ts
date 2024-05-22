@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 const HOST = process.env.BE_HTTP_HOST;
 
-const appFetch = {
+export const appFetch = {
 	get: async <TQuery extends Record<string, string>>(
 		path: string,
 		query?: TQuery,
@@ -58,5 +58,3 @@ function getHeaders(): HeadersInit {
 		Authorization: `Bearer ${token}`,
 	};
 }
-
-export default appFetch;

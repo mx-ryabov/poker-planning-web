@@ -51,11 +51,11 @@ export function Input(props: Props) {
 		errors,
 		onChange,
 		type = "text",
-		...htmlAnchorProps
+		...htmlInputProps
 	} = props;
 
 	const [isFilled, setIsFilled] = useState(
-		!!htmlAnchorProps.value || !!htmlAnchorProps.defaultValue,
+		!!htmlInputProps.value || !!htmlInputProps.defaultValue,
 	);
 
 	const onChangeHandler = useCallback(
@@ -74,7 +74,7 @@ export function Input(props: Props) {
 			</span>
 			<div className="relative w-full overflow-hidden">
 				<input
-					{...htmlAnchorProps}
+					{...htmlInputProps}
 					className={input({ hasError: !!errors?.length })}
 					type={type}
 					onChange={onChangeHandler}

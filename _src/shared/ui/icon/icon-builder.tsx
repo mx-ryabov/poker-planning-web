@@ -23,7 +23,7 @@ export type IconType = (props: Props) => React.ReactNode;
 export function iconBuilder(
 	iconComponent: (svgProps: SvgProps) => React.ReactNode,
 ): IconType {
-	return ({ color, size = 24, thikness = "regular" }) => {
+	return ({ color, size = 24, thikness = "regular", ...restHtmlProps }) => {
 		const svgProps: SvgProps = {
 			color: color,
 			width: size,
@@ -38,6 +38,7 @@ export function iconBuilder(
 					width: `${svgProps.width}px`,
 					height: `${svgProps.height}px`,
 				}}
+				{...restHtmlProps}
 			>
 				{iconComponent(svgProps)}
 			</i>

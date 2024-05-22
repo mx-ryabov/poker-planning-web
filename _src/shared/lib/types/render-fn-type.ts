@@ -1,1 +1,3 @@
-export type RenderFnType<TItem> = (item: TItem) => React.ReactNode;
+export type RenderFnType<TItem, TProps> = (
+	item: TItem,
+) => React.ReactElement<TProps>;

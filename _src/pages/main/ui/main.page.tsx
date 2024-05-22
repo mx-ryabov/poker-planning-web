@@ -1,21 +1,30 @@
 "use client";
-import { ContentPosition } from "@/_src/shared/lib";
-import { Button, Popover } from "@/_src/shared/ui";
+import { Select } from "@/_src/shared/ui";
+import { useState } from "react";
 
 export function MainPage() {
+	const [selectedItems, setSelectedItems] = useState<React.Key[]>(["2"]);
+
 	return (
 		<div className="flex h-screen items-center justify-center">
-			<Popover position={ContentPosition.RightStart}>
-				<Popover.Trigger>
-					<Button title={"Click!"} />
-				</Popover.Trigger>
-				<Popover.Content>
-					<div className="flex p-2 bg-white border border-neutral-100 rounded-lg drop-shadow-lg">
-						Content! Lalalala <br />
-						tyryntyryn lalalalala
-					</div>
-				</Popover.Content>
-			</Popover>
+			<div className="w-48">
+				<Select
+					label="Select Label"
+					placeholder="Select something"
+					selectedItems={selectedItems}
+					onSelectionChange={setSelectedItems}
+				>
+					<Select.Item id="1" key="1">
+						Item 1
+					</Select.Item>
+					<Select.Item id="2" key="2">
+						Item 2
+					</Select.Item>
+					<Select.Item id="3" key="3">
+						Item 3
+					</Select.Item>
+				</Select>
+			</div>
 		</div>
 	);
 }

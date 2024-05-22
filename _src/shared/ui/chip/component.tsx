@@ -1,17 +1,18 @@
 import { cva } from "class-variance-authority";
 import { CloseIcon } from "../icon";
+import { MouseEventHandler } from "react";
 
 type Props = {
 	text: string;
 	outlined?: boolean;
 	disabled?: boolean;
-	onClick?: () => void;
+	onClick?: MouseEventHandler<HTMLSpanElement> | undefined;
 	onClose?: () => void;
 };
 
-const tag = cva(
+const chip = cva(
 	[
-		"h-[21px] bg-neutral-100 rounded flex flex-row gap-1 px-2 text-neutral-500 text-xs items-center transition-all select-none",
+		"h-[21px] bg-neutral-100 rounded flex flex-row min-w-fit gap-1 px-2 text-neutral-500 text-xs items-center transition-all select-none",
 	],
 	{
 		variants: {
@@ -28,7 +29,7 @@ const tag = cva(
 				false: [
 					"cursor-pointer",
 					"hover:bg-primary-100 hover:text-primary-500",
-					"active:bg-primary-200 active:text-primary-600 active:scale-95",
+					"active:bg-primary-200 active:text-primary-600",
 				],
 			},
 		},
@@ -47,7 +48,7 @@ const tag = cva(
 	},
 );
 
-export function Tag({
+export function Chip({
 	text,
 	outlined = false,
 	disabled = false,
@@ -57,11 +58,11 @@ export function Tag({
 	const onCloseHandler = (
 		event: React.MouseEvent<HTMLElement, MouseEvent>,
 	) => {
-		event.preventDefault();
+		event.stopPropagation();
 		onClose && onClose();
 	};
 	return (
-		<span className={tag({ outlined, disabled })} onClick={onClick}>
+		<span className={chip({ outlined, disabled })} onClick={onClick}>
 			{text}{" "}
 			{!disabled && onClose && (
 				<CloseIcon size={16} onClick={onCloseHandler} />

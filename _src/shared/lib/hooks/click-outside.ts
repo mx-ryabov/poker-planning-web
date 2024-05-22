@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 export function useClickOutside(
-	elements: (HTMLDivElement | null)[],
+	elements: (HTMLElement | null)[],
 	cb: () => void,
 ) {
 	useEffect(() => {

@@ -1,11 +1,14 @@
 import { RenderFnType } from "@/_src/shared/lib";
 import { Popover } from "../../popover";
 import { List } from "../../list";
+import { ListItemProps } from "../../list/components/list-item";
 
 type DropdownMenuProps<TItem> = {
-	children: React.ReactNode | RenderFnType<TItem>;
+	children:
+		| React.ReactElement<ListItemProps>[]
+		| RenderFnType<TItem, ListItemProps>;
 	items?: TItem[];
-	onAction?: (item: string | number) => void;
+	onAction?: (item: React.Key) => void;
 };
 
 function DropdownMenu<TItem>({

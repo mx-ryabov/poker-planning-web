@@ -3,9 +3,10 @@ import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
 type PopoverContextStateType = {
 	isOpened: boolean;
-	triggerRef: MutableRefObject<HTMLDivElement | null> | null;
+	triggerRef: MutableRefObject<HTMLElement | null> | null;
 	position: ContentPosition;
 	showingMode?: "click" | "hover";
+	contentWidth?: "fit-content" | "equal-to-trigger";
 	hideContentOnTriggerClick?: boolean;
 };
 

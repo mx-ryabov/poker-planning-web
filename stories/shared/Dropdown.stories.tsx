@@ -1,4 +1,3 @@
-import { ContentPosition } from "@/_src/shared/lib";
 import {
 	ArrowUpIcon,
 	ButtonSquare,
