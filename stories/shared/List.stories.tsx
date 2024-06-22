@@ -1,5 +1,5 @@
 import { List } from "@/_src/shared/ui";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 const meta = {
 	title: "Shared/List",
@@ -11,75 +11,116 @@ const meta = {
 } satisfies Meta<typeof List>;
 
 export default meta;
-type Story = StoryObj<typeof List>;
 
-const data = [
-	{ textValue: "List Item 1" },
-	{ textValue: "List Item 2" },
-	{ textValue: "List Item 3", disabled: true },
-	{ textValue: "List Item 4" },
-	{ textValue: "List Item 5" },
+type ItemData = { textValue: string; id: number; disabled?: boolean };
+const data: ItemData[] = [
+	{ textValue: "List Item 1", id: 1 },
+	{ textValue: "List Item 2", id: 2 },
+	{ textValue: "List Item 3", id: 3 },
+	{ textValue: "List Item 4", id: 4 },
+	{ textValue: "List Item 5", id: 5 },
 ];
 
-const itemClassName = `pl-3 py-2 items-center cursor-pointer transition-colors gap-2
-                            text-neutral-500 text-sm font-normal
-                            hover:bg-neutral-100
-                            active:bg-neutral-200
-                            aria-disabled:text-neutral-200 aria-disabled:hover:bg-white aria-disabled:cursor-default`;
+export const ListDefault = (args: any) => (
+	<List<ItemData>
+		items={data}
+		{...args}
+		aria-label="List Default"
+		className="border border-neutral-100 rounded-lg px-2 py-3"
+	>
+		{(item) => (
+			<List.Item key={item.id} textValue={item.textValue}>
+				{item.textValue}
+			</List.Item>
+		)}
+	</List>
+);
 
-export const ListDefault: Story = {
-	render: () => (
-		<List
-			onAction={(id) => console.log(id)}
-			selectedItems={["List Item 1", "List Item 2"]}
-			selectionMode="multiple"
-			onSelectionChange={(items) =>
-				console.log("onSelectionChange", items)
-			}
-		>
-			<List.Section
-				title="Dropdown Title"
-				showDivider
-				className={{
-					title: "text-neutral-500 text-xs font-medium py-1 scale-100",
-				}}
-			>
-				<List.Item
-					className={itemClassName}
-					key={"List Item 1"}
-					id={"List Item 1"}
-				>
-					List Item 1
+type SectionData = { id: number; title: string; items: ItemData[] };
+const multiLevelData: SectionData[] = [
+	{
+		id: 1,
+		title: "Section 1",
+		items: [
+			{ textValue: "List Item 1", id: 1 },
+			{ textValue: "List Item 2", id: 2 },
+		],
+	},
+	{
+		id: 2,
+		title: "Section 2",
+		items: [
+			{ textValue: "List Item 3", id: 3 },
+			{ textValue: "List Item 4", id: 4 },
+		],
+	},
+];
+
+export const ListWithSections = (args: any) => (
+	<List<SectionData>
+		{...args}
+		aria-label="List With Sections"
+		className="border border-neutral-100 rounded-lg px-2 py-3"
+	>
+		<List.Section title={"Section Title 1"} items={multiLevelData[0].items}>
+			{(item) => (
+				<List.Item key={item.id} textValue={item.textValue}>
+					{item.textValue}
 				</List.Item>
-				<List.Item
-					className={itemClassName}
-					key={"List Item 2"}
-					id={"List Item 2"}
-				>
-					List Item 2
+			)}
+		</List.Section>
+		<List.Separator />
+		<List.Section title={"Section Title 2"} items={multiLevelData[1].items}>
+			{(item) => (
+				<List.Item key={item.id} textValue={item.textValue}>
+					{item.textValue}
 				</List.Item>
-				<List.Item
-					className={itemClassName}
-					key={"List Item 3"}
-					id={"List Item 3"}
-				>
-					List Item 3
-				</List.Item>
-			</List.Section>
+			)}
+		</List.Section>
+	</List>
+);
+const dataWithDisabledItems: ItemData[] = [
+	{ textValue: "List Item 1", id: 1 },
+	{ textValue: "List Item 2", id: 2 },
+	{ textValue: "List Item 3", id: 3, disabled: true },
+	{ textValue: "List Item 4", id: 4 },
+	{ textValue: "List Item 5", id: 5 },
+];
+
+export const ListWithDisabledItems = (args: any) => (
+	<List<ItemData>
+		items={dataWithDisabledItems}
+		{...args}
+		aria-label="List Default"
+		className="border border-neutral-100 rounded-lg px-2 py-3"
+	>
+		{(item) => (
 			<List.Item
-				className={itemClassName}
-				key={"List Item 4"}
-				id={"List Item 4"}
+				key={item.id}
+				textValue={item.textValue}
+				isDisabled={item.disabled}
 			>
-				List Item 4
+				{item.textValue}
 			</List.Item>
+		)}
+	</List>
+);
+
+export const ListEmptyState = (args: any) => (
+	<List<ItemData>
+		items={[]}
+		{...args}
+		aria-label="List Default"
+		className="border border-neutral-100 rounded-lg px-2 py-3"
+	>
+		{(item) => (
 			<List.Item
-				className={itemClassName}
-				key={"List Item 5"}
-				id={"List Item 5"}
+				key={item.id}
+				textValue={item.textValue}
+				isDisabled={item.disabled}
 			>
-				List Item 5
+				{item.textValue}
 			</List.Item>
-		</List>
-	),
-};
+		)}
+	</List>
+);

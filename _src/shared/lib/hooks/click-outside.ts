@@ -1,17 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { MutableRefObject, useEffect } from "react";
 
 export function useClickOutside(
-	elements: (HTMLElement | null)[],
+	refs: MutableRefObject<HTMLElement | null>[],
 	cb: () => void,
 ) {
 	useEffect(() => {
+		const elements = refs.map((ref) => ref.current);
 		if (!document || !elements.length) {
 			return;
 		}
 
 		const clickHandler = (e: MouseEvent) => {
+			console.log(elements);
+
 			const isClickInsideElements = elements.find((element) => {
 				return element?.contains(e.target as Node);
 			});
@@ -21,10 +24,10 @@ export function useClickOutside(
 			}
 		};
 
-		document.addEventListener("click", clickHandler);
+		document.addEventListener("mousedown", clickHandler);
 
 		return () => {
-			document?.removeEventListener("click", clickHandler);
+			document?.removeEventListener("mousedown", clickHandler);
 		};
-	}, [elements, cb]);
+	}, [refs, cb]);
 }

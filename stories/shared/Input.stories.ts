@@ -25,7 +25,14 @@ export const InputDefault: Story = {
 	args: {
 		label: "Label",
 		placeholder: "Placeholder",
-		placeholderIcon: PeopleIcon,
+	},
+};
+
+export const InputWithStartIcon: Story = {
+	args: {
+		label: "Label",
+		placeholder: "Placeholder",
+		startIcon: PeopleIcon,
 	},
 };
 
@@ -33,7 +40,7 @@ export const InputError: Story = {
 	args: {
 		label: "Label",
 		placeholder: "Placeholder",
-		placeholderIcon: PeopleIcon,
+		startIcon: PeopleIcon,
 		errors: ["This field is required"],
 	},
 };

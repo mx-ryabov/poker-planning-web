@@ -14,8 +14,8 @@ const meta = {
 	tags: ["autodocs"],
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {},
-	// Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-	args: { onClick: fn() },
+	// Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+	args: { onPress: fn() },
 } satisfies Meta<typeof ButtonSquare>;
 
 export default meta;
@@ -31,7 +31,7 @@ export const DefaultLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		disabled: true,
+		isDisabled: true,
 	},
 };
 
@@ -61,7 +61,7 @@ export const OutlineLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		styleType: "outline",
-		disabled: true,
+		isDisabled: true,
 	},
 };
 
@@ -94,7 +94,7 @@ export const GhostLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		styleType: "ghost",
-		disabled: true,
+		isDisabled: true,
 	},
 };
 
@@ -127,7 +127,7 @@ export const GrayedOutLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		styleType: "grayed-out",
-		disabled: true,
+		isDisabled: true,
 	},
 };
 

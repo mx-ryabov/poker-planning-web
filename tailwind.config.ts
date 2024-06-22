@@ -95,6 +95,7 @@ const config: Config = {
 			},
 			animation: {
 				popup: "popup 0.2s",
+				"popup-reverse": "popup 0.2s reverse",
 			},
 		},
 	},

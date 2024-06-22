@@ -24,7 +24,7 @@ export const SwitchDefault: Story = {
 
 export const SwitchDisabled: Story = {
 	args: {
-		disabled: true,
+		isDisabled: true,
 		defaultSelected: true,
 		label: "Switch label",
 	},
