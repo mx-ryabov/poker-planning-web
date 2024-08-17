@@ -35,7 +35,13 @@ const button = cva(
 	{
 		variants: {
 			size: {
-				small: ["text-xs", "h-8", "rounded-md", "text-xs"],
+				small: [
+					"text-xs",
+					"min-h-8",
+					"max-h-8",
+					"rounded-md",
+					"text-xs",
+				],
 				medium: ["text-sm", "h-10", "rounded-lg"],
 				large: ["text-base", "h-14", "rounded-lg"],
 			},
@@ -88,6 +94,10 @@ const button = cva(
 			isPressed: {
 				true: ["enabled:scale-95"],
 			},
+			excludeFromFocus: {
+				true: ["outline-none"],
+				false: [],
+			},
 		},
 		compoundVariants: [
 			{
@@ -116,7 +126,7 @@ const button = cva(
 			{
 				size: "small",
 				form: "square",
-				className: ["w-8"],
+				className: ["min-w-8", "max-w-8"],
 			},
 			{
 				size: "medium",
@@ -167,7 +177,12 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 					size,
 					styleType,
 					form: "default",
-					isPressed,
+					// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
+					isPressed:
+						isPressed ||
+						(props as LabeledButtonProps & { isPressed?: boolean })
+							.isPressed,
+					excludeFromFocus: props.excludeFromTabOrder,
 				})}
 				ref={ref}
 				{...buttonProps}
@@ -193,7 +208,12 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 					size,
 					styleType,
 					form: "square",
-					isPressed,
+					// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
+					isPressed:
+						isPressed ||
+						(props as SquareButtonProps & { isPressed?: boolean })
+							.isPressed,
+					excludeFromFocus: props.excludeFromTabOrder,
 				})}
 				ref={ref}
 				{...buttonProps}

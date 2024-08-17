@@ -1,27 +1,40 @@
 "use client";
-import { forwardRef, useEffect, useRef } from "react";
+import {
+	forwardRef,
+	MutableRefObject,
+	ReactNode,
+	useEffect,
+	useRef,
+} from "react";
 import { IconType } from "../icon/icon-builder";
 import { WarningIcon } from "../icon";
 import { cva } from "class-variance-authority";
 import {
 	Input as AriaInput,
 	FieldError,
-	InputProps,
+	Group,
+	InputProps as AriaInputProps,
 	Label,
 	TextField,
 	TextFieldProps,
 } from "react-aria-components";
+import { setRefs } from "@/_src/shared/lib";
 
-type Props = {
+type _InputProps = {
 	label?: string;
 	startIcon?: IconType;
 	errors?: string[];
+	endContent?: ReactNode;
 } & TextFieldProps &
-	InputProps;
+	Omit<AriaInputProps, "onChange" | "onKeyDown" | "onKeyUp">;
 
-export const inputStyles = cva(
+const inputStyles = cva(
 	[
-		"relative w-full overflow-hidden flex items-center peer h-10 px-3 gap-2 border-2 text-sm rounded-lg box-border transition-colors cursor-text",
+		"peer flex items-center gap-2 relative overflow-hidden",
+		"w-full h-10 px-3",
+		"rounded-lg box-border border-2",
+		"text-sm transition-colors cursor-text",
+		"focus-within:border-primary-500",
 	],
 	{
 		variants: {
@@ -34,46 +47,84 @@ export const inputStyles = cva(
 					"focus-visible:border-primary-400 focus-visible:border-2",
 				],
 			},
+			hasEndContent: {
+				true: ["pr-1"],
+				false: [],
+			},
+			isDisabled: {
+				true: ["group-hover:border-neutral-100", "bg-neutral-100"],
+				false: [],
+			},
 		},
 	},
 );
 
-export const Input = forwardRef<HTMLInputElement, Props>(function (props, ref) {
-	const { label, startIcon, errors, ...restProps } = props;
-
-	const inputRef = useRef<HTMLInputElement>(null);
-	useEffect(() => {
-		ref = inputRef;
-	}, [inputRef, ref]);
-
-	return (
-		<TextField
-			className="group flex flex-col w-full"
-			{...restProps}
-			isInvalid={!!errors || restProps.isInvalid}
-		>
-			<Label className="w-full text-xs font-medium p-1 block text-neutral-500">
-				{label}
-			</Label>
-			<div
-				className={
-					inputStyles({ hasError: !!errors?.length }) +
-					" has-[data-[focused]]:outline-2 outline-primary-500"
-				}
-				onClick={() => inputRef.current?.focus()}
-			>
-				{startIcon && (
-					<span className="text-neutral-200">
-						{startIcon({ size: 12, thikness: "bold" })}
-					</span>
-				)}
-				<AriaInput className="outline-none" ref={inputRef} />
-			</div>
-
-			<FieldError className="w-full text-xs font-medium p-1 text-error-500 flex flex-row items-center gap-1">
-				<WarningIcon size={12} thikness="bold" />
-				{errors?.length ? errors[0] : null}
-			</FieldError>
-		</TextField>
-	);
+const labelStyles = cva(["w-full text-xs font-medium p-1 block"], {
+	variants: {
+		isDisabled: {
+			true: ["text-neutral-300"],
+			false: [],
+		},
+	},
+	compoundVariants: [
+		{
+			isDisabled: false,
+			class: ["text-neutral-500"],
+		},
+	],
 });
+
+export const Input = forwardRef<HTMLInputElement, _InputProps>(
+	function (props, ref) {
+		const { label, startIcon, errors, endContent, ...restProps } = props;
+
+		const inputRef: MutableRefObject<HTMLInputElement | null> =
+			useRef<HTMLInputElement>(null);
+
+		return (
+			<TextField
+				className="group flex flex-col w-full"
+				{...restProps}
+				isInvalid={!!errors || restProps.isInvalid}
+			>
+				<Label
+					className={labelStyles({
+						isDisabled: restProps.isDisabled,
+					})}
+					aria-labelledby="Label"
+				>
+					{label}
+				</Label>
+				<Group
+					className={inputStyles({
+						hasError: !!errors?.length,
+						hasEndContent: !!endContent,
+						isDisabled: restProps.isDisabled,
+					})}
+					onClick={() => inputRef.current?.focus()}
+				>
+					{startIcon && (
+						<span className="text-neutral-200">
+							{startIcon({ size: 12, thikness: "bold" })}
+						</span>
+					)}
+					<AriaInput
+						className="outline-none w-full h-full placeholder:text-neutral-200 disabled:placeholder:text-neutral-300"
+						aria-labelledby="input"
+						ref={setRefs(inputRef, ref)}
+					/>
+					{endContent}
+				</Group>
+
+				<FieldError className="w-full text-xs font-medium p-1 text-error-500 flex flex-row items-center gap-1">
+					<WarningIcon size={12} thikness="bold" />
+					{errors?.length ? errors[0] : null}
+				</FieldError>
+			</TextField>
+		);
+	},
+);
+
+export type InputProps = _InputProps & {
+	ref?: MutableRefObject<HTMLInputElement>;
+};

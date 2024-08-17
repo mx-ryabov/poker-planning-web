@@ -1,15 +1,8 @@
 import { cva } from "class-variance-authority";
-import React, { useEffect, useLayoutEffect, useRef } from "react";
-import {
-	AriaPopoverProps,
-	Overlay,
-	useOverlayTrigger,
-	usePopover,
-} from "react-aria";
+import React, { useRef } from "react";
+import { useOverlayTrigger } from "react-aria";
 import {
 	Button,
-	ComboBox,
-	DialogTrigger,
 	Input,
 	Label,
 	ListBox,
@@ -18,17 +11,8 @@ import {
 	ListBoxProps,
 	Popover,
 } from "react-aria-components";
-import {
-	OverlayTriggerProps,
-	OverlayTriggerState,
-	useOverlayTriggerState,
-} from "react-stately";
+import { OverlayTriggerProps, useOverlayTriggerState } from "react-stately";
 import { ArrowDownIcon } from "../../icon";
-
-type Props<TItem> = {
-	label?: string;
-	children: React.ReactNode;
-} & ListBoxProps<TItem>;
 
 const input = cva(
 	[

@@ -1,4 +1,4 @@
-import { usePopoverForcePositionUpdate } from "@/_src/shared/lib";
+import { setRefs, usePopoverForcePositionUpdate } from "@/_src/shared/lib";
 import { MutableRefObject, forwardRef, useCallback, useRef } from "react";
 import {
 	PopoverProps,
@@ -52,14 +52,7 @@ const PopoverContent = forwardRef<HTMLElement, PopoverContentProps>(
 			<Popover
 				{...restProps}
 				triggerRef={triggerRef}
-				ref={(el) => {
-					popoverRef.current = el;
-					if (typeof ref === "function") {
-						ref(el);
-					} else if (ref) {
-						ref.current = el;
-					}
-				}}
+				ref={setRefs(popoverRef, ref)}
 				style={() => ({
 					width: getPopoverWidth(),
 				})}

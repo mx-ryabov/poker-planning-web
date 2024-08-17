@@ -44,3 +44,11 @@ export const InputError: Story = {
 		errors: ["This field is required"],
 	},
 };
+
+export const InputDisabled: Story = {
+	args: {
+		label: "Label",
+		placeholder: "Placeholder",
+		isDisabled: true,
+	},
+};

@@ -14,6 +14,7 @@ export const listItemStyles = cva(
 		"px-2 py-2 m-1",
 		"rounded-md transition-colors",
 		"text-sm font-normal",
+		"cursor-pointer",
 	],
 	{
 		variants: {
@@ -31,7 +32,7 @@ export const listItemStyles = cva(
 				true: ["bg-primary-100 hover:bg-initial text-primary-500"],
 			},
 			isFocused: {
-				true: ["outline-primary-400"],
+				true: ["outline-2 outline-primary-500 outline"],
 			},
 		},
 	},

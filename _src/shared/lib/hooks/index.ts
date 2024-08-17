@@ -7,3 +7,4 @@ export * from "./use-controlled-state";
 export * from "./use-event-for-trigger";
 export * from "./use-resize-observable";
 export * from "./use-popover-force-position-update";
+export * from "./use-event-target-listener";

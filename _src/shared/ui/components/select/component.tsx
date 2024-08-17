@@ -26,28 +26,6 @@ type SelectProps<TItemData extends object> = {
 } & UseSelectProps<TItemData> &
 	AriaFieldProps;
 
-/**
- * TODO:
- * 1. Style the focus on the menu list after opening +
- * 2. Style the focus on the menu item +
- * 3. Style label +
- * 4. Style multiple selection. Make ChipGroup both with breaking to new line +
- * and the counter with tooltip (tooltip should show the rest selected items)
- * 5. Remove selected item by clicking on close button in the chip +
- * 6. Make sure that the new implementation for the chip group will be also suitable for autocomplete ?
- * 7. "Clear all" button for multiple selection.
- * 8. Error state +
- * 9. Empty state +
- * 10. Disabled items +
- * 11. Disabled select (styles needed) +/-
- * 12. Animate arrow +
- * 13. Make shadow for top and bottom menu if scrollable ?
- * 14. Hidden Select???
- * 15. Close Popover on select for single selection +
- * 16. rid of inputStyles and make unique selectStyles +
- * 17. Deal with aria-label +
- */
-
 function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 	const {
 		label,
