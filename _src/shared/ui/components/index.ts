@@ -9,5 +9,4 @@ export * from "./menu";
 export * from "./popover";
 export * from "./list";
 export * from "./select";
-export * from "./autocomplete-aria";
 export * from "./autocomplete";

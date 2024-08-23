@@ -14,7 +14,8 @@ export function Switch(props: Props) {
 			<div
 				className="block h-[24px] w-[42px] rounded-[24px] bg-neutral-200 relative cursor-pointer transition-all shadow-inner
                 group-has-[:checked]:bg-primary-500 group-has-[:checked]:checked-state
-                group-has-[:disabled]:bg-neutral-100"
+                group-has-[:disabled]:bg-neutral-100
+				  group-data-[focused=true]:outline group-data-[focused=true]:outline-offset-2 group-data-[focused=true]:outline-primary-500"
 			>
 				<div
 					className="w-[16px] h-[16px] rounded-[16px] bg-white absolute top-1 transition-all translate-x-1 flex items-center justify-center drop-shadow-md
@@ -24,7 +25,10 @@ export function Switch(props: Props) {
 				></div>
 			</div>
 
-			<span className="text-sm text-neutral-900 group-has-[:disabled]:text-neutral-200">
+			<span
+				className="text-sm text-neutral-900 group-has-[:disabled]:text-neutral-200"
+				role="label"
+			>
 				{label}
 			</span>
 		</Checkbox>

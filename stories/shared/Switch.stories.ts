@@ -29,3 +29,11 @@ export const SwitchDisabled: Story = {
 		label: "Switch label",
 	},
 };
+
+export const SwitchReadonly: Story = {
+	args: {
+		isReadOnly: true,
+		defaultSelected: true,
+		label: "Switch label",
+	},
+};
