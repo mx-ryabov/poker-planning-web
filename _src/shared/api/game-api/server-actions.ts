@@ -1,12 +1,12 @@
 "use server";
 
 import { cookies } from "next/headers";
-import appFetch from "../../lib/utils/app-fetch";
 import { CreateGameRequest, CreateGameResponse } from "./dto";
 import { redirect } from "next/navigation";
+import { appFetchPost } from "../../lib";
 
 export async function createGameAsGuest(request: CreateGameRequest) {
-	const res = await appFetch.post<CreateGameRequest>("/games", request);
+	const res = await appFetchPost<CreateGameRequest>("/games", request);
 
 	if (res.ok) {
 		const data: CreateGameResponse = await res.json();

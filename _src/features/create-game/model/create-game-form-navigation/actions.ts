@@ -1,4 +1,4 @@
-import { ActionsSet } from "@/src/shared/lib/types/local-state-types";
+import { ActionsSet } from "@/_src/shared/lib";
 
 export namespace CreateGameFormActions {
 	export enum Type {
