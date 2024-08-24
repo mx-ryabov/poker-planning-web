@@ -13,8 +13,11 @@ jobs:
       - uses: actions/checkout@v4
         name: Checkout Repo
 
-      - uses: actions/setup-node@v4
-        name: Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
       - uses: actions/cache@v4
         id: npm-cache
@@ -27,15 +30,18 @@ jobs:
 
       - run: npm test
         name: Run the tests
-        
+
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         name: Checkout Repo
 
-      - uses: actions/setup-node@v4
-        name: Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
       - uses: actions/cache@v4
         id: npm-cache
