@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
+"use client";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 /**
  *

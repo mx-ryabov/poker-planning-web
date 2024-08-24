@@ -1,3 +1,4 @@
+"use client";
 import { ForwardedRef, useEffect } from "react";
 
 export function useEventForTrigger<T extends HTMLElement>(

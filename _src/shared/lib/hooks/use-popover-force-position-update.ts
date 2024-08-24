@@ -1,3 +1,4 @@
+"use client";
 import { RefObject, useCallback } from "react";
 import { useResizeObserver } from "./use-resize-observable";
 
