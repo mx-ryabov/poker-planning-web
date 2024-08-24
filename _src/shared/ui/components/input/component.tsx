@@ -1,11 +1,5 @@
 "use client";
-import {
-	forwardRef,
-	MutableRefObject,
-	ReactNode,
-	useEffect,
-	useRef,
-} from "react";
+import { forwardRef, MutableRefObject, ReactNode, useRef } from "react";
 import { IconType } from "../icon/icon-builder";
 import { WarningIcon } from "../icon";
 import { cva } from "class-variance-authority";
