@@ -3,7 +3,7 @@ import { SelectionMode } from "react-aria-components";
 import { RenderedCollectionType } from "../hooks/use-autocomplete-state";
 
 export type AutocompleteValueContextProps = {
-	label?: string;
+	label: string;
 	errorMessages?: string[];
 	placeholder?: string;
 	isDisabled?: boolean;
