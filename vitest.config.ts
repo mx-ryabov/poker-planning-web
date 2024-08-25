@@ -16,6 +16,10 @@ export default defineConfig({
 		alias,
 	},
 	test: {
-		environment: "jsdom",
+		globals: true,
+		setupFiles: path.resolve(__dirname, "test/setup.ts"),
+		// if you don't enough the happy-dom you can change environment to the jsdom.
+		// on the first line of your file where you need this you need to define // @vitest-environment jsdom
+		environment: "happy-dom",
 	},
 });
