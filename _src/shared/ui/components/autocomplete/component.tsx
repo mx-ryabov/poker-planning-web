@@ -28,7 +28,7 @@ import { AutocompleteList } from "./components/autocomplete-list";
  * TItemData extends { id: string } - the simplest solution (hack) to avoid the react-stately lib bug https://github.com/adobe/react-spectrum/issues/6103
  */
 type AutocompleteProps<TItemData extends { id: string }> = {
-	label?: string;
+	label: string;
 	placeholder?: string;
 	description?: string;
 	isDisabled?: boolean;

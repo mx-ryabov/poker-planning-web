@@ -15,7 +15,7 @@ import {
 import { setRefs } from "@/_src/shared/lib";
 
 type _InputProps = {
-	label?: string;
+	label: string;
 	startIcon?: IconType;
 	errors?: string[];
 	endContent?: ReactNode;

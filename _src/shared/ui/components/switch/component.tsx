@@ -25,10 +25,7 @@ export function Switch(props: Props) {
 				></div>
 			</div>
 
-			<span
-				className="text-sm text-neutral-900 group-has-[:disabled]:text-neutral-200"
-				role="label"
-			>
+			<span className="text-sm text-neutral-900 group-has-[:disabled]:text-neutral-200">
 				{label}
 			</span>
 		</Checkbox>

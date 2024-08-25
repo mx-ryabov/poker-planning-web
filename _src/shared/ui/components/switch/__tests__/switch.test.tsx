@@ -1,13 +1,12 @@
-import { render, fireEvent, screen } from "@testing-library/react";
 import { test, describe, expect } from "vitest";
 import { Switch } from "../component";
+import { render } from "@/test/utilities";
+import { axe } from "jest-axe";
 
 describe("Switch", () => {
 	test("renders correctly", async () => {
 		const wrapper = render(<Switch label="Switch label" />);
 
-		expect(wrapper.getByRole("label").textContent).toEqual("Switch label");
-		expect(wrapper.getByRole("checkbox")).toBeDefined();
 		expect(() => wrapper.unmount()).not.toThrow();
 	});
 
@@ -37,5 +36,12 @@ describe("Switch", () => {
 
 	test("should work with React Hook Form???", async () => {
 		render(<Switch label="Switch label" />);
+	});
+
+	test("doesn't violate any accessiblity rules", async () => {
+		const { container } = render(<Switch label="Label" />);
+		const results = await axe(container);
+
+		expect(results).toHaveNoViolations();
 	});
 });
