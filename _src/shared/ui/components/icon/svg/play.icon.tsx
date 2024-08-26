@@ -20,4 +20,4 @@ export const PlayIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "PlayIcon");

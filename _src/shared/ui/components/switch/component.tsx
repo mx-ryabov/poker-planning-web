@@ -9,9 +9,11 @@ export function Switch(props: Props) {
 	return (
 		<Checkbox
 			className="group flex flex-row items-center gap-2 cursor-pointer"
+			data-testid="checkbox-container"
 			{...checkboxProps}
 		>
 			<div
+				data-testid="switch-container"
 				className="block h-[24px] w-[42px] rounded-[24px] bg-neutral-200 relative cursor-pointer transition-all shadow-inner
                 group-has-[:checked]:bg-primary-500 group-has-[:checked]:checked-state
                 group-has-[:disabled]:bg-neutral-100

@@ -26,4 +26,4 @@ export const OpenEyeIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "OpenEyeIcon");

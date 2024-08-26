@@ -40,4 +40,4 @@ export const CardsIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "CardsIcon");

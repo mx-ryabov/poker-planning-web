@@ -35,4 +35,4 @@ export const CopySuccessIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "CopySuccessIcon");

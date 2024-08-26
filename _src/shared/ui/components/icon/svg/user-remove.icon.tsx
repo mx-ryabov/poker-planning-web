@@ -50,4 +50,4 @@ export const UserRemoveIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "UserRemoveIcon");

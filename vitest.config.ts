@@ -21,5 +21,18 @@ export default defineConfig({
 		// if you don't enough the happy-dom you can change environment to the jsdom.
 		// on the first line of your file where you need this you need to define // @vitest-environment jsdom
 		environment: "happy-dom",
+		coverage: {
+			provider: "v8",
+			// thresholds: {
+			// 	branches: 60,
+			// 	lines: 60,
+			// 	functions: 60,
+			// 	statements: 60,
+			// },
+			enabled: true,
+			reporter: ["html"],
+			include: ["_src/**", "app/**"],
+			exclude: ["**/index.ts", "**/dto/**", "**/types/**", "**/*.test.*"],
+		},
 	},
 });

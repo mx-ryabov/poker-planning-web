@@ -28,4 +28,4 @@ export const SettingsIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "SettingsIcon");

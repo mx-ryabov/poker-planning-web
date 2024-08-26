@@ -43,4 +43,4 @@ export const SadManIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "SadManIcon");

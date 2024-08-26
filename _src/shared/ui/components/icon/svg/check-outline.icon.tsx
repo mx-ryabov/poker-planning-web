@@ -26,4 +26,4 @@ export const CheckOutlineIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "CheckOutlineIcon");

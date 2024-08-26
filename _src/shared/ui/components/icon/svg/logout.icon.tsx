@@ -33,4 +33,4 @@ export const LogoutIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "LogoutIcon");
