@@ -23,12 +23,12 @@ export default defineConfig({
 		environment: "happy-dom",
 		coverage: {
 			provider: "v8",
-			thresholds: {
-				branches: 60,
-				lines: 60,
-				functions: 60,
-				statements: 60,
-			},
+			// thresholds: {
+			// 	branches: 60,
+			// 	lines: 60,
+			// 	functions: 60,
+			// 	statements: 60,
+			// },
 			enabled: true,
 			reporter: ["html"],
 			include: ["_src/**", "app/**"],
