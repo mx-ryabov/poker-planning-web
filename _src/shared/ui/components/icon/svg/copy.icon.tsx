@@ -28,4 +28,4 @@ export const CopyIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "CopyIcon");

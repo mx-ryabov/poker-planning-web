@@ -33,4 +33,4 @@ export const WarningIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "WarningIcon");

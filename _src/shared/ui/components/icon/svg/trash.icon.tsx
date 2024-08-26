@@ -40,4 +40,4 @@ export const TrashIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "TrashIcon");

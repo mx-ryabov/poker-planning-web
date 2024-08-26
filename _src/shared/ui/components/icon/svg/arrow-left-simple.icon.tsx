@@ -20,4 +20,4 @@ export const ArrowLeftSimpleIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "ArrowLeftSimpleIcon");

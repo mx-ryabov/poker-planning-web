@@ -79,6 +79,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 			<TextField
 				className="group flex flex-col w-full"
 				{...restProps}
+				data-testid="text-field-container"
 				isInvalid={!!errors || restProps.isInvalid}
 			>
 				<Label

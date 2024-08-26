@@ -33,4 +33,4 @@ export const ProfileIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "ProfileIcon");

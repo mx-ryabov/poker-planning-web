@@ -26,4 +26,4 @@ export const CloseIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "CloseIcon");

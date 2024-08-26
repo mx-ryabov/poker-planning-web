@@ -27,4 +27,4 @@ export const MoreIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "MoreIcon");

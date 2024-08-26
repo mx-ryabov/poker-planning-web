@@ -19,4 +19,4 @@ export const CheckIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "CheckIcon");

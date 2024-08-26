@@ -26,4 +26,4 @@ export const ListIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "ListIcon");

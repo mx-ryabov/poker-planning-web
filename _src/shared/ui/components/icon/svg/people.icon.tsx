@@ -19,4 +19,4 @@ export const PeopleIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "PeopleIcon");

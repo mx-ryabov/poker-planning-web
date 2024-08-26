@@ -31,7 +31,8 @@ export default defineConfig({
 			},
 			enabled: true,
 			reporter: ["html"],
-			include: ["./_src/**", "./app/**"],
+			include: ["_src/**", "app/**"],
+			exclude: ["**/index.ts", "**/dto/**", "**/types/**", "**/*.test.*"],
 		},
 	},
 });

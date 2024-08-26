@@ -54,4 +54,4 @@ export const ParticipantsIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "ParticipantsIcon");

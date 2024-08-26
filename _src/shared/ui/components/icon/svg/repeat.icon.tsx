@@ -52,4 +52,4 @@ export const RepeatIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-});
+}, "RepeatIcon");
