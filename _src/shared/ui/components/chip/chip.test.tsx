@@ -1,8 +1,7 @@
 import { test, describe, expect, vi } from "vitest";
-import { render, screen } from "@/test/utilities";
+import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Chip, ChipGroup } from "./component";
-import { useListData } from "react-stately";
 
 describe("Chip Group", () => {
 	test("renders correctly", async () => {
