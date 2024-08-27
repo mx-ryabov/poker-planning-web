@@ -51,6 +51,7 @@ export function Chip(props: ChipProps) {
 		<Tag
 			{...restProps}
 			className={chip({ outlined, disabled: restProps.isDisabled })}
+			aria-label={`${props.textValue} chip`}
 		>
 			{({ allowsRemoving }) => (
 				<>
@@ -58,6 +59,7 @@ export function Chip(props: ChipProps) {
 					{allowsRemoving && !restProps.isDisabled && (
 						<AriaButton
 							slot="remove"
+							aria-label={`Remove ${props.textValue}`}
 							className="rounded hover:bg-neutral-200 active:hover:bg-neutral-300 transition-colors"
 						>
 							<CloseIcon size={16} />
@@ -84,7 +86,10 @@ export function ChipGroup<TItem extends object>({
 }: ChipGroupProps<TItem>) {
 	return (
 		<ChipGroupContextProvider value={{ outlined }}>
-			<TagGroup {...props}>
+			<TagGroup
+				{...props}
+				aria-label={props["aria-label"] || "Chip group"}
+			>
 				<TagList
 					items={items}
 					renderEmptyState={renderEmptyState}
