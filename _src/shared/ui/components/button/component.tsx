@@ -200,7 +200,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 		[props, ref] = useContextProps(props, ref, ButtonContext);
 		const { size = "medium", styleType = "default", icon } = props;
 
-		let { buttonProps, isPressed } = useButton(props, ref);
+		const { buttonProps, isPressed } = useButton(props, ref);
 
 		return (
 			<button
@@ -216,6 +216,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 					excludeFromFocus: props.excludeFromTabOrder,
 				})}
 				ref={ref}
+				aria-label={buttonProps["aria-label"] || "icon button"}
 				{...buttonProps}
 			>
 				{icon({ size: ButtonIconSize[size] })}
