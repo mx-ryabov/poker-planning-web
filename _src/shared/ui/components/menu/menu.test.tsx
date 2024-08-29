@@ -38,7 +38,10 @@ function renderMenu() {
 
 describe("Menu", () => {
 	test("renders correctly", async () => {
-		const { unmount } = renderMenu();
+		const { unmount, user, getByRole } = renderMenu();
+
+		const trigger = getByRole("button");
+		await user.click(trigger);
 
 		expect(() => unmount()).not.toThrow();
 	});
