@@ -50,13 +50,15 @@ export function Chip(props: ChipProps) {
 	return (
 		<Tag
 			{...restProps}
-			className={chip({ outlined, disabled: restProps.isDisabled })}
+			className={({ isDisabled }) =>
+				chip({ outlined, disabled: restProps.isDisabled || isDisabled })
+			}
 			aria-label={`${props.textValue} chip`}
 		>
-			{({ allowsRemoving }) => (
+			{({ allowsRemoving, isDisabled }) => (
 				<>
 					<span className="mr-1">{props.textValue}</span>
-					{allowsRemoving && !restProps.isDisabled && (
+					{allowsRemoving && !restProps.isDisabled && !isDisabled && (
 						<AriaButton
 							slot="remove"
 							aria-label={`Remove ${props.textValue}`}

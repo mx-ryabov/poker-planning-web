@@ -24,15 +24,14 @@ describe("Switch", () => {
 			<Switch label="Switch label" defaultSelected={false} />,
 		);
 
-		const checkboxContainer = screen.getAllByTestId("checkbox-container");
 		const checkbox = screen.getByRole("checkbox");
 
 		expect(checkbox).not.toBeChecked();
-		await user.click(checkboxContainer[0]);
-		waitFor(() => expect(checkbox).toBeChecked());
+		await user.click(checkbox);
+		expect(checkbox).toBeChecked();
 
-		await user.click(checkboxContainer[0]);
-		waitFor(() => expect(checkbox).not.toBeChecked());
+		await user.click(checkbox);
+		expect(checkbox).not.toBeChecked();
 	});
 
 	test("shouldn't check if disabled", async () => {

@@ -1,6 +1,10 @@
 import { useContext, useMemo } from "react";
 import { Chip, ChipGroup } from "../../chip";
-import { Button as AriaButton } from "react-aria-components";
+import {
+	Button as AriaButton,
+	Group,
+	Label as AriaLabel,
+} from "react-aria-components";
 import { ArrowDownIcon, PlusIcon } from "../../icon";
 import { cva } from "class-variance-authority";
 import { SelectValueContext } from "../utils/contexts";
@@ -9,29 +13,61 @@ const selectContainerStyles = cva(
 	[
 		"flex items-center relative overflow-hidden transition-all",
 		"min-h-10 w-full py-2",
-		"border-2 rounded-lg box-border",
+		"border-2 border-neutral-100 rounded-lg box-border",
 	],
 	{
 		variants: {
+			isHovered: {
+				true: ["border-primary-500"],
+			},
 			isInvalid: {
-				true: ["border-error-500"],
-				false: [
-					"border-neutral-100",
-					"hover:border-primary-400",
-					"focus:border-2 focus:border-primary-400",
-					"focus-visible:border-primary-400 focus-visible:border-2",
-				],
+				true: ["!border-error-500"],
 			},
 			isPressed: {
 				true: ["border-primary-500"],
+			},
+			isFocused: {
+				true: ["border-primary-500"],
+			},
+			isDisabled: {
+				true: ["!border-neutral-100 bg-neutral-100"],
 			},
 		},
 	},
 );
 
+const labelStyles = cva(["block text-neutral-500 text-xs font-medium p-1"], {
+	variants: {
+		isDisabled: {
+			true: ["!text-neutral-300"],
+		},
+	},
+});
+
+// TODO: Change border color on focus
 export const SelectValue = () => {
-	const { selectionMode, isInvalid, overlayTriggerState, triggerRef } =
-		useContext(SelectValueContext);
+	const {
+		selectionMode,
+		isInvalid,
+		isDisabled,
+		overlayTriggerState,
+		triggerRef,
+		label,
+		labelProps,
+	} = useContext(SelectValueContext);
+
+	const labelComponent = useMemo(
+		() =>
+			label && (
+				<AriaLabel
+					{...labelProps}
+					className={labelStyles({ isDisabled })}
+				>
+					{label}
+				</AriaLabel>
+			),
+		[label, labelProps, isDisabled],
+	);
 
 	const renderedContent = useMemo(() => {
 		if (selectionMode === "single") {
@@ -42,15 +78,27 @@ export const SelectValue = () => {
 	}, [selectionMode]);
 
 	return (
-		<div
-			className={selectContainerStyles({
-				isInvalid: isInvalid,
-				isPressed: overlayTriggerState.isOpen,
-			})}
-			ref={triggerRef}
-		>
-			{renderedContent}
-		</div>
+		<Group>
+			{({ isFocusWithin, isHovered }) => (
+				<>
+					{labelComponent}
+					<div
+						className={selectContainerStyles({
+							isInvalid: isInvalid,
+							isPressed: overlayTriggerState.isOpen,
+							isHovered: isHovered,
+							isFocused: isFocusWithin,
+							isDisabled,
+						})}
+						data-testid="select-value-container"
+						data-focused={isFocusWithin}
+						ref={triggerRef}
+					>
+						{renderedContent}
+					</div>
+				</>
+			)}
+		</Group>
 	);
 };
 
@@ -63,9 +111,9 @@ const SingleSelectionValue = () => {
 			data-trigger="toggle-button"
 			aria-pressed={ctx.overlayTriggerState.isOpen ? "true" : "false"}
 			className={
-				"flex flex-row w-full h-full px-3 items-center justify-between group outline-none text-sm text-neutral-500"
+				"flex flex-row w-full h-full px-3 items-center justify-between group outline-none text-sm text-neutral-500 disabled:text-neutral-200"
 			}
-			onPress={ctx.overlayTriggerState.open}
+			onPress={ctx.overlayTriggerState.toggle}
 		>
 			{ctx.selectedItems[0]?.textValue || ctx.placeholder}
 			<ArrowDownIcon
@@ -81,14 +129,23 @@ const MultipleSelectionValue = () => {
 
 	return (
 		<div className="flex flex-row flex-wrap gap-2 px-2">
-			<ChipGroup
-				items={ctx.selectedItems}
-				disabledKeys={ctx.isDisabled ? "all" : []}
-				aria-label="Selected Items"
-				onRemove={ctx.onSelectionRemove}
-			>
-				{(item) => <Chip key={item.key} textValue={item.textValue} />}
-			</ChipGroup>
+			{ctx.selectedItems.length > 0 && (
+				<ChipGroup
+					items={ctx.selectedItems}
+					outlined={ctx.isDisabled}
+					disabledKeys={ctx.isDisabled ? "all" : ctx.disabledKeys}
+					aria-label="Selected Items"
+					onRemove={ctx.onSelectionRemove}
+				>
+					{(item) => (
+						<Chip
+							key={item.key}
+							isDisabled={ctx.isDisabled}
+							textValue={item.textValue}
+						/>
+					)}
+				</ChipGroup>
+			)}
 			<AriaButton
 				isDisabled={ctx.isDisabled}
 				onPress={ctx.overlayTriggerState.toggle}

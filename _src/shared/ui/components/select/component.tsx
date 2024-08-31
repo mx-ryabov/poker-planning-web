@@ -1,9 +1,6 @@
 import {
-	Label as AriaLabel,
 	DialogContext,
-	ListStateContext,
 	OverlayTriggerStateContext,
-	PopoverContext,
 	Provider,
 } from "react-aria-components";
 import { List } from "../list";
@@ -64,6 +61,8 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 
 	const selectValueProps: SelectValueContextProps = useMemo(
 		() => ({
+			label,
+			labelProps,
 			overlayTriggerState,
 			triggerRef,
 			placeholder,
@@ -104,18 +103,11 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				[SelectValueContext, selectValueProps],
 			]}
 		>
-			{label && (
-				<AriaLabel
-					{...labelProps}
-					className="block text-neutral-500 text-xs font-medium p-1"
-				>
-					{label}
-				</AriaLabel>
-			)}
 			<SelectValue />
 			{errorMessages?.length && (
 				<span
 					{...errorMessageProps}
+					role="alert"
 					className="w-full text-xs font-medium p-1 text-error-500 flex flex-row items-center gap-1"
 				>
 					<WarningIcon size={12} thikness="bold" />
