@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { IconType } from "../icon/icon-builder";
 import {
 	ButtonContext,
@@ -11,7 +11,8 @@ import { useButton } from "react-aria";
 type BaseButtonProps = {
 	size?: "small" | "medium" | "large";
 	styleType?: "default" | "outline" | "ghost" | "grayed-out";
-} & ButtonProps;
+} & ButtonProps &
+	HTMLAttributes<HTMLButtonElement>;
 
 type LabeledButtonProps = BaseButtonProps & {
 	title: string;
@@ -167,6 +168,7 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			styleType = "default",
 			iconLeft,
 			iconRight,
+			role,
 		} = props;
 
 		let { buttonProps, isPressed } = useButton(props, ref);
@@ -185,6 +187,8 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 					excludeFromFocus: props.excludeFromTabOrder,
 				})}
 				ref={ref}
+				role={role || "button"}
+				aria-label={buttonProps["aria-label"] || "icon button"}
 				{...buttonProps}
 			>
 				{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
@@ -198,9 +202,9 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 	(props, ref) => {
 		[props, ref] = useContextProps(props, ref, ButtonContext);
-		const { size = "medium", styleType = "default", icon } = props;
+		const { size = "medium", styleType = "default", icon, role } = props;
 
-		let { buttonProps, isPressed } = useButton(props, ref);
+		const { buttonProps, isPressed } = useButton(props, ref);
 
 		return (
 			<button
@@ -216,6 +220,8 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 					excludeFromFocus: props.excludeFromTabOrder,
 				})}
 				ref={ref}
+				aria-label={buttonProps["aria-label"] || "icon button"}
+				role={role || "button"}
 				{...buttonProps}
 			>
 				{icon({ size: ButtonIconSize[size] })}

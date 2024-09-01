@@ -41,6 +41,17 @@ export const ChipDefault: Story = {
 	},
 };
 
+export const ChipStateless: Story = {
+	render: () => {
+		return (
+			<ChipGroup aria-label="The list who can change the game's settings">
+				<Chip textValue="Apple" />
+				<Chip textValue="Orange" />
+			</ChipGroup>
+		);
+	},
+};
+
 export const ChipOutlined: Story = {
 	render: () => {
 		let list = useListData({

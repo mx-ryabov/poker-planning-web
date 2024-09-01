@@ -1,14 +1,5 @@
 import { Select } from "@/_src/shared/ui";
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-	Button,
-	Label,
-	ListBox,
-	ListBoxItem,
-	Popover,
-	SelectValue,
-	Select as SelectAria,
-} from "react-aria-components";
 
 const meta = {
 	title: "Shared/Select",
@@ -92,6 +83,59 @@ export const SelectMultiple: Story = {
 	),
 };
 
+export const SelectMultipleWithDisabledKeys: Story = {
+	render: () => (
+		<div className="w-full flex justify-center mt-[200px]">
+			<div className="w-[300px]">
+				<Select
+					label="Select Multiple"
+					selectionMode="multiple"
+					aria-label="Select Multiple"
+					disabledKeys={["1", "3"]}
+					items={dataMultiple}
+				>
+					{(item) => (
+						<Select.Item
+							key={item.id}
+							aria-label={`Item ${item.textValue}`}
+							textValue={item.textValue}
+						>
+							{item.textValue}
+						</Select.Item>
+					)}
+				</Select>
+			</div>
+		</div>
+	),
+};
+
+export const SelectMultipleWithDisabledAndSelectedKeys: Story = {
+	render: () => (
+		<div className="w-full flex justify-center mt-[200px]">
+			<div className="w-[300px]">
+				<Select
+					label="Select Multiple"
+					selectionMode="multiple"
+					aria-label="Select Multiple"
+					disabledKeys={["1", "3"]}
+					defaultSelectedKeys={["1", "3"]}
+					items={dataMultiple}
+				>
+					{(item) => (
+						<Select.Item
+							key={item.id}
+							aria-label={`Item ${item.textValue}`}
+							textValue={item.textValue}
+						>
+							{item.textValue}
+						</Select.Item>
+					)}
+				</Select>
+			</div>
+		</div>
+	),
+};
+
 export const SelectError: Story = {
 	render: () => (
 		<div className="w-[200px]">
@@ -120,62 +164,71 @@ export const SelectDisabled: Story = {
 	),
 };
 
-export const SelectEmpty: Story = {
+export const SelectDisabledWithSelectedItem: Story = {
 	render: () => (
 		<div className="w-[200px]">
-			<Select label="Select Multiple">{[]}</Select>
+			<Select label="Select Multiple" isDisabled selectedKeys={["2"]}>
+				<Select.Item key="1">Item 1</Select.Item>
+				<Select.Item key="2">Item 2</Select.Item>
+				<Select.Item key="3">Item 3</Select.Item>
+			</Select>
 		</div>
 	),
 };
 
-export const SelectAriaDefault: Story = {
+export const SelectMultipleDisabled: Story = {
 	render: () => (
-		<div style={{ width: "200px" }}>
-			<SelectAria isOpen={true}>
-				<Label />
-				<Button
-					style={{
-						border: "1px solid black",
-						padding: "8px",
-						backgroundColor: "yellow",
-					}}
-				>
-					<SelectValue>
-						{({ isPlaceholder, selectedText }) => (
-							<div>
-								{isPlaceholder ? (
-									"Select an item"
-								) : (
-									<div style={{ height: "50px" }}>
-										{selectedText}
-									</div>
-								)}
-							</div>
-						)}
-					</SelectValue>
-				</Button>
-				<Popover
-					style={{
-						border: "1px solid black",
-						padding: "8px",
-						overflow: "auto",
-					}}
-					maxHeight={200}
-				>
-					<ListBox>
-						<ListBoxItem>Apple</ListBoxItem>
-						<ListBoxItem>Orange</ListBoxItem>
-						<ListBoxItem>People</ListBoxItem>
-						<ListBoxItem>Car</ListBoxItem>
-						<ListBoxItem>Juce</ListBoxItem>
-						<ListBoxItem>Pencil</ListBoxItem>
-						<ListBoxItem>Laptop</ListBoxItem>
-						<ListBoxItem>Headphones</ListBoxItem>
-						<ListBoxItem>Table</ListBoxItem>
-						<ListBoxItem>Cherry</ListBoxItem>
-					</ListBox>
-				</Popover>
-			</SelectAria>
+		<div className="w-[200px]">
+			<Select
+				label="Select Multiple"
+				selectionMode="multiple"
+				aria-label="Select Multiple"
+				items={dataMultiple}
+				isDisabled
+			>
+				{(item) => (
+					<Select.Item
+						key={item.id}
+						aria-label={`Item ${item.textValue}`}
+						textValue={item.textValue}
+					>
+						{item.textValue}
+					</Select.Item>
+				)}
+			</Select>
+		</div>
+	),
+};
+
+export const SelectMultipleDisabledWithSelectedItems: Story = {
+	render: () => (
+		<div className="w-[300px]">
+			<Select
+				label="Select Multiple"
+				selectionMode="multiple"
+				aria-label="Select Multiple"
+				items={dataMultiple}
+				isDisabled
+				defaultSelectedKeys={["1", "2"]}
+			>
+				{(item) => (
+					<Select.Item
+						key={item.id}
+						aria-label={`Item ${item.textValue}`}
+						textValue={item.textValue}
+					>
+						{item.textValue}
+					</Select.Item>
+				)}
+			</Select>
+		</div>
+	),
+};
+
+export const SelectEmpty: Story = {
+	render: () => (
+		<div className="w-[200px]">
+			<Select label="Select Multiple">{[]}</Select>
 		</div>
 	),
 };

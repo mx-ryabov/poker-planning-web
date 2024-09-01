@@ -103,6 +103,12 @@ export function useAutocompleteValue() {
 		[open, setSearchValue, listState],
 	);
 
+	const onFocus = useCallback(() => {
+		if (!overlayTriggerState.isOpen) {
+			open("full");
+		}
+	}, [overlayTriggerState.isOpen, open]);
+
 	const inputProps: InputProps = useMemo(
 		() => ({
 			ref: inputRef,
@@ -115,10 +121,19 @@ export function useAutocompleteValue() {
 			value: searchValue,
 			isDisabled,
 			isInvalid,
+			onFocus,
 			onKeyDown,
 			onChange,
 		}),
-		[inputRef, label, errorMessages, searchValue, onKeyDown, onChange],
+		[
+			inputRef,
+			label,
+			errorMessages,
+			searchValue,
+			onKeyDown,
+			onChange,
+			onFocus,
+		],
 	);
 
 	const toggleBtnProps = useMemo(

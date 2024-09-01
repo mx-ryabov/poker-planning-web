@@ -28,25 +28,22 @@ const inputStyles = cva(
 		"w-full h-10 px-3",
 		"rounded-lg box-border border-2",
 		"text-sm transition-colors cursor-text",
-		"focus-within:border-primary-500",
+		"focus-within:!border-primary-500",
+		"border-neutral-100",
+		"group-hover:border-primary-400",
 	],
 	{
 		variants: {
 			hasError: {
-				true: ["border-error-500"],
-				false: [
-					"border-neutral-100",
-					"group-hover:border-primary-400",
-					"focus:border-2 focus:border-primary-400",
-					"focus-visible:border-primary-400 focus-visible:border-2",
-				],
+				true: ["!border-error-500"],
+				false: [],
 			},
 			hasEndContent: {
 				true: ["pr-1"],
 				false: [],
 			},
 			isDisabled: {
-				true: ["group-hover:border-neutral-100", "bg-neutral-100"],
+				true: ["group-hover:!border-neutral-100", "bg-neutral-100"],
 				false: [],
 			},
 		},
