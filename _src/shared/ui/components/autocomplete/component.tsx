@@ -25,9 +25,10 @@ import { AutocompleteValue } from "./components/autocomplete-value";
 import { AutocompleteList } from "./components/autocomplete-list";
 
 /**
+ * TODO: consider implementing a facade for single and multiple selection autocompletes
  * TItemData extends { id: string } - the simplest solution (hack) to avoid the react-stately lib bug https://github.com/adobe/react-spectrum/issues/6103
  */
-type AutocompleteProps<TItemData extends { id: string }> = {
+export type AutocompleteProps<TItemData extends { id: string }> = {
 	label: string;
 	placeholder?: string;
 	description?: string;

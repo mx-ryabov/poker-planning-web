@@ -95,9 +95,10 @@ export function useAutocompleteState<TItemData extends { id: string }>(
 		(event: OnMenuOpenChangeEvent) => {
 			if (!event.isOpen) {
 				applySelectedItemTextForSearchValue();
+				listState.selectionManager.setFocusedKey(null);
 			}
 		},
-		[applySelectedItemTextForSearchValue],
+		[applySelectedItemTextForSearchValue, listState],
 	);
 
 	useEventTargetListener<OnMenuOpenChangeEvent>(

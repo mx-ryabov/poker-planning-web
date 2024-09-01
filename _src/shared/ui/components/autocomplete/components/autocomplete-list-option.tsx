@@ -37,6 +37,7 @@ export const AutocompleteListOption = <TItemData extends object>({
 		<div
 			{...mergeProps(optionProps, shouldFocusOnHover ? {} : hoverProps)}
 			ref={ref}
+			data-focused={isFocused}
 			className={listItemStyles({
 				isHovered,
 				isFocused: shouldUseVirtualFocus && isFocused,

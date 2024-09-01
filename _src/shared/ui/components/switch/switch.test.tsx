@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { test, describe, expect } from "vitest";
 import { Switch } from "./component";
 import { render, screen, waitFor } from "@/test/utilities";
@@ -12,11 +15,10 @@ describe("Switch", () => {
 
 	test("has focus on tab", async () => {
 		const { user } = render(<Switch label="Switch label" />);
-		const switchContainer = screen.getByTestId("switch-container");
-		expect(switchContainer).not.toHaveStyle(focusStyles);
+		const checkbox = screen.getByRole("checkbox");
 		await user.tab();
 
-		waitFor(() => expect(switchContainer).toHaveStyle(focusStyles));
+		expect(checkbox).toHaveFocus();
 	});
 
 	test("should check and uncheck", async () => {
@@ -60,9 +62,3 @@ describe("Switch", () => {
 		expect(results).toHaveNoViolations();
 	});
 });
-
-const focusStyles = {
-	"outline-color": "#845EC2",
-	"outline-offset": "2px",
-	"outline-style": "solid",
-};
