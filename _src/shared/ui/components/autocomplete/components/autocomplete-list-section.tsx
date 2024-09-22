@@ -3,12 +3,12 @@ import { Header, ListStateContext } from "react-aria-components";
 import { Node } from "react-stately";
 import { AutocompleteListOption } from "./autocomplete-list-option";
 
-type AutocompleteListSectionProps<TItemData extends object> = {
-	item: Node<TItemData>;
+type AutocompleteListSectionProps<TReutrnData extends object> = {
+	item: Node<TReutrnData>;
 };
 
-export const AutocompleteListSection = <TItemData extends object>(
-	props: AutocompleteListSectionProps<TItemData>,
+export const AutocompleteListSection = <TReutrnData extends object>(
+	props: AutocompleteListSectionProps<TReutrnData>,
 ) => {
 	const { item } = props;
 	const listState = useContext(ListStateContext);
@@ -23,7 +23,9 @@ export const AutocompleteListSection = <TItemData extends object>(
 		<div className="flex flex-col">
 			{title && (
 				<Header
-					className={"pl-3 p-1 text-xs text-neutral-500 font-medium"}
+					className={
+						"pl-3 p-2 text-xs text-neutral-500 font-medium border-b border-neutral-100"
+					}
 				>
 					{title}
 				</Header>

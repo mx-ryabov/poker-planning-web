@@ -29,6 +29,7 @@ export const AutocompleteListOption = <TItemData extends object>({
 		state,
 		ref,
 	);
+
 	let { hoverProps, isHovered } = useHover({
 		isDisabled,
 	});

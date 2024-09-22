@@ -16,6 +16,7 @@ export function useEventTargetListener<CustomEvent extends Event>(
 		const eventHandler = (e: Event) => {
 			handler(e as CustomEvent);
 		};
+
 		eventTarget.addEventListener(eventName, eventHandler);
 
 		return () => {

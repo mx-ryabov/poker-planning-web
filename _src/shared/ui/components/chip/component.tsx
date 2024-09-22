@@ -10,12 +10,16 @@ import {
 	TagProps,
 } from "react-aria-components";
 import { buildProvider } from "@/_src/shared/lib";
+import { useRef } from "react";
 
 type ChipProps = TagProps & Required<Pick<TagProps, "textValue">>;
 
 const chip = cva(
 	[
-		"h-[21px] bg-neutral-100 rounded flex flex-row min-w-fit pl-2 pr-1 text-neutral-500 text-xs items-center transition-all select-none",
+		"h-[21px] min-w-fit pl-2 pr-1",
+		"flex flex-row items-center",
+		"bg-neutral-100 text-neutral-500",
+		"rounded text-xs transition-all select-none outline-primary-500",
 	],
 	{
 		variants: {
@@ -83,9 +87,12 @@ export function ChipGroup<TItem extends object>({
 	items,
 	children,
 	outlined,
+	className,
 	renderEmptyState,
 	...props
 }: ChipGroupProps<TItem>) {
+	const tagListRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<ChipGroupContextProvider value={{ outlined }}>
 			<TagGroup
@@ -94,8 +101,9 @@ export function ChipGroup<TItem extends object>({
 			>
 				<TagList
 					items={items}
+					ref={tagListRef}
 					renderEmptyState={renderEmptyState}
-					className="flex flex-row gap-2 flex-wrap"
+					className={"flex flex-row gap-2 flex-wrap " + className}
 				>
 					{children}
 				</TagList>
@@ -108,5 +116,5 @@ type ChipGroupContext = {
 	outlined?: boolean;
 };
 
-const [useChipGroupContext, ChipGroupContextProvider] =
+export const [useChipGroupContext, ChipGroupContextProvider] =
 	buildProvider<ChipGroupContext>();

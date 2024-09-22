@@ -1,7 +1,7 @@
 import { useRef, useMemo, useContext, useCallback } from "react";
 import { KeyboardEvent } from "@react-types/shared";
 import { useSelectableCollection } from "@react-aria/selection";
-import { ListKeyboardDelegate } from "react-aria";
+import { ListKeyboardDelegate, PressEvent } from "react-aria";
 import { InputProps } from "../../input";
 import { AutocompleteValueContext } from "../contexts/autocomplete-value-context";
 import {
@@ -19,7 +19,8 @@ export function useAutocompleteValue() {
 		selectionMode,
 		searchValue,
 		listRef,
-		setSearchValue,
+		selectedNodes,
+		onSearchValueChange,
 		toggle,
 		open,
 	} = useContext(AutocompleteValueContext);
@@ -85,22 +86,9 @@ export function useAutocompleteValue() {
 
 	const onChange = useCallback(
 		(textValue: string) => {
-			open("filtered");
-			setSearchValue(textValue);
-
-			// TODO: Move to the state hook
-			const firstChildKey = Array.from(
-				listState.collection.getKeys(),
-			).find((key) => {
-				const item = listState.collection.getItem(key);
-				return item?.type === "item";
-			});
-
-			if (firstChildKey) {
-				listState.selectionManager.setFocusedKey(firstChildKey);
-			}
+			onSearchValueChange(textValue);
 		},
-		[open, setSearchValue, listState],
+		[onSearchValueChange],
 	);
 
 	const onFocus = useCallback(() => {
@@ -109,9 +97,12 @@ export function useAutocompleteValue() {
 		}
 	}, [overlayTriggerState.isOpen, open]);
 
+	const onBlur = useCallback(() => {
+		overlayTriggerState.close();
+	}, [overlayTriggerState.close]);
+
 	const inputProps: InputProps = useMemo(
 		() => ({
-			ref: inputRef,
 			role: "combobox",
 			autoComplete: "off",
 			"aria-labelledby": "autocomplete-input",
@@ -124,32 +115,31 @@ export function useAutocompleteValue() {
 			onFocus,
 			onKeyDown,
 			onChange,
+			onBlur,
 		}),
-		[
-			inputRef,
-			label,
-			errorMessages,
-			searchValue,
-			onKeyDown,
-			onChange,
-			onFocus,
-		],
+		[label, errorMessages, searchValue, onKeyDown, onChange, onFocus],
 	);
 
 	const toggleBtnProps = useMemo(
 		() => ({
 			isDisabled,
-			onPress: () => {
-				inputRef.current.focus();
+			onPressStart: (e: PressEvent) => {
+				if (!overlayTriggerState.isOpen) {
+					inputRef.current?.focus();
+				}
 				toggle("full");
 			},
 		}),
-		[toggle, inputRef],
+		[toggle, inputRef, overlayTriggerState.isOpen],
 	);
 
 	return {
+		isDisabled,
+		listState,
 		inputProps,
+		inputRef,
 		overlayTriggerState,
 		toggleBtnProps,
+		selectedNodes,
 	};
 }

@@ -1,4 +1,3 @@
-import { AriaFieldProps } from "react-aria";
 import {
 	useAutocomplete,
 	UseAutocompleteProps,
@@ -12,6 +11,8 @@ import {
 	Popover,
 	ListStateContext,
 	ListBoxContext,
+	FieldErrorContext,
+	ValidationResult,
 } from "react-aria-components";
 import {
 	AutocompleteValueContext,
@@ -23,6 +24,8 @@ import {
 } from "./hooks/use-autocomplete-state";
 import { AutocompleteValue } from "./components/autocomplete-value";
 import { AutocompleteList } from "./components/autocomplete-list";
+import { useMemo } from "react";
+import { VALID_VALIDITY_STATE } from "@/_src/shared/lib/utils/validation";
 
 /**
  * TODO: consider implementing a facade for single and multiple selection autocompletes
@@ -39,7 +42,7 @@ export type AutocompleteProps<TItemData extends { id: string }> = {
 
 function Autocomplete<TItemData extends { id: string }>(
 	props: AutocompleteProps<TItemData>,
-) {
+): React.ReactNode {
 	const {
 		label,
 		description,
@@ -57,8 +60,10 @@ function Autocomplete<TItemData extends { id: string }>(
 		overlayTriggerState,
 		overlayTriggerFunctions,
 		searchValue,
+		selectedNodes,
 		setSearchValue,
-	} = useAutocompleteState({
+		onSearchValueChange,
+	} = useAutocompleteState<TItemData>({
 		...props,
 		selectionMode,
 	});
@@ -76,7 +81,7 @@ function Autocomplete<TItemData extends { id: string }>(
 
 	useClickOutside([triggerRef, popoverRef], overlayTriggerState.close);
 
-	const autocompleteValueProps: AutocompleteValueContextProps = {
+	const autocompleteValueProps: AutocompleteValueContextProps<TItemData> = {
 		label,
 		errorMessages,
 		placeholder,
@@ -85,9 +90,21 @@ function Autocomplete<TItemData extends { id: string }>(
 		selectionMode,
 		listRef,
 		searchValue,
+		selectedNodes,
 		setSearchValue,
+		onSearchValueChange,
 		...overlayTriggerFunctions,
 	};
+
+	// TODO: re-implement with ValidationResult type because it works in a more native way
+	const validationProps: ValidationResult = useMemo(
+		() => ({
+			isInvalid: !!errorMessages,
+			validationErrors: errorMessages || [],
+			validationDetails: VALID_VALIDITY_STATE,
+		}),
+		[errorMessages],
+	);
 
 	return (
 		<Provider
@@ -96,27 +113,29 @@ function Autocomplete<TItemData extends { id: string }>(
 				[AutocompleteValueContext, autocompleteValueProps],
 				[ListBoxContext, listProps],
 				[ListStateContext, listState],
+				[FieldErrorContext, validationProps],
 			]}
 		>
 			<div ref={triggerRef}>
-				<AutocompleteValue />
+				<AutocompleteValue selectionMode={selectionMode} />
 			</div>
-			<Popover {...popoverProps} aria-label="Select Items">
+			<Popover
+				{...popoverProps}
+				aria-label="Select Items"
+				data-testid="popover"
+			>
 				<AutocompleteList {...listProps} />
 			</Popover>
 		</Provider>
 	);
 }
 
-/**
- * TODO:
- * 7. Refactoring. Render optimization +-
- * 8. Multiselection
- * 10. Tests :)
- */
-
 const _Autocomplete = Object.assign(Autocomplete, {
 	Item: Item,
+	/**
+	 * Usage:
+	 *  - Do NOT use an entity id as the key for Section because if ids of Sections and Items match then the dropdown list renders incorectly due to several items in the collection with the same key
+	 */
 	Section: Section,
 	Separator: List.Separator,
 });

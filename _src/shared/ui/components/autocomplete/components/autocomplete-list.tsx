@@ -64,39 +64,37 @@ export const AutocompleteList = forwardRef(
 					shouldUseVirtualFocus,
 				}}
 			>
-				<FocusScope>
-					<div
-						{...listBoxProps}
-						ref={setRefs(listRef, ref)}
-						className="max-h-[inherit] overflow-auto outline-none"
-					>
-						{renderedItems.length === 0 && renderEmptyState
-							? renderEmptyState()
-							: null}
-						{renderedItems.map((item) => {
-							if (item.type === "section") {
-								return (
-									<AutocompleteListSection
-										item={item}
-										key={item.key}
-									/>
-								);
-							}
-							if (item.type === "item") {
-								return (
-									<AutocompleteListOption
-										item={item}
-										key={item.key}
-									/>
-								);
-							}
-							if (item.type === "separator") {
-								return <div key={item.key} />;
-							}
-							return null;
-						})}
-					</div>
-				</FocusScope>
+				<div
+					{...listBoxProps}
+					ref={setRefs(listRef, ref)}
+					className="max-h-[inherit] overflow-auto outline-none flex flex-col gap-2"
+				>
+					{renderedItems.length === 0 && renderEmptyState
+						? renderEmptyState()
+						: null}
+					{renderedItems.map((item) => {
+						if (item.type === "section") {
+							return (
+								<AutocompleteListSection
+									item={item}
+									key={item.key}
+								/>
+							);
+						}
+						if (item.type === "item") {
+							return (
+								<AutocompleteListOption
+									item={item}
+									key={item.key}
+								/>
+							);
+						}
+						if (item.type === "separator") {
+							return <div key={item.key} />;
+						}
+						return null;
+					})}
+				</div>
 			</AutocompleteListContext.Provider>
 		);
 	},
