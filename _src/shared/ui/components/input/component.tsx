@@ -93,7 +93,9 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 						hasEndContent: !!endContent,
 						isDisabled: restProps.isDisabled,
 					})}
-					onClick={() => inputRef.current?.focus()}
+					onClick={() => {
+						inputRef.current?.focus();
+					}}
 				>
 					{startIcon && (
 						<span className="text-neutral-200">

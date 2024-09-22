@@ -111,3 +111,27 @@ export const ChipOutlinedDisabled: Story = {
 		);
 	},
 };
+
+export const ChipOutlinedDisabledPartially: Story = {
+	render: () => {
+		let list = useListData({
+			initialItems,
+		});
+
+		return (
+			<ChipGroup
+				items={list.items}
+				aria-label="The list who can change the game's settings"
+				onRemove={(keys) => list.remove(...keys)}
+			>
+				{(item) => (
+					<Chip
+						isDisabled={item.id === 4}
+						textValue={item.name}
+						key={item.id}
+					/>
+				)}
+			</ChipGroup>
+		);
+	},
+};

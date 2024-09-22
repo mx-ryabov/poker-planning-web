@@ -16,7 +16,7 @@ type Story = StoryObj<typeof Autocomplete>;
 
 const data = [];
 
-export const AutocompleteSingle: Story = {
+export const AutocompleteSingleStatefull: Story = {
 	render: () => (
 		<div className="w-[200px]">
 			<Autocomplete
@@ -40,7 +40,12 @@ export const AutocompleteSingle: Story = {
 	),
 };
 
-const dataMultiple = [
+type ItemT = {
+	id: string;
+	textValue: string;
+};
+
+const dataMultiple: ItemT[] = [
 	{ id: "1", textValue: "Apple" },
 	{ id: "2", textValue: "Orange" },
 	{ id: "3", textValue: "Avocado" },
@@ -57,13 +62,48 @@ const dataMultiple = [
 	{ id: "14", textValue: "Anabolic" },
 ];
 
-export const AutocompleteMultiple: Story = {
+type SectionT = {
+	id: string;
+	title: string;
+	items: ItemT[];
+};
+const dataMultipleWithSections: SectionT[] = [
+	{
+		id: "1",
+		title: "Fruits",
+		items: [
+			{ id: "1", textValue: "Apple" },
+			{ id: "2", textValue: "Orange" },
+			{ id: "3", textValue: "Avocado" },
+			{ id: "4", textValue: "Watermelon" },
+			{ id: "5", textValue: "Banana" },
+			{ id: "6", textValue: "Mango" },
+		],
+	},
+	{
+		id: "2",
+		title: "Vegetables",
+		items: [
+			{ id: "7", textValue: "Tomato" },
+			{ id: "8", textValue: "Peach" },
+			{ id: "9", textValue: "Pear" },
+			{ id: "10", textValue: "Dragonfruit" },
+			{ id: "11", textValue: "Pineapple" },
+			{ id: "12", textValue: "Apricot" },
+			{ id: "13", textValue: "Anus" },
+			{ id: "14", textValue: "Anabolic" },
+		],
+	},
+];
+
+export const AutocompleteSingleStateless: Story = {
 	render: () => (
-		<div className="w-[300px]">
+		<div className="w-[200px]">
 			<Autocomplete
-				label="Select Multiple"
-				selectionMode="multiple"
+				label="Select Single"
+				selectionMode="single"
 				placeholder="Select something"
+				onSelectionChange={(res) => console.log(res)}
 				items={dataMultiple}
 			>
 				{(item) => (
@@ -76,7 +116,7 @@ export const AutocompleteMultiple: Story = {
 	),
 };
 
-export const AutocompleteControllable = (args: any) => {
+export const AutocompleteSingleControllable = (args: any) => {
 	const [currentItems, setCurrentItems] = useState([dataMultiple[3]]);
 
 	return (
@@ -85,7 +125,7 @@ export const AutocompleteControllable = (args: any) => {
 				label="Select Controlable"
 				placeholder="Select something"
 				onSelectionChange={(items) => {
-					setCurrentItems(items);
+					setCurrentItems(items as ItemT[]);
 				}}
 				onQuery={(searchValue) => {
 					return new Promise((resolve, reject) => {
@@ -115,7 +155,45 @@ export const AutocompleteControllable = (args: any) => {
 	);
 };
 
-export const AutocompleteError: Story = {
+export const AutocompleteSingleWithSections = () => {
+	const [currentItems, setCurrentItems] = useState<
+		{ id: string; textValue: string }[]
+	>([dataMultipleWithSections[0].items[3]]);
+
+	return (
+		<div className="w-[300px]">
+			<Autocomplete<ItemT>
+				label="Select Multiple"
+				selectionMode="single"
+				placeholder="Select something"
+				onSelectionChange={(items) => {
+					console.log("selection: ", items);
+					setCurrentItems(items);
+				}}
+				selectedKeys={currentItems.map((item) => item.id)}
+			>
+				{dataMultipleWithSections.map((section) => (
+					<Autocomplete.Section
+						title={section.title}
+						items={section.items}
+						key={section.title}
+					>
+						{(item) => (
+							<Autocomplete.Item
+								key={item.id}
+								textValue={item.textValue}
+							>
+								{item.textValue}
+							</Autocomplete.Item>
+						)}
+					</Autocomplete.Section>
+				))}
+			</Autocomplete>
+		</div>
+	);
+};
+
+export const AutocompleteSingleError: Story = {
 	render: () => (
 		<div className="w-[200px]">
 			<Autocomplete
@@ -138,7 +216,7 @@ export const AutocompleteError: Story = {
 	),
 };
 
-export const AutocompleteDisabled: Story = {
+export const AutocompleteSingleDisabled: Story = {
 	render: () => (
 		<div className="w-[200px]">
 			<Autocomplete
@@ -161,14 +239,14 @@ export const AutocompleteDisabled: Story = {
 	),
 };
 
-export const AutocompleteDisabledItems: Story = {
+export const AutocompleteSingleDisabledItems: Story = {
 	render: () => (
 		<div className="w-[200px]">
 			<Autocomplete
 				label="Select Single"
 				selectionMode="single"
 				placeholder="Select something"
-				disabledKeys={["2"]}
+				disabledKeys={["1"]}
 			>
 				<Autocomplete.Item key="1" textValue="Item 1">
 					Item 1
@@ -182,4 +260,179 @@ export const AutocompleteDisabledItems: Story = {
 			</Autocomplete>
 		</div>
 	),
+};
+
+export const AutocompleteMultipleStateless: Story = {
+	render: () => (
+		<div className="w-[300px]">
+			<Autocomplete
+				label="Select Multiple"
+				selectionMode="multiple"
+				placeholder="Select something"
+				items={dataMultiple}
+			>
+				{(item) => (
+					<Autocomplete.Item key={item.id} textValue={item.textValue}>
+						{item.textValue}
+					</Autocomplete.Item>
+				)}
+			</Autocomplete>
+		</div>
+	),
+};
+
+export const AutocompleteMultipleControllable = () => {
+	const [currentItems, setCurrentItems] = useState([
+		dataMultiple[0],
+		dataMultiple[5],
+	]);
+
+	return (
+		<div className="w-[300px]">
+			<Autocomplete
+				label="Select Multiple"
+				selectionMode="multiple"
+				placeholder="Select something"
+				onSelectionChange={setCurrentItems}
+				selectedKeys={currentItems.map((item) => item.id)}
+				items={dataMultiple}
+			>
+				{(item) => (
+					<Autocomplete.Item key={item.id} textValue={item.textValue}>
+						{item.textValue}
+					</Autocomplete.Item>
+				)}
+			</Autocomplete>
+		</div>
+	);
+};
+
+export const AutocompleteMultipleWithSections = () => {
+	const [currentItems, setCurrentItems] = useState<
+		{ id: string; textValue: string }[]
+	>([dataMultipleWithSections[0].items[3]]);
+
+	return (
+		<div className="w-[300px]">
+			<Autocomplete<ItemT>
+				label="Select Multiple"
+				selectionMode="multiple"
+				placeholder="Select something"
+				onSelectionChange={(items) => {
+					console.log("selection: ", items);
+					setCurrentItems(items);
+				}}
+				selectedKeys={currentItems.map((item) => item.id)}
+			>
+				{dataMultipleWithSections.map((section: SectionT) => (
+					<Autocomplete.Section
+						title={section.title}
+						items={section.items}
+						key={section.title}
+					>
+						{(item) => (
+							<Autocomplete.Item
+								key={item.id}
+								textValue={item.textValue}
+							>
+								{item.textValue}
+							</Autocomplete.Item>
+						)}
+					</Autocomplete.Section>
+				))}
+			</Autocomplete>
+		</div>
+	);
+};
+
+export const AutocompleteMultipleControllableWithSelectedAndDisabledItems =
+	() => {
+		const [currentItems, setCurrentItems] = useState([
+			dataMultiple[3],
+			dataMultiple[5],
+		]);
+
+		return (
+			<div className="w-[300px]">
+				<Autocomplete
+					label="Select Multiple"
+					selectionMode="multiple"
+					placeholder="Select something"
+					onSelectionChange={setCurrentItems}
+					selectedKeys={currentItems.map((item) => item.id)}
+					disabledKeys={["4", "6"]}
+					items={dataMultiple}
+				>
+					{(item) => (
+						<Autocomplete.Item
+							key={item.id}
+							textValue={item.textValue}
+						>
+							{item.textValue}
+						</Autocomplete.Item>
+					)}
+				</Autocomplete>
+			</div>
+		);
+	};
+
+export const AutocompleteMultipleError = () => {
+	return (
+		<div className="w-[300px]">
+			<Autocomplete
+				label="Select Multiple"
+				selectionMode="multiple"
+				placeholder="Select something"
+				errorMessages={["Error message text"]}
+				items={dataMultiple}
+			>
+				{(item) => (
+					<Autocomplete.Item key={item.id} textValue={item.textValue}>
+						{item.textValue}
+					</Autocomplete.Item>
+				)}
+			</Autocomplete>
+		</div>
+	);
+};
+
+export const AutocompleteMultipleDisabled = () => {
+	return (
+		<div className="w-[300px]">
+			<Autocomplete
+				label="Select Multiple"
+				selectionMode="multiple"
+				placeholder="Select something"
+				isDisabled
+				items={dataMultiple}
+			>
+				{(item) => (
+					<Autocomplete.Item key={item.id} textValue={item.textValue}>
+						{item.textValue}
+					</Autocomplete.Item>
+				)}
+			</Autocomplete>
+		</div>
+	);
+};
+
+export const AutocompleteMultipleDisabledWithKeys = () => {
+	return (
+		<div className="w-[300px]">
+			<Autocomplete
+				label="Select Multiple"
+				selectionMode="multiple"
+				placeholder="Select something"
+				isDisabled
+				selectedKeys={["3", "5"]}
+				items={dataMultiple}
+			>
+				{(item) => (
+					<Autocomplete.Item key={item.id} textValue={item.textValue}>
+						{item.textValue}
+					</Autocomplete.Item>
+				)}
+			</Autocomplete>
+		</div>
+	);
 };

@@ -4,15 +4,26 @@ import { PopoverProps, SelectionMode } from "react-aria-components";
 import { ListState } from "react-stately";
 import { SadManIcon } from "../../icon";
 import { AutocompleteListProps } from "../components/autocomplete-list";
+import { usePopoverForcePositionUpdate } from "@/_src/shared/lib";
 
 export type UseAutocompleteProps<TItemData extends object> = {
+	/** Usage:
+	 * 1. If you have no sections in the list then use it together with children: (item: TItemData) => React.ReactElement
+	 * 2. If you have sections then do NOT use it.
+	 * 	  Instead, render sections as children with map() and provide your TItemData directly in JSX
+	 *    like this \<Autocomplete\<ItemT\> {...yourPropsWithoutItems}\>{children}\</Autocomplete\>.
+	 * 	  See an example in AutocompleteMultipleWithSections story
+	 */
 	items?: Iterable<TItemData>;
 	selectionMode?: Exclude<SelectionMode, "none">;
 	children:
 		| React.ReactElement
 		| React.ReactElement[]
 		| ((item: TItemData) => React.ReactElement);
-} & Omit<AriaListBoxProps<TItemData>, "children" | "onSelectionChange">;
+} & Omit<
+	AriaListBoxProps<TItemData>,
+	"children" | "onSelectionChange" | "items"
+>;
 
 export function useAutocomplete<TItemData extends object>(
 	props: UseAutocompleteProps<TItemData>,
@@ -69,6 +80,8 @@ export function useAutocomplete<TItemData extends object>(
 		maxHeight: 300,
 		isNonModal: true,
 	};
+
+	usePopoverForcePositionUpdate(popoverRef, triggerRef);
 
 	return {
 		listProps,

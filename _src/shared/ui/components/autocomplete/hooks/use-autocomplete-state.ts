@@ -4,8 +4,6 @@ import {
 	useListState,
 	Node,
 	ListProps,
-	Selection,
-	useMenuTriggerState,
 	Collection,
 	useOverlayTriggerState,
 } from "react-stately";
@@ -22,20 +20,11 @@ class OnMenuOpenChangeEvent extends Event {
 	}
 }
 
-class OnSelectionChangeEvent extends Event {
-	get selection() {
-		return this._selection;
-	}
-	constructor(private _selection: Selection) {
-		super("OnSelectionChange");
-	}
-}
-
 export type UseAutocompleteStateProps<TItemData extends { id: string }> = {
-	onSelectionChange?: (item: TItemData[]) => void;
+	onSelectionChange?: (items: TItemData[]) => void;
 	// Not implemented
 	onQuery?: (searchValue: string) => Promise<TItemData[]>;
-} & Omit<ListProps<TItemData>, "onSelectionChange">;
+} & Omit<ListProps<TItemData>, "onSelectionChange" | "items">;
 
 export function useAutocompleteState<TItemData extends { id: string }>(
 	props: UseAutocompleteStateProps<TItemData>,
@@ -57,9 +46,11 @@ export function useAutocompleteState<TItemData extends { id: string }>(
 	const listState = useListState({
 		...props,
 		onSelectionChange: (selection) => {
-			stateChangeEventTarget.dispatchEvent(
-				new OnSelectionChangeEvent(selection),
-			);
+			if (onSelectionChange) {
+				onSelectionChange(
+					getSelectedItemData([...selection], listState.collection),
+				);
+			}
 		},
 		allowDuplicateSelectionEvents: true,
 	});
@@ -76,77 +67,33 @@ export function useAutocompleteState<TItemData extends { id: string }>(
 		[listState.selectionManager.selectedKeys, listState.collection],
 	);
 
-	const applySelectedItemTextForSearchValue = useCallback(() => {
-		const selectedItem = selectedNodes[0]?.textValue;
-		setSearchValue(selectedItem || "");
-	}, [selectedNodes, setSearchValue]);
+	const renderedCollection = useMemo(() => {
+		switch (renderedCollectionType) {
+			case "filtered":
+				return filterCollection(
+					listState.collection,
+					searchValue || "",
+					contains,
+				);
+			default:
+				return listState.collection;
+		}
+	}, [renderedCollectionType, listState.collection, searchValue, contains]);
 
+	// Set textValue of a selected item to the searchValue when selectionMode=single
 	useEffect(() => {
 		if (selectionMode === "single" && !overlayTriggerState.isOpen) {
-			applySelectedItemTextForSearchValue();
+			const selectedItem = selectedNodes[0]?.textValue;
+			setSearchValue(selectedItem || "");
 		}
 	}, [
 		overlayTriggerState.isOpen,
-		applySelectedItemTextForSearchValue,
+		setSearchValue,
+		selectedNodes,
 		selectionMode,
 	]);
 
-	const onMenuOpenChangeEventHandler = useCallback(
-		(event: OnMenuOpenChangeEvent) => {
-			if (!event.isOpen) {
-				applySelectedItemTextForSearchValue();
-				listState.selectionManager.setFocusedKey(null);
-			}
-		},
-		[applySelectedItemTextForSearchValue, listState],
-	);
-
-	useEventTargetListener<OnMenuOpenChangeEvent>(
-		stateChangeEventTarget,
-		"OnMenuOpenChange",
-		onMenuOpenChangeEventHandler,
-	);
-
-	const onSelectionChangeEventHandler = useCallback(
-		(event: OnSelectionChangeEvent) => {
-			const { selection } = event;
-			const selectedKeys = [...selection];
-			const selectedNodes = getSelectedNodes(
-				selectedKeys,
-				listState.collection,
-			);
-
-			if (selectionMode === "single") {
-				const selectedItem = selectedNodes[0]?.textValue;
-				setSearchValue(selectedItem || "");
-				if (selectedItem) {
-					overlayTriggerState.close();
-				}
-			}
-
-			if (onSelectionChange && selectedKeys) {
-				onSelectionChange(
-					selectedNodes
-						.map((node) => node.value as TItemData)
-						.filter((item) => !!item),
-				);
-			}
-		},
-		[
-			overlayTriggerState.close,
-			onSelectionChange,
-			listState.collection,
-			setSearchValue,
-		],
-	);
-
-	useEventTargetListener<OnSelectionChangeEvent>(
-		stateChangeEventTarget,
-		"OnSelectionChange",
-		onSelectionChangeEventHandler,
-	);
-
-	// Clear selection if a user clears the input
+	// Clear selection if a user clears the input when selectionMode=single
 	const prevSearchValueRef = useRef("");
 	useEffect(() => {
 		if (
@@ -164,6 +111,97 @@ export function useAutocompleteState<TItemData extends { id: string }>(
 		prevSearchValueRef,
 	]);
 
+	const firstAvailableKey = useMemo(() => {
+		return Array.from(renderedCollection.getKeys()).find((key) => {
+			const item = renderedCollection.getItem(key);
+			return (
+				item?.type === "item" &&
+				!listState.selectionManager.isDisabled(key)
+			);
+		});
+	}, [renderedCollection, listState.selectionManager.isDisabled]);
+
+	// set first available item focused whenever renderedCollection changes (i.e. filtered)
+	useEffect(() => {
+		if (firstAvailableKey) {
+			listState.selectionManager.setFocusedKey(firstAvailableKey);
+		}
+	}, [listState.selectionManager.setFocusedKey, firstAvailableKey]);
+
+	const onMenuOpenChangeEventHandler = useCallback(
+		(event: OnMenuOpenChangeEvent) => {
+			if (selectionMode === "single" && !event.isOpen) {
+				const selectedItem = selectedNodes[0]?.textValue;
+				setSearchValue(selectedItem || "");
+			}
+			if (selectionMode === "multiple" && !event.isOpen) {
+				setSearchValue("");
+			}
+
+			if (event.isOpen && firstAvailableKey) {
+				listState.selectionManager.setFocused(true);
+				listState.selectionManager.setFocusedKey(firstAvailableKey);
+			}
+		},
+		[
+			setSearchValue,
+			selectedNodes,
+			listState,
+			selectionMode,
+			firstAvailableKey,
+		],
+	);
+
+	useEventTargetListener<OnMenuOpenChangeEvent>(
+		stateChangeEventTarget,
+		"OnMenuOpenChange",
+		onMenuOpenChangeEventHandler,
+	);
+
+	const onSelectionChangeEventHandler = useCallback(
+		(selectedKeys: Set<Key>) => {
+			const selectedNodes = getSelectedNodes(
+				[...selectedKeys],
+				listState.collection,
+			);
+
+			if (selectionMode === "single") {
+				const selectedItem = selectedNodes[0]?.textValue;
+				setSearchValue(selectedItem || "");
+				if (selectedItem) {
+					overlayTriggerState.close();
+				}
+			}
+
+			if (selectionMode === "multiple") {
+				setSearchValue("");
+			}
+		},
+		[
+			selectionMode,
+			overlayTriggerState.close,
+			listState.collection,
+			setSearchValue,
+		],
+	);
+
+	const prevSelectedKeysRef = useRef(listState.selectionManager.selectedKeys);
+	useEffect(() => {
+		const isSelectionChanged =
+			prevSelectedKeysRef.current !==
+			listState.selectionManager.selectedKeys;
+		if (isSelectionChanged) {
+			onSelectionChangeEventHandler(
+				listState.selectionManager.selectedKeys,
+			);
+		}
+		prevSelectedKeysRef.current = listState.selectionManager.selectedKeys;
+	}, [
+		onSelectionChangeEventHandler,
+		listState.selectionManager.selectedKeys,
+		prevSelectedKeysRef,
+	]);
+
 	// adapter for trigger overlay functions that consider the collection type
 	const triggerStateFn = useCallback(
 		<TArgs>(triggerCallback: (...args: TArgs[]) => void) => {
@@ -178,18 +216,20 @@ export function useAutocompleteState<TItemData extends { id: string }>(
 		[setRenderedCollectionType],
 	);
 
-	const renderedCollection = useMemo(() => {
-		switch (renderedCollectionType) {
-			case "filtered":
-				return filterCollection(
-					listState.collection,
-					searchValue || "",
-					contains,
-				);
-			default:
-				return listState.collection;
-		}
-	}, [renderedCollectionType, listState.collection, searchValue, contains]);
+	const onSearchValueChange = useCallback(
+		(textValue: string) => {
+			overlayTriggerState.open();
+			setRenderedCollectionType("filtered");
+			setSearchValue(textValue);
+		},
+		[
+			overlayTriggerState.open,
+			setRenderedCollectionType,
+			setSearchValue,
+			renderedCollection,
+			listState.selectionManager,
+		],
+	);
 
 	return {
 		listState: {
@@ -200,11 +240,11 @@ export function useAutocompleteState<TItemData extends { id: string }>(
 		overlayTriggerFunctions: {
 			toggle: triggerStateFn(overlayTriggerState.toggle),
 			open: triggerStateFn(overlayTriggerState.open),
-			//close: overlayTriggerState.close,
-			//setOpen: triggerStateFn(overlayTriggerState.setOpen),
 		},
+		selectedNodes,
 		searchValue,
 		setSearchValue,
+		onSearchValueChange,
 	};
 }
 
@@ -256,5 +296,16 @@ function getSelectedNodes<TItemData extends object>(
 	if (!selectedKeys) return [];
 	return selectedKeys
 		.map((key) => collection.getItem(String(key)) as Node<TItemData>)
+		.filter((item) => !!item);
+}
+
+function getSelectedItemData<TItemData extends object>(
+	selectedKeys: Key[],
+	collection: Collection<Node<TItemData>>,
+) {
+	const selectedNodes = getSelectedNodes(selectedKeys, collection);
+
+	return selectedNodes
+		.map((node) => node.value as TItemData)
 		.filter((item) => !!item);
 }
