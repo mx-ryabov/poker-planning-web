@@ -42,11 +42,13 @@ export const DefaultLarge: Story = {
 	},
 };
 
-export const DefaultMedium: Story = {
-	args: {
-		...Default.args,
-		size: "medium",
-	},
+export const DefaultMedium = (args: any) => {
+	return (
+		<ButtonSquare
+			icon={SettingsIcon}
+			onPress={() => console.log("check")}
+		/>
+	);
 };
 
 export const DefaultSmall: Story = {

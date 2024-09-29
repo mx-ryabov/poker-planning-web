@@ -32,6 +32,7 @@ const button = cva(
 		"justify-center",
 		"items-center",
 		"gap-x-2",
+		"outline-primary-500",
 	],
 	{
 		variants: {
