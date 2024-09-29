@@ -1,3 +1,4 @@
+"use client";
 import {
 	RefObject,
 	useCallback,
@@ -11,46 +12,42 @@ export function useEnterAnimation(
 	ref: RefObject<HTMLElement>,
 	isReady: boolean = true,
 ) {
-	let [isEntering, setEntering] = useState(true);
+	let [isStarting, setStarting] = useState(true);
 
 	useAnimation(
 		ref,
-		isEntering && isReady,
+		isStarting && isReady,
 		useCallback(() => {
-			setEntering(false);
+			setStarting(false);
 		}, []),
 	);
-	return isEntering && isReady;
+	return isStarting && isReady;
 }
 
 export function useExitAnimation(ref: RefObject<HTMLElement>, isOpen: boolean) {
-	// State to trigger a re-render after animation is complete, which causes the element to be removed from the DOM.
-	// Ref to track the state we're in, so we don't immediately reset isExiting to true after the animation.
-	let [isExiting, setExiting] = useState(false);
-	let [exitState, setExitState] = useState("idle");
+	let [isFinishing, setIsFinishing] = useState(false);
+	let [exitState, setExitState] = useState("not-started");
 
-	// If isOpen becomes false, set isExiting to true.
-	if (!isOpen && ref.current && exitState === "idle") {
-		isExiting = true;
-		setExiting(true);
+	if (!isOpen && ref.current && exitState === "not-started") {
+		isFinishing = true;
+		setIsFinishing(true);
 		setExitState("exiting");
 	}
 
-	// If we exited, and the element has been removed, reset exit state to idle.
 	if (!ref.current && exitState === "exited") {
-		setExitState("idle");
+		setExitState("not-started");
 	}
 
 	useAnimation(
 		ref,
-		isExiting,
+		isFinishing,
 		useCallback(() => {
 			setExitState("exited");
-			setExiting(false);
+			setIsFinishing(false);
 		}, []),
 	);
 
-	return isExiting;
+	return isFinishing;
 }
 
 function useAnimation(
@@ -61,16 +58,11 @@ function useAnimation(
 	let prevAnimation = useRef<string | null>(null);
 
 	if (isActive && ref.current) {
-		// This is ok because we only read it in the layout effect below, immediately after the commit phase.
-		// We could move this to another effect that runs every render, but this would be unnecessarily slow.
-		// We only need the computed style right before the animation becomes active.
-		// eslint-disable-next-line rulesdir/pure-render
 		prevAnimation.current = window.getComputedStyle(ref.current).animation;
 	}
 
 	useLayoutEffect(() => {
 		if (isActive && ref.current) {
-			// Make sure there's actually an animation, and it wasn't there before we triggered the update.
 			let computedStyle = window.getComputedStyle(ref.current);
 
 			if (
