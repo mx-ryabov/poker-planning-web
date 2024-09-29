@@ -3,6 +3,7 @@ export * from "./icon";
 export * from "./logo";
 export * from "./link";
 export * from "./input";
+export * from "./input-with-confirmation";
 export * from "./chip";
 export * from "./switch";
 export * from "./menu";
