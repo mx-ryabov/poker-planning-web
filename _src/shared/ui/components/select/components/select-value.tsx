@@ -39,7 +39,7 @@ const selectContainerStyles = cva(
 const labelStyles = cva(["block text-neutral-500 text-xs font-medium p-1"], {
 	variants: {
 		isDisabled: {
-			true: ["!text-neutral-300"],
+			true: ["!text-neutral-400"],
 		},
 	},
 });
@@ -150,7 +150,7 @@ const MultipleSelectionValue = () => {
 				isDisabled={ctx.isDisabled}
 				onPress={ctx.overlayTriggerState.toggle}
 				aria-label="Add Items"
-				className="flex flex-row items-center gap-2 text-xs text-neutral-200 bg-neutral-100 py-1 px-2 max-h-[21px] rounded"
+				className="flex flex-row items-center gap-2 text-xs text-neutral-500 bg-neutral-100 py-1 px-2 max-h-[21px] rounded"
 			>
 				<PlusIcon size={16} />
 				{ctx.placeholder}

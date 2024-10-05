@@ -56,29 +56,6 @@ const multiLevelData: SectionData[] = [
 	},
 ];
 
-export const ListWithSections = (args: any) => (
-	<List<SectionData>
-		{...args}
-		aria-label="List With Sections"
-		className="border border-neutral-100 rounded-lg px-2 py-3"
-	>
-		<List.Section title={"Section Title 1"} items={multiLevelData[0].items}>
-			{(item) => (
-				<List.Item key={item.id} textValue={item.textValue}>
-					{item.textValue}
-				</List.Item>
-			)}
-		</List.Section>
-		<List.Separator />
-		<List.Section title={"Section Title 2"} items={multiLevelData[1].items}>
-			{(item) => (
-				<List.Item key={item.id} textValue={item.textValue}>
-					{item.textValue}
-				</List.Item>
-			)}
-		</List.Section>
-	</List>
-);
 const dataWithDisabledItems: ItemData[] = [
 	{ textValue: "List Item 1", id: 1 },
 	{ textValue: "List Item 2", id: 2 },

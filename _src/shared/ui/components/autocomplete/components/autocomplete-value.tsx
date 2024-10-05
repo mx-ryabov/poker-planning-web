@@ -53,8 +53,7 @@ function AutocompleteSingleValue() {
 					icon={ArrowDownIcon}
 					size="small"
 					styleType="ghost"
-					className="outline-none"
-					aria-labelledby="autocomplete-toggle-button"
+					aria-label="autocomplete-toggle-button"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
 				/>
@@ -67,28 +66,6 @@ function AutocompleteSingleValue() {
 	);
 }
 
-/**
- * Main difference between single and multiple autocompletes:
- *                        | Single           | Multiple
- *
- * 1. selected keys       | TItem            | TItem[]
- *
- * 2. onSelectionChange   | TItem            | TItems[]
- *
- * 3. closes popup on     |                  |
- *    selection changed   | True             | False
- *
- * 4. shows chips         | False            | True
- *
- * 5. focus magic inside  |                  |
- *    of input container  | False            | True
- *
- * 6. Affects textField   |                  |
- *    value on selection  | True             | False
- *    change              |                  |
- *    /popup state change |                  |
- *
- */
 function AutocompleteMultipleValue() {
 	const {
 		inputProps,
@@ -112,8 +89,7 @@ function AutocompleteMultipleValue() {
 					size="small"
 					data-testid="trigger"
 					styleType="ghost"
-					className="outline-none"
-					aria-labelledby="autocomplete-toggle-button"
+					aria-label="autocomplete-toggle-button"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
 				/>
@@ -186,7 +162,7 @@ function AutocompleteMultipleValue() {
 	const placeholder = useMemo(() => {
 		if (selectedItems.length === 0 && !inputProps.value) {
 			return (
-				<span className="absolute left-4 text-sm text-neutral-200">
+				<span className="absolute left-4 text-sm text-neutral-400">
 					{inputProps.placeholder}
 				</span>
 			);
@@ -208,7 +184,7 @@ function AutocompleteMultipleValue() {
 				className={multipleValueLabelStyles({
 					isDisabled: isDisabled,
 				})}
-				aria-labelledby="Label"
+				aria-label="Label"
 				htmlFor="multiple-autocomplete-input"
 			>
 				{inputProps.label}
@@ -224,7 +200,7 @@ function AutocompleteMultipleValue() {
 				{placeholder}
 				{toggleListButton}
 			</Group>
-			<FieldError className="w-full text-xs font-medium p-1 text-error-500 flex flex-row items-center gap-1">
+			<FieldError className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1">
 				<WarningIcon size={12} thikness="bold" />
 				{inputProps.errors?.length ? inputProps.errors[0] : null}
 			</FieldError>

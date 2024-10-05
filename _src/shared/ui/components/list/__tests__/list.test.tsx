@@ -137,27 +137,6 @@ describe("List", () => {
 		getAllByText("No results found.");
 	});
 
-	test("supports dividers", async () => {
-		const { getByRole } = render(
-			<List aria-label="Products List">
-				<List.Section title="Fruits">
-					<List.Item textValue="Apple" id={1}>
-						Apple
-					</List.Item>
-					<List.Item textValue="Orange" id={2} isDisabled>
-						Orange
-					</List.Item>
-				</List.Section>
-				<List.Separator />
-				<List.Item textValue="Cake" id={3}>
-					Cake
-				</List.Item>
-			</List>,
-		);
-
-		getByRole("separator");
-	});
-
 	test("doesn't violate any accessiblity rules", async () => {
 		const { container } = render(
 			<List aria-label="Product list">

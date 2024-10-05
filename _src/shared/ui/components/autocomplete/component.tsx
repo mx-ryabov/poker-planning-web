@@ -13,6 +13,7 @@ import {
 	ListBoxContext,
 	FieldErrorContext,
 	ValidationResult,
+	Separator,
 } from "react-aria-components";
 import {
 	AutocompleteValueContext,
@@ -137,7 +138,7 @@ const _Autocomplete = Object.assign(Autocomplete, {
 	 *  - Do NOT use an entity id as the key for Section because if ids of Sections and Items match then the dropdown list renders incorectly due to several items in the collection with the same key
 	 */
 	Section: Section,
-	Separator: List.Separator,
+	Separator,
 });
 
 export { _Autocomplete as Autocomplete };
