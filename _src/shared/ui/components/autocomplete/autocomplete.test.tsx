@@ -1351,7 +1351,7 @@ const dataWithSections = [
 	},
 	{
 		id: "b",
-		title: "Fruits",
+		title: "Vegetables",
 		items: [
 			{ id: "7", textValue: "Tomato" },
 			{ id: "8", textValue: "Peach" },

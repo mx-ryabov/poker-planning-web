@@ -37,7 +37,8 @@ const config: StorybookConfig = {
 
 	docs: {},
 
-	staticDirs: ["..\\public"],
+	// it crashes interaction-and-accessibility job in git-hub actions workflow. but you can add it whenever it's really needed (i.e. there is something to put there)
+	//staticDirs: ["..\\public"],
 
 	typescript: {
 		reactDocgen: "react-docgen-typescript",
