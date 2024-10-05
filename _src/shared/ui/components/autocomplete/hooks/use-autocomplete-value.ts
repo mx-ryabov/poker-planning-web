@@ -105,7 +105,7 @@ export function useAutocompleteValue() {
 		() => ({
 			role: "combobox",
 			autoComplete: "off",
-			"aria-labelledby": "autocomplete-input",
+			"aria-label": "autocomplete-input",
 			label,
 			placeholder,
 			errors: errorMessages,

@@ -67,7 +67,8 @@ const labelStyles = cva(["w-full text-xs font-medium p-1 block"], {
 
 export const Input = forwardRef<HTMLInputElement, _InputProps>(
 	function (props, ref) {
-		const { label, startIcon, errors, endContent, ...restProps } = props;
+		const { label, startIcon, errors, endContent, id, ...restProps } =
+			props;
 
 		const inputRef: MutableRefObject<HTMLInputElement | null> =
 			useRef<HTMLInputElement>(null);
@@ -79,38 +80,40 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 				data-testid="text-field-container"
 				isInvalid={!!errors || restProps.isInvalid}
 			>
-				<Label
-					className={labelStyles({
-						isDisabled: restProps.isDisabled,
-					})}
-					aria-labelledby="Label"
-				>
-					{label}
-				</Label>
-				<Group
-					className={inputStyles({
-						hasError: !!errors?.length,
-						hasEndContent: !!endContent,
-						isDisabled: restProps.isDisabled,
-					})}
-					onClick={() => {
-						inputRef.current?.focus();
-					}}
-				>
-					{startIcon && (
-						<span className="text-neutral-200">
-							{startIcon({ size: 12, thikness: "bold" })}
-						</span>
-					)}
-					<AriaInput
-						className="outline-none w-full h-full placeholder:text-neutral-200 disabled:placeholder:text-neutral-300"
-						aria-labelledby="input"
-						ref={setRefs(inputRef, ref)}
-					/>
-					{endContent}
-				</Group>
+				<Label aria-label="Label">
+					<span
+						className={labelStyles({
+							isDisabled: restProps.isDisabled,
+						})}
+					>
+						{label}
+					</span>
 
-				<FieldError className="w-full text-xs font-medium p-1 text-error-500 flex flex-row items-center gap-1">
+					<Group
+						className={inputStyles({
+							hasError: !!errors?.length,
+							hasEndContent: !!endContent,
+							isDisabled: restProps.isDisabled,
+						})}
+						onClick={() => {
+							inputRef.current?.focus();
+						}}
+					>
+						{startIcon && (
+							<span className="text-neutral-200">
+								{startIcon({ size: 12, thikness: "bold" })}
+							</span>
+						)}
+						<AriaInput
+							className="outline-none w-full h-full placeholder:text-neutral-200 disabled:placeholder:text-neutral-300"
+							aria-label="input"
+							ref={setRefs(inputRef, ref)}
+						/>
+						{endContent}
+					</Group>
+				</Label>
+
+				<FieldError className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1">
 					<WarningIcon size={12} thikness="bold" />
 					{errors?.length ? errors[0] : null}
 				</FieldError>

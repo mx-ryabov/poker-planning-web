@@ -11,3 +11,4 @@ export * from "./popover";
 export * from "./list";
 export * from "./select";
 export * from "./autocomplete";
+export * from "./separator";

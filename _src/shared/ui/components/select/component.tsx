@@ -13,6 +13,7 @@ import { WarningIcon } from "../icon";
 import { useMemo, useRef } from "react";
 import { useClickOutside } from "@/_src/shared/lib";
 import { SelectValueContext, SelectValueContextProps } from "./utils/contexts";
+import { Separator } from "../separator";
 
 type SelectProps<TItemData extends object> = {
 	label?: string;
@@ -108,7 +109,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				<span
 					{...errorMessageProps}
 					role="alert"
-					className="w-full text-xs font-medium p-1 text-error-500 flex flex-row items-center gap-1"
+					className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1"
 				>
 					<WarningIcon size={12} thikness="bold" />
 					{errorMessages[0]}
@@ -141,8 +142,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 const _Select = Object.assign(Select, {
 	Item: Item as typeof List.Item,
 	Section: Section as typeof List.Section,
-	// TODO: create plain Separator component that returns null and use it instead
-	Separator: List.Separator,
+	Separator: Separator,
 });
 
 export { _Select as Select };

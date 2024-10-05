@@ -32,7 +32,7 @@ const button = cva(
 		"justify-center",
 		"items-center",
 		"gap-x-2",
-		"outline-primary-500",
+		"outline-primary-500 outline-offset-2",
 	],
 	{
 		variants: {
@@ -97,7 +97,7 @@ const button = cva(
 				true: ["enabled:scale-95"],
 			},
 			excludeFromFocus: {
-				true: ["outline-none"],
+				true: ["outline-none!"],
 				false: [],
 			},
 		},

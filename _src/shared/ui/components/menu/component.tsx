@@ -8,6 +8,7 @@ import {
 	MenuItem as AriaMenuItem,
 	MenuItemProps,
 	composeRenderProps,
+	Separator,
 } from "react-aria-components";
 import { ArrowRightSimplecon, CheckIcon } from "../icon";
 import { List } from "../list";
@@ -63,7 +64,7 @@ const _Menu = Object.assign(MenuTrigger, {
 	Content: MenuContent,
 	Item: MenuItem,
 	Section: MenuSection,
-	Separator: List.Separator,
+	Separator,
 	SubmenuTrigger,
 });
 

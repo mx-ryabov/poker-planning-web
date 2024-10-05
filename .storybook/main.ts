@@ -27,6 +27,7 @@ const config: StorybookConfig = {
 		"@chromatic-com/storybook",
 		"@storybook/addon-interactions",
 		"@storybook/addon-mdx-gfm",
+		"@storybook/addon-a11y",
 	],
 
 	framework: {

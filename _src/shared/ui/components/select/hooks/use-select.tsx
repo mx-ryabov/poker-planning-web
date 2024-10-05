@@ -5,6 +5,7 @@ import { ListState, useOverlayTriggerState } from "react-stately";
 import { List } from "../../list";
 import { SadManIcon } from "../../icon";
 import { ListProps } from "../../list/components/list";
+import { Separator } from "../../separator";
 
 export type UseSelectProps<TItemData extends object> = {
 	items?: Iterable<TItemData>;
@@ -100,7 +101,7 @@ export function useSelect<TItemData extends object>(
 					);
 				}
 				if (item.type === "separator") {
-					return <List.Separator key={item.key} {...item.props} />;
+					return <Separator key={item.key} {...item.props} />;
 				}
 				return null;
 			}),
