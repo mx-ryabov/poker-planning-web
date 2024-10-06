@@ -1,9 +1,10 @@
 import { createContext, RefObject, SetStateAction } from "react";
 import { SelectionMode } from "react-aria-components";
-import { Node } from "react-stately";
+import { ListState, Node } from "react-stately";
 import { RenderedCollectionType } from "../hooks/use-autocomplete-state";
 
 export type AutocompleteValueContextProps<TItemData extends { id: string }> = {
+	listState: ListState<TItemData>;
 	label: string;
 	errorMessages?: string[];
 	placeholder?: string;

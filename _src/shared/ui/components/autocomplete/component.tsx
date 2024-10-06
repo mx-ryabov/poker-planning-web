@@ -83,6 +83,7 @@ function Autocomplete<TItemData extends { id: string }>(
 	useClickOutside([triggerRef, popoverRef], overlayTriggerState.close);
 
 	const autocompleteValueProps: AutocompleteValueContextProps<TItemData> = {
+		listState,
 		label,
 		errorMessages,
 		placeholder,
@@ -112,8 +113,6 @@ function Autocomplete<TItemData extends { id: string }>(
 			values={[
 				[OverlayTriggerStateContext, overlayTriggerState],
 				[AutocompleteValueContext, autocompleteValueProps],
-				[ListBoxContext, listProps],
-				[ListStateContext, listState],
 				[FieldErrorContext, validationProps],
 			]}
 		>
@@ -125,7 +124,12 @@ function Autocomplete<TItemData extends { id: string }>(
 				aria-label="Select Items"
 				data-testid="popover"
 			>
-				<AutocompleteList {...listProps} />
+				{/* I itentipnally don't provide ListStateContext to the AutocompleteValue->useAutocompleteValue 
+					because AutocompleteMultipleValue has ChipGroup->TagGroup that uses this context and crashes the component...
+					More info: https://github.com/adobe/react-spectrum/issues/6814 */}
+				<Provider values={[[ListStateContext, listState]]}>
+					<AutocompleteList {...listProps} />
+				</Provider>
 			</Popover>
 		</Provider>
 	);

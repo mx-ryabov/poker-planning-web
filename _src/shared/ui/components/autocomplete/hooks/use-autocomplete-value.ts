@@ -11,6 +11,7 @@ import {
 
 export function useAutocompleteValue() {
 	const {
+		listState,
 		label,
 		errorMessages,
 		placeholder,
@@ -24,7 +25,6 @@ export function useAutocompleteValue() {
 		toggle,
 		open,
 	} = useContext(AutocompleteValueContext);
-	const listState = useContext(ListStateContext);
 	const overlayTriggerState = useContext(OverlayTriggerStateContext);
 
 	const inputRef = useRef<HTMLInputElement>(null!);

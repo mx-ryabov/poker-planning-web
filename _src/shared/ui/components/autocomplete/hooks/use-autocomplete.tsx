@@ -84,6 +84,7 @@ export function useAutocomplete<TItemData extends object>(
 	usePopoverForcePositionUpdate(popoverRef, triggerRef);
 
 	return {
+		state: listState,
 		listProps,
 		triggerRef,
 		listRef,

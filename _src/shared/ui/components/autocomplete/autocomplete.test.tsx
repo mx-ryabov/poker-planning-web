@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { test, describe, expect, vi } from "vitest";
-import { act, render, screen, waitFor, within } from "@/test/utilities";
+import { render, waitFor, within } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Autocomplete } from "./component";
 import { Key } from "react-aria";

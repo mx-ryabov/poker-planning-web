@@ -14,7 +14,7 @@ import {
 	useMemo,
 	useRef,
 } from "react";
-import { AriaListBoxOptions, FocusScope, useListBox } from "react-aria";
+import { AriaListBoxOptions, useListBox } from "react-aria";
 import { AutocompleteListContext } from "../contexts/autocomplete-list-context";
 import { AutocompleteListOption } from "./autocomplete-list-option";
 import { AutocompleteListSection } from "./autocomplete-list-section";
