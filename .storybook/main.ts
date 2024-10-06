@@ -13,7 +13,6 @@ import type { StorybookConfig } from "@storybook/nextjs";
 // 	"onBeforeInput",
 // 	"onInput",
 // ]);
-
 const config: StorybookConfig = {
 	stories: [
 		"../stories/**/*.mdx",
@@ -24,6 +23,7 @@ const config: StorybookConfig = {
 		"@storybook/addon-essentials",
 		"@chromatic-com/storybook",
 		"@storybook/addon-interactions",
+
 		"@storybook/addon-mdx-gfm",
 		"@storybook/addon-a11y",
 	],
@@ -31,7 +31,9 @@ const config: StorybookConfig = {
 		name: "@storybook/nextjs",
 		options: {},
 	},
-	staticDirs: ["..\\public"],
+	// it crashes interaction-and-accessibility job in git-hub actions workflow. but you can add it whenever it's really needed (i.e. there is something to put there)
+	//staticDirs: ["..\\public"],
+
 	// typescript: {
 	// 	reactDocgen: "react-docgen-typescript",
 	// 	reactDocgenTypescriptOptions: {
@@ -43,6 +45,6 @@ const config: StorybookConfig = {
 	// 		propFilter: (prop) =>
 	// 			!prop.name.startsWith("aria-") && !excludedProps.has(prop.name),
 	// 	},
-	// },
+	// },aria-") && !excludedProps.has(prop.name),
 };
 export default config;
