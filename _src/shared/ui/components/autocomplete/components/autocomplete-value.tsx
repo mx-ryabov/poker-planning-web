@@ -18,6 +18,7 @@ import {
 	Tag,
 	Label,
 	FieldError,
+	ListStateContext,
 } from "react-aria-components";
 import { useAutocompleteValue } from "../hooks/use-autocomplete-value";
 import { ButtonSquare } from "../../button";
@@ -137,6 +138,7 @@ function AutocompleteMultipleValue() {
 					disabledKeys={isDisabled ? "all" : listState.disabledKeys}
 					aria-label="Selected Items"
 					className="min-h-10 flex items-center py-2 outline-none"
+					items={undefined}
 					onRemove={onSelectionRemove}
 				>
 					{selectedItems.map((item, ind) => (
