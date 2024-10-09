@@ -1,47 +1,45 @@
-"use client";
-import { Select } from "@/_src/shared/ui";
+import { Link } from "@/_src/shared/ui/components/link";
+import { Button } from "@/_src/shared/ui/components/button";
+import { Logo } from "@/_src/shared/ui/components/logo";
+import Image from "next/image";
+import CardsImage from "@public/playing-cards 1.webp";
 
 export function MainPage() {
 	return (
-		<div className="flex flex-col h-screen items-center">
-			<div className="w-[300px]">
-				<Select
-					label="Select Multiple"
-					selectionMode="multiple"
-					aria-label="Select Multiple"
-					items={dataMultiple}
-				>
-					{(item) => (
-						<Select.Item
-							key={item.id}
-							aria-label={`Item ${item.textValue}`}
-							textValue={item.textValue}
-						>
-							{item.textValue}
-						</Select.Item>
-					)}
-				</Select>
+		<div className="flex flex-col items-center h-lvh">
+			<header className="flex flex-row w-full px-9 py-5 justify-between">
+				<Logo />
+				<nav className="flex flex-row gap-6">
+					<Button title="Sign In" styleType="ghost" />
+					<Button title="Sign Up" styleType="outline" />
+					<Button title="Start the game" />
+				</nav>
+			</header>
+			<div className="flex flex-row flex-grow items-center justify-between max-w-7xl w-full px-10">
+				<section>
+					<header className="mb-6">
+						<h1 className="text-6xl leading-normal font-bold text-neutral-700">
+							Poker Planning
+						</h1>
+						<h3 className="text-lg text-neutral-700">
+							Make your team efficient again 🚀
+						</h3>
+					</header>
+					<nav>
+						<Button
+							title="Start the game"
+							size="large"
+							className="mb-3"
+						/>
+						<p className="text-xs text-neutral-700">
+							Already a member? <Link>Sign In</Link>
+						</p>
+					</nav>
+				</section>
+				<section>
+					<Image src={CardsImage} alt="Cards" />
+				</section>
 			</div>
 		</div>
 	);
 }
-
-const dataMultiple = [
-	{ id: 1, textValue: "Item 1" },
-	{ id: 2, textValue: "Item 2" },
-	{ id: 3, textValue: "Item 3" },
-	{ id: 4, textValue: "Item 4" },
-	{ id: 5, textValue: "Item 5" },
-	{ id: 6, textValue: "Item 6" },
-	{ id: 7, textValue: "Item 7" },
-	{ id: 8, textValue: "Item 8" },
-	{ id: 9, textValue: "Item 9" },
-	{ id: 10, textValue: "Item 10" },
-	{ id: 11, textValue: "Item 11" },
-	{ id: 12, textValue: "Item 12" },
-	{ id: 13, textValue: "Item 13" },
-	{ id: 14, textValue: "Item 14" },
-	{ id: 15, textValue: "Item 15" },
-	{ id: 16, textValue: "Item 16" },
-	{ id: 17, textValue: "Item 17" },
-];

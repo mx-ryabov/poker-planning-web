@@ -1,1 +1,2 @@
-export * from "./input-with-confirmation";
+"use client";
+export { InputWithConfirmation } from "./input-with-confirmation";

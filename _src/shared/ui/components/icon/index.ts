@@ -1,3 +1,4 @@
+"use client";
 export * from "./svg/arrow-left.icon";
 export * from "./svg/arrow-down.icon";
 export * from "./svg/arrow-left-simple.icon";

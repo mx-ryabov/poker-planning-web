@@ -20,7 +20,8 @@
 		],
 		"paths": {
 			"@/*": ["./*"],
-			"@ui/*": ["./_src/shared/ui/*"]
+			"@ui/*": ["./_src/shared/ui/*"],
+			"@public/*": ["./public/*"]
 		}
 	},
 	"include": ["svgr.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "stories/*.mdx"],
