@@ -96,7 +96,7 @@ jobs:
         name: Install modules from npm
 
       - name: Install Playwright
-        run: pnpm dlx playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
 
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
