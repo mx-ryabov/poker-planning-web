@@ -5,7 +5,7 @@ import { CreateGamePage } from "@/_src/pages/create-game";
 
 interface Props {}
 
-const Page: NextPage<Props> = async ({}) => {
+const Page: NextPage<Props> = async () => {
 	const votingSystems = await getVotingSystems();
 
 	return (

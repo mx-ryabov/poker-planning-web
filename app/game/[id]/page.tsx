@@ -7,7 +7,7 @@ interface Props {
 	params: { id: string };
 }
 
-const Page: NextPage<Props> = ({ params }) => {
+const Page: NextPage<Props> = ({ params }: Props) => {
 	const token = cookies().get("token");
 	if (!token) {
 		redirect(`/game/${params.id}/join`);
