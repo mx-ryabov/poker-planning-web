@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -16,6 +16,8 @@
   "dependencies": {
     "@gsap/react": "^2.1.0",
     "@microsoft/signalr": "^8.0.0",
+    "@next/bundle-analyzer": "^14.2.14",
+    "@react-aria/optimize-locales-plugin": "^1.1.2",
     "@react-aria/selection": "^3.20.0",
     "@react-stately/collections": "^3.11.0",
     "@react-types/shared": "^3.25.0",
@@ -27,7 +29,8 @@
     "react-aria-components": "^1.2.1",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
-    "react-stately": "^3.31.1"
+    "react-stately": "^3.31.1",
+    "tailwind-merge": "^2.5.3"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.9.0",

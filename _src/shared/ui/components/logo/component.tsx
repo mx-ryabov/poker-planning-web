@@ -1,6 +1,10 @@
+import Image from "next/image";
+import CardsImage from "@public/playing-cards 1.webp";
+
 export function Logo() {
 	return (
-		<div>
+		<div className="flex flex-row gap-1 items-center">
+			<Image src={CardsImage} alt="Cards" width={38} height={38} />
 			<svg
 				width="164"
 				height="38"

@@ -7,6 +7,7 @@ import {
 	useContextProps,
 } from "react-aria-components";
 import { useButton } from "react-aria";
+import { twMerge } from "tailwind-merge";
 
 type BaseButtonProps = {
 	size?: "small" | "medium" | "large";
@@ -170,23 +171,30 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			iconLeft,
 			iconRight,
 			role,
+			className,
 		} = props;
 
 		let { buttonProps, isPressed } = useButton(props, ref);
 
 		return (
 			<button
-				className={button({
-					size,
-					styleType,
-					form: "default",
-					// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
-					isPressed:
-						isPressed ||
-						(props as LabeledButtonProps & { isPressed?: boolean })
-							.isPressed,
-					excludeFromFocus: props.excludeFromTabOrder,
-				})}
+				className={twMerge(
+					button({
+						size,
+						styleType,
+						form: "default",
+						// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
+						isPressed:
+							isPressed ||
+							(
+								props as LabeledButtonProps & {
+									isPressed?: boolean;
+								}
+							).isPressed,
+						excludeFromFocus: props.excludeFromTabOrder,
+					}),
+					className,
+				)}
 				ref={ref}
 				role={role || "button"}
 				aria-label={buttonProps["aria-label"] || "icon button"}
