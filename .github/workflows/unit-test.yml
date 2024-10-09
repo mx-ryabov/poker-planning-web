@@ -95,6 +95,9 @@ jobs:
       - run: pnpm install
         name: Install modules from npm
 
+      - name: Clear Playwright cache
+        run: pnpm dlx playwright cache clear
+
       - name: Install Playwright
         run: pnpm dlx playwright install --with-deps
 
