@@ -8,7 +8,7 @@ import { VotingSystem } from "@/_src/shared/api/voting-system-api";
 
 interface Props {
 	votingSystems: VotingSystem[];
-	createGameAsGuest: (req: CreateGameRequest) => Promise<void>;
+	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
 }
 
 export const CreateGamePage = ({ votingSystems, createGameAsGuest }: Props) => {

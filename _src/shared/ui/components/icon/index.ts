@@ -23,6 +23,8 @@ export * from "./svg/play.icon";
 export * from "./svg/plus.icon";
 export * from "./svg/profile.icon";
 export * from "./svg/repeat.icon";
+export * from "./svg/refresh.icon";
+export * from "./svg/refresh-borderless.icon";
 export * from "./svg/sad-man.icon";
 export * from "./svg/settings.icon";
 export * from "./svg/trash.icon";

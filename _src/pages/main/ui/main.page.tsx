@@ -12,7 +12,9 @@ export function MainPage() {
 				<nav className="flex flex-row gap-6">
 					<Button title="Sign In" styleType="ghost" />
 					<Button title="Sign Up" styleType="outline" />
-					<Button title="Start the game" />
+					<Link className="no-underline" href="/create-game">
+						<Button title="Start the game" />
+					</Link>
 				</nav>
 			</header>
 			<div className="flex flex-row flex-grow items-center justify-between max-w-7xl w-full px-10">
@@ -26,11 +28,13 @@ export function MainPage() {
 						</h3>
 					</header>
 					<nav>
-						<Button
-							title="Start the game"
-							size="large"
-							className="mb-3"
-						/>
+						<Link className="no-underline" href="/create-game">
+							<Button
+								title="Start the game"
+								size="large"
+								className="mb-3"
+							/>
+						</Link>
 						<p className="text-xs text-neutral-700">
 							Already a member? <Link>Sign In</Link>
 						</p>

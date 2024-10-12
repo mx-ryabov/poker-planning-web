@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
 import { LinkProps, Link as LinkAria } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
 type Props = LinkProps & {
-	children: React.ReactNode;
+	children: ReactNode;
 };
 
 export function Link(props: Props) {
@@ -19,7 +20,7 @@ export function Link(props: Props) {
 				)
 			}
 		>
-			{props.children}
+			{children}
 		</LinkAria>
 	);
 }

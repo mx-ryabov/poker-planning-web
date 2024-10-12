@@ -6,7 +6,7 @@ import {
 	ButtonProps,
 	useContextProps,
 } from "react-aria-components";
-import { useButton } from "react-aria";
+import { mergeProps, useButton, useFocusRing } from "react-aria";
 import { twMerge } from "tailwind-merge";
 
 type BaseButtonProps = {
@@ -33,7 +33,6 @@ const button = cva(
 		"justify-center",
 		"items-center",
 		"gap-x-2",
-		"outline-primary-500 outline-offset-2",
 	],
 	{
 		variants: {
@@ -95,11 +94,15 @@ const button = cva(
 				square: ["px-0"],
 			},
 			isPressed: {
-				true: ["enabled:scale-95"],
+				true: [],
 			},
 			excludeFromFocus: {
 				true: ["outline-none!"],
 				false: [],
+			},
+			isFocused: {
+				true: ["outline-primary-500", "outline-offset-2"],
+				false: ["outline-none"],
 			},
 		},
 		compoundVariants: [
@@ -175,6 +178,7 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 		} = props;
 
 		let { buttonProps, isPressed } = useButton(props, ref);
+		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
 		return (
 			<button
@@ -192,13 +196,15 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 								}
 							).isPressed,
 						excludeFromFocus: props.excludeFromTabOrder,
+						isFocused: isFocusVisible,
 					}),
 					className,
 				)}
 				ref={ref}
 				role={role || "button"}
+				data-focused={isFocused || undefined}
 				aria-label={buttonProps["aria-label"] || "icon button"}
-				{...buttonProps}
+				{...mergeProps(buttonProps, focusProps)}
 			>
 				{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
 				{title}

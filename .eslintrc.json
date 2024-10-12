@@ -19,5 +19,9 @@
         }
     },
     "dirs": ["_src"]
- }
+ },
+ "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "react/display-name": "off"
+  }
 }
