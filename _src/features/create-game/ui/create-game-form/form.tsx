@@ -16,7 +16,7 @@ import {
 export type CreateGameFormFormState = CreateGameRequest;
 
 interface Props {
-	createGameAsGuest: (req: CreateGameRequest) => Promise<void>;
+	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
 }
 
 export function CreateGameForm({ createGameAsGuest }: Props) {
@@ -27,7 +27,7 @@ export function CreateGameForm({ createGameAsGuest }: Props) {
 		async (formState: CreateGameFormFormState) => {
 			console.log(formState);
 
-			//await createGameAsGuest(formState);
+			await createGameAsGuest(formState);
 		},
 		[createGameAsGuest],
 	);

@@ -18,7 +18,7 @@ type Props = InputProps;
 
 export const InputWithConfirmation = forwardRef<HTMLInputElement, Props>(
 	(props, ref) => {
-		const { onFocusChange, onChange, value, ...restProps } = props;
+		const { onChange, value, ...restProps } = props;
 
 		const [inputValue, setInputValue] = useState(value);
 		const inputRef = useRef<HTMLInputElement>(null);
@@ -104,13 +104,13 @@ export const InputWithConfirmation = forwardRef<HTMLInputElement, Props>(
 					state={overlayTriggerState}
 				>
 					<ButtonSquare
-						styleType="grayed-out"
+						variant="grayed-out"
 						data-action="cancel"
 						icon={CloseIcon}
 						onPress={onCancelChanges}
 					/>
 					<ButtonSquare
-						styleType="grayed-out"
+						variant="grayed-out"
 						data-action="commit"
 						icon={CheckIcon}
 						onPress={onCommitChanges}

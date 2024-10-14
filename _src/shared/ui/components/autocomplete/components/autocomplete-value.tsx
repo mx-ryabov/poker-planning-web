@@ -18,7 +18,6 @@ import {
 	Tag,
 	Label,
 	FieldError,
-	ListStateContext,
 } from "react-aria-components";
 import { useAutocompleteValue } from "../hooks/use-autocomplete-value";
 import { ButtonSquare } from "../../button";
@@ -53,14 +52,14 @@ function AutocompleteSingleValue() {
 				<ButtonSquare
 					icon={ArrowDownIcon}
 					size="small"
-					styleType="ghost"
+					variant="ghost"
 					aria-label="autocomplete-toggle-button"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
 				/>
 			</Provider>
 		);
-	}, [overlayTriggerState.toggle, overlayTriggerState.isOpen]);
+	}, [overlayTriggerState.isOpen, toggleBtnProps]);
 
 	return (
 		<Input {...inputProps} ref={inputRef} endContent={toggleListButton} />
@@ -89,14 +88,14 @@ function AutocompleteMultipleValue() {
 					icon={ArrowDownIcon}
 					size="small"
 					data-testid="trigger"
-					styleType="ghost"
+					variant="ghost"
 					aria-label="autocomplete-toggle-button"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
 				/>
 			</Provider>
 		);
-	}, [overlayTriggerState.toggle, overlayTriggerState.isOpen]);
+	}, [overlayTriggerState.isOpen, toggleBtnProps]);
 
 	const selectedItems = useMemo(() => {
 		const items = selectedNodes.map((node) => {
@@ -124,6 +123,7 @@ function AutocompleteMultipleValue() {
 		if (lastKey && !listState.selectionManager.isDisabled(lastKey)) {
 			onSelectionRemove(new Set([lastKey]));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		onSelectionRemove,
 		listState.selectionManager.isDisabled,
@@ -159,7 +159,15 @@ function AutocompleteMultipleValue() {
 				</ChipGroup>
 			</FocusScope>
 		);
-	}, [selectedItems, isDisabled, listState.disabledKeys, onSelectionRemove]);
+	}, [
+		isDisabled,
+		listState.disabledKeys,
+		onSelectionRemove,
+		selectedItems,
+		inputProps,
+		inputRef,
+		removeLatestSelection,
+	]);
 
 	const placeholder = useMemo(() => {
 		if (selectedItems.length === 0 && !inputProps.value) {

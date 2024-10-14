@@ -45,3 +45,7 @@ export { Select } from "./components/select";
 export { Autocomplete } from "./components/autocomplete";
 export { Separator } from "./components/separator";
 export { LocalizedStringProvider } from "./components/localized-string-provider";
+
+export { buttonStyles } from "./styles";
+
+export type { ButtonStylesProps } from "./styles";

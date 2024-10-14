@@ -42,7 +42,7 @@ export const DefaultLarge: Story = {
 	},
 };
 
-export const DefaultMedium = (args: any) => {
+export const DefaultMedium = () => {
 	return (
 		<ButtonSquare
 			icon={SettingsIcon}
@@ -62,7 +62,7 @@ export const OutlineLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "outline",
+		variant: "outline",
 		isDisabled: true,
 	},
 };
@@ -71,7 +71,7 @@ export const OutlineLarge: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "outline",
+		variant: "outline",
 	},
 };
 
@@ -79,7 +79,7 @@ export const OutlineMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
-		styleType: "outline",
+		variant: "outline",
 	},
 };
 
@@ -87,7 +87,7 @@ export const OutlineSmall: Story = {
 	args: {
 		...Default.args,
 		size: "small",
-		styleType: "outline",
+		variant: "outline",
 	},
 };
 
@@ -95,7 +95,7 @@ export const GhostLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "ghost",
+		variant: "ghost",
 		isDisabled: true,
 	},
 };
@@ -104,7 +104,7 @@ export const GhostLarge: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "ghost",
+		variant: "ghost",
 	},
 };
 
@@ -112,7 +112,7 @@ export const GhostMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
-		styleType: "ghost",
+		variant: "ghost",
 	},
 };
 
@@ -120,7 +120,7 @@ export const GhostSmall: Story = {
 	args: {
 		...Default.args,
 		size: "small",
-		styleType: "ghost",
+		variant: "ghost",
 	},
 };
 
@@ -128,7 +128,7 @@ export const GrayedOutLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 		isDisabled: true,
 	},
 };
@@ -137,7 +137,7 @@ export const GrayedOutLarge: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 	},
 };
 
@@ -145,7 +145,7 @@ export const GrayedOutMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 	},
 };
 
@@ -153,6 +153,6 @@ export const GrayedOutSmall: Story = {
 	args: {
 		...Default.args,
 		size: "small",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 	},
 };

@@ -34,13 +34,13 @@ export default function Error({
 			<div className="flex flex-row gap-2">
 				<Button
 					title="Go Back"
-					styleType="ghost"
+					variant="ghost"
 					iconLeft={ArrowLeftIcon}
 					onPress={() => router.back()}
 				/>
 				<Button
 					title="Try Again"
-					styleType="outline"
+					variant="outline"
 					iconLeft={RefreshBorderlessIcon}
 					onPress={reset}
 				/>

@@ -1,4 +1,6 @@
+import { Logo } from "@/_src/shared/ui/components/logo";
 import { useCreateGameFormNavigation } from "../../model";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
 	className?: string;
@@ -9,9 +11,12 @@ const CreateGameHeader = (props: Props) => {
 
 	return (
 		<header
-			className={`${props.className} h-[100px] w-full flex items-center justify-between px-[40px]`}
+			className={twMerge(
+				"flex flex-row w-full px-9 py-5 justify-between",
+				props.className,
+			)}
 		>
-			<div>Poker Planning</div>
+			<Logo />
 			<div>Step: {formState.stepData.number}</div>
 		</header>
 	);

@@ -1,6 +1,12 @@
 "use client";
 
-import { Dispatch, createContext, useContext, useReducer } from "react";
+import {
+	Dispatch,
+	createContext,
+	useContext,
+	useReducer,
+	ReactNode,
+} from "react";
 import { CreateGameFormActions as Actions } from "./actions";
 import {
 	CreateGameFormState,
@@ -16,7 +22,7 @@ export const CreateGameFormDispatchContext = createContext<
 >(() => {});
 
 interface Props {
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 export function CreateGameFormProvider({ children }: Props) {
