@@ -14,8 +14,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Autocomplete>;
 
-const data = [];
-
 export const AutocompleteSingleStatefull: Story = {
 	render: () => (
 		<div className="w-[200px]">
@@ -103,7 +101,6 @@ export const AutocompleteSingleStateless: Story = {
 				label="Select Single"
 				selectionMode="single"
 				placeholder="Select something"
-				onSelectionChange={(res) => console.log(res)}
 				items={dataMultiple}
 			>
 				{(item) => (
@@ -116,7 +113,7 @@ export const AutocompleteSingleStateless: Story = {
 	),
 };
 
-export const AutocompleteSingleControllable = (args: any) => {
+export const AutocompleteSingleControllable = (_args: any) => {
 	const [currentItems, setCurrentItems] = useState([dataMultiple[3]]);
 
 	return (
@@ -127,8 +124,8 @@ export const AutocompleteSingleControllable = (args: any) => {
 				onSelectionChange={(items) => {
 					setCurrentItems(items as ItemT[]);
 				}}
-				onQuery={(searchValue) => {
-					return new Promise((resolve, reject) => {
+				onQuery={(_searchValue) => {
+					return new Promise((resolve) => {
 						setTimeout(() => {
 							resolve(currentItems.slice(3, 5));
 						}, 2000);
@@ -167,7 +164,6 @@ export const AutocompleteSingleWithSections = () => {
 				selectionMode="single"
 				placeholder="Select something"
 				onSelectionChange={(items) => {
-					console.log("selection: ", items);
 					setCurrentItems(items);
 				}}
 				selectedKeys={currentItems.map((item) => item.id)}
@@ -319,7 +315,6 @@ export const AutocompleteMultipleWithSections = () => {
 				selectionMode="multiple"
 				placeholder="Select something"
 				onSelectionChange={(items) => {
-					console.log("selection: ", items);
 					setCurrentItems(items);
 				}}
 				selectedKeys={currentItems.map((item) => item.id)}

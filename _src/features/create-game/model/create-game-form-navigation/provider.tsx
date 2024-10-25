@@ -44,8 +44,10 @@ export function useCreateGameFormNavigation() {
 	const context = useContext(CreateGameFormContext);
 	return {
 		isClientInitialized: context.isClientInitialized,
+		isStartGameEnabled: context.isStartGameEnabled,
 		step: context.step,
 		stepData: context.stepData[context.step],
+		stepsLength: context.stepsLength,
 	};
 }
 

@@ -4,6 +4,16 @@ import {
 	useCreateGameFormNavigationDispatch,
 	CreateGameFormActions as Actions,
 } from "../../model";
+import { Button } from "@/_src/shared/ui/components/button";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	ProfileIcon,
+	SettingsIcon,
+} from "@/_src/shared/ui/components/icon";
+import { twMerge } from "tailwind-merge";
+import { Color } from "@/_src/shared/ui";
+import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 
 interface Props {
 	className?: string;
@@ -14,11 +24,8 @@ export default function CreateGameFooter(props: Props) {
 	const formDispatch = useCreateGameFormNavigationDispatch();
 
 	const nextStep = useCallback(() => {
-		const nextStep = formNavigation.stepData.nextStep;
-		if (nextStep) {
-			formDispatch({ type: Actions.Type.NextStep });
-		}
-	}, [formDispatch, formNavigation]);
+		formDispatch({ type: Actions.Type.NextStep });
+	}, [formDispatch]);
 
 	const prevStep = useCallback(() => {
 		formDispatch({ type: Actions.Type.PrevStep });
@@ -26,37 +33,66 @@ export default function CreateGameFooter(props: Props) {
 
 	return (
 		<footer
-			className={`${props.className} h-[100px] w-full flex justify-end px-[40px]`}
+			className={twMerge(
+				"w-full flex justify-between px-10 pb-10 items-center",
+				props.className,
+			)}
 		>
-			{formNavigation.stepData.number > 1 && (
-				<button
-					className="px-[20px] border-2 rounded border-black h-[60px]"
-					type="button"
-					onClick={prevStep}
-				>
-					Back
-				</button>
-			)}
-			{(formNavigation.stepData.showContinueBtn ||
-				formNavigation.stepData.showAdvancedSettingsBtn) && (
-				<button
-					className="px-[20px] border-2 rounded border-black h-[60px] ml-[12px]"
-					type="button"
-					onClick={nextStep}
-				>
-					{formNavigation.stepData.showContinueBtn
-						? "Continue"
-						: "Advanced Settings"}
-				</button>
-			)}
-			{formNavigation.stepData.showStartGameBtn && (
-				<button
-					className="px-[20px] border-2 rounded border-black h-[60px] ml-[12px]"
-					type="submit"
-				>
-					Start Game
-				</button>
-			)}
+			<section>
+				<p className="flex flex-row text-neutral-300 item-center text-sm">
+					<ProfileIcon color={Color.Neutral300} className="mr-2" />
+					<NextLink
+						href="/sign-in"
+						className="text-neutral-900 mr-1 leading-relaxed"
+					>
+						Login
+					</NextLink>
+					<span>or</span>
+					<NextLink
+						href="/sign-up"
+						className="text-neutral-900 mx-1 leading-relaxed"
+					>
+						Sign Up
+					</NextLink>
+					<span>to see more app features</span>
+				</p>
+			</section>
+			<section className="flex flex-row gap-4">
+				{formNavigation.stepData.number > 1 && (
+					<Button
+						variant="ghost"
+						iconLeft={ArrowLeftIcon}
+						title="Back"
+						type="button"
+						onPress={prevStep}
+					/>
+				)}
+				{formNavigation.stepData.showContinueBtn && (
+					<Button
+						title="Continue"
+						iconRight={ArrowRightIcon}
+						isDisabled={!formNavigation.stepData.isNextStepEnabled}
+						onPress={nextStep}
+						type="button"
+					/>
+				)}
+				{formNavigation.stepData.showAdvancedSettingsBtn && (
+					<Button
+						title="Advanced Settings"
+						variant="outline"
+						iconRight={SettingsIcon}
+						onPress={nextStep}
+						type="button"
+					/>
+				)}
+				{formNavigation.stepData.showStartGameBtn && (
+					<Button
+						type="submit"
+						title="Start Game"
+						isDisabled={!formNavigation.isStartGameEnabled}
+					/>
+				)}
+			</section>
 		</footer>
 	);
 }

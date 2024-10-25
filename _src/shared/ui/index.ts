@@ -45,6 +45,7 @@ export { Select } from "./components/select";
 export { Autocomplete } from "./components/autocomplete";
 export { Separator } from "./components/separator";
 export { LocalizedStringProvider } from "./components/localized-string-provider";
+export { RadioGroup } from "./components/radio-group";
 
 export { buttonStyles } from "./styles";
 

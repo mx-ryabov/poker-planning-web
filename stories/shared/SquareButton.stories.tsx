@@ -43,12 +43,7 @@ export const DefaultLarge: Story = {
 };
 
 export const DefaultMedium = () => {
-	return (
-		<ButtonSquare
-			icon={SettingsIcon}
-			onPress={() => console.log("check")}
-		/>
-	);
+	return <ButtonSquare icon={SettingsIcon} />;
 };
 
 export const DefaultSmall: Story = {

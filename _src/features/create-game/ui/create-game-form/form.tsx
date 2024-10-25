@@ -6,11 +6,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import CreateGameFooter from "./footer";
 import CreatorNameStep from "./creator-name-step";
 import CreateGameHeader from "./header";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import {
 	CreateGameFormSteps,
 	useCreateGameFormNavigation,
+	useCreateGameFormNavigationDispatch,
+	CreateGameFormActions as Actions,
 } from "../../model/create-game-form-navigation";
 
 export type CreateGameFormFormState = CreateGameRequest;
@@ -20,14 +22,33 @@ interface Props {
 }
 
 export function CreateGameForm({ createGameAsGuest }: Props) {
-	const methods = useForm<CreateGameFormFormState>();
+	const methods = useForm<CreateGameFormFormState>({
+		mode: "onChange",
+		defaultValues: {
+			name: "",
+			votingSystemId: "",
+			creatorName: "",
+			isAutoRevealCards: false,
+		},
+	});
+
 	const formNavigation = useCreateGameFormNavigation();
+	const formDispatch = useCreateGameFormNavigationDispatch();
+
+	useEffect(() => {
+		formDispatch({
+			type: Actions.Type.MakeStartGameEnabled,
+			payload: methods.formState.isValid,
+		});
+	}, [methods.formState.isValid, formDispatch]);
 
 	const onSubmit = useCallback(
 		async (formState: CreateGameFormFormState) => {
-			console.log(formState);
+			console.log("Submitted form state: ", formState);
 
-			await createGameAsGuest(formState);
+			if (formState.name === "abra cadabra") {
+				await createGameAsGuest(formState);
+			}
 		},
 		[createGameAsGuest],
 	);
@@ -40,17 +61,52 @@ export function CreateGameForm({ createGameAsGuest }: Props) {
 			>
 				<CreateGameHeader className="fixed top-0" />
 				<div className="w-full h-full flex flex-row">
-					{STEPS[formNavigation.step]()}
+					<div
+						style={{
+							display:
+								formNavigation.step === CreateGameFormSteps.Name
+									? "block"
+									: "none",
+						}}
+					>
+						<NameStep />
+					</div>
+					<div
+						style={{
+							display:
+								formNavigation.step ===
+								CreateGameFormSteps.VotingSystem
+									? "block"
+									: "none",
+						}}
+					>
+						<VotingSystemStep />
+					</div>
+					<div
+						style={{
+							display:
+								formNavigation.step ===
+								CreateGameFormSteps.CreatorName
+									? "block"
+									: "none",
+						}}
+					>
+						<CreatorNameStep />
+					</div>
+					<div
+						style={{
+							display:
+								formNavigation.step ===
+								CreateGameFormSteps.AdvancedSettings
+									? "block"
+									: "none",
+						}}
+					>
+						<AdvancedSettingsStep />
+					</div>
 				</div>
 				<CreateGameFooter className="fixed bottom-0" />
 			</form>
 		</FormProvider>
 	);
 }
-
-const STEPS = {
-	[CreateGameFormSteps.Name]: () => <NameStep />,
-	[CreateGameFormSteps.VotingSystem]: () => <VotingSystemStep />,
-	[CreateGameFormSteps.CreatorName]: () => <CreatorNameStep />,
-	[CreateGameFormSteps.AdvancedSettings]: () => <AdvancedSettingsStep />,
-};

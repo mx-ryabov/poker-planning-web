@@ -21,7 +21,7 @@ export default meta;
 export const MenuDefault = (args: any) => (
 	<Menu>
 		<ButtonSquare icon={SettingsIcon} />
-		<Menu.Content {...args} onAction={(key) => console.log(key)}>
+		<Menu.Content {...args}>
 			<Menu.Section title="Dropdown Title">
 				<Menu.Item id={1}>
 					<PeopleIcon size={16} />
