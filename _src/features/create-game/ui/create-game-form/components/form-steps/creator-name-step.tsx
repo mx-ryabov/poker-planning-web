@@ -1,50 +1,38 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import {
-	useCreateGameFormNavigationDispatch as useFormNavDispatch,
-	CreateGameFormActions as Actions,
-	useCreateGameFormNavigation as useFormNavState,
-	CreateGameFormSteps,
-} from "../../model/create-game-form-navigation";
 import { TextInput } from "./text-input";
-import { CreateGameFormFormState } from "./form";
+import { CreateGameFormFormState } from "../../../../model";
+import { StepProps } from "./types";
 
-export default function CreatorNameStep() {
+export function CreatorNameStep({
+	isActive,
+	onValidate,
+	onNextStep,
+}: StepProps) {
 	const inputRef: MutableRefObject<HTMLInputElement | null> =
 		useRef<HTMLInputElement>(null);
 	const { control, formState } = useFormContext<CreateGameFormFormState>();
 
-	const formNavigation = useFormNavState();
-	const formDispatch = useFormNavDispatch();
-
 	useEffect(() => {
 		const inputEl = inputRef.current;
-		if (
-			formNavigation.step !== CreateGameFormSteps.CreatorName ||
-			!inputEl
-		) {
-			return;
+		if (isActive && inputEl) {
+			inputEl.focus();
 		}
-		inputEl.focus();
-	}, [formNavigation.step, inputRef]);
+	}, [isActive, inputRef]);
 
 	useEffect(() => {
-		formDispatch({
-			type: Actions.Type.MakeNextStepEnabled,
-			payload:
-				!!formState.dirtyFields.creatorName &&
-				!formState.errors.creatorName,
-		});
+		const isStepValid =
+			!!formState.dirtyFields.creatorName &&
+			!formState.errors.creatorName;
+		onValidate(isStepValid);
 	}, [
 		formState.dirtyFields.creatorName,
 		formState.errors.creatorName,
-		formDispatch,
+		onValidate,
 	]);
 
-	const startGame = () => {};
-
 	return (
-		<div className="w-full h-full flex flex-col shrink-0 basis-full justify-center px-[60px]">
+		<div className="w-full h-full flex flex-col shrink-0 basis-full justify-center px-10">
 			<Controller
 				control={control}
 				name="creatorName"
@@ -68,7 +56,7 @@ export default function CreatorNameStep() {
 								: undefined
 						}
 						error={fieldState.error?.message}
-						onEnter={startGame}
+						onEnter={onNextStep}
 						{...field}
 						ref={(el) => {
 							field.ref(el);

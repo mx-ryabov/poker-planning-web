@@ -1,8 +1,7 @@
 "use client";
 
-import { VotingSystemsProvider } from "@/_src/entities";
-import { CreateGameForm } from "@/_src/features";
-import { CreateGameFormProvider } from "@/_src/features/create-game/model";
+import { VotingSystemsProvider } from "@/_src/entities/voting-system";
+import { CreateGameForm } from "@/_src/features/create-game";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import { VotingSystem } from "@/_src/shared/api/voting-system-api";
 
@@ -15,9 +14,7 @@ export const CreateGamePage = ({ votingSystems, createGameAsGuest }: Props) => {
 	return (
 		<div className="flex-1 h-screen">
 			<VotingSystemsProvider value={votingSystems}>
-				<CreateGameFormProvider>
-					<CreateGameForm createGameAsGuest={createGameAsGuest} />
-				</CreateGameFormProvider>
+				<CreateGameForm createGameAsGuest={createGameAsGuest} />
 			</VotingSystemsProvider>
 		</div>
 	);

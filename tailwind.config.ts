@@ -92,10 +92,21 @@ const config: Config = {
 						transform: "translateY(0px)",
 					},
 				},
+				downOut: {
+					"0%": {
+						opacity: "0",
+						transform: "translateY(-20px)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateY(0px)",
+					},
+				},
 			},
 			animation: {
 				popup: "popup 0.2s",
 				"popup-reverse": "popup 0.2s reverse",
+				downOut: "downOut 0.3s",
 			},
 		},
 	},

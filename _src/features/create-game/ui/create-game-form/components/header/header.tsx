@@ -1,5 +1,5 @@
 import { Logo } from "@/_src/shared/ui/components/logo";
-import { useCreateGameFormNavigation } from "../../model";
+import { useCreateGameFormNavigation } from "../../../../model";
 import { twMerge } from "tailwind-merge";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 import { Stepper } from "./stepper";
@@ -8,7 +8,7 @@ interface Props {
 	className?: string;
 }
 
-const CreateGameHeader = (props: Props) => {
+export const CreateGameHeader = (props: Props) => {
 	const formState = useCreateGameFormNavigation();
 
 	return (
@@ -28,5 +28,3 @@ const CreateGameHeader = (props: Props) => {
 		</header>
 	);
 };
-
-export default CreateGameHeader;

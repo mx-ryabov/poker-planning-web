@@ -1,12 +1,13 @@
 import { InfoIcon } from "@/_src/shared/ui/components/icon";
 import { Switch } from "@/_src/shared/ui/components/switch";
 import { Controller, useFormContext } from "react-hook-form";
-import { CreateGameFormFormState } from "./form";
+import { CreateGameFormFormState } from "../../../../model";
+import { StepProps } from "./types";
 
-export default function AdvancedSettingsStep() {
+export function AdvancedSettingsStep(_: StepProps) {
 	const { control } = useFormContext<CreateGameFormFormState>();
 	return (
-		<div className="w-full h-full flex shrink-0 basis-full justify-center pl-[60px] flex-col">
+		<div className="w-full h-full flex shrink-0 basis-full justify-center pl-10 flex-col">
 			<p className="label mb-4 text-lg text-neutral-900">
 				Advanced settings
 			</p>

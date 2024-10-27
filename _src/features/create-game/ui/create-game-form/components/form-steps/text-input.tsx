@@ -5,6 +5,7 @@ import {
 	forwardRef,
 	ForwardedRef,
 } from "react";
+import { twMerge } from "tailwind-merge";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label: string;
@@ -30,22 +31,20 @@ const _TextInput = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
 	);
 
 	return (
-		<label className="flex flex-col">
+		<label className="flex flex-col relative">
 			<span className="label mb-4 text-lg text-neutral-900">{label}</span>
-			<div className="relative mb-2">
+			<div className="mb-2">
 				<input
-					className="input min-w-[400px] h-20 text-6xl outline-none font-semibold text-neutral-500 placeholder:text-neutral-200"
 					type="text"
 					autoComplete="off"
 					onKeyDown={onKeyDown}
 					ref={ref}
 					{...inputProps}
+					className={twMerge(
+						"min-w-[400px] h-20 text-6xl outline-none font-semibold text-neutral-500 placeholder:text-neutral-200",
+						inputProps.className,
+					)}
 				/>
-				{lengthState && lengthState.current > 0 && (
-					<div className="absolute py-1 px-2 border border-neutral-100 rounded right-0 top-1/2 -translate-y-1/2 translate-x-full text-sm text-neutral-200">
-						↵ Enter
-					</div>
-				)}
 			</div>
 
 			<div className="flex flex-row gap-1 h-5">
@@ -58,6 +57,14 @@ const _TextInput = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
 				)}
 				<span className="text-error-600 text-sm">{error}</span>
 			</div>
+
+			{lengthState && lengthState.current > 0 && (
+				<div className="absolute left-0 -bottom-3 translate-y-full">
+					<div className="py-1 px-2 border border-neutral-200 rounded text-sm text-neutral-300 animate-downOut">
+						↵ Enter
+					</div>
+				</div>
+			)}
 		</label>
 	);
 };

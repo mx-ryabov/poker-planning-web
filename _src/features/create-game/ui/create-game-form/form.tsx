@@ -1,39 +1,38 @@
 "use client";
-import NameStep from "./name-step";
-import VotingSystemStep from "./voting-system-step";
-import AdvancedSettingsStep from "./advanced-settings-step";
-import { FormProvider, useForm } from "react-hook-form";
-import CreateGameFooter from "./footer";
-import CreatorNameStep from "./creator-name-step";
-import CreateGameHeader from "./header";
+import { FormProvider } from "react-hook-form";
+import { CreateGameFooter as Footer } from "./components/footer";
+import { CreateGameHeader as Header } from "./components/header";
 import { useCallback, useEffect } from "react";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import {
-	CreateGameFormSteps,
-	useCreateGameFormNavigation,
-	useCreateGameFormNavigationDispatch,
+	useCreateGameFormNavigationDispatch as useFormNavDispatch,
+	useCreateGameFormNavigation as useFormNavState,
 	CreateGameFormActions as Actions,
+	CreateGameFormSteps,
+	CreateGameFormProvider,
 } from "../../model/create-game-form-navigation";
-
-export type CreateGameFormFormState = CreateGameRequest;
+import { FormSteps } from "./components/form-steps";
+import { useCreateGameFormState } from "../../model";
 
 interface Props {
 	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
 }
 
-export function CreateGameForm({ createGameAsGuest }: Props) {
-	const methods = useForm<CreateGameFormFormState>({
-		mode: "onChange",
-		defaultValues: {
-			name: "",
-			votingSystemId: "",
-			creatorName: "",
-			isAutoRevealCards: false,
-		},
+export const CreateGameForm = ({ createGameAsGuest }: Props) => {
+	return (
+		<CreateGameFormProvider>
+			<CreateGameFormBase createGameAsGuest={createGameAsGuest} />
+		</CreateGameFormProvider>
+	);
+};
+
+function CreateGameFormBase({ createGameAsGuest }: Props) {
+	const { onSubmit, methods } = useCreateGameFormState({
+		onSubmitAction: createGameAsGuest,
 	});
 
-	const formNavigation = useCreateGameFormNavigation();
-	const formDispatch = useCreateGameFormNavigationDispatch();
+	const formDispatch = useFormNavDispatch();
+	const { step } = useFormNavState();
 
 	useEffect(() => {
 		formDispatch({
@@ -42,15 +41,27 @@ export function CreateGameForm({ createGameAsGuest }: Props) {
 		});
 	}, [methods.formState.isValid, formDispatch]);
 
-	const onSubmit = useCallback(
-		async (formState: CreateGameFormFormState) => {
-			console.log("Submitted form state: ", formState);
-
-			if (formState.name === "abra cadabra") {
-				await createGameAsGuest(formState);
+	const onNextStep = useCallback(
+		(currentStep: CreateGameFormSteps) => {
+			if (currentStep === CreateGameFormSteps.CreatorName) {
+				if (methods.formState.isValid) {
+					onSubmit(methods.getValues());
+				}
+				return;
 			}
+			formDispatch({ type: Actions.Type.NextStep });
 		},
-		[createGameAsGuest],
+		[formDispatch, onSubmit, methods.getValues, methods.formState.isValid],
+	);
+
+	const onStepValidate = useCallback(
+		(isValid: boolean) => {
+			formDispatch({
+				type: Actions.Type.MakeNextStepEnabled,
+				payload: isValid,
+			});
+		},
+		[formDispatch],
 	);
 
 	return (
@@ -59,53 +70,13 @@ export function CreateGameForm({ createGameAsGuest }: Props) {
 				className="w-full h-full flex"
 				onSubmit={methods.handleSubmit(onSubmit)}
 			>
-				<CreateGameHeader className="fixed top-0" />
-				<div className="w-full h-full flex flex-row">
-					<div
-						style={{
-							display:
-								formNavigation.step === CreateGameFormSteps.Name
-									? "block"
-									: "none",
-						}}
-					>
-						<NameStep />
-					</div>
-					<div
-						style={{
-							display:
-								formNavigation.step ===
-								CreateGameFormSteps.VotingSystem
-									? "block"
-									: "none",
-						}}
-					>
-						<VotingSystemStep />
-					</div>
-					<div
-						style={{
-							display:
-								formNavigation.step ===
-								CreateGameFormSteps.CreatorName
-									? "block"
-									: "none",
-						}}
-					>
-						<CreatorNameStep />
-					</div>
-					<div
-						style={{
-							display:
-								formNavigation.step ===
-								CreateGameFormSteps.AdvancedSettings
-									? "block"
-									: "none",
-						}}
-					>
-						<AdvancedSettingsStep />
-					</div>
-				</div>
-				<CreateGameFooter className="fixed bottom-0" />
+				<Header className="fixed top-0" />
+				<FormSteps
+					currentStep={step}
+					onNextStep={onNextStep}
+					onStepValidate={onStepValidate}
+				/>
+				<Footer className="fixed bottom-0" />
 			</form>
 		</FormProvider>
 	);

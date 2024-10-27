@@ -3,7 +3,7 @@ import {
 	useCreateGameFormNavigation,
 	useCreateGameFormNavigationDispatch,
 	CreateGameFormActions as Actions,
-} from "../../model";
+} from "../../../model";
 import { Button } from "@/_src/shared/ui/components/button";
 import {
 	ArrowLeftIcon,
@@ -19,7 +19,7 @@ interface Props {
 	className?: string;
 }
 
-export default function CreateGameFooter(props: Props) {
+export function CreateGameFooter(props: Props) {
 	const formNavigation = useCreateGameFormNavigation();
 	const formDispatch = useCreateGameFormNavigationDispatch();
 
@@ -82,6 +82,7 @@ export default function CreateGameFooter(props: Props) {
 						variant="outline"
 						iconRight={SettingsIcon}
 						onPress={nextStep}
+						isDisabled={!formNavigation.stepData.isNextStepEnabled}
 						type="button"
 					/>
 				)}

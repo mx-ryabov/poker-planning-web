@@ -1,82 +1,63 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { CreateGameFormFormState } from "./form";
 import { useCallback, useEffect, useRef, KeyboardEvent } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import { useVotingSystems } from "@/_src/entities/voting-system/model/voting-systems-provider";
-import {
-	useCreateGameFormNavigationDispatch as useFormNavDispatch,
-	CreateGameFormActions as Actions,
-	useCreateGameFormNavigation as useFormNavState,
-	CreateGameFormSteps,
-} from "../../model/create-game-form-navigation";
 import { RadioGroup } from "@/_src/shared/ui/components/radio-group";
 import { InfoIcon } from "@/_src/shared/ui/components/icon";
+import { CreateGameFormFormState } from "../../../../model";
+import { StepProps } from "./types";
 
-gsap.registerPlugin(useGSAP);
+//gsap.registerPlugin(useGSAP);
 
-export default function VotingSystemStep() {
+export function VotingSystemStep({
+	isActive,
+	onValidate,
+	onNextStep,
+}: StepProps) {
 	const firstRadioRef = useRef<HTMLInputElement>(null);
 	const votingSystems = useVotingSystems();
-
-	const formNavigation = useFormNavState();
-	const formDispatch = useFormNavDispatch();
 
 	const { control, formState } = useFormContext<CreateGameFormFormState>();
 	const container = useRef(null);
 
 	useEffect(() => {
 		const firstRadioEl = firstRadioRef.current;
-		if (
-			formNavigation.step !== CreateGameFormSteps.VotingSystem ||
-			!firstRadioEl
-		) {
-			return;
+		if (isActive && firstRadioEl) {
+			firstRadioEl.focus();
 		}
-		firstRadioEl.focus();
-	}, [formNavigation.step, firstRadioRef]);
+	}, [isActive, firstRadioRef]);
 
 	useEffect(() => {
-		formDispatch({
-			type: Actions.Type.MakeNextStepEnabled,
-			payload:
-				!!formState.dirtyFields.votingSystemId &&
-				!formState.errors.votingSystemId,
-		});
+		const isStepValid =
+			!!formState.dirtyFields.votingSystemId &&
+			!formState.errors.votingSystemId;
+		onValidate(isStepValid);
 	}, [
 		formState.dirtyFields.votingSystemId,
 		formState.errors.votingSystemId,
-		formDispatch,
+		onValidate,
 	]);
-
-	const nextStep = useCallback(() => {
-		const nextStep = formNavigation.stepData.nextStep;
-		if (nextStep) {
-			formDispatch({ type: Actions.Type.NextStep });
-		}
-	}, [formDispatch, formNavigation]);
 
 	const onVotingSystemRadioKeyDown = useCallback(
 		(e: KeyboardEvent) => {
 			if (e.key === "Enter") {
-				nextStep();
+				onNextStep();
 				e.preventDefault();
 			}
 		},
-		[nextStep],
+		[onNextStep],
 	);
 
-	useGSAP(
-		() => {
-			gsap.from(".label", { opacity: 0, y: 10, duration: 0.3 });
-		},
-		{ scope: container },
-	);
+	// useGSAP(
+	// 	() => {
+	// 		gsap.from(".label", { opacity: 0, y: 10, duration: 0.3 });
+	// 	},
+	// 	{ scope: container },
+	// );
 
 	return (
 		<div
 			ref={container}
-			className="w-full h-full flex shrink-0 basis-full justify-center pl-[60px] flex-col"
+			className="w-full h-full flex shrink-0 basis-full justify-center pl-10 flex-col"
 		>
 			<Controller
 				control={control}
