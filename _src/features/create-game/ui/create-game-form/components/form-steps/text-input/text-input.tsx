@@ -4,21 +4,18 @@ import {
 	InputHTMLAttributes,
 	forwardRef,
 	ForwardedRef,
+	useMemo,
 } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label: string;
-	lengthState?: {
-		current: number;
-		total: number;
-	};
 	error?: string;
 	onEnter: () => void;
 };
 
 const _TextInput = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
-	const { onEnter, lengthState, error, label, ...inputProps } = props;
+	const { onEnter, maxLength, error, label, ...inputProps } = props;
 
 	const onKeyDown = useCallback(
 		(e: KeyboardEvent<HTMLInputElement>) => {
@@ -30,8 +27,16 @@ const _TextInput = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
 		[onEnter],
 	);
 
+	const charsCount = useMemo(
+		() => inputProps.value?.toString().length || 0,
+		[inputProps.value],
+	);
+
 	return (
-		<label className="flex flex-col relative">
+		<label
+			className="flex flex-col relative"
+			data-testid={`${inputProps.name || ""}-text-field-container`}
+		>
 			<span className="label mb-4 text-lg text-neutral-900">{label}</span>
 			<div className="mb-2">
 				<input
@@ -48,18 +53,27 @@ const _TextInput = (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
 			</div>
 
 			<div className="flex flex-row gap-1 h-5">
-				{lengthState && (
+				{maxLength && charsCount > 0 && (
 					<span
-						className={`text-sm ${lengthState.current > lengthState.total ? "text-error-600 font-semibold" : "text-neutral-300"}`}
+						className={`text-sm ${charsCount > maxLength ? "text-error-600 font-semibold" : "text-neutral-300"}`}
+						data-testid="length-state"
 					>
-						{lengthState.current}/{lengthState.total}
+						{charsCount}/{maxLength}
 					</span>
 				)}
-				<span className="text-error-600 text-sm">{error}</span>
+				<span
+					className="text-error-600 text-sm"
+					data-testid="error-msg"
+				>
+					{error}
+				</span>
 			</div>
 
-			{lengthState && lengthState.current > 0 && (
-				<div className="absolute left-0 -bottom-3 translate-y-full">
+			{charsCount > 0 && (
+				<div
+					className="absolute left-0 -bottom-3 translate-y-full"
+					data-testid="enter-shortcut"
+				>
 					<div className="py-1 px-2 border border-neutral-200 rounded text-sm text-neutral-300 animate-downOut">
 						↵ Enter
 					</div>

@@ -24,13 +24,15 @@ export const FormSteps = ({
 	onNextStep,
 }: Props) => {
 	return (
-		<div className="w-full h-full flex flex-row px-10">
-			{Object.entries(STEPS).map(([stepName, StepElement]) => {
+		<div className="w-full h-full flex flex-row px-10" role="group">
+			{Object.entries(STEPS).map(([stepName, StepElement], ind) => {
 				return (
 					<div
 						className={stepContainerStyles({
 							isActive: currentStep === stepName,
 						})}
+						aria-hidden={currentStep !== stepName}
+						aria-labelledby={`step-${ind}-${stepName}`}
 						key={stepName}
 					>
 						<StepElement

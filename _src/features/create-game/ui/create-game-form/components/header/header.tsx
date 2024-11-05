@@ -17,6 +17,7 @@ export const CreateGameHeader = (props: Props) => {
 				"flex flex-row w-full px-9 py-5 justify-between items-center",
 				props.className,
 			)}
+			role="header"
 		>
 			<NextLink href="/">
 				<Logo />

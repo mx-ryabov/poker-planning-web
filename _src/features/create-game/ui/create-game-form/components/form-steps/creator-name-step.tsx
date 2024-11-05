@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { TextInput } from "./text-input";
+import { TextInput } from "./text-input/text-input";
 import { CreateGameFormFormState } from "../../../../model";
 import { StepProps } from "./types";
 
@@ -47,14 +47,7 @@ export function CreatorNameStep({
 					<TextInput
 						label="Let's get acquainted👇"
 						placeholder="Type your name"
-						lengthState={
-							field.value.length > 0
-								? {
-										current: field.value.length,
-										total: 50,
-									}
-								: undefined
-						}
+						maxLength={50}
 						error={fieldState.error?.message}
 						onEnter={onNextStep}
 						{...field}

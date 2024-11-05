@@ -14,7 +14,6 @@ export const Switch = forwardRef(
 		return (
 			<Checkbox
 				className="group flex flex-row items-center gap-2 cursor-pointer"
-				data-testid="checkbox-container"
 				inputRef={inputRef}
 				{...checkboxProps}
 			>

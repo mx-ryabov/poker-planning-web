@@ -73,8 +73,10 @@ export const DefaultCreateGameState: CreateGameFormState = {
 
 export function createGameFormReducer(
 	formState: CreateGameFormState,
-	action: Actions.Actions,
+	action?: Actions.Actions,
 ): CreateGameFormState {
+	if (!action) return formState;
+
 	const currentStepData = formState.stepData[formState.step];
 	switch (action.type) {
 		case Actions.Type.NextStep:

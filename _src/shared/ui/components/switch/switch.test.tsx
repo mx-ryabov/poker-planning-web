@@ -38,10 +38,15 @@ describe("Switch", () => {
 
 	test("shouldn't check if disabled", async () => {
 		const { user } = render(
-			<Switch label="Switch label" isDisabled={true} />,
+			<Switch
+				label="Switch label"
+				data-testid="field"
+				isDisabled={true}
+				name="field"
+			/>,
 		);
 		const checkbox = screen.getByRole("checkbox");
-		const checkboxContainer = screen.getAllByTestId("checkbox-container");
+		const checkboxContainer = screen.getAllByTestId("field");
 
 		expect(checkbox).not.toBeChecked();
 		await user.click(checkboxContainer[0]);

@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef, useEffect, MutableRefObject } from "react";
 import { CreateGameFormFormState } from "../../../../model";
-import { TextInput } from "./text-input";
+import { TextInput } from "./text-input/text-input";
 import { StepProps } from "./types";
 
 gsap.registerPlugin(useGSAP);
@@ -48,14 +48,7 @@ export const NameStep = ({ isActive, onValidate, onNextStep }: StepProps) => {
 						<TextInput
 							label="Hey!👋 What is the name of your game?"
 							placeholder="Team Planning"
-							lengthState={
-								field.value.length > 0
-									? {
-											current: field.value.length,
-											total: 50,
-										}
-									: undefined
-							}
+							maxLength={50}
 							error={fieldState.error?.message}
 							onEnter={onNextStep}
 							{...field}

@@ -73,7 +73,10 @@ export function VotingSystemStep({
 						onChange={field.onChange}
 						name={field.name}
 					>
-						<RadioGroup.Label className="label">
+						<RadioGroup.Label
+							className="label"
+							data-testid="voting-systems-field-label"
+						>
 							Now choose your voting system
 						</RadioGroup.Label>
 						{votingSystems.map((vs, ind) => (
@@ -81,6 +84,7 @@ export function VotingSystemStep({
 								key={vs.id}
 								value={vs.id}
 								className="label"
+								data-testid="voting-system-option-container"
 								onKeyDown={onVotingSystemRadioKeyDown}
 								inputRef={ind === 0 ? firstRadioRef : undefined}
 							>
@@ -91,7 +95,7 @@ export function VotingSystemStep({
 								)
 							</RadioGroup.Radio>
 						))}
-						<RadioGroup.Description>
+						<RadioGroup.Description data-testid="voting-systems-field-description">
 							<InfoIcon /> You can change all settings during the
 							game
 						</RadioGroup.Description>

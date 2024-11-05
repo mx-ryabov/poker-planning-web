@@ -1,6 +1,6 @@
 "use client";
 import { FormProvider } from "react-hook-form";
-import { CreateGameFooter as Footer } from "./components/footer";
+import { CreateGameFooter as Footer } from "./components/footer/footer";
 import { CreateGameHeader as Header } from "./components/header";
 import { useCallback, useEffect } from "react";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
