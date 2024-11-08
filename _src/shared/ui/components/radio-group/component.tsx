@@ -165,7 +165,7 @@ const Description = (props: TextProps) => {
 		<Text
 			slot="description"
 			{...restProps}
-			className="flex flex-row items-center gap-1 text-sm text-neutral-300 mt-1"
+			className="flex flex-row items-center gap-1 text-sm text-neutral-400 mt-1"
 		>
 			{children}
 		</Text>
