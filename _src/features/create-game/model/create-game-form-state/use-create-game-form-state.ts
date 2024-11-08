@@ -49,10 +49,7 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 	const onSubmit = useCallback(
 		async (formState: CreateGameFormFormState) => {
 			console.log("Submitted form state: ", formState);
-
-			if (formState.name === "abra cadabra") {
-				await onSubmitAction(formState);
-			}
+			await onSubmitAction(formState);
 		},
 		[onSubmitAction],
 	);

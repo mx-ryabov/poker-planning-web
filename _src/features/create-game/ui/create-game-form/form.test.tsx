@@ -1,6 +1,6 @@
 import { test, describe, expect, vi } from "vitest";
 import { render, within } from "@/test/utilities";
-import { CreateGameForm } from "../form";
+import { CreateGameForm } from "./form";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import { VotingSystemsProvider } from "@/_src/entities/voting-system";
 import { ReactNode } from "react";
@@ -609,6 +609,28 @@ describe("Create Game Form", () => {
 			const backBtn = helper.getBackBtn();
 			await user.click(backBtn);
 			helper.getCreatorNameField();
+		});
+	});
+
+	test("submits data when the start game button clicked", async () => {
+		const submitMock = vi.fn();
+		const { helper, user, getAllByTestId, debug } = renderForm({
+			submitMock,
+		});
+		await helper.goToAdvancedSettingsStep();
+		const autoRevealFieldContainer = getAllByTestId(
+			"auto-reveal-cards-field-container",
+		)[0];
+		await user.click(autoRevealFieldContainer);
+		const startGameBtn = helper.getStartGameBtn();
+		expect(startGameBtn).toBeEnabled();
+		await user.click(startGameBtn);
+		debug(startGameBtn);
+		expect(submitMock).toHaveBeenNthCalledWith(1, {
+			name: "Game Name",
+			votingSystemId: "6a113d25-34c9-4b49-985c-2df6dd67650c",
+			creatorName: "Creator Name",
+			isAutoRevealCards: true,
 		});
 	});
 });

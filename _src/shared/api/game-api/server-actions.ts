@@ -10,7 +10,8 @@ export async function createGameAsGuest(request: CreateGameRequest) {
 
 	if (res.ok) {
 		const data: CreateGameResponse = await res.json();
-		cookies().set("token", data.masterToken, {
+		const cookieStore = await cookies();
+		cookieStore.set("token", data.masterToken, {
 			httpOnly: true,
 		});
 		// TODO: refactoring is needed. move the redirect closer to features?

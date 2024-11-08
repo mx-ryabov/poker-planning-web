@@ -51,7 +51,7 @@ function CreateGameFormBase({ createGameAsGuest }: Props) {
 			}
 			formDispatch({ type: Actions.Type.NextStep });
 		},
-		[formDispatch, onSubmit, methods.getValues, methods.formState.isValid],
+		[formDispatch, onSubmit, methods],
 	);
 
 	const onStepValidate = useCallback(
@@ -68,6 +68,7 @@ function CreateGameFormBase({ createGameAsGuest }: Props) {
 		<FormProvider {...methods}>
 			<form
 				className="w-full h-full flex"
+				//action={createGameAsGuest}
 				onSubmit={methods.handleSubmit(onSubmit)}
 			>
 				<Header className="fixed top-0" />

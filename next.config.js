@@ -8,7 +8,10 @@ const nextConfig = {
       config.plugins.push(localesPlugin.webpack({locales: []}));
     }
     return config;
-  }
+  },
+  experimental: {
+    testProxy: true,
+  },
 };
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({

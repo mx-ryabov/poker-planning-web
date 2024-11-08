@@ -1,12 +1,8 @@
 import { Controller, useFormContext } from "react-hook-form";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { useRef, useEffect, MutableRefObject } from "react";
 import { CreateGameFormFormState } from "../../../../model";
 import { TextInput } from "./text-input/text-input";
 import { StepProps } from "./types";
-
-gsap.registerPlugin(useGSAP);
 
 export const NameStep = ({ isActive, onValidate, onNextStep }: StepProps) => {
 	const inputRef: MutableRefObject<HTMLInputElement | null> =
@@ -28,12 +24,6 @@ export const NameStep = ({ isActive, onValidate, onNextStep }: StepProps) => {
 	}, [formState.dirtyFields.name, formState.errors.name, onValidate]);
 
 	const container = useRef(null);
-	useGSAP(
-		() => {
-			gsap.from(".field", { opacity: 0, y: 10, duration: 0.3 });
-		},
-		{ scope: container },
-	);
 
 	return (
 		<div

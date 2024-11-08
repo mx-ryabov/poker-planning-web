@@ -11,7 +11,7 @@ export const appFetchGet = async <TQuery extends Record<string, string>>(
 
 	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "GET",
-		headers: getHeaders(),
+		headers: await getHeaders(),
 	});
 };
 
@@ -24,7 +24,7 @@ export const appFetchPost = async <TRequest extends object>(
 
 	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "POST",
-		headers: getHeaders(),
+		headers: await getHeaders(),
 		body: JSON.stringify(body),
 	});
 };
@@ -38,7 +38,7 @@ export const appFetchPut = async <TRequest extends object>(
 
 	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "PUT",
-		headers: getHeaders(),
+		headers: await getHeaders(),
 		body: JSON.stringify(body),
 	});
 };
@@ -46,12 +46,13 @@ export const appFetchPut = async <TRequest extends object>(
 export const appFetchDelete = async (path: string): Promise<Response> => {
 	return await fetch(`${HOST}/api${path}`, {
 		method: "DELETE",
-		headers: getHeaders(),
+		headers: await getHeaders(),
 	});
 };
 
-function getHeaders(): HeadersInit {
-	const token = cookies().get("token");
+async function getHeaders() {
+	const cookieStore = await cookies();
+	const token = cookieStore.get("token");
 	return {
 		"Content-Type": "application/json",
 		Authorization: `Bearer ${token}`,
