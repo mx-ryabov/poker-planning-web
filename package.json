@@ -67,6 +67,7 @@
     "autoprefixer": "^10.0.1",
     "axe-core": "^4.10.0",
     "axe-playwright": "^2.0.3",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-react": "^7.37.1",
