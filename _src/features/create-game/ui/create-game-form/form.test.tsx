@@ -1,5 +1,5 @@
 import { test, describe, expect, vi } from "vitest";
-import { render, within } from "@/test/utilities";
+import { act, render, within } from "@/test/utilities";
 import { CreateGameForm } from "./form";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import { VotingSystemsProvider } from "@/_src/entities/voting-system";
@@ -186,11 +186,11 @@ describe("Create Game Form", () => {
 
 		test("has the continue button disabled if the Game Name text field is invalid", async () => {
 			const { helper, user } = renderForm({ submitMock: vi.fn() });
-			const continueBtn = helper.getContinueBtn();
 			const textField = helper.getNameField();
 
 			await user.type(textField, "Game Name");
-			await user.clear(textField);
+			await act(() => user.clear(textField));
+			const continueBtn = helper.getContinueBtn();
 			expect(continueBtn).toBeDisabled();
 		});
 
@@ -406,7 +406,7 @@ describe("Create Game Form", () => {
 			const optionContainers = within(
 				votingSystemsRadioGroup,
 			).getAllByTestId("voting-system-option-container");
-			await user.click(optionContainers[0]);
+			await act(async () => await user.click(optionContainers[0]));
 			expect(optionContainers[0]).toHaveAttribute(
 				"data-selected",
 				"true",
@@ -487,10 +487,10 @@ describe("Create Game Form", () => {
 			const { helper, user } = renderForm({ submitMock: vi.fn() });
 			await helper.goToCreatorNameStep();
 			const advancedSettingsBtn = helper.getAdvancedSettingsBtn();
-			const startGameBtn = helper.getStartGameBtn();
 			const textField = helper.getCreatorNameField();
 			await user.type(textField, "Creator Name");
 			await user.clear(textField);
+			const startGameBtn = helper.getStartGameBtn();
 			expect(startGameBtn).toBeDisabled();
 			expect(advancedSettingsBtn).toBeDisabled();
 		});

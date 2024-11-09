@@ -6,7 +6,8 @@ import { defineConfig, devices } from "next/experimental/testmode/playwright";
  */
 import dotenv from "dotenv";
 import path from "path";
-dotenv.config({ path: path.resolve(__dirname, ".env.local") });
+// Seems not working. Check later why
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
