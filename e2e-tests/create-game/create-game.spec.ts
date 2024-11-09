@@ -28,14 +28,27 @@ test.use({
 
 test.describe("Create Game form", () => {
 	test("renders successfully", async ({ page }) => {
-		await page.goto(`/create-game`);
+		await page.goto("/create-game");
+		await expect(page).toHaveScreenshot("create-game-name-step.png");
 		await page.getByPlaceholder("Team Planning").click();
 		await page.getByPlaceholder("Team Planning").fill("Game Name");
 		await page.getByTestId("continue-btn").click();
+
+		await expect(page).toHaveScreenshot(
+			"create-game-voting-systems-step.png",
+		);
 		await page.getByText(/Fibonacci/i).click();
 		await page.getByTestId("continue-btn").click();
+
+		await expect(page).toHaveScreenshot(
+			"create-game-creator-name-step.png",
+		);
 		await page.getByPlaceholder("Type your name").fill("Maxim");
 		await page.getByTestId("advanced-settings-btn").click();
+
+		await expect(page).toHaveScreenshot(
+			"create-game-advanced-settings-step.png",
+		);
 		await page.getByTestId("switch-container").click();
 		await page.getByTestId("start-game-btn").click();
 		await expect(page.getByTestId("start-game-btn")).toBeEnabled();
