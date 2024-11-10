@@ -1,27 +1,61 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    push:
+        branches:
+            - "*"
+    pull_request:
+        branches:
+            - "*"
 jobs:
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm install -g pnpm && pnpm install
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps
-    - name: Run Playwright tests
-      run: pnpm exec playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+    test:
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              name: Checkout Repo
+
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 9
+                  run_install: false
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - uses: actions/cache@v4
+              id: pnpm-cache
+              with:
+                  path: ~/.pnpm-store
+                  key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+            - run: pnpm install
+              name: Install modules from pnpm
+
+            - name: Install Playwright Browsers
+              run: pnpm exec playwright install --with-deps
+
+            - name: Set up the Snapshot cache
+              id: snapshot-cache
+              uses: actions/cache@v4
+              with:
+                  key: cache/${{github.repository}}/${{github.ref}}
+                  restore-keys: cache/${{github.repository}}/refs/heads/master
+                  path: ./e2e/snapshots/**
+
+            - name: Initialize snapshots
+              if: ${{steps.snapshot-cache.outputs.cache-hit != 'true'}}
+              run: npx playwright test --update-snapshots
+
+            - name: Run Playwright tests
+              run: pnpm exec playwright test
+
+            - uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30

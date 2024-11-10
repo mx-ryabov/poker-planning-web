@@ -8,6 +8,13 @@
 
 # testing
 /coverage
+/e2e/snapshots
+/e2e/output
+/e2e/results
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # next.js
 /.next/
@@ -40,7 +47,3 @@ certificates
 
 PLANS.md
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
