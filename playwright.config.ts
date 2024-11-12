@@ -14,8 +14,8 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
  */
 export default defineConfig({
 	testDir: "./e2e/tests",
-	testMatch: "./e2e/tests/**/*.spec.ts",
-	outputDir: "./e2e/output",
+	testMatch: "e2e/tests/**/*.spec.ts",
+	outputDir: "./e2e/results",
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -25,16 +25,7 @@ export default defineConfig({
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: [
-		[
-			"html",
-			{
-				outputFolder: "./e2e/results",
-				open: "never",
-			},
-		],
-		process.env.CI ? ["github"] : ["line"],
-	],
+	reporter: "html",
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
@@ -44,7 +35,10 @@ export default defineConfig({
 		trace: "on-first-retry",
 	},
 	expect: {
-		toHaveScreenshot: { maxDiffPixels: 100 },
+		toHaveScreenshot: {
+			maxDiffPixels: 100,
+			stylePath: "./e2e/utils/next-dev-toasts-hider.css",
+		},
 	},
 	snapshotPathTemplate:
 		"./e2e/snapshots/{projectName}/{testFilePath}/{arg}{ext}",
@@ -66,7 +60,7 @@ export default defineConfig({
 	],
 
 	webServer: {
-		command: "pnpm run build & pnpm run start",
+		command: "pnpm run dev",
 		url: "http://localhost:3000",
 		timeout: 120 * 1000,
 		reuseExistingServer: !process.env.CI,
