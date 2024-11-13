@@ -2,7 +2,7 @@
 import { FormProvider } from "react-hook-form";
 import { CreateGameFooter as Footer } from "./components/footer/footer";
 import { CreateGameHeader as Header } from "./components/header";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import {
 	useCreateGameFormNavigationDispatch as useFormNavDispatch,
@@ -15,7 +15,7 @@ import { FormSteps } from "./components/form-steps";
 import { useCreateGameFormState } from "../../model";
 
 interface Props {
-	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
+	createGameAsGuest: (_req: CreateGameRequest) => Promise<string>;
 }
 
 export const CreateGameForm = ({ createGameAsGuest }: Props) => {
@@ -27,7 +27,8 @@ export const CreateGameForm = ({ createGameAsGuest }: Props) => {
 };
 
 function CreateGameFormBase({ createGameAsGuest }: Props) {
-	const { onSubmit, methods } = useCreateGameFormState({
+	const formRef = useRef<HTMLFormElement>(null);
+	const { clientFormMethods, action, isPending } = useCreateGameFormState({
 		onSubmitAction: createGameAsGuest,
 	});
 
@@ -37,21 +38,22 @@ function CreateGameFormBase({ createGameAsGuest }: Props) {
 	useEffect(() => {
 		formDispatch({
 			type: Actions.Type.MakeStartGameEnabled,
-			payload: methods.formState.isValid,
+			payload: clientFormMethods.formState.isValid,
 		});
-	}, [methods.formState.isValid, formDispatch]);
+	}, [clientFormMethods.formState.isValid, formDispatch]);
 
 	const onNextStep = useCallback(
 		(currentStep: CreateGameFormSteps) => {
 			if (currentStep === CreateGameFormSteps.CreatorName) {
-				if (methods.formState.isValid) {
-					onSubmit(methods.getValues());
+				const formEl = formRef.current;
+				if (clientFormMethods.formState.isValid && formEl) {
+					formEl.requestSubmit();
 				}
 				return;
 			}
 			formDispatch({ type: Actions.Type.NextStep });
 		},
-		[formDispatch, onSubmit, methods],
+		[formDispatch, clientFormMethods.formState.isValid, formRef],
 	);
 
 	const onStepValidate = useCallback(
@@ -65,19 +67,15 @@ function CreateGameFormBase({ createGameAsGuest }: Props) {
 	);
 
 	return (
-		<FormProvider {...methods}>
-			<form
-				className="w-full h-full flex"
-				//action={createGameAsGuest}
-				onSubmit={methods.handleSubmit(onSubmit)}
-			>
+		<FormProvider {...clientFormMethods}>
+			<form className="w-full h-full flex" ref={formRef} action={action}>
 				<Header className="fixed top-0" />
 				<FormSteps
 					currentStep={step}
 					onNextStep={onNextStep}
 					onStepValidate={onStepValidate}
 				/>
-				<Footer className="fixed bottom-0" />
+				<Footer className="fixed bottom-0" isPending={isPending} />
 			</form>
 		</FormProvider>
 	);

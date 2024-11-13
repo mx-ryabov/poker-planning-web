@@ -17,6 +17,7 @@ import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 
 interface Props {
 	className?: string;
+	isPending: boolean;
 }
 
 export function CreateGameFooter(props: Props) {
@@ -99,6 +100,7 @@ export function CreateGameFooter(props: Props) {
 						aria-label="Start Game button"
 						title="Start Game"
 						isDisabled={!formNavigation.isStartGameEnabled}
+						isPending={props.isPending}
 						data-testid="start-game-btn"
 					/>
 				)}

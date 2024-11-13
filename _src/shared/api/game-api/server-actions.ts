@@ -14,7 +14,8 @@ export async function createGameAsGuest(request: CreateGameRequest) {
 		cookieStore.set("token", data.masterToken, {
 			httpOnly: true,
 		});
-		// TODO: refactoring is needed. move the redirect closer to features?
 		redirect(`/game/${data.id}`);
+	} else {
+		return `Game creation is failed. Status: ${res.status}. Message: ${res.statusText}`;
 	}
 }

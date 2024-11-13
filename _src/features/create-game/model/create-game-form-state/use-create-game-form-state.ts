@@ -1,9 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
+import { useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-//export type CreateGameFormFormState = CreateGameRequest;
 
 const CreateGameFormSchema = z.object({
 	name: z
@@ -23,13 +21,13 @@ const CreateGameFormSchema = z.object({
 		.string()
 		.min(1, "Don't be shy!")
 		.max(50, "Maybe you have a short name?"),
-	isAutoRevealCards: z.boolean(),
+	isAutoRevealCards: z.boolean().optional(),
 });
 
 export type CreateGameFormFormState = z.infer<typeof CreateGameFormSchema>;
 
 export type UseCreateGameFormStateProps = {
-	onSubmitAction: (_formState: CreateGameFormFormState) => Promise<void>;
+	onSubmitAction: (_formState: CreateGameFormFormState) => Promise<string>;
 };
 
 export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
@@ -46,13 +44,23 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 		resolver: zodResolver(CreateGameFormSchema),
 	});
 
-	const onSubmit = useCallback(
-		async (formState: CreateGameFormFormState) => {
-			console.log("Submitted form state: ", formState);
-			await onSubmitAction(formState);
-		},
-		[onSubmitAction],
-	);
+	const formActionHandler = async (
+		_prevState: string,
+		formData: FormData,
+	) => {
+		const data = Object.fromEntries(formData);
+		const parsed = CreateGameFormSchema.safeParse({
+			...data,
+			isAutoRevealCards: data.isAutoRevealCards === "true",
+		});
 
-	return { methods, onSubmit };
+		if (parsed.success) {
+			return await onSubmitAction(parsed.data);
+		}
+		return parsed.error.message;
+	};
+
+	const [, formAction, isPending] = useActionState(formActionHandler, "");
+
+	return { clientFormMethods: methods, action: formAction, isPending };
 }

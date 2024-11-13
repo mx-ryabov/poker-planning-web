@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { test, describe, expect, vi } from "vitest";
 import { act, render, within } from "@/test/utilities";
 import { CreateGameForm } from "./form";
@@ -116,7 +119,7 @@ const helper = ({
 const renderForm = ({
 	submitMock,
 }: {
-	submitMock: (_req: CreateGameRequest) => Promise<void>;
+	submitMock: (_req: CreateGameRequest) => Promise<string>;
 }) => {
 	const renderResult = render(
 		<CreateGameForm createGameAsGuest={submitMock} />,
@@ -489,7 +492,7 @@ describe("Create Game Form", () => {
 			const advancedSettingsBtn = helper.getAdvancedSettingsBtn();
 			const textField = helper.getCreatorNameField();
 			await user.type(textField, "Creator Name");
-			await user.clear(textField);
+			await act(() => user.clear(textField));
 			const startGameBtn = helper.getStartGameBtn();
 			expect(startGameBtn).toBeDisabled();
 			expect(advancedSettingsBtn).toBeDisabled();
@@ -614,7 +617,7 @@ describe("Create Game Form", () => {
 
 	test("submits data when the start game button clicked", async () => {
 		const submitMock = vi.fn();
-		const { helper, user, getAllByTestId, debug } = renderForm({
+		const { helper, user, getAllByTestId } = renderForm({
 			submitMock,
 		});
 		await helper.goToAdvancedSettingsStep();
@@ -625,7 +628,6 @@ describe("Create Game Form", () => {
 		const startGameBtn = helper.getStartGameBtn();
 		expect(startGameBtn).toBeEnabled();
 		await user.click(startGameBtn);
-		debug(startGameBtn);
 		expect(submitMock).toHaveBeenNthCalledWith(1, {
 			name: "Game Name",
 			votingSystemId: "6a113d25-34c9-4b49-985c-2df6dd67650c",
