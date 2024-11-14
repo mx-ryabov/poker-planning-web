@@ -70,6 +70,9 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 				aria-label={buttonProps["aria-label"] || "icon button"}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}
 			>
+				{isPending && (
+					<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+				)}
 				{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
 				{title}
 				{iconRight && iconRight({ size: ButtonIconSize[size] })}

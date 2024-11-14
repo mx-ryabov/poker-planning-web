@@ -40,7 +40,7 @@ export const buttonStyles = cva(
 					"bg-white",
 					"text-neutral-500",
 					"border-2",
-					"border-neutral-400",
+					"border-neutral-500",
 
 					"font-medium",
 					"drop-shadow-md",
@@ -92,7 +92,7 @@ export const buttonStyles = cva(
 			{
 				isDisabled: true,
 				variant: "default",
-				className: ["bg-neutral-100", "text-neutral-300"],
+				className: ["bg-neutral-100", "text-neutral-400"],
 			},
 			// Outline
 			{
@@ -110,8 +110,8 @@ export const buttonStyles = cva(
 				variant: "outline",
 				className: [
 					"bg-neutral-100",
-					"border-neutral-200",
-					"text-neutral-300",
+					"border-neutral-300",
+					"text-neutral-400",
 				],
 			},
 			// Ghost
@@ -128,7 +128,7 @@ export const buttonStyles = cva(
 			{
 				isDisabled: true,
 				variant: "ghost",
-				className: ["text-neutral-300"],
+				className: ["text-neutral-400"],
 			},
 			// Grayed Out
 			{
@@ -144,7 +144,7 @@ export const buttonStyles = cva(
 			{
 				isDisabled: true,
 				variant: "grayed-out",
-				className: ["bg-neutral-100", "text-neutral-300"],
+				className: ["bg-neutral-100", "text-neutral-400"],
 			},
 			// Square
 			{

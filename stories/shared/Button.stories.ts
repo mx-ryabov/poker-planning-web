@@ -43,8 +43,6 @@ export const DefaultLarge: Story = {
 		const button = canvas.getByRole("button");
 		expect(button).toHaveStyle({
 			height: "56px",
-			// paddingLeft: "16px",
-			// paddingRight: "16px",
 		});
 	},
 };
@@ -53,6 +51,14 @@ export const DefaultMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
+	},
+};
+
+export const DefaultMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		isPending: true,
 	},
 };
 
@@ -89,6 +95,15 @@ export const OutlineMedium: Story = {
 	},
 };
 
+export const OutlineMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		variant: "outline",
+		isPending: true,
+	},
+};
+
 export const OutlineSmall: Story = {
 	args: {
 		...Default.args,
@@ -119,6 +134,15 @@ export const GhostMedium: Story = {
 		...Default.args,
 		size: "medium",
 		variant: "ghost",
+	},
+};
+
+export const GhostMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		variant: "ghost",
+		isPending: true,
 	},
 };
 
@@ -153,6 +177,15 @@ export const GrayedOutMedium: Story = {
 		...Default.args,
 		size: "medium",
 		variant: "grayed-out",
+	},
+};
+
+export const GrayedOutMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		variant: "grayed-out",
+		isPending: true,
 	},
 };
 

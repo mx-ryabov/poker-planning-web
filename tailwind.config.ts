@@ -102,11 +102,17 @@ const config: Config = {
 						transform: "translateY(0px)",
 					},
 				},
+				rotation: {
+					to: {
+						transform: "rotate(1turn)",
+					},
+				},
 			},
 			animation: {
 				popup: "popup 0.2s",
 				"popup-reverse": "popup 0.2s reverse",
 				downOut: "downOut 0.3s",
+				"rotation-linear": "rotation 1s infinite linear",
 			},
 		},
 	},
