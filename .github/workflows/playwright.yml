@@ -47,9 +47,6 @@ jobs:
             - run: pnpm install
               name: Install modules from pnpm
 
-            - name: Install Playwright Browsers
-              run: pnpm exec playwright install --with-deps
-
             - name: Set up the Snapshot cache
               id: snapshot-cache
               uses: actions/cache@v4

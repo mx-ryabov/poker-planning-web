@@ -9,6 +9,9 @@ import path from "path";
 // Seems not working. Check later why
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
+const isCI = !!process.env.CI;
+const useBC = !!process.env.BROWSERCAT_API_KEY;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -19,11 +22,12 @@ export default defineConfig({
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
-	forbidOnly: !!process.env.CI,
+	forbidOnly: isCI,
 	/* Retry on CI only */
-	retries: process.env.CI ? 2 : 0,
+	retries: useBC || isCI ? 2 : 0,
 	/* Opt out of parallel tests on CI. */
-	workers: process.env.CI ? 1 : undefined,
+	workers: useBC ? 10 : isCI ? 1 : "50%",
+	maxFailures: useBC && !isCI ? 0 : 3,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		[
@@ -33,7 +37,7 @@ export default defineConfig({
 				open: "never",
 			},
 		],
-		process.env.CI ? ["github"] : ["line"],
+		isCI ? ["github"] : ["line"],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
@@ -42,6 +46,12 @@ export default defineConfig({
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
+		connectOptions: useBC
+			? {
+					wsEndpoint: "wss://api.browsercat.com/connect",
+					headers: { "Api-Key": process.env.BROWSERCAT_API_KEY! },
+				}
+			: undefined,
 	},
 	expect: {
 		toHaveScreenshot: {
@@ -72,6 +82,6 @@ export default defineConfig({
 		command: "pnpm run dev",
 		url: "http://localhost:3000",
 		timeout: 120 * 1000,
-		reuseExistingServer: !process.env.CI,
+		reuseExistingServer: !isCI,
 	},
 });
