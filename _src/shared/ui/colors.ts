@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export enum Color {
 	Primary100 = "#EFE4FF",
 	Primary200 = "#D7C4F7",

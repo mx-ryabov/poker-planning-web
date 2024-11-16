@@ -1,10 +1,10 @@
 "use client";
-import { createContext, useContext } from "react";
+import { createContext, useContext, ReactNode, JSX } from "react";
 
-type ProviderProps<TValue> = { children: React.ReactNode; value: TValue };
+type ProviderProps<TValue> = { children: ReactNode; value: TValue };
 type ProviderBuilder<TState> = [
 	() => TState,
-	(props: ProviderProps<TState>) => JSX.Element,
+	(_props: ProviderProps<TState>) => JSX.Element,
 ];
 
 export function buildProvider<TState>(): ProviderBuilder<TState> {

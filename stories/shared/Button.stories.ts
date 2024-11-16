@@ -43,8 +43,6 @@ export const DefaultLarge: Story = {
 		const button = canvas.getByRole("button");
 		expect(button).toHaveStyle({
 			height: "56px",
-			// paddingLeft: "16px",
-			// paddingRight: "16px",
 		});
 	},
 };
@@ -53,6 +51,14 @@ export const DefaultMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
+	},
+};
+
+export const DefaultMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		isPending: true,
 	},
 };
 
@@ -67,7 +73,7 @@ export const OutlineLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "outline",
+		variant: "outline",
 		isDisabled: true,
 	},
 };
@@ -76,7 +82,7 @@ export const OutlineLarge: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "outline",
+		variant: "outline",
 		iconLeft: SettingsIcon,
 	},
 };
@@ -85,7 +91,16 @@ export const OutlineMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
-		styleType: "outline",
+		variant: "outline",
+	},
+};
+
+export const OutlineMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		variant: "outline",
+		isPending: true,
 	},
 };
 
@@ -93,7 +108,7 @@ export const OutlineSmall: Story = {
 	args: {
 		...Default.args,
 		size: "small",
-		styleType: "outline",
+		variant: "outline",
 	},
 };
 
@@ -101,7 +116,7 @@ export const GhostLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "ghost",
+		variant: "ghost",
 		isDisabled: true,
 	},
 };
@@ -110,7 +125,7 @@ export const GhostLarge: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "ghost",
+		variant: "ghost",
 	},
 };
 
@@ -118,7 +133,16 @@ export const GhostMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
-		styleType: "ghost",
+		variant: "ghost",
+	},
+};
+
+export const GhostMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		variant: "ghost",
+		isPending: true,
 	},
 };
 
@@ -126,7 +150,7 @@ export const GhostSmall: Story = {
 	args: {
 		...Default.args,
 		size: "small",
-		styleType: "ghost",
+		variant: "ghost",
 	},
 };
 
@@ -134,7 +158,7 @@ export const GrayedOutLargeDisabled: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 		isDisabled: true,
 	},
 };
@@ -143,7 +167,7 @@ export const GrayedOutLarge: Story = {
 	args: {
 		...Default.args,
 		size: "large",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 		iconRight: ArrowRightIcon,
 	},
 };
@@ -152,7 +176,16 @@ export const GrayedOutMedium: Story = {
 	args: {
 		...Default.args,
 		size: "medium",
-		styleType: "grayed-out",
+		variant: "grayed-out",
+	},
+};
+
+export const GrayedOutMediumPending: Story = {
+	args: {
+		...Default.args,
+		size: "medium",
+		variant: "grayed-out",
+		isPending: true,
 	},
 };
 
@@ -160,6 +193,6 @@ export const GrayedOutSmall: Story = {
 	args: {
 		...Default.args,
 		size: "small",
-		styleType: "grayed-out",
+		variant: "grayed-out",
 	},
 };

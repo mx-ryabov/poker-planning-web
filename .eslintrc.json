@@ -1,8 +1,11 @@
 {
  "extends": [
-  "next/babel",
+  "next",
   "next/core-web-vitals",
-  "plugin:storybook/recommended"
+  "plugin:storybook/recommended",
+  "plugin:react/recommended",
+  "plugin:react/jsx-runtime",
+  "eslint:recommended"
  ],
  "settings": {
     "import/resolver": {
@@ -13,6 +16,12 @@
             ],
             "extensions": [".ts", ".tsx"]
         }
-    }
- }
+    },
+    "dirs": ["_src"]
+ },
+ "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "react/display-name": "off",
+    "no-mixed-spaces-and-tabs": "off"
+  }
 }

@@ -1,1 +1,1 @@
-export * from "./model/voting-systems-provider";
+export * from "./model";

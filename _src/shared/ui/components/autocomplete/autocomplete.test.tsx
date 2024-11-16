@@ -15,7 +15,7 @@ function renderAutocompleteSingle({
 	disabledKeys?: Key[];
 	selectedKeys?: Key[];
 	onSelectionChange?: (
-		item: {
+		_item: {
 			id: string;
 			textValue: string;
 		}[],
@@ -54,7 +54,7 @@ function renderAutocompleteMultiple({
 	errorMessages?: string[];
 	isDisabled?: boolean;
 	onSelectionChange?: (
-		item: {
+		_item: {
 			id: string;
 			textValue: string;
 		}[],
@@ -649,11 +649,10 @@ describe("Autocomplete", () => {
 		});
 
 		test("can only read keys when disabled", async () => {
-			const { queryByRole, getByRole, getByTestId, user } =
-				renderAutocompleteMultiple({
-					isDisabled: true,
-					selectedKeys: ["3", "5"],
-				});
+			const { getByTestId } = renderAutocompleteMultiple({
+				isDisabled: true,
+				selectedKeys: ["3", "5"],
+			});
 
 			const chips = within(getByTestId("value-box")).getAllByTestId(
 				"selected-item-chip",

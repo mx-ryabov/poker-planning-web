@@ -3,21 +3,24 @@ import { CreateGameFormSteps } from "./types";
 
 export type CreateGameFormState = {
 	isClientInitialized: boolean;
+	isStartGameEnabled: boolean;
 	step: CreateGameFormSteps;
 	stepData: StepOptions;
+	stepsLength: number;
 };
 
 type StepOption = {
 	number: number;
 	nextStep: CreateGameFormSteps | null;
 	prevStep: CreateGameFormSteps | null;
-	isNextStepAvailable: boolean;
+	isNextStepEnabled: boolean;
 	showContinueBtn: boolean;
 	showAdvancedSettingsBtn: boolean;
 	showStartGameBtn: boolean;
 };
 
 type StepOptions = {
+	// eslint-disable-next-line no-unused-vars
 	[key in CreateGameFormSteps]: StepOption;
 };
 
@@ -26,7 +29,7 @@ const DEFAULT_STEP_OPTIONS: StepOptions = {
 		number: 1,
 		nextStep: CreateGameFormSteps.VotingSystem,
 		prevStep: null,
-		isNextStepAvailable: false,
+		isNextStepEnabled: false,
 		showContinueBtn: true,
 		showStartGameBtn: false,
 		showAdvancedSettingsBtn: false,
@@ -35,7 +38,7 @@ const DEFAULT_STEP_OPTIONS: StepOptions = {
 		number: 2,
 		nextStep: CreateGameFormSteps.CreatorName,
 		prevStep: CreateGameFormSteps.Name,
-		isNextStepAvailable: false,
+		isNextStepEnabled: false,
 		showContinueBtn: true,
 		showStartGameBtn: false,
 		showAdvancedSettingsBtn: false,
@@ -44,8 +47,8 @@ const DEFAULT_STEP_OPTIONS: StepOptions = {
 		number: 3,
 		nextStep: CreateGameFormSteps.AdvancedSettings,
 		prevStep: CreateGameFormSteps.VotingSystem,
-		isNextStepAvailable: false,
 		showContinueBtn: false,
+		isNextStepEnabled: false,
 		showStartGameBtn: true,
 		showAdvancedSettingsBtn: true,
 	},
@@ -53,7 +56,7 @@ const DEFAULT_STEP_OPTIONS: StepOptions = {
 		number: 3,
 		nextStep: null,
 		prevStep: CreateGameFormSteps.CreatorName,
-		isNextStepAvailable: false,
+		isNextStepEnabled: false,
 		showContinueBtn: false,
 		showStartGameBtn: true,
 		showAdvancedSettingsBtn: false,
@@ -62,21 +65,26 @@ const DEFAULT_STEP_OPTIONS: StepOptions = {
 
 export const DefaultCreateGameState: CreateGameFormState = {
 	isClientInitialized: false,
+	isStartGameEnabled: false,
 	stepData: DEFAULT_STEP_OPTIONS,
 	step: CreateGameFormSteps.Name,
+	stepsLength: 3,
 };
 
 export function createGameFormReducer(
 	formState: CreateGameFormState,
-	action: Actions.Actions,
+	action?: Actions.Actions,
 ): CreateGameFormState {
+	if (!action) return formState;
+
 	const currentStepData = formState.stepData[formState.step];
 	switch (action.type) {
 		case Actions.Type.NextStep:
 			return {
 				...formState,
 				step:
-					currentStepData.nextStep !== null
+					currentStepData.nextStep !== null &&
+					currentStepData.isNextStepEnabled
 						? currentStepData.nextStep
 						: formState.step,
 			};
@@ -90,16 +98,22 @@ export function createGameFormReducer(
 						: formState.step,
 			};
 
-		case Actions.Type.MakeNextStepAvailable:
+		case Actions.Type.MakeNextStepEnabled:
 			return {
 				...formState,
 				stepData: {
 					...formState.stepData,
 					[formState.step]: {
 						...formState.stepData[formState.step],
-						isNextStepAvailable: action.payload,
+						isNextStepEnabled: action.payload,
 					},
 				},
+			};
+
+		case Actions.Type.MakeStartGameEnabled:
+			return {
+				...formState,
+				isStartGameEnabled: action.payload,
 			};
 
 		default:

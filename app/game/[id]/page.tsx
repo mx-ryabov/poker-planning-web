@@ -3,16 +3,19 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { GameRoomPage } from "@/_src/pages/game-room/ui/game-room.page";
 
+type Params = Promise<{ id: string }>;
 interface Props {
-	params: { id: string };
+	params: Params;
 }
 
-const Page: NextPage<Props> = ({ params }) => {
-	const token = cookies().get("token");
+const Page: NextPage<Props> = async ({ params }: Props) => {
+	const { id } = await params;
+	const cookieStore = await cookies();
+	const token = cookieStore.get("token");
 	if (!token) {
-		redirect(`/game/${params.id}/join`);
+		redirect(`/game/${id}/join`);
 	}
-	return <GameRoomPage token={token.value} gameId={params.id} />;
+	return <GameRoomPage token={token.value} gameId={id} />;
 };
 
 export default Page;

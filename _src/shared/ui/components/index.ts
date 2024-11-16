@@ -43,3 +43,4 @@ export { Select } from "./select";
 export { Autocomplete } from "./autocomplete";
 export { Separator } from "./separator";
 export { LocalizedStringProvider } from "./localized-string-provider";
+export { RadioGroup } from "./radio-group";

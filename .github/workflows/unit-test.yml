@@ -1,108 +1,108 @@
 name: Unit Tests
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
-  unit-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        name: Checkout Repo
+    unit-tests:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              name: Checkout Repo
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: false
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 9
+                  run_install: false
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
 
-      - uses: actions/cache@v4
-        id: pnpm-cache
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+            - uses: actions/cache@v4
+              id: pnpm-cache
+              with:
+                  path: ~/.pnpm-store
+                  key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
-      - run: pnpm install
-        name: Install modules from npm
+            - run: pnpm install
+              name: Install modules from pnpm
 
-      - run: pnpm run test
-        name: Run the tests
+            - run: pnpm run test
+              name: Run the tests
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        name: Checkout Repo
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              name: Checkout Repo
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: false
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 9
+                  run_install: false
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
 
-      - uses: actions/cache@v4
-        id: pnpm-cache
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+            - uses: actions/cache@v4
+              id: pnpm-cache
+              with:
+                  path: ~/.pnpm-store
+                  key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
-      - run: pnpm install
-        name: Install modules from npm
+            - run: pnpm install
+              name: Install modules from npm
 
-      - run: pnpm run build
-        name: Run the build
+            - run: pnpm run build
+              name: Run the build
 
-  # Run interaction and accessibility tests
-  interaction-and-accessibility:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        name: Checkout Repo
+    # Run interaction and accessibility tests
+    interaction-and-accessibility:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              name: Checkout Repo
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: false
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 9
+                  run_install: false
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
 
-      - uses: actions/cache@v4
-        id: pnpm-cache
-        with:
-          path: ~/.pnpm-store
-          key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+            - uses: actions/cache@v4
+              id: pnpm-cache
+              with:
+                  path: ~/.pnpm-store
+                  key: pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
-      - run: pnpm install
-        name: Install modules from npm
+            - run: pnpm install
+              name: Install modules from npm
 
-      - name: Install Playwright
-        run: pnpm dlx playwright@1.47.2 install --with-deps
+            - name: Install Playwright
+              run: pnpm dlx playwright@1.48.2 install --with-deps
 
-      - name: Build Storybook
-        run: pnpm run build-storybook --quiet
-        
-      - name: Serve Storybook and run tests
-        run: |
-          pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "pnpm dlx http-server storybook-static --port 6006 --silent" \
-            "pnpm dlx wait-on tcp:6006 && pnpm run test-storybook"
+            - name: Build Storybook
+              run: pnpm run build-storybook --quiet
+
+            - name: Serve Storybook and run tests
+              run: |
+                  pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+                    "pnpm dlx http-server storybook-static --port 6006 --silent" \
+                    "pnpm dlx wait-on tcp:6006 && pnpm run test-storybook"

@@ -67,8 +67,7 @@ const labelStyles = cva(["w-full text-xs font-medium p-1 block"], {
 
 export const Input = forwardRef<HTMLInputElement, _InputProps>(
 	function (props, ref) {
-		const { label, startIcon, errors, endContent, id, ...restProps } =
-			props;
+		const { label, startIcon, errors, endContent, ...restProps } = props;
 
 		const inputRef: MutableRefObject<HTMLInputElement | null> =
 			useRef<HTMLInputElement>(null);
