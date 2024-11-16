@@ -15,7 +15,7 @@ dotenv.config({ path: path.resolve(__dirname, ".env") });
 export default defineConfig({
 	testDir: "./e2e/tests",
 	testMatch: "e2e/tests/**/*.spec.ts",
-	outputDir: "./e2e/results",
+	outputDir: "./e2e/output",
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -25,7 +25,16 @@ export default defineConfig({
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: "html",
+	reporter: [
+		[
+			"html",
+			{
+				outputFolder: "./e2e/results",
+				open: "never",
+			},
+		],
+		process.env.CI ? ["github"] : ["line"],
+	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
