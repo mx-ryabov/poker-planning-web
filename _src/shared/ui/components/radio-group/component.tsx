@@ -1,10 +1,10 @@
 import { buildProvider } from "@/_src/shared/lib";
+import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
 import { cva } from "class-variance-authority";
-import { forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, useMemo } from "react";
 import {
 	RadioGroup as RadioGroupAria,
 	RadioGroupProps as RadioGroupAriaProps,
-	RadioGroupRenderProps,
 	Radio as RadioAria,
 	RadioRenderProps,
 	RadioProps as RadioAriaProps,
@@ -29,18 +29,8 @@ const _RadioGroup = forwardRef<HTMLDivElement, RadioGrouProps>((props, ref) => {
 		...restProps
 	} = props;
 
-	const classNameWithProps = useCallback(
-		(
-			renderProps: RadioGroupRenderProps & {
-				defaultClassName: string | undefined;
-			},
-		) => {
-			const cn =
-				typeof className == "function"
-					? className(renderProps)
-					: className;
-			return twMerge("flex flex-col", cn);
-		},
+	const classNameWithProps = useMemo(
+		() => mergeClassNames("flex flex-col", className),
 		[className],
 	);
 

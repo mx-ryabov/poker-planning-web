@@ -31,3 +31,5 @@ export * from "./svg/settings.icon";
 export * from "./svg/trash.icon";
 export * from "./svg/user-remove.icon";
 export * from "./svg/warning.icon";
+
+export type { IconType } from "./icon-builder";

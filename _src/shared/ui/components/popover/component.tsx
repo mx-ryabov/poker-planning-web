@@ -1,5 +1,11 @@
 import { setRefs, usePopoverForcePositionUpdate } from "@/_src/shared/lib";
-import { MutableRefObject, forwardRef, useCallback, useRef } from "react";
+import {
+	MutableRefObject,
+	ReactNode,
+	forwardRef,
+	useCallback,
+	useRef,
+} from "react";
 import {
 	PopoverProps,
 	DialogTriggerProps,
@@ -20,7 +26,7 @@ type PopoverContentProps = Omit<
 	PopoverProps & DialogProps,
 	"children" | "style"
 > & {
-	children: React.ReactNode;
+	children: ReactNode;
 	widthType?: "auto" | "equalToTrigger";
 };
 
