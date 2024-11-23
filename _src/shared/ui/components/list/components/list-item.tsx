@@ -39,8 +39,6 @@ export const listItemStyles = cva(
 );
 
 export function ListItem(props: ItemProps) {
-	const { children, className, ...restProps } = props;
-
 	const renderCheckState = (isSelected: boolean) => (
 		<div className="w-[20px] h-[20px] ml-auto scale-100">
 			{isSelected && <CheckIcon size={20} />}
@@ -49,7 +47,7 @@ export function ListItem(props: ItemProps) {
 
 	return (
 		<ListBoxItem
-			{...restProps}
+			{...props}
 			className={(renderProps) => listItemStyles(renderProps)}
 		>
 			{composeRenderProps(props.children, (children, { isSelected }) => (

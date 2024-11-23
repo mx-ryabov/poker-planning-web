@@ -1,7 +1,7 @@
 import { iconBuilder } from "../icon-builder";
 import { SvgProps } from "../types";
 
-export const ArrowRightSimplecon = iconBuilder((props: SvgProps) => {
+export const ArrowRightSimpleIcon = iconBuilder((props: SvgProps) => {
 	return (
 		<svg
 			width="100%"
@@ -20,4 +20,4 @@ export const ArrowRightSimplecon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-}, "ArrowRightSimplecon");
+}, "ArrowRightSimpleIcon");

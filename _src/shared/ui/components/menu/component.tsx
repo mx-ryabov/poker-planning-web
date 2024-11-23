@@ -10,7 +10,7 @@ import {
 	composeRenderProps,
 	Separator,
 } from "react-aria-components";
-import { ArrowRightSimplecon, CheckIcon } from "../icon";
+import { ArrowRightSimpleIcon, CheckIcon } from "../icon";
 import { List } from "../list";
 import { ListSectionProps } from "../list/components/list-section";
 import { listItemStyles } from "../list/components/list-item";
@@ -41,7 +41,15 @@ export function MenuSection<TItemData extends object>(
 
 export function MenuItem(props: MenuItemProps) {
 	return (
-		<AriaMenuItem {...props} className={listItemStyles}>
+		<AriaMenuItem
+			{...props}
+			className={(renderProps) =>
+				listItemStyles({
+					...renderProps,
+					isFocused: renderProps.isFocusVisible,
+				})
+			}
+		>
 			{composeRenderProps(
 				props.children,
 				(children, { selectionMode, isSelected, hasSubmenu }) => (
@@ -52,7 +60,7 @@ export function MenuItem(props: MenuItemProps) {
 							</span>
 						)}
 						{children}
-						{hasSubmenu && <ArrowRightSimplecon size={20} />}
+						{hasSubmenu && <ArrowRightSimpleIcon size={20} />}
 					</>
 				),
 			)}

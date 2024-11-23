@@ -92,6 +92,36 @@ const config: Config = {
 						transform: "translateY(0px)",
 					},
 				},
+				bottomUpFadeIn: {
+					"0%": {
+						opacity: "0",
+						transform: "translateY(50%)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateY(0px)",
+					},
+				},
+				rightLeftFadeIn: {
+					"0%": {
+						opacity: "0",
+						transform: "translateX(50%)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateX(0px)",
+					},
+				},
+				leftRightFadeIn: {
+					"0%": {
+						opacity: "0",
+						transform: "translateX(-50%)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateX(0px)",
+					},
+				},
 				downOut: {
 					"0%": {
 						opacity: "0",
@@ -100,6 +130,16 @@ const config: Config = {
 					"100%": {
 						opacity: "1",
 						transform: "translateY(0px)",
+					},
+				},
+				fadeIn: {
+					"0%": {
+						opacity: "0",
+						transform: "scale(0.95)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "scale(1)",
 					},
 				},
 				rotation: {
@@ -113,6 +153,14 @@ const config: Config = {
 				"popup-reverse": "popup 0.2s reverse",
 				downOut: "downOut 0.3s",
 				"rotation-linear": "rotation 1s infinite linear",
+				"fade-in": "fadeIn 0.3s",
+				"fade-in-reverse": "fadeIn 0.3s reverse",
+				"bottom-up-fade-in": "bottomUpFadeIn 0.3s",
+				"bottom-up-fade-in-reverse": "bottomUpFadeIn 0.3s reverse",
+				"right-left-fade-in": "rightLeftFadeIn 0.3s",
+				"right-left-fade-in-reverse": "rightLeftFadeIn 0.3s reverse",
+				"left-right-fade-in": "leftRightFadeIn 0.3s",
+				"left-right-fade-in-reverse": "leftRightFadeIn 0.3s reverse",
 			},
 		},
 	},

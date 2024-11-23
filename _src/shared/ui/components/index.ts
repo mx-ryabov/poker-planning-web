@@ -4,7 +4,7 @@ export {
 	ArrowLeftIcon,
 	ArrowLeftSimpleIcon,
 	ArrowRightIcon,
-	ArrowRightSimplecon,
+	ArrowRightSimpleIcon,
 	ArrowUpIcon,
 	CardsIcon,
 	CheckIcon,
