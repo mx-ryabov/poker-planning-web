@@ -8,7 +8,7 @@ const config = defineConfig([
 		ignores: ["**/*.test.tsx"],
 	},
 	{
-		files: [".\\_src\\shared\\**"],
+		files: ["./_src/shared/**"],
 		rules: {
 			// disable public-api rule for files in /shared folder
 			"fsd/no-public-api-sidestep": "off",
