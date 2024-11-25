@@ -11,6 +11,7 @@ const nextConfig = {
   },
   experimental: {
     testProxy: true,
+    optimizePackageImports: ["@/_src/shared/ui"]
   },
 };
 

@@ -12,6 +12,7 @@
     "storybook": "storybook dev -p 6006",
     "test-storybook": "test-storybook",
     "build-storybook": "storybook build",
+    "fsd-lint": "pnpm exec steiger ./_src/",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -38,10 +39,12 @@
     "react-hook-form": "^7.51.2",
     "react-stately": "^3.31.1",
     "tailwind-merge": "^2.5.3",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.9.0",
+    "@feature-sliced/steiger-plugin": "^0.5.2",
     "@next/eslint-plugin-next": "^14.2.15",
     "@playwright/test": "^1.48.2",
     "@storybook/addon-a11y": "^8.3.5",
@@ -81,6 +84,7 @@
     "msw": "^2.6.1",
     "postcss": "^8",
     "prettier": "3.2.5",
+    "steiger": "^0.5.2",
     "storybook": "8.3.5",
     "tailwindcss": "^3.3.0",
     "typescript": "^5",

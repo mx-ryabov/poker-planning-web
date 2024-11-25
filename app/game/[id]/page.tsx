@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { GameRoomPage } from "@/_src/pages/game-room/ui/game-room.page";
+import { getGameById } from "@/_src/shared/api/game-api";
 
 type Params = Promise<{ id: string }>;
 interface Props {
@@ -15,7 +16,9 @@ const Page: NextPage<Props> = async ({ params }: Props) => {
 	if (!token) {
 		redirect(`/game/${id}/join`);
 	}
-	return <GameRoomPage token={token.value} gameId={id} />;
+	const game = await getGameById(id);
+
+	return <GameRoomPage token={token.value} gameId={id} game={game} />;
 };
 
 export default Page;

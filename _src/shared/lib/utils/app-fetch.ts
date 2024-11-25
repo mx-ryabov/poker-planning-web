@@ -8,9 +8,12 @@ export const appFetchGet = async <TQuery extends Record<string, string>>(
 	query?: TQuery,
 ): Promise<Response> => {
 	const params = new URLSearchParams(query);
+	const headers = await getHeaders();
+	console.log(`${HOST}/api${path}?${params.toString()}`, headers);
+
 	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "GET",
-		headers: await getHeaders(),
+		headers,
 	});
 };
 
@@ -54,6 +57,6 @@ async function getHeaders() {
 	const token = cookieStore.get("token");
 	return {
 		"Content-Type": "application/json",
-		Authorization: `Bearer ${token}`,
+		Authorization: token?.value ? `Bearer ${token.value}` : "",
 	};
 }

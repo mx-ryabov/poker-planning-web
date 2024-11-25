@@ -1,62 +1,26 @@
 "use client";
 
-import { GameManagementTab } from "@/_src/entities/game-room/game-management/model";
+import { useGameEventsHub } from "@/_src/entities/game-room/game-events-hub";
+import { GameManagementTab } from "@/_src/entities/game-room/game-management";
 import { GameManagementBar } from "@/_src/features/game-room/game-management-bar";
+import { GameManagementDrawer } from "@/_src/features/game-room/game-management-drawer";
+import { ParticipantsPanel } from "@/_src/features/game-room/participants-panel";
+import { SettingsPanel } from "@/_src/features/game-room/settings-panel";
+import { TasksPanel } from "@/_src/features/game-room/tasks-panel";
 import { UserBar } from "@/_src/features/game-room/user-bar";
-import { Drawer } from "@/_src/shared/ui/components/drawer";
+import { GetGameByIdResponse } from "@/_src/shared/api/game-api/dto/get-game-by-id-response";
+import { ListIcon } from "@/_src/shared/ui/components/icon/svg/list.icon";
 import { Logo } from "@/_src/shared/ui/components/logo";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
-import {
-	HubConnection,
-	HubConnectionBuilder,
-	HttpTransportType,
-} from "@microsoft/signalr";
-import { useEffect, useState } from "react";
 
 interface Props {
 	token: string;
 	gameId: string;
+	game: GetGameByIdResponse;
 }
 
 export function GameRoomPage({ token, gameId }: Props) {
-	const [connection, setConnection] = useState<HubConnection | null>(null);
-
-	useEffect(() => {
-		if (typeof window === "undefined") {
-			return;
-		}
-
-		const conn = new HubConnectionBuilder()
-			.withUrl(`http://localhost:5011/hubs/game?gameId=${gameId}`, {
-				transport: HttpTransportType.WebSockets,
-				accessTokenFactory: () => token,
-			})
-			.build();
-		conn.start()
-			.then(() => {
-				setConnection(conn);
-			})
-			.catch((e) => {
-				console.log(`connection error ${conn.connectionId}: `, e);
-			});
-
-		return () => {
-			conn.stop();
-			setConnection(null);
-		};
-	}, [setConnection, gameId, token]);
-
-	useEffect(() => {
-		if (!connection) {
-			return;
-		}
-		console.log("connected!");
-		connection.on("ParticipantJoined", (data) => {
-			console.log("ParticipantJoined", data);
-		});
-	}, [connection]);
-
-	const [activeTab, setActiveTab] = useState<GameManagementTab | null>(null);
+	useGameEventsHub({ token, gameId });
 
 	return (
 		<div className="flex flex-row h-screen w-full overflow-hidden">
@@ -65,33 +29,28 @@ export function GameRoomPage({ token, gameId }: Props) {
 					<NextLink href="/">
 						<Logo />
 					</NextLink>
-					<GameManagementBar
-						className="absolute left-1/2 -translate-x-1/2"
-						activeTab={activeTab}
-						onSelect={(tab) =>
-							setActiveTab((prev) => (prev === tab ? null : tab))
-						}
-					/>
+					<GameManagementBar className="absolute left-1/2 -translate-x-1/2" />
 					<UserBar />
 				</header>
 				<main></main>
 			</div>
 
-			<Drawer.Modal
-				type="inline"
-				position="end"
-				portal="in-same-place"
-				isOpen={activeTab !== null}
-				onOpenChange={() => setActiveTab(null)}
-				withSeparator
-				stateKey="game-manager-drawer"
-				className="min-w-[300px] max-w-[500px]"
-			>
-				<section className="flex flex-col w-full h-full">
-					<Drawer.Heading>Header</Drawer.Heading>
-					{activeTab}
-				</section>
-			</Drawer.Modal>
+			<GameManagementDrawer>
+				<GameManagementDrawer.Header
+					icon={ListIcon}
+					title="Issues"
+					subTitle="15 in the list"
+				/>
+				<GameManagementDrawer.Body
+					panels={{
+						[GameManagementTab.TaskList]: <TasksPanel />,
+						[GameManagementTab.ParticipantList]: (
+							<ParticipantsPanel />
+						),
+						[GameManagementTab.Settings]: <SettingsPanel />,
+					}}
+				/>
+			</GameManagementDrawer>
 		</div>
 	);
 }

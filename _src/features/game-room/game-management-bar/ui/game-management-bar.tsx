@@ -7,10 +7,9 @@ import {
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { GameManagementTab } from "@/_src/entities/game-room/game-management/model";
 import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
+import { useGameManagementState } from "@/_src/entities/game-room/game-management";
 
 type Props = {
-	onSelect: (tab: GameManagementTab) => void;
-	activeTab: GameManagementTab | null;
 	className?: string;
 };
 
@@ -32,7 +31,9 @@ const TAB_BUTTON_OPTIONS: Record<
 	},
 };
 
-export function GameManagementBar({ className, activeTab, onSelect }: Props) {
+export function GameManagementBar({ className }: Props) {
+	const { activeTab, setActiveTab } = useGameManagementState();
+
 	return (
 		<div className={className}>
 			<SlidingSelector
@@ -52,8 +53,8 @@ export function GameManagementBar({ className, activeTab, onSelect }: Props) {
 							variant="ghost"
 							size="small"
 							className="bg-opacity-0 hover:bg-primary-100 hover:text-primary-500 data-[sliding-selector-element-active=true]:text-primary-500"
-							onPress={onSelect.bind(
-								onSelect,
+							onPress={setActiveTab.bind(
+								setActiveTab,
 								tabType as GameManagementTab,
 							)}
 						/>
