@@ -1,17 +1,17 @@
 "use client";
 
-import { useGameEventsHub } from "@/_src/entities/game-room/game-events-hub";
-import { GameManagementTab } from "@/_src/entities/game-room/game-management";
-import { GameManagementBar } from "@/_src/features/game-room/game-management-bar";
-import { GameManagementDrawer } from "@/_src/features/game-room/game-management-drawer";
-import { ParticipantsPanel } from "@/_src/features/game-room/participants-panel";
-import { SettingsPanel } from "@/_src/features/game-room/settings-panel";
-import { TasksPanel } from "@/_src/features/game-room/tasks-panel";
-import { UserBar } from "@/_src/features/game-room/user-bar";
 import { GetGameByIdResponse } from "@/_src/shared/api/game-api/dto/get-game-by-id-response";
 import { ListIcon } from "@/_src/shared/ui/components/icon/svg/list.icon";
 import { Logo } from "@/_src/shared/ui/components/logo";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
+import { GameManagementBar } from "./game-management-bar";
+import { UserBar } from "./user-bar";
+import { GameManagementDrawer } from "./game-management-drawer";
+import { GameManagementTab } from "../model/game-management";
+import { useGameEventsHub } from "../model/game-events-hub";
+import { TasksPanel } from "./tasks-panel";
+import { SettingsPanel } from "./settings-panel";
+import { ParticipantsPanel } from "./participants-panel";
 
 interface Props {
 	token: string;

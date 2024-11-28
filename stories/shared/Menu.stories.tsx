@@ -1,10 +1,10 @@
+import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import {
-	ButtonSquare,
 	CardsIcon,
-	Menu,
 	PeopleIcon,
 	SettingsIcon,
-} from "@/_src/shared/ui";
+} from "@/_src/shared/ui/components/icon";
+import { Menu } from "@/_src/shared/ui/components/menu";
 import type { Meta } from "@storybook/react";
 
 const meta = {

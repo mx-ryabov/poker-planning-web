@@ -1,4 +1,5 @@
-import { Input, PeopleIcon } from "@/_src/shared/ui";
+import { PeopleIcon } from "@/_src/shared/ui/components/icon";
+import { Input } from "@/_src/shared/ui/components/input";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 

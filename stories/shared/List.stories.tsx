@@ -1,4 +1,4 @@
-import { List } from "@/_src/shared/ui";
+import { List } from "@/_src/shared/ui/components/list";
 import type { Meta } from "@storybook/react";
 
 const meta = {

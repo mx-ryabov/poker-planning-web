@@ -1,1 +1,1 @@
-export * from "./component";
+export { Drawer } from "./component";

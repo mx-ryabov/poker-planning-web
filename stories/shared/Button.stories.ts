@@ -1,4 +1,5 @@
-import { ArrowRightIcon, Button, SettingsIcon } from "@/_src/shared/ui";
+import { Button } from "@/_src/shared/ui/components/button";
+import { ArrowRightIcon, SettingsIcon } from "@/_src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn, within, expect } from "@storybook/test";
 

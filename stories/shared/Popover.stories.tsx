@@ -1,4 +1,6 @@
-import { Button, ButtonSquare, CloseIcon, Popover } from "@/_src/shared/ui";
+import { Button, ButtonSquare } from "@/_src/shared/ui/components/button";
+import { CloseIcon } from "@/_src/shared/ui/components/icon";
+import { Popover } from "@/_src/shared/ui/components/popover";
 import type { Meta } from "@storybook/react";
 import { Placement } from "react-aria";
 

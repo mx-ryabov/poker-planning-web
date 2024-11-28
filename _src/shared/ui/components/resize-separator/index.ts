@@ -1,1 +1,1 @@
-export * from "./component";
+export { ResizeSeparator } from "./component";
