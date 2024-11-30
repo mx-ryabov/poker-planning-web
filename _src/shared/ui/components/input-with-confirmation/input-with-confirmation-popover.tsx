@@ -4,13 +4,13 @@ import {
 	useEnterAnimation,
 	useExitAnimation,
 } from "@/_src/shared/lib";
-import { forwardRef, RefObject, useRef } from "react";
+import { forwardRef, ReactNode, RefObject, useRef } from "react";
 import { usePopover } from "react-aria";
 import { PopoverProps as AriaPopoverProps } from "react-aria-components";
 import { OverlayTriggerState } from "react-stately";
 
 interface PopoverProps extends Omit<AriaPopoverProps, "popoverRef"> {
-	children: React.ReactNode;
+	children: ReactNode;
 	state: OverlayTriggerState;
 	triggerRef: RefObject<HTMLDivElement>;
 	className: string;
@@ -40,7 +40,7 @@ export const PopoverWithoutFocusManagment = ({
 };
 
 interface PopoverInnerProps extends AriaPopoverProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	state: OverlayTriggerState;
 	isEntering?: boolean;
 	isExiting: boolean;

@@ -1,1 +1,1 @@
-export * from "./component";
+export { Tooltip } from "./component";

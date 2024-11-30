@@ -1,4 +1,4 @@
-import { Logo } from "@/_src/shared/ui";
+import { Logo } from "@/_src/shared/ui/components/logo";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 

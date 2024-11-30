@@ -1,4 +1,5 @@
-import { ButtonSquare, SettingsIcon } from "@/_src/shared/ui";
+import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { SettingsIcon } from "@/_src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 

@@ -1,4 +1,4 @@
-import { Chip, ChipGroup } from "@/_src/shared/ui";
+import { Chip, ChipGroup } from "@/_src/shared/ui/components/chip";
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { useListData } from "react-stately";

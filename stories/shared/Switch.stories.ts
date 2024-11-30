@@ -1,4 +1,4 @@
-import { Switch } from "@/_src/shared/ui";
+import { Switch } from "@/_src/shared/ui/components/switch";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 

@@ -1,4 +1,4 @@
-import { InputWithConfirmation } from "@/_src/shared/ui";
+import { InputWithConfirmation } from "@/_src/shared/ui/components/input-with-confirmation";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
