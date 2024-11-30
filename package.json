@@ -31,6 +31,7 @@
     "@react-types/shared": "^3.25.0",
     "class-variance-authority": "^0.7.0",
     "gsap": "^3.12.5",
+    "immer": "^10.1.1",
     "next": "^15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-aria": "^3.33.1",

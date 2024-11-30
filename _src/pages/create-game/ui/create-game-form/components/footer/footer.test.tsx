@@ -8,7 +8,7 @@ import {
 	CreateGameFormDispatchContext,
 	CreateGameFormState,
 	DefaultCreateGameState,
-} from "@/_src/features/create-game/model";
+} from "@/_src/pages/create-game/model";
 
 type ProviderValue = {
 	state: CreateGameFormState;
@@ -60,10 +60,13 @@ function generateProviderState(
 	};
 }
 
-const renderFooter = (stepOptions: StepOptionsSimplified) => {
+const renderFooter = (
+	stepOptions: StepOptionsSimplified,
+	footerProps: { isPending: boolean } = { isPending: false },
+) => {
 	return render(
 		<MockCreateGameFormProvider value={generateProviderState(stepOptions)}>
-			<CreateGameFooter />
+			<CreateGameFooter isPending={footerProps.isPending} />
 		</MockCreateGameFormProvider>,
 	);
 };
@@ -134,7 +137,7 @@ describe("Create Game Form Footer", () => {
 						action,
 					})}
 				>
-					<CreateGameFooter />
+					<CreateGameFooter isPending={false} />
 				</MockCreateGameFormProvider>,
 			);
 			await user.click(continueBtn);
@@ -157,7 +160,7 @@ describe("Create Game Form Footer", () => {
 						number: 2,
 					})}
 				>
-					<CreateGameFooter />
+					<CreateGameFooter isPending={false} />
 				</MockCreateGameFormProvider>,
 			);
 
@@ -194,7 +197,7 @@ describe("Create Game Form Footer", () => {
 						showAdvancedSettingsBtn: true,
 					})}
 				>
-					<CreateGameFooter />
+					<CreateGameFooter isPending={false} />
 				</MockCreateGameFormProvider>,
 			);
 

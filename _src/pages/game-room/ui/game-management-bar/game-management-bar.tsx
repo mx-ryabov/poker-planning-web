@@ -31,7 +31,8 @@ const TAB_BUTTON_OPTIONS: Record<
 };
 
 export function GameManagementBar({ className }: Props) {
-	const { activeTab, setActiveTab } = useGameManagementState();
+	const activeTab = useGameManagementState((state) => state.activeTab);
+	const setActiveTab = useGameManagementState((state) => state.setActiveTab);
 
 	return (
 		<div className={className}>
@@ -43,6 +44,7 @@ export function GameManagementBar({ className }: Props) {
 					activeTab ? TAB_BUTTON_OPTIONS[activeTab].index : null
 				}
 				selectorClassName="rounded-lg bg-primary-200 mix-blend-multiply"
+				onSelectionReset={() => setActiveTab(null)}
 			>
 				{Object.entries(TAB_BUTTON_OPTIONS).map(
 					([tabType, tabOptions], ind) => (

@@ -26,7 +26,6 @@ export async function getGameById(gameId: string) {
 
 	if (res.ok) {
 		const data: GetGameByIdResponse = await res.json();
-		console.log(data);
 		return data;
 	} else {
 		throw new Error(

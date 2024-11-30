@@ -41,7 +41,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "stories/*.mdx",
+    "stories/*.mdx"
   ],
   "exclude": [
     "node_modules"

@@ -9,8 +9,6 @@ export const appFetchGet = async <TQuery extends Record<string, string>>(
 ): Promise<Response> => {
 	const params = new URLSearchParams(query);
 	const headers = await getHeaders();
-	console.log(`${HOST}/api${path}?${params.toString()}`, headers);
-
 	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "GET",
 		headers,
