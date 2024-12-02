@@ -83,6 +83,7 @@ function SlidingSelectorContainer(props: ContainerProps) {
 					setActiveElement(null);
 					onSelectionReset && onSelectionReset();
 				}}
+				data-testid="sliding-selector"
 				ref={activeFloatingElRef}
 			></div>
 		</div>

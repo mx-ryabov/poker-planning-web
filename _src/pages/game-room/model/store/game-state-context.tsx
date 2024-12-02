@@ -1,6 +1,4 @@
-import { GetGameByIdResponse } from "@/_src/shared/api";
 import { createContext, ReactNode, useContext, useRef } from "react";
-import { createGameStateStore } from "./game-state-store";
 import { StoreApi, useStore } from "zustand";
 import { GameManagementSlice, GameStateStore } from "./game-state-store.model";
 
@@ -10,16 +8,13 @@ const GameStateCotnext = createContext<GameStateContextProps | null>(null);
 
 type GameStateProviderProps = {
 	children: ReactNode;
-	initialState: GetGameByIdResponse;
+	store: StoreApi<GameStateStore>;
 };
 
-export function GameStateProvider({
-	initialState,
-	children,
-}: GameStateProviderProps) {
+export function GameStateProvider({ store, children }: GameStateProviderProps) {
 	const storeRef = useRef<StoreApi<GameStateStore>>();
 	if (!storeRef.current) {
-		storeRef.current = createGameStateStore(initialState);
+		storeRef.current = store;
 	}
 	return (
 		<GameStateCotnext.Provider value={storeRef.current}>

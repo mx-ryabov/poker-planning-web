@@ -31,10 +31,34 @@ const headerStyles = cva(
 
 export function DrawerHeader() {
 	const activeTab = useGameManagementState((state) => state.activeTab);
-	const { headers } = useDrawerHeaderState();
+	const participantsCount = useGameState(selectParticipantsCount);
+	const ticketsCount = useGameState(selectTicketsCount);
+
+	const headers = useMemo(
+		() => [
+			{
+				title: "Participants",
+				subTitle: `${participantsCount} online`,
+				icon: PeopleIcon,
+				tab: GameManagementTab.ParticipantList,
+			},
+			{
+				title: "Issues",
+				subTitle: `${ticketsCount} in the list`,
+				icon: ListIcon,
+				tab: GameManagementTab.TaskList,
+			},
+			{
+				title: "Settings",
+				icon: SettingsIcon,
+				tab: GameManagementTab.Settings,
+			},
+		],
+		[participantsCount, ticketsCount],
+	);
 
 	return (
-		<header className="h-11">
+		<header className="h-11" data-testid="game-management-drawer-header">
 			<div className="w-full h-full relative flex flex-col overflow-hidden">
 				{headers.map((header) => (
 					<div
@@ -62,34 +86,4 @@ export function DrawerHeader() {
 			</div>
 		</header>
 	);
-}
-
-function useDrawerHeaderState() {
-	const participantsCount = useGameState(selectParticipantsCount);
-	const ticketsCount = useGameState(selectTicketsCount);
-
-	const headers = useMemo(
-		() => [
-			{
-				title: "Participants",
-				subTitle: `${participantsCount} online`,
-				icon: PeopleIcon,
-				tab: GameManagementTab.ParticipantList,
-			},
-			{
-				title: "Issues",
-				subTitle: `${ticketsCount} in the list`,
-				icon: ListIcon,
-				tab: GameManagementTab.TaskList,
-			},
-			{
-				title: "Settings",
-				icon: SettingsIcon,
-				tab: GameManagementTab.Settings,
-			},
-		],
-		[participantsCount, ticketsCount],
-	);
-
-	return { headers };
 }

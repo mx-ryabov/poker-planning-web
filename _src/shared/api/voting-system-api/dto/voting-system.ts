@@ -4,6 +4,6 @@ import { VotingSystemVote } from "./voting-system-vote";
 export interface VotingSystem {
 	id: string;
 	name: string;
-	creator?: User;
+	creator: User | null;
 	votes: VotingSystemVote[];
 }
