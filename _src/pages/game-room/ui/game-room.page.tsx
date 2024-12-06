@@ -11,13 +11,13 @@ import { GameStateProvider } from "../model";
 import { createGameStateStore } from "../model";
 
 interface Props {
-	token: string;
+	accessTokenFactory: () => Promise<string>;
 	gameId: string;
 	game: GetGameByIdResponse;
 }
 
-export function GameRoomPage({ token, gameId, game }: Props) {
-	useGameEventsHub({ token, gameId });
+export function GameRoomPage({ accessTokenFactory, gameId, game }: Props) {
+	useGameEventsHub({ accessTokenFactory, gameId });
 	const gameStateStore = createGameStateStore(game);
 
 	return (

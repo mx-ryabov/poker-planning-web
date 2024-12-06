@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 
 type Props = {
 	gameId: string;
-	token: string;
+	accessTokenFactory: () => Promise<string>;
 };
 
-// TODO: refactor. make it more securable?
-export function useGameEventsHub({ gameId, token }: Props) {
+export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 	const [connection, setConnection] = useState<HubConnection | null>(null);
 
 	useEffect(() => {
@@ -20,7 +19,7 @@ export function useGameEventsHub({ gameId, token }: Props) {
 		const conn = new HubConnectionBuilder()
 			.withUrl(`http://localhost:5011/hubs/game?gameId=${gameId}`, {
 				transport: HttpTransportType.WebSockets,
-				accessTokenFactory: () => token,
+				accessTokenFactory,
 			})
 			.build();
 		conn.start()
@@ -35,7 +34,7 @@ export function useGameEventsHub({ gameId, token }: Props) {
 			conn.stop();
 			setConnection(null);
 		};
-	}, [setConnection, gameId, token]);
+	}, [setConnection, gameId, accessTokenFactory]);
 
 	useEffect(() => {
 		if (!connection) {

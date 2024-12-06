@@ -49,6 +49,7 @@ export function Separator({
 			/>
 			<Button
 				className={collapseBtnStyles({ orientation: "vertical" })}
+				aria-label="collapse-button"
 				onPress={onCollapse}
 			>
 				<ArrowRightSimpleIcon size={14} thikness="bold" />
