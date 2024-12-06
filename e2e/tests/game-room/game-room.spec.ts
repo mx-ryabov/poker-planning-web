@@ -1,4 +1,4 @@
-import { NEWLY_CREATED_GAME } from "@/__mocks__/game";
+import { NEWLY_CREATED_GAME } from "@/_src/shared/mocks/game";
 import { within } from "@testing-library/react";
 import {
 	test,

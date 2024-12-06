@@ -1,3 +1,9 @@
-import { GetGameByIdResponse } from "@/_src/shared/api/game-api";
+import {
+	GameParticipant,
+	GetGameByIdResponse,
+} from "@/_src/shared/api/game-api";
 
-export type GameAsyncState = GetGameByIdResponse;
+export type GameAsyncState = {
+	game: GetGameByIdResponse;
+	currentParticipant: GameParticipant;
+};

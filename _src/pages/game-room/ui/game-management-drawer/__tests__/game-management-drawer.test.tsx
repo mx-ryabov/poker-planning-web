@@ -1,6 +1,5 @@
 import { test, describe, expect } from "vitest";
-import { act, render, screen, within } from "@/test/utilities";
-import { axe } from "jest-axe";
+import { act, render, within } from "@/test/utilities";
 import {
 	createGameStateStore,
 	GameManagementTab,
@@ -8,8 +7,12 @@ import {
 } from "../../../model";
 import { GAME_MOCK } from "./game-management-drawer.mock";
 import { GameManagementDrawer } from "../game-management-drawer";
+import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
 
-const gameStateStore = createGameStateStore(GAME_MOCK);
+const gameStateStore = createGameStateStore({
+	game: GAME_MOCK,
+	currentParticipant: MASTER_PARTICIPANT,
+});
 function renderDrawer() {
 	return render(
 		<GameStateProvider store={gameStateStore}>

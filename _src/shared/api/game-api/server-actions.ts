@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { CreateGameRequest, CreateGameResponse } from "./dto";
+import { CreateGameRequest, CreateGameResponse, GameParticipant } from "./dto";
 import { redirect } from "next/navigation";
 import { appFetchGet, appFetchPost } from "../../lib/utils/app-fetch";
 import { GetGameByIdResponse } from "./dto/get-game-by-id-response";
@@ -32,4 +32,23 @@ export async function getGameById(gameId: string) {
 			`Getting Game by ID is failed. Status: ${res.status}. Message: ${res.statusText}`,
 		);
 	}
+}
+
+export async function getCurrentParticipant(gameId: string) {
+	const res = await appFetchGet(`/games/${gameId}/current-participant`);
+
+	if (res.ok) {
+		const data: GameParticipant = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Getting Current Participant by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function logout() {
+	const cookieStore = await cookies();
+	cookieStore.delete("token");
+	redirect("/");
 }
