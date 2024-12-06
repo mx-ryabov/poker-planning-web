@@ -196,8 +196,8 @@ importers:
         specifier: 3.2.5
         version: 3.2.5
       steiger:
-        specifier: ^0.5.2
-        version: 0.5.2(typescript@5.6.2)
+        specifier: ^0.5.3
+        version: 0.5.3(typescript@5.6.2)
       storybook:
         specifier: 8.3.5
         version: 8.3.5
@@ -1061,6 +1061,9 @@ packages:
 
   '@feature-sliced/steiger-plugin@0.5.2':
     resolution: {integrity: sha512-BV1quBoDpaEKj8+UZgskx0hUjsuoNaMXHxYVe73ne0efLtrymh1rred56nl0iHi9WvKgVa883uVuE6u3/z2t0Q==}
+
+  '@feature-sliced/steiger-plugin@0.5.3':
+    resolution: {integrity: sha512-WSXQGdVf6ceq0YqRkdgq6qfDp/q/KaWR9QHD8fDOkXufxtVv3lCth+ALI68CcaO1r3WHlsnTOeZ73sxJkHwBag==}
 
   '@formatjs/ecma402-abstract@2.0.0':
     resolution: {integrity: sha512-rRqXOqdFmk7RYvj4khklyqzcfQl9vEL/usogncBHRZfZBDOwMGuSRNFl02fu5KGHXdbinju+YXyuR+Nk8xlr/g==}
@@ -6449,8 +6452,8 @@ packages:
   std-env@3.7.0:
     resolution: {integrity: sha512-JPbdCEQLj1w5GilpiHAx3qJvFndqybBysA3qUOnznweH4QbNYUsW/ea8QzSrnh0vNsezMMw5bcVool8lM0gwzg==}
 
-  steiger@0.5.2:
-    resolution: {integrity: sha512-kacMhdlZVML6UskYe5RBuAnrn/w3tNeVx6scKH2pq4ikIJgZWL34U2bQcDeeMlbNIdbUY44LpmmGdqD2eTpPoQ==}
+  steiger@0.5.3:
+    resolution: {integrity: sha512-hOpqpHp1nta+xhc5NicHNQnvPPpNEJuYTKiIgYWPnan3kFIt4JiM5+BztHf/4wZZ7VflCHOCJvlLQ3BKzEeU4g==}
     hasBin: true
 
   stop-iteration-iterator@1.0.0:
@@ -8275,6 +8278,18 @@ snapshots:
       typescript: 5.6.2
 
   '@feature-sliced/steiger-plugin@0.5.2(typescript@5.6.2)':
+    dependencies:
+      '@feature-sliced/filesystem': 2.4.0
+      fastest-levenshtein: 1.0.16
+      lodash-es: 4.17.21
+      pluralize: 8.0.0
+      precinct: 12.1.2
+      tsconfck: 3.1.4(typescript@5.6.2)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@feature-sliced/steiger-plugin@0.5.3(typescript@5.6.2)':
     dependencies:
       '@feature-sliced/filesystem': 2.4.0
       fastest-levenshtein: 1.0.16
@@ -15329,9 +15344,9 @@ snapshots:
 
   std-env@3.7.0: {}
 
-  steiger@0.5.2(typescript@5.6.2):
+  steiger@0.5.3(typescript@5.6.2):
     dependencies:
-      '@feature-sliced/steiger-plugin': 0.5.2(typescript@5.6.2)
+      '@feature-sliced/steiger-plugin': 0.5.3(typescript@5.6.2)
       chokidar: 3.6.0
       cosmiconfig: 9.0.0(typescript@5.6.2)
       effector: 23.2.3

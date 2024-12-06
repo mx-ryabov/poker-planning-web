@@ -13,8 +13,6 @@ type TriggerProps = TooltipAriaTriggerComponentProps;
 
 function Wrapper(props: TriggerProps) {
 	const { children, delay = 0, closeDelay = 300, ...restProps } = props;
-	console.log(restProps);
-
 	return (
 		<TooltipTriggerAria
 			{...restProps}

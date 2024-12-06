@@ -1,5 +1,5 @@
-import { NEWLY_CREATED_GAME } from "@/__mocks__/game";
-import { MASTER_PARTICIPANT } from "@/__mocks__/game/participant";
+import { NEWLY_CREATED_GAME } from "@/_src/shared/mocks/game";
+import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
 import { GetGameByIdResponse } from "@/_src/shared/api/game-api";
 
 export const GAME_MOCK: GetGameByIdResponse = {

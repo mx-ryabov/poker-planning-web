@@ -14,7 +14,7 @@ export function createGameAsyncStateSliceCreator(
 		state: initialState,
 		addParticipant: (participant) => {
 			set((state) => {
-				state.state.participants.push(participant);
+				state.state.game.participants.push(participant);
 			});
 		},
 	});

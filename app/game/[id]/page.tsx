@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { GameRoomPage } from "@/_src/pages/game-room/ui/game-room.page";
-import { getGameById } from "@/_src/shared/api/game-api";
+import { getCurrentParticipant, getGameById } from "@/_src/shared/api/game-api";
 
 type Params = Promise<{ id: string }>;
 interface Props {
@@ -10,13 +10,14 @@ interface Props {
 }
 
 const Page: NextPage<Props> = async ({ params }: Props) => {
-	const { id } = await params;
+	const { id: gameId } = await params;
 	const cookieStore = await cookies();
 	const token = cookieStore.get("token")?.value;
 	if (!token) {
-		redirect(`/game/${id}/join`);
+		redirect(`/game/${gameId}/join`);
 	}
-	const game = await getGameById(id);
+	const game = await getGameById(gameId);
+	const currentParticipant = await getCurrentParticipant(gameId);
 
 	return (
 		<GameRoomPage
@@ -24,7 +25,8 @@ const Page: NextPage<Props> = async ({ params }: Props) => {
 				"use server";
 				return token;
 			}}
-			gameId={id}
+			gameId={gameId}
+			currentParticipant={currentParticipant}
 			game={game}
 		/>
 	);
