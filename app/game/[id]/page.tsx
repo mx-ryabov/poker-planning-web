@@ -12,13 +12,22 @@ interface Props {
 const Page: NextPage<Props> = async ({ params }: Props) => {
 	const { id } = await params;
 	const cookieStore = await cookies();
-	const token = cookieStore.get("token");
+	const token = cookieStore.get("token")?.value;
 	if (!token) {
 		redirect(`/game/${id}/join`);
 	}
 	const game = await getGameById(id);
 
-	return <GameRoomPage token={token.value} gameId={id} game={game} />;
+	return (
+		<GameRoomPage
+			accessTokenFactory={async () => {
+				"use server";
+				return token;
+			}}
+			gameId={id}
+			game={game}
+		/>
+	);
 };
 
 export default Page;

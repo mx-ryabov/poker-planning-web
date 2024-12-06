@@ -8,18 +8,20 @@ import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
 import { useGameEventsHub } from "../model/game-events-hub";
 import { GameStateProvider } from "../model";
+import { createGameStateStore } from "../model";
 
 interface Props {
-	token: string;
+	accessTokenFactory: () => Promise<string>;
 	gameId: string;
 	game: GetGameByIdResponse;
 }
 
-export function GameRoomPage({ token, gameId, game }: Props) {
-	useGameEventsHub({ token, gameId });
+export function GameRoomPage({ accessTokenFactory, gameId, game }: Props) {
+	useGameEventsHub({ accessTokenFactory, gameId });
+	const gameStateStore = createGameStateStore(game);
 
 	return (
-		<GameStateProvider initialState={game}>
+		<GameStateProvider store={gameStateStore}>
 			<div className="flex flex-row h-screen w-full overflow-hidden">
 				<div className="flex flex-col w-full">
 					<header className="w-full flex flex-row justify-between p-6 relative">

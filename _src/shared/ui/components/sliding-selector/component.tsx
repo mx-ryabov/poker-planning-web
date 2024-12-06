@@ -46,6 +46,7 @@ function SlidingSelectorContainer(props: ContainerProps) {
 		const staticChildren = container.querySelectorAll(
 			"[data-sliding-selector-element-type='static']",
 		);
+
 		const firstStaticChild = staticChildren[0];
 		const activeStaticChild = staticChildren[activeElementFinal];
 		const firstClientRect = firstStaticChild.getBoundingClientRect();
@@ -63,26 +64,31 @@ function SlidingSelectorContainer(props: ContainerProps) {
 			className={twJoin("relative", containerClassName)}
 			ref={containerRef}
 		>
-			{children.map((child, ind) =>
-				cloneElement(child, {
-					"data-sliding-selector-element-type": "static",
-					"data-sliding-selector-element-active":
-						ind === activeElementFinal,
-					...mergeProps(child.props, {
-						onPress: () =>
-							setActiveElement((prev) =>
-								prev === ind ? null : ind,
-							),
-					}),
-					key: ind,
-				}),
-			)}
+			{children.map((child, ind) => (
+				<div
+					key={ind}
+					data-sliding-selector-element-type="static"
+					data-sliding-selector-element-active={
+						ind === activeElementFinal
+					}
+				>
+					{cloneElement(child, {
+						...mergeProps(child.props, {
+							onPress: () =>
+								setActiveElement((prev) =>
+									prev === ind ? null : ind,
+								),
+						}),
+					})}
+				</div>
+			))}
 			<div
 				className={twJoin("absolute transition-all", selectorClassName)}
 				onClick={() => {
 					setActiveElement(null);
 					onSelectionReset && onSelectionReset();
 				}}
+				data-testid="sliding-selector"
 				ref={activeFloatingElRef}
 			></div>
 		</div>

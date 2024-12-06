@@ -40,7 +40,7 @@ export function Separator({
 }: SeparatorProps) {
 	const direction = position === "start" ? "right/bottom" : "left/top";
 	return (
-		<div className="h-full relative">
+		<div className="h-full relative" data-testid="drawer-separator">
 			<ResizeSeparator
 				orientation="vertical"
 				direction={direction}
@@ -49,6 +49,7 @@ export function Separator({
 			/>
 			<Button
 				className={collapseBtnStyles({ orientation: "vertical" })}
+				aria-label="collapse-button"
 				onPress={onCollapse}
 			>
 				<ArrowRightSimpleIcon size={14} thikness="bold" />

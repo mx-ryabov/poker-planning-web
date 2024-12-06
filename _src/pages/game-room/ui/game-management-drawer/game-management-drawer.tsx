@@ -21,7 +21,10 @@ export function GameManagementDrawer() {
 			stateKey="game-manager-drawer"
 			className="min-w-[300px] max-w-[500px]"
 		>
-			<section className="flex flex-col gap-5 w-full h-full">
+			<section
+				className="flex flex-col gap-5 w-full h-full"
+				data-testid="game-management-drawer-content"
+			>
 				<DrawerHeader />
 				<DrawerBody
 					panels={{

@@ -73,7 +73,10 @@ export function DrawerModal(props: ModalProps) {
 				UNSTABLE_portalContainer={modalPortal || undefined}
 			>
 				<Modal className={modalStyles({ type, position })}>
-					<Dialog className={dialogStyles({ orientation })}>
+					<Dialog
+						className={dialogStyles({ orientation })}
+						aria-label="Drawer Dialog"
+					>
 						{({ close }) => (
 							<>
 								{withSeparator && (
