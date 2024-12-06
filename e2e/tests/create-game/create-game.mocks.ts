@@ -5,6 +5,7 @@ export const GET_VOTING_SYSTEMS: VotingSystem[] = [
 	{
 		id: "6a113d25-34c9-4b49-985c-2df6dd67650c",
 		name: "Fibonacci",
+		creator: null,
 		votes: [
 			{
 				id: "bf0d4051-84a7-4162-8f48-580d4e488df2",
@@ -18,6 +19,7 @@ export const GET_VOTING_SYSTEMS: VotingSystem[] = [
 	{
 		id: "6a113d25-34c9-4b49-985c-2df6dd67650b",
 		name: "T-shirts",
+		creator: null,
 		votes: [
 			{
 				id: "bf0d4051-84a7-4162-8f48-580d4e488df3",

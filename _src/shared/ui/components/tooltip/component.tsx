@@ -1,5 +1,5 @@
 import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
-import { ReactNode, SVGProps, useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import { Placement } from "react-aria";
 import {
 	TooltipTrigger as TooltipTriggerAria,
@@ -13,6 +13,8 @@ type TriggerProps = TooltipAriaTriggerComponentProps;
 
 function Wrapper(props: TriggerProps) {
 	const { children, delay = 0, closeDelay = 300, ...restProps } = props;
+	console.log(restProps);
+
 	return (
 		<TooltipTriggerAria
 			{...restProps}
