@@ -1,37 +1,51 @@
-"use client";
-
+"use server";
 import {
-	GetGameByIdResponse,
-	GameParticipant,
-} from "@/_src/shared/api/game-api/dto";
-import { Logo } from "@/_src/shared/ui/components/logo";
+	getCurrentParticipant,
+	getGameById,
+	logout,
+} from "@/_src/shared/api/game-api";
+import { NextPage } from "next/types";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { GameRoomPageProvider } from "./game-room-page.provider";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
+import { Logo } from "@/_src/shared/ui/components/logo";
 import { GameManagementBar } from "./game-management-bar";
 import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
-import { useGameEventsHub } from "../model/game-events-hub";
-import { GameStateProvider } from "../model";
-import { createGameStateStore } from "../model";
-import { logout } from "@/_src/shared/api/game-api";
 
-interface Props {
-	accessTokenFactory: () => Promise<string>;
-	gameId: string;
-	game: GetGameByIdResponse;
-	currentParticipant: GameParticipant;
+type Params = Promise<{ id: string }>;
+interface PageProps {
+	params: Params;
 }
 
-export function GameRoomPage({
-	accessTokenFactory,
-	gameId,
-	game,
-	currentParticipant,
-}: Props) {
-	useGameEventsHub({ accessTokenFactory, gameId });
-	const gameStateStore = createGameStateStore({ game, currentParticipant });
+export const GameRoomPage: NextPage<PageProps> = async ({
+	params,
+}: PageProps) => {
+	const { id: gameId } = await params;
+	const cookieStore = await cookies();
+	const token = cookieStore.get("token")?.value;
+	if (!token) {
+		redirect(`/game/${gameId}/join`);
+	}
+
+	const [game, currentParticipant] = await Promise.all([
+		getGameById(gameId),
+		getCurrentParticipant(gameId),
+	]);
+
+	const accessTokenFactory = async function () {
+		"use server";
+		return token;
+	};
 
 	return (
-		<GameStateProvider store={gameStateStore}>
+		<GameRoomPageProvider
+			accessTokenFactory={accessTokenFactory}
+			gameId={gameId}
+			currentParticipant={currentParticipant}
+			game={game}
+		>
 			<div className="flex flex-row h-screen w-full overflow-hidden">
 				<div className="flex flex-col w-full">
 					<header className="w-full flex flex-row justify-between p-6 relative">
@@ -46,6 +60,6 @@ export function GameRoomPage({
 
 				<GameManagementDrawer />
 			</div>
-		</GameStateProvider>
+		</GameRoomPageProvider>
 	);
-}
+};

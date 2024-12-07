@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/_src/shared/ui/components/button";
 import { LogoutIcon, ProfileIcon } from "@/_src/shared/ui/components/icon";
 import { Menu } from "@/_src/shared/ui/components/menu";

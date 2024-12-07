@@ -1,3 +1,4 @@
+"use client";
 import { Drawer } from "@/_src/shared/ui/components/drawer";
 import { GameManagementTab, useGameManagementState } from "../../model";
 import { DrawerHeader } from "./game-management-drawer-header";
