@@ -11,6 +11,7 @@ export * from "./svg/check.icon";
 export * from "./svg/close.icon";
 export * from "./svg/copy-success.icon";
 export * from "./svg/copy.icon";
+export * from "./svg/crown.icon";
 export * from "./svg/info.icon";
 export * from "./svg/list.icon";
 export * from "./svg/logout.icon";
