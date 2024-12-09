@@ -27,7 +27,7 @@ const collapseBtnStyles = cva(
 
 type SeparatorProps = {
 	position: "start" | "end";
-	contentRef: RefObject<HTMLDivElement>;
+	contentRef: RefObject<HTMLDivElement | null>;
 	stateKey?: string;
 	onCollapse: () => void;
 };

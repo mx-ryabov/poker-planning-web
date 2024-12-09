@@ -12,7 +12,7 @@ import { OverlayTriggerState } from "react-stately";
 interface PopoverProps extends Omit<AriaPopoverProps, "popoverRef"> {
 	children: ReactNode;
 	state: OverlayTriggerState;
-	triggerRef: RefObject<HTMLDivElement>;
+	triggerRef: RefObject<HTMLDivElement | null>;
 	className: string;
 }
 
@@ -20,7 +20,7 @@ export const PopoverWithoutFocusManagment = ({
 	state,
 	...props
 }: PopoverProps) => {
-	let popoverRef = useRef<HTMLDivElement>(null);
+	let popoverRef = useRef<HTMLDivElement | null>(null);
 	useClickOutside([props.triggerRef, popoverRef], state.close);
 	let isExiting =
 		useExitAnimation(popoverRef, state.isOpen) || props.isExiting || false;
@@ -44,7 +44,7 @@ interface PopoverInnerProps extends AriaPopoverProps {
 	state: OverlayTriggerState;
 	isEntering?: boolean;
 	isExiting: boolean;
-	triggerRef: RefObject<HTMLDivElement>;
+	triggerRef: RefObject<HTMLDivElement | null>;
 	className: string;
 }
 
@@ -52,7 +52,7 @@ const PopoverWithoutFocusManagmentInner = forwardRef<
 	HTMLDivElement,
 	PopoverInnerProps
 >(({ children, state, offset = 8, className, isExiting, ...props }, ref) => {
-	let popoverRef = useRef<HTMLDivElement>(null);
+	let popoverRef = useRef<HTMLDivElement | null>(null);
 	let isEntering =
 		useEnterAnimation(popoverRef, !!props.placement) ||
 		props.isEntering ||

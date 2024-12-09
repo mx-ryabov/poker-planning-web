@@ -12,7 +12,7 @@ type GameStateProviderProps = {
 };
 
 export function GameStateProvider({ store, children }: GameStateProviderProps) {
-	const storeRef = useRef<StoreApi<GameStateStore>>();
+	const storeRef = useRef<StoreApi<GameStateStore> | null>(null);
 	if (!storeRef.current) {
 		storeRef.current = store;
 	}

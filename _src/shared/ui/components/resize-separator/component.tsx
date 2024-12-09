@@ -39,7 +39,7 @@ const separatorStyles = cva(
 type Props = {
 	orientation: "vertical" | "horizontal";
 	direction: "left/top" | "right/bottom";
-	resizableElementRef: RefObject<HTMLDivElement>;
+	resizableElementRef: RefObject<HTMLDivElement | null>;
 	stateKey?: string;
 };
 

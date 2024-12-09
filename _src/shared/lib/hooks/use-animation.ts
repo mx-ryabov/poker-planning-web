@@ -9,7 +9,7 @@ import {
 import ReactDOM from "react-dom";
 
 export function useEnterAnimation(
-	ref: RefObject<HTMLElement>,
+	ref: RefObject<HTMLElement | null>,
 	isReady: boolean = true,
 ) {
 	let [isStarting, setStarting] = useState(true);
@@ -24,7 +24,10 @@ export function useEnterAnimation(
 	return isStarting && isReady;
 }
 
-export function useExitAnimation(ref: RefObject<HTMLElement>, isOpen: boolean) {
+export function useExitAnimation(
+	ref: RefObject<HTMLElement | null>,
+	isOpen: boolean,
+) {
 	let [isFinishing, setIsFinishing] = useState(false);
 	let [exitState, setExitState] = useState("not-started");
 
@@ -51,7 +54,7 @@ export function useExitAnimation(ref: RefObject<HTMLElement>, isOpen: boolean) {
 }
 
 function useAnimation(
-	ref: RefObject<HTMLElement>,
+	ref: RefObject<HTMLElement | null>,
 	isActive: boolean,
 	onEnd: () => void,
 ) {

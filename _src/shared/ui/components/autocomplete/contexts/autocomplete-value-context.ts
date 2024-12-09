@@ -11,7 +11,7 @@ export type AutocompleteValueContextProps<TItemData extends { id: string }> = {
 	isDisabled?: boolean;
 	isInvalid?: boolean;
 	selectionMode: Exclude<SelectionMode, "none">;
-	listRef: RefObject<HTMLDivElement>;
+	listRef: RefObject<HTMLDivElement | null>;
 	selectedNodes: Node<TItemData>[];
 
 	searchValue: string;

@@ -3,14 +3,12 @@ import {
 	UseAutocompleteProps,
 } from "./hooks/use-autocomplete";
 import { Item, Section } from "react-stately";
-import { List } from "../list";
 import { useClickOutside } from "@/_src/shared/lib";
 import {
 	OverlayTriggerStateContext,
 	Provider,
 	Popover,
 	ListStateContext,
-	ListBoxContext,
 	FieldErrorContext,
 	ValidationResult,
 	Separator,
@@ -25,7 +23,7 @@ import {
 } from "./hooks/use-autocomplete-state";
 import { AutocompleteValue } from "./components/autocomplete-value";
 import { AutocompleteList } from "./components/autocomplete-list";
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import { VALID_VALIDITY_STATE } from "@/_src/shared/lib/utils/validation";
 
 /**
@@ -43,7 +41,7 @@ export type AutocompleteProps<TItemData extends { id: string }> = {
 
 function Autocomplete<TItemData extends { id: string }>(
 	props: AutocompleteProps<TItemData>,
-): React.ReactNode {
+): ReactNode {
 	const {
 		label,
 		description,

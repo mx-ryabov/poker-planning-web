@@ -1,16 +1,9 @@
-import {
-	cloneElement,
-	ReactElement,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
-import { mergeProps } from "react-aria";
+import { cloneElement, ReactElement, useEffect, useRef, useState } from "react";
+import { mergeProps, PressEvents, usePress } from "react-aria";
 import { twJoin } from "tailwind-merge";
 
 type ContainerProps = {
-	children: ReactElement[];
+	children: ReactElement<Pick<PressEvents, "onPress">>[];
 	containerClassName?: string;
 	selectorClassName: string;
 
@@ -26,6 +19,7 @@ function SlidingSelectorContainer(props: ContainerProps) {
 		activeIndex,
 		onSelectionReset,
 	} = props;
+	usePress;
 	const [activeElement, setActiveElement] = useState<number | null>(null);
 	const activeElementFinal =
 		activeIndex !== undefined ? activeIndex : activeElement;

@@ -4,16 +4,17 @@ import { useResizeObserver } from "./use-resize-observable";
 
 // Hack. This will be fixed when this PR is released https://github.com/adobe/react-spectrum/pull/6396
 export function usePopoverForcePositionUpdate(
-	popoverRef: RefObject<HTMLElement> | undefined,
-	triggerRef: RefObject<Element> | undefined,
+	popoverRef: RefObject<HTMLElement | null> | undefined,
+	triggerRef: RefObject<Element | null> | undefined,
 ) {
 	const forcePositionUpdate = useCallback(() => {
 		if (!popoverRef || !triggerRef) {
 			return;
 		}
-		if (popoverRef.current) {
+		const popoverEl = popoverRef.current;
+		if (popoverEl) {
 			const { bottom, top, left, right, height } =
-				popoverRef.current?.getBoundingClientRect();
+				popoverEl.getBoundingClientRect();
 
 			requestAnimationFrame(() => {
 				bottom &&
@@ -33,7 +34,7 @@ export function usePopoverForcePositionUpdate(
 					popoverRef.current?.style.setProperty("max-height", ``);
 			});
 		}
-	}, [popoverRef]);
+	}, [popoverRef, triggerRef]);
 
 	useResizeObserver({
 		ref: triggerRef,
