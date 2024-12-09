@@ -1,8 +1,8 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { TextInput } from "./text-input/text-input";
 import { CreateGameFormFormState } from "../../../../model";
 import { StepProps } from "./types";
+import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 
 export function CreatorNameStep({
 	isActive,
@@ -44,7 +44,7 @@ export function CreatorNameStep({
 					},
 				}}
 				render={({ field, fieldState }) => (
-					<TextInput
+					<FullSizeFormTextInput
 						label="Let's get acquainted👇"
 						placeholder="Type your name"
 						maxLength={50}

@@ -1,11 +1,11 @@
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
-import { TextInput } from "./text-input";
+import { FullSizeFormTextInput } from "./component";
 
-describe("Create Game Form Text Input", () => {
+describe("FullSizeFormTextInput", () => {
 	test("renders", async () => {
 		const { unmount, getByText, getByRole } = render(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				onEnter={vi.fn()}
@@ -20,7 +20,7 @@ describe("Create Game Form Text Input", () => {
 	test("can show the value's letters count and the total allowable count if the value.length > 0", async () => {
 		const { getByRole, queryByTestId, getByTestId, user, rerender } =
 			render(
-				<TextInput
+				<FullSizeFormTextInput
 					label="Name"
 					placeholder="Team Planning"
 					onEnter={vi.fn()}
@@ -31,7 +31,7 @@ describe("Create Game Form Text Input", () => {
 		expect(queryByTestId("length-state")).not.toBeInTheDocument();
 		await user.type(textField, "game name");
 		rerender(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				value={"game name"}
@@ -45,7 +45,7 @@ describe("Create Game Form Text Input", () => {
 
 	test("can show validation message", async () => {
 		const { getByTestId, rerender } = render(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				onEnter={vi.fn()}
@@ -56,7 +56,7 @@ describe("Create Game Form Text Input", () => {
 		const errorContainer = getByTestId("error-msg");
 		expect(errorContainer).toHaveTextContent("");
 		rerender(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				onEnter={vi.fn()}
@@ -69,7 +69,7 @@ describe("Create Game Form Text Input", () => {
 
 	test("shows Enter shortcut if the value.length > 0 and hides if === 0", async () => {
 		const { getByTestId, queryByTestId, rerender } = render(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				value=""
@@ -79,7 +79,7 @@ describe("Create Game Form Text Input", () => {
 		);
 		expect(queryByTestId("enter-shortcut")).not.toBeInTheDocument();
 		rerender(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				value="something"
@@ -89,7 +89,7 @@ describe("Create Game Form Text Input", () => {
 		);
 		getByTestId("enter-shortcut");
 		rerender(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				value=""
@@ -103,7 +103,7 @@ describe("Create Game Form Text Input", () => {
 	test("trggers onEnter if focused and Enter is pressed", async () => {
 		const onEnterFn = vi.fn();
 		const { user } = render(
-			<TextInput
+			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				value="something"

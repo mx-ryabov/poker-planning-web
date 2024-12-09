@@ -1,8 +1,8 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { useRef, useEffect, MutableRefObject } from "react";
 import { CreateGameFormFormState } from "../../../../model";
-import { TextInput } from "./text-input/text-input";
 import { StepProps } from "./types";
+import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 
 export const NameStep = ({ isActive, onValidate, onNextStep }: StepProps) => {
 	const inputRef: MutableRefObject<HTMLInputElement | null> =
@@ -35,7 +35,7 @@ export const NameStep = ({ isActive, onValidate, onNextStep }: StepProps) => {
 					control={control}
 					name="name"
 					render={({ field, fieldState }) => (
-						<TextInput
+						<FullSizeFormTextInput
 							label="Hey!👋 What is the name of your game?"
 							placeholder="Team Planning"
 							maxLength={50}

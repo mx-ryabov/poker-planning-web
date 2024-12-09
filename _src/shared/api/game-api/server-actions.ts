@@ -47,6 +47,25 @@ export async function getCurrentParticipant(gameId: string) {
 	}
 }
 
+export async function joinAsGuest(
+	gameId: string,
+	data: { displayName: string },
+) {
+	const res = await appFetchPost<{ displayName: string }>(
+		`/games/${gameId}/join-as-guest`,
+		data,
+	);
+
+	if (res.ok) {
+		const data: { token: string } = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Joining as guest by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
 export async function logout() {
 	const cookieStore = await cookies();
 	cookieStore.delete("token");
