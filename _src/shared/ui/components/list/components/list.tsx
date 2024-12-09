@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from "react";
+import { ForwardedRef, forwardRef, JSX } from "react";
 import { AriaListBoxOptions } from "react-aria";
 import { ListBox, ListBoxProps } from "react-aria-components";
 

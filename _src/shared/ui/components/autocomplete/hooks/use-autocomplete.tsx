@@ -1,4 +1,10 @@
-import { ForwardedRef, RefAttributes, useCallback, useRef } from "react";
+import {
+	ForwardedRef,
+	ReactElement,
+	RefAttributes,
+	useCallback,
+	useRef,
+} from "react";
 import { AriaListBoxProps } from "react-aria";
 import { PopoverProps, SelectionMode } from "react-aria-components";
 import { ListState } from "react-stately";
@@ -17,9 +23,9 @@ export type UseAutocompleteProps<TItemData extends object> = {
 	items?: Iterable<TItemData>;
 	selectionMode?: Exclude<SelectionMode, "none">;
 	children:
-		| React.ReactElement
-		| React.ReactElement[]
-		| ((item: TItemData) => React.ReactElement);
+		| ReactElement
+		| ReactElement[]
+		| ((item: TItemData) => ReactElement);
 } & Omit<
 	AriaListBoxProps<TItemData>,
 	"children" | "onSelectionChange" | "items"
@@ -30,9 +36,9 @@ export function useAutocomplete<TItemData extends object>(
 	listState: ListState<TItemData>,
 ) {
 	const { selectionMode = "single", children, items, ...restProps } = props;
-	const popoverRef = useRef(null);
-	const listRef = useRef<HTMLDivElement>(null);
-	const triggerRef = useRef<HTMLDivElement>(null);
+	const popoverRef = useRef<HTMLDivElement | null>(null);
+	const listRef = useRef<HTMLDivElement | null>(null);
+	const triggerRef = useRef<HTMLDivElement | null>(null);
 
 	const renderEmptyState = useCallback(
 		() => (

@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useRef } from "react";
+import { ReactElement, useCallback, useId, useMemo, useRef } from "react";
 import { AriaListBoxProps, Key, useField, useOverlayTrigger } from "react-aria";
 import { SelectionMode } from "react-aria-components";
 import { ListState, useOverlayTriggerState } from "react-stately";
@@ -10,11 +10,7 @@ import { Separator } from "../../separator";
 export type UseSelectProps<TItemData extends object> = {
 	items?: Iterable<TItemData>;
 	selectionMode?: Exclude<SelectionMode, "none">;
-	children:
-		| React.ReactElement
-		| React.ReactElement[]
-		| ((item: TItemData) => React.ReactElement);
-} & Omit<AriaListBoxProps<TItemData>, "children">;
+} & AriaListBoxProps<TItemData>;
 
 export function useSelect<TItemData extends object>(
 	props: UseSelectProps<TItemData>,

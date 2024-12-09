@@ -37,7 +37,7 @@ export function DrawerModal(props: ModalProps) {
 		portal,
 		stateKey,
 	} = props;
-	const contentRef = useRef<HTMLDivElement>(null);
+	const contentRef = useRef<HTMLDivElement | null>(null);
 
 	// It's a hack because react aria doesn't expose PortalProvider
 	// useLayoutEffect(() => {

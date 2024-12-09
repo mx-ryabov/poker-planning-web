@@ -1,0 +1,1 @@
+export { FullSizeFormTextInput } from "./component";

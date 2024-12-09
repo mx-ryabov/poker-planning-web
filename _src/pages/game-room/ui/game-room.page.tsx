@@ -26,7 +26,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 	const cookieStore = await cookies();
 	const token = cookieStore.get("token")?.value;
 	if (!token) {
-		redirect(`/game/${gameId}/join`);
+		redirect(`/game/${gameId}/join-room`);
 	}
 
 	const [game, currentParticipant] = await Promise.all([

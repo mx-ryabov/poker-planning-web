@@ -1,3 +1,4 @@
+"use client";
 import {
 	useCallback,
 	KeyboardEvent,
@@ -11,16 +12,16 @@ import { twMerge } from "tailwind-merge";
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label: string;
 	error?: string;
-	onEnter: () => void;
+	onEnter?: () => void;
 };
 
-export const TextInput = forwardRef(
+export const FullSizeFormTextInput = forwardRef(
 	(props: Props, ref: ForwardedRef<HTMLInputElement>) => {
 		const { onEnter, maxLength, error, label, ...inputProps } = props;
 
 		const onKeyDown = useCallback(
 			(e: KeyboardEvent<HTMLInputElement>) => {
-				if (e.key === "Enter") {
+				if (e.key === "Enter" && onEnter) {
 					onEnter();
 					e.preventDefault();
 				}
