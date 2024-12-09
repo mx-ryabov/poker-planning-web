@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { CreateGameFormFormState } from "../../../../model";
 import { StepProps } from "./types";
@@ -9,8 +9,7 @@ export function CreatorNameStep({
 	onValidate,
 	onNextStep,
 }: StepProps) {
-	const inputRef: MutableRefObject<HTMLInputElement | null> =
-		useRef<HTMLInputElement>(null);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 	const { control, formState } = useFormContext<CreateGameFormFormState>();
 
 	useEffect(() => {

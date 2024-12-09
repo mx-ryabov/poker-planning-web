@@ -10,7 +10,8 @@ export function Avatar({ altText, className }: AvatarProps) {
 	const initials = altText
 		.split(" ")
 		.map((word) => word[0].toUpperCase())
-		.join("");
+		.join("")
+		.slice(0, 2);
 	return (
 		<div
 			className={twMerge(

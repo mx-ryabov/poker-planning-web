@@ -16,7 +16,8 @@ export function UserBar({ onLogout }: Props) {
 		return currentParticipant.displayName
 			.split(" ")
 			.map((word) => word[0].toUpperCase())
-			.join("");
+			.join("")
+			.slice(0, 2);
 	}, [currentParticipant.displayName]);
 
 	return (

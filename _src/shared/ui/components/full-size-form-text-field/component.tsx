@@ -21,8 +21,8 @@ export const FullSizeFormTextInput = forwardRef(
 
 		const onKeyDown = useCallback(
 			(e: KeyboardEvent<HTMLInputElement>) => {
-				if (e.key === "Enter") {
-					onEnter && onEnter();
+				if (e.key === "Enter" && onEnter) {
+					onEnter();
 					e.preventDefault();
 				}
 			},

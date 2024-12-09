@@ -58,11 +58,13 @@ export async function joinAsGuest(
 
 	if (res.ok) {
 		const data: { token: string } = await res.json();
-		return data;
+		const cookieStore = await cookies();
+		cookieStore.set("token", data.token, {
+			httpOnly: true,
+		});
+		redirect(`/game/${gameId}`);
 	} else {
-		throw new Error(
-			`Joining as guest by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
-		);
+		return `Joining as guest by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`;
 	}
 }
 
