@@ -12,9 +12,39 @@ export function createGameAsyncStateSliceCreator(
 > {
 	return (set) => ({
 		state: initialState,
-		addParticipant: (participant) => {
+		joinParticipant: (participant) => {
 			set((state) => {
-				state.state.game.participants.push(participant);
+				const participantFromList = state.state.game.participants.find(
+					(p) => p.id === participant.id,
+				);
+				if (participantFromList) {
+					participantFromList.online = true;
+				} else {
+					state.state.game.participants.push({
+						...participant,
+						online: true,
+					});
+				}
+			});
+		},
+		disconnectParticipant: (userId) => {
+			set((state) => {
+				const participantFromList = state.state.game.participants.find(
+					(p) => p.userId === userId,
+				);
+				if (participantFromList) {
+					participantFromList.online = false;
+				}
+			});
+		},
+		kickParticipant: (participantId) => {
+			set((state) => {
+				const ind = state.state.game.participants.findIndex(
+					(p) => p.id === participantId,
+				);
+				if (ind >= 0) {
+					state.state.game.participants.splice(ind, 1);
+				}
 			});
 		},
 	});

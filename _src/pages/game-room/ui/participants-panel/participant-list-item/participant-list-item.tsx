@@ -34,7 +34,8 @@ export function ParticipantListItem({
 		<div className="flex flex-row gap-3">
 			<Avatar
 				altText={participantFromList.displayName}
-				className="bg-primary-100 text-primary-500 w-10 h-10 shrink-0"
+				className="w-10 h-10 shrink-0"
+				online={participantFromList.online}
 			/>
 			<div className="flex flex-row w-full justify-between">
 				<div className="flex flex-col">

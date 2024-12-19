@@ -4,8 +4,10 @@ import {
 	GetGameByIdResponse,
 } from "@/_src/shared/api/game-api";
 import {
-	createGameStateStore,
+	useGameStateStore,
+	GameEventsProvider,
 	GameStateProvider,
+	useGameEventsDispatcher,
 	useGameEventsHub,
 } from "../model";
 import { ReactNode } from "react";
@@ -25,10 +27,15 @@ export function GameRoomPageProvider({
 	currentParticipant,
 	children,
 }: Props) {
-	useGameEventsHub({ accessTokenFactory, gameId });
-	const gameStateStore = createGameStateStore({ game, currentParticipant });
+	const eventListener = useGameEventsHub({ accessTokenFactory, gameId });
+	const gameStateStore = useGameStateStore({ game, currentParticipant });
+	useGameEventsDispatcher({ eventListener, gameStateStore });
 
 	return (
-		<GameStateProvider store={gameStateStore}>{children}</GameStateProvider>
+		<GameEventsProvider value={eventListener}>
+			<GameStateProvider store={gameStateStore}>
+				{children}
+			</GameStateProvider>
+		</GameEventsProvider>
 	);
 }

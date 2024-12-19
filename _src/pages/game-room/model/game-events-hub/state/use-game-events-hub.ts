@@ -1,14 +1,27 @@
-import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
+import {
+	HubConnection,
+	HubConnectionState,
+} from "@microsoft/signalr/dist/esm/HubConnection";
 import { HubConnectionBuilder } from "@microsoft/signalr/dist/esm/HubConnectionBuilder";
 import { HttpTransportType } from "@microsoft/signalr/dist/esm/ITransport";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+	ParticipantJoinedEvent,
+	ParticipantLeftEvent,
+} from "../events/game-events";
+import { GameEventType, GameEventTypeMap } from "../events";
+import { GameEventListener } from "./use-game-events-hub.types";
 
 type Props = {
 	gameId: string;
 	accessTokenFactory: () => Promise<string>;
 };
 
-export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
+export function useGameEventsHub({
+	gameId,
+	accessTokenFactory,
+}: Props): GameEventListener {
+	const gameEventTarget = useMemo(() => new EventTarget(), []);
 	const [connection, setConnection] = useState<HubConnection | null>(null);
 
 	useEffect(() => {
@@ -24,6 +37,7 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 			.build();
 		conn.start()
 			.then(() => {
+				console.log("started");
 				setConnection(conn);
 			})
 			.catch((e) => {
@@ -37,12 +51,23 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 	}, [setConnection, gameId, accessTokenFactory]);
 
 	useEffect(() => {
-		if (!connection) {
+		if (!connection || connection.state !== HubConnectionState.Connected) {
 			return;
 		}
-		console.log("connected!");
-		connection.on("ParticipantJoined", (data) => {
-			console.log("ParticipantJoined", data);
+		connection.on(GameEventType.ParticipantJoined, (data) => {
+			gameEventTarget.dispatchEvent(new ParticipantJoinedEvent(data));
 		});
-	}, [connection]);
+		connection.on(GameEventType.ParticipantLeft, (data) => {
+			gameEventTarget.dispatchEvent(new ParticipantLeftEvent(data));
+		});
+	}, [connection, gameEventTarget]);
+
+	return {
+		add: gameEventTarget.addEventListener.bind(
+			gameEventTarget,
+		) as GameEventListener["add"],
+		remove: gameEventTarget.removeEventListener.bind(
+			gameEventTarget,
+		) as GameEventListener["remove"],
+	};
 }
