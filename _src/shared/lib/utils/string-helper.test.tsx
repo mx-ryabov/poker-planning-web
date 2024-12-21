@@ -36,6 +36,4 @@ describe("StringHelper", () => {
 			expect(StringHelper.getFirstLetters("One", 2)).toHaveLength(1);
 		});
 	});
-
-	describe("cleanUpString", () => {});
 });

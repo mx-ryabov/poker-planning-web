@@ -8,10 +8,27 @@ import {
 import { GAME_MOCK } from "./game-management-drawer.mock";
 import { GameManagementDrawer } from "../game-management-drawer";
 import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
+import { generateParticipant } from "../../../__tests__/game-state-store.test-helpers";
+import { ParticipantRole } from "@/_src/shared/api";
 
 const gameStateStore = createGameStateStore({
-	game: GAME_MOCK,
-	currentParticipant: MASTER_PARTICIPANT,
+	game: {
+		...GAME_MOCK,
+		participants: [
+			...GAME_MOCK.participants,
+			generateParticipant({
+				role: ParticipantRole.VotingMember,
+				displayName: "active voting memeber",
+				online: true,
+			}),
+			generateParticipant({
+				role: ParticipantRole.VotingMember,
+				displayName: "inactive voting memeber",
+				online: false,
+			}),
+		],
+	},
+	currentParticipant: { ...MASTER_PARTICIPANT, online: true },
 });
 function renderDrawer() {
 	return render(
@@ -74,7 +91,8 @@ describe("Game Management Drawer", () => {
 			);
 
 			const header = getByRole("banner");
-			expect(header).toHaveTextContent(/1 online/i);
+			expect(header).toHaveTextContent(/3 in the list/i);
+			expect(header).toHaveTextContent(/2 online/i);
 		});
 
 		test("is the active tab is TaskList then shows the task's count", async () => {

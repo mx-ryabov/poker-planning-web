@@ -3,11 +3,8 @@ import { renderHook } from "@/test/utilities";
 import { createGameStateStore } from "../game-state-store";
 import { GameManagementTab } from "../game-management-slice/game-managemet.model";
 import { GAME_MOCK } from "./game-state-store.mocks";
-import {
-	MASTER_PARTICIPANT,
-	VOTING_MEMBER_PARTICIPANT,
-} from "@/_src/shared/mocks/game/participant";
-import { generateParticipant } from "./game-state-store.test-helpers";
+import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
+import { generateParticipant } from "../../../__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
 
 describe("Game State Store", () => {
