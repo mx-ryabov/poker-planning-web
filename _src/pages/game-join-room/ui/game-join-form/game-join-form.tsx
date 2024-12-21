@@ -1,5 +1,6 @@
 "use client";
 
+import { StringHelper } from "@/_src/shared/lib/utils/string-helper";
 import { Color } from "@/_src/shared/ui/colors";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
@@ -23,7 +24,10 @@ const GameJoinFormSchema = z.object({
 	displayName: z
 		.string()
 		.min(1, "Don't be shy!")
-		.max(50, "Maybe you have a short name?"),
+		.max(50, "Maybe you have a short name?")
+		.transform((val) =>
+			StringHelper.cleanUpString(val, { onlyWords: true }),
+		),
 });
 
 export function GameJoinForm({ gameId, onSubmit }: Props) {

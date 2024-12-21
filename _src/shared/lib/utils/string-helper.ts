@@ -9,4 +9,12 @@ export class StringHelper {
 			.join("")
 			.slice(0, maxCount);
 	}
+
+	static cleanUpString(
+		input: string,
+		options?: { onlyWords?: boolean },
+	): string {
+		const result = input.trim().replace(/\s+/g, " ");
+		return options?.onlyWords ? result.replace(/[^\w\s]/g, "") : result;
+	}
 }

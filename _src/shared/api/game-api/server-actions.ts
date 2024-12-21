@@ -41,6 +41,9 @@ export async function getCurrentParticipant(gameId: string) {
 		const data: GameParticipant = await res.json();
 		return data;
 	} else {
+		if (res.status === 404) {
+			redirect(`/game/${gameId}/join-room`);
+		}
 		throw new Error(
 			`Getting Current Participant by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
 		);
@@ -66,6 +69,11 @@ export async function joinAsGuest(
 	} else {
 		return `Joining as guest by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`;
 	}
+}
+
+export async function getToken() {
+	const cookieStore = await cookies();
+	return cookieStore.get("token")?.value;
 }
 
 export async function logout() {
