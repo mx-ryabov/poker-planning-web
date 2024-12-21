@@ -22,6 +22,9 @@ export const selectSortedParticipants = (state: GameStateStore) => {
 export const selectParticipantsCount = (state: GameStateStore) =>
 	state.state.game.participants.length;
 
+export const selectParticipantsOnlineCount = (state: GameStateStore) =>
+	state.state.game.participants.filter((p) => p.online).length;
+
 export const selectTickets = (state: GameStateStore) =>
 	state.state.game.tickets;
 
