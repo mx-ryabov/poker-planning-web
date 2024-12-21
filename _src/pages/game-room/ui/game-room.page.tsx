@@ -2,10 +2,10 @@
 import {
 	getCurrentParticipant,
 	getGameById,
+	getToken,
 	logout,
 } from "@/_src/shared/api/game-api";
 import { NextPage } from "next/types";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { GameRoomPageProvider } from "./game-room-page.provider";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
@@ -23,8 +23,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 	params,
 }: PageProps) => {
 	const { id: gameId } = await params;
-	const cookieStore = await cookies();
-	const token = cookieStore.get("token")?.value;
+	const token = await getToken();
 	if (!token) {
 		redirect(`/game/${gameId}/join-room`);
 	}

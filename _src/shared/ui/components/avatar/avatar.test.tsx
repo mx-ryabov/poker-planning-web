@@ -2,6 +2,7 @@ import { test, describe, expect } from "vitest";
 import { render, screen } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Avatar } from "./component";
+import { Color } from "../../colors";
 
 describe("Avatar", () => {
 	test("renders successfully", async () => {
@@ -30,6 +31,51 @@ describe("Avatar", () => {
 		const { container } = render(<Avatar altText={"One Two Three"} />);
 
 		expect(container).toHaveTextContent("OT");
+	});
+
+	test("displays online badge if online property is provided", async () => {
+		const { queryByTestId, rerender } = render(
+			<Avatar altText={"One Two Three"} />,
+		);
+
+		expect(queryByTestId("online-badge")).not.toBeInTheDocument();
+
+		rerender(<Avatar altText={"One Two Three"} online />);
+
+		expect(queryByTestId("online-badge")).toBeInTheDocument();
+	});
+
+	test("applies Error colors based on the first letter of altText", async () => {
+		const { getByTestId } = render(<Avatar altText={"Abra"} />);
+
+		const avatarFrame = getByTestId("avatar");
+		screen.debug(avatarFrame);
+		expect(avatarFrame).toHaveStyle({
+			"background-color": Color.Error100,
+			color: Color.Error500,
+		});
+	});
+
+	test("applies Warning colors based on the first letter of altText", async () => {
+		const { getByTestId } = render(<Avatar altText={"Babra"} />);
+
+		const avatarFrame = getByTestId("avatar");
+		screen.debug(avatarFrame);
+		expect(avatarFrame).toHaveStyle({
+			"background-color": Color.Warning100,
+			color: Color.Warning500,
+		});
+	});
+
+	test("applies Info colors based on the first letter of altText", async () => {
+		const { getByTestId } = render(<Avatar altText={"Dabra"} />);
+
+		const avatarFrame = getByTestId("avatar");
+		screen.debug(avatarFrame);
+		expect(avatarFrame).toHaveStyle({
+			"background-color": Color.Info100,
+			color: Color.Info500,
+		});
 	});
 
 	test("doesn't violate any accessiblity rules", async () => {

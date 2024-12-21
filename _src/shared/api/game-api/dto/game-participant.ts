@@ -4,5 +4,6 @@ export type GameParticipant = {
 	id: string;
 	displayName: string;
 	role: ParticipantRole;
-	userId?: string;
+	online: boolean;
+	userId: string;
 };

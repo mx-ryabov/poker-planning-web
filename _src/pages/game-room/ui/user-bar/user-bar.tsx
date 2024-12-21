@@ -4,6 +4,7 @@ import { LogoutIcon, ProfileIcon } from "@/_src/shared/ui/components/icon";
 import { Menu } from "@/_src/shared/ui/components/menu";
 import { selectCurrentParticipant, useGameState } from "../../model";
 import { useMemo } from "react";
+import { StringHelper } from "@/_src/shared/lib/utils/string-helper";
 
 type Props = {
 	onLogout: () => void;
@@ -13,11 +14,10 @@ export function UserBar({ onLogout }: Props) {
 	const currentParticipant = useGameState(selectCurrentParticipant);
 
 	const initials = useMemo(() => {
-		return currentParticipant.displayName
-			.split(" ")
-			.map((word) => word[0].toUpperCase())
-			.join("")
-			.slice(0, 2);
+		return StringHelper.getFirstLetters(
+			currentParticipant.displayName,
+			2,
+		).toUpperCase();
 	}, [currentParticipant.displayName]);
 
 	return (

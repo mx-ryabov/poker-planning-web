@@ -9,7 +9,9 @@ export type GameManagementSlice = {
 
 export type GameAsyncSlice = {
 	state: GameAsyncState;
-	addParticipant: (participant: GameParticipant) => void;
+	joinParticipant: (participant: GameParticipant) => void;
+	disconnectParticipant: (userId: string) => void;
+	kickParticipant: (participantId: string) => void;
 };
 
 export type GameStateStore = GameAsyncSlice & GameManagementSlice;

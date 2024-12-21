@@ -1,5 +1,5 @@
 import { GameParticipant } from "@/_src/shared/api";
-import { selectParticipants, useGameState } from "../../../model";
+import { selectSortedParticipants, useGameState } from "../../../model";
 import { ReactNode } from "react";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export function ParticipantList({ children }: Props) {
-	const participants = useGameState(selectParticipants);
+	const participants = useGameState(selectSortedParticipants);
 
 	return (
 		<div className="flex flex-col gap-3 h-full overflow-y-auto">

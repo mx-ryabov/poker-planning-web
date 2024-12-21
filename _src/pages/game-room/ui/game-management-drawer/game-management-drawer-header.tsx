@@ -8,6 +8,7 @@ import {
 import {
 	GameManagementTab,
 	selectParticipantsCount,
+	selectParticipantsOnlineCount,
 	selectTicketsCount,
 	useGameManagementState,
 	useGameState,
@@ -32,13 +33,14 @@ const headerStyles = cva(
 export function DrawerHeader() {
 	const activeTab = useGameManagementState((state) => state.activeTab);
 	const participantsCount = useGameState(selectParticipantsCount);
+	const participantsOnlineCount = useGameState(selectParticipantsOnlineCount);
 	const ticketsCount = useGameState(selectTicketsCount);
 
 	const headers = useMemo(
 		() => [
 			{
 				title: "Participants",
-				subTitle: `${participantsCount} online`,
+				subTitle: `${participantsCount} in the list. ${participantsOnlineCount} online`,
 				icon: PeopleIcon,
 				tab: GameManagementTab.ParticipantList,
 			},
@@ -54,7 +56,7 @@ export function DrawerHeader() {
 				tab: GameManagementTab.Settings,
 			},
 		],
-		[participantsCount, ticketsCount],
+		[participantsCount, ticketsCount, participantsOnlineCount],
 	);
 
 	return (

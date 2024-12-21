@@ -1,3 +1,4 @@
+import { StringHelper } from "@/_src/shared/lib";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,8 @@ const CreateGameFormSchema = z.object({
 		.max(
 			50,
 			"Statistically, 50 can be painful. For your brain, to perceive the information.",
-		),
+		)
+		.transform((val) => StringHelper.cleanUpString(val)),
 	votingSystemId: z
 		.string({
 			required_error:
@@ -20,7 +22,10 @@ const CreateGameFormSchema = z.object({
 	creatorName: z
 		.string()
 		.min(1, "Don't be shy!")
-		.max(50, "Maybe you have a short name?"),
+		.max(50, "Maybe you have a short name?")
+		.transform((val) =>
+			StringHelper.cleanUpString(val, { onlyWords: true }),
+		),
 	isAutoRevealCards: z.boolean().optional(),
 });
 
