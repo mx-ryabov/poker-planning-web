@@ -40,7 +40,7 @@ export function Separator({
 }: SeparatorProps) {
 	const direction = position === "start" ? "right/bottom" : "left/top";
 	return (
-		<div className="h-full relative" data-testid="drawer-separator">
+		<div className="h-full relative z-10" data-testid="drawer-separator">
 			<ResizeSeparator
 				orientation="vertical"
 				direction={direction}

@@ -1,7 +1,9 @@
 import {
 	GameParticipant,
+	GameTicket,
 	GetGameByIdResponse,
 	ParticipantRole,
+	TicketType,
 } from "@/_src/shared/api/game-api";
 import { NEWLY_CREATED_GAME } from "@/_src/shared/mocks/game";
 
@@ -24,6 +26,19 @@ export function generateParticipant(
 		userId: uuidv4(),
 		role: ParticipantRole.VotingMember,
 		...overrideParticipant,
+	};
+}
+
+export function generateTicket(
+	overrideTicket: Partial<GameTicket>,
+): GameTicket {
+	return {
+		id: uuidv4(),
+		title: "New Ticket",
+		type: TicketType.Story,
+		description: "",
+		identifier: "TEST-1",
+		...overrideTicket,
 	};
 }
 

@@ -51,7 +51,7 @@ function SlidingSelectorContainer(props: ContainerProps) {
 		activeFloatingEl.style.height = `${activeClientRect.height}px`;
 
 		activeFloatingEl.style.transform = `translate(${activeClientRect.left - firstClientRect.left}px, ${activeClientRect.top - firstClientRect.top}px)`;
-	}, [children, containerRef, activeElementFinal, activeFloatingElRef]);
+	}, [containerRef, activeElementFinal, activeFloatingElRef]);
 
 	return (
 		<div
@@ -65,6 +65,7 @@ function SlidingSelectorContainer(props: ContainerProps) {
 					data-sliding-selector-element-active={
 						ind === activeElementFinal
 					}
+					className="group"
 				>
 					{cloneElement(child, {
 						...mergeProps(child.props, {

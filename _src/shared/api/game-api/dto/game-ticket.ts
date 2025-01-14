@@ -4,7 +4,7 @@ export type GameTicket = {
 	description: string;
 	link?: string;
 	type?: TicketType;
-	identifier?: string;
+	identifier: string;
 	estimation?: string;
 };
 

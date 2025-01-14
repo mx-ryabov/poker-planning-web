@@ -53,19 +53,19 @@ html {
 	width: 16px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
 	background: white;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #c1c0c4;
+	background: #e9e8e9;
 	border-radius: 8px;
 	border: 4px solid white;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: white;
+	background: #c1c0c4;
+}
+::-webkit-scrollbar-thumb:active {
+	background: #85828a;
 }

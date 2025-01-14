@@ -60,7 +60,10 @@ export function DrawerHeader() {
 	);
 
 	return (
-		<header className="h-11" data-testid="game-management-drawer-header">
+		<header
+			className="h-12 mx-6 mt-6"
+			data-testid="game-management-drawer-header"
+		>
 			<div className="w-full h-full relative flex flex-col overflow-hidden">
 				{headers.map((header) => (
 					<div

@@ -30,7 +30,7 @@ export function useClickOutside(
 				document?.removeEventListener("mousedown", clickHandler);
 			};
 		}
-	}, [refs, cb]);
+	}, [refs, cb, options?.areAllElementsObservable]);
 }
 
 type UseClickOutsideOptions = {

@@ -1,6 +1,6 @@
 import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
 import { ReactNode, useMemo } from "react";
-import { Placement } from "react-aria";
+import { Placement, PlacementAxis } from "react-aria";
 import {
 	TooltipTrigger as TooltipTriggerAria,
 	Tooltip as TooltipAria,
@@ -26,34 +26,12 @@ function Wrapper(props: TriggerProps) {
 
 type ContentProps = TooltipAriaProps;
 
-const ARROW_PATH: Record<Placement, ReactNode> = {
+const ARROW_PATH: Record<PlacementAxis, ReactNode> = {
 	bottom: <path d="M0 8 L4 4 L8 8" />,
-	"bottom left": <path d="M0 8 L4 4 L8 8" />,
-	"bottom right": <path d="M0 8 L4 4 L8 8" />,
-	"bottom start": <path d="M0 8 L4 4 L8 8" />,
-	"bottom end": <path d="M0 8 L4 4 L8 8" />,
-
 	top: <path d="M0 0 L4 4 L8 0" />,
-	"top left": <path d="M0 0 L4 4 L8 0" />,
-	"top right": <path d="M0 0 L4 4 L8 0" />,
-	"top start": <path d="M0 0 L4 4 L8 0" />,
-	"top end": <path d="M0 0 L4 4 L8 0" />,
-
 	left: <path d="M0 0 L4 4 L0 8" />,
-	"left top": <path d="M0 0 L4 4 L0 8" />,
-	"left bottom": <path d="M0 0 L4 4 L0 8" />,
-
-	start: <path d="M0 0 L4 4 L0 8" />,
-	"start top": <path d="M0 0 L4 4 L0 8" />,
-	"start bottom": <path d="M0 0 L4 4 L0 8" />,
-
+	center: <path d="M0 0 L4 4 L0 8" />,
 	right: <path d="M8 0 L4 4 L8 8" />,
-	"right top": <path d="M8 0 L4 4 L8 8" />,
-	"right bottom": <path d="M8 0 L4 4 L8 8" />,
-
-	end: <path d="M8 0 L4 4 L8 8" />,
-	"end top": <path d="M8 0 L4 4 L8 8" />,
-	"end bottom": <path d="M8 0 L4 4 L8 8" />,
 };
 
 function Content(props: ContentProps) {
@@ -86,7 +64,7 @@ function Content(props: ContentProps) {
 				<>
 					<OverlayArrow>
 						<svg width={8} height={8} viewBox="0 0 8 8">
-							{ARROW_PATH[placement]}
+							{ARROW_PATH[renderProps.placement]}
 						</svg>
 					</OverlayArrow>
 					{typeof children === "function"

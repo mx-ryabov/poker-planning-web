@@ -3,7 +3,7 @@ import { Drawer } from "@/_src/shared/ui/components/drawer";
 import { GameManagementTab, useGameManagementState } from "../../model";
 import { DrawerHeader } from "./game-management-drawer-header";
 import { DrawerBody } from "./game-management-drawer-body";
-import { TasksPanel } from "../tasks-panel";
+import { TicketsPanel } from "../tickets-panel";
 import { ParticipantsPanel } from "../participants-panel";
 import { SettingsPanel } from "../settings-panel";
 
@@ -27,23 +27,23 @@ export function GameManagementDrawer() {
 				data-testid="game-management-drawer-content"
 			>
 				<DrawerHeader />
-				<DrawerBody
-					panels={{
-						[GameManagementTab.TaskList]: {
-							index: 0,
-							component: <TasksPanel />,
-						},
-						[GameManagementTab.ParticipantList]: {
-							index: 1,
-							component: <ParticipantsPanel />,
-						},
-						[GameManagementTab.Settings]: {
-							index: 2,
-							component: <SettingsPanel />,
-						},
-					}}
-				/>
+				<DrawerBody panels={PANELS} />
 			</section>
 		</Drawer.Modal>
 	);
 }
+
+const PANELS = {
+	[GameManagementTab.TaskList]: {
+		index: 0,
+		component: <TicketsPanel />,
+	},
+	[GameManagementTab.ParticipantList]: {
+		index: 1,
+		component: <ParticipantsPanel />,
+	},
+	[GameManagementTab.Settings]: {
+		index: 2,
+		component: <SettingsPanel />,
+	},
+};

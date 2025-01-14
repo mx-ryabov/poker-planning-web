@@ -36,6 +36,14 @@ export const DefaultLargeDisabled: Story = {
 	},
 };
 
+export const DefaultLargePending: Story = {
+	args: {
+		...Default.args,
+		size: "large",
+		isPending: true,
+	},
+};
+
 export const DefaultLarge: Story = {
 	args: {
 		...Default.args,

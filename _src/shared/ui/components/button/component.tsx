@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { IconType } from "../icon/icon-builder";
 import {
 	ButtonContext,
@@ -15,8 +15,8 @@ type BaseButtonProps = { isPending?: boolean } & ButtonStylesProps &
 
 type LabeledButtonProps = BaseButtonProps & {
 	title: string;
-	iconLeft?: IconType;
-	iconRight?: IconType;
+	contentLeft?: ReactNode;
+	contentRight?: ReactNode;
 };
 
 type SquareButtonProps = BaseButtonProps & { icon: IconType };
@@ -29,13 +29,19 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			size = "medium",
 			variant = "default",
 			isPending = false,
-			iconLeft,
-			iconRight,
+			contentLeft,
+			contentRight,
 			role,
 			className,
 		} = props;
 
-		let { buttonProps, isPressed } = useButton(props, ref);
+		let { buttonProps, isPressed } = useButton(
+			{
+				...props,
+				isDisabled: props.isDisabled || isPending,
+			},
+			ref,
+		);
 		let { hoverProps, isHovered } = useHover({
 			...props,
 			isDisabled: props.isDisabled || isPending,
@@ -73,9 +79,9 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 				{isPending && (
 					<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
 				)}
-				{iconLeft && iconLeft({ size: ButtonIconSize[size] })}
+				{contentLeft}
 				{title}
-				{iconRight && iconRight({ size: ButtonIconSize[size] })}
+				{contentRight}
 			</button>
 		);
 	},
@@ -93,7 +99,13 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 			className,
 		} = props;
 
-		const { buttonProps, isPressed } = useButton(props, ref);
+		const { buttonProps, isPressed } = useButton(
+			{
+				...props,
+				isDisabled: props.isDisabled || isPending,
+			},
+			ref,
+		);
 		let { hoverProps, isHovered } = useHover({
 			...props,
 			isDisabled: props.isDisabled || isPending,
@@ -128,7 +140,10 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 				role={role || "button"}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}
 			>
-				{icon({ size: ButtonIconSize[size] })}
+				{isPending && (
+					<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+				)}
+				{!isPending && icon({ size: ButtonIconSize[size] })}
 			</button>
 		);
 	},

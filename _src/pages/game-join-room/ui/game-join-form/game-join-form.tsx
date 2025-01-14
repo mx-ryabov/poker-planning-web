@@ -124,7 +124,7 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 							!!error || !formState.dirtyFields.displayName
 						}
 						isPending={isPending}
-						iconRight={PlayIcon}
+						contentRight={PlayIcon({ size: 18 })}
 					/>
 				</section>
 			</footer>

@@ -35,13 +35,13 @@ export default function Error({
 				<Button
 					title="Go Back"
 					variant="ghost"
-					iconLeft={ArrowLeftIcon}
+					contentLeft={ArrowLeftIcon({ size: 18 })}
 					onPress={() => router.back()}
 				/>
 				<Button
 					title="Try Again"
 					variant="outline"
-					iconLeft={RefreshBorderlessIcon}
+					contentLeft={RefreshBorderlessIcon({ size: 18 })}
 					onPress={reset}
 				/>
 			</div>

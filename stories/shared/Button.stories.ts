@@ -29,8 +29,18 @@ export const DefaultLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		isDisabled: true,
-		iconLeft: SettingsIcon,
-		iconRight: ArrowRightIcon,
+		contentLeft: SettingsIcon({ size: 18 }),
+		contentRight: ArrowRightIcon({ size: 18 }),
+	},
+};
+
+export const DefaultLargePending: Story = {
+	args: {
+		...Default.args,
+		size: "large",
+		isPending: true,
+		contentLeft: SettingsIcon({ size: 18 }),
+		contentRight: ArrowRightIcon({ size: 18 }),
 	},
 };
 
@@ -84,7 +94,7 @@ export const OutlineLarge: Story = {
 		...Default.args,
 		size: "large",
 		variant: "outline",
-		iconLeft: SettingsIcon,
+		contentLeft: SettingsIcon({ size: 18 }),
 	},
 };
 
@@ -169,7 +179,7 @@ export const GrayedOutLarge: Story = {
 		...Default.args,
 		size: "large",
 		variant: "grayed-out",
-		iconRight: ArrowRightIcon,
+		contentRight: ArrowRightIcon({ size: 18 }),
 	},
 };
 

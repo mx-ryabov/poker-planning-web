@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, ReactNode, useEffect, useRef } from "react";
 import { GameManagementTab, useGameManagementState } from "../../model";
 
 type DrawerBodyProps = {
@@ -10,37 +10,52 @@ type DrawerBodyProps = {
 
 export function DrawerBody({ panels }: DrawerBodyProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const activeTab = useGameManagementState((state) => state.activeTab);
-
-	useEffect(() => {
-		const containerEl = containerRef.current;
-		if (!containerEl || !activeTab) return;
-
-		[...containerEl.children].forEach((panelEl) => {
-			if (panelEl instanceof HTMLDivElement) {
-				panelEl.style.transform = `translateX(-${panels[activeTab].index}00%)`;
-			}
-		});
-	}, [containerRef, panels, activeTab]);
-
-	if (!activeTab) return null;
 
 	return (
 		<section
-			className="w-full h-full overflow-hidden relative flex flex-row"
+			className="w-full h-full overflow-hidden relative flex flex-row px-6 pb-6"
 			ref={containerRef}
 			data-testid="game-management-drawer-body"
 		>
 			{Object.entries(panels).map(([tab, panelNode]) => (
-				<div
-					key={tab}
-					data-testid={`game-management-panel-${tab}`}
-					aria-hidden={tab !== activeTab}
-					className="w-full h-full flex-shrink-0 transition-transform duration-300"
-				>
+				<Slide key={tab} tab={tab} index={panelNode.index}>
 					{panelNode.component}
-				</div>
+				</Slide>
 			))}
 		</section>
+	);
+}
+
+type SlideProps = {
+	tab: string;
+	index: number;
+	children: ReactNode;
+};
+
+function Slide({ children, tab, index }: SlideProps) {
+	const slideRef = useRef<HTMLDivElement | null>(null);
+	const activeTab = useGameManagementState((state) => state.activeTab);
+
+	useEffect(() => {
+		const slideEl = slideRef.current;
+		if (!slideEl || !activeTab) return;
+
+		let translateValue = -100 * index;
+		if (tab !== activeTab) {
+			translateValue += 100;
+		}
+		slideEl.style.transform = `translateX(${translateValue}%)`;
+	}, [slideRef, activeTab, index, tab]);
+
+	return (
+		<div
+			ref={slideRef}
+			data-testid={`game-management-panel-${tab}`}
+			aria-hidden={tab !== activeTab}
+			className="w-full h-full flex-shrink-0 transition-transform duration-300"
+			style={{ visibility: activeTab === tab ? "visible" : "hidden" }}
+		>
+			{children}
+		</div>
 	);
 }

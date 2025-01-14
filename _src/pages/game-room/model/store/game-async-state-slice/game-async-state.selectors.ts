@@ -33,3 +33,9 @@ export const selectTicketsCount = (state: GameStateStore) =>
 
 export const selectCurrentParticipant = (state: GameStateStore) =>
 	state.state.currentParticipant;
+
+export const selectCurrentRole = (state: GameStateStore) =>
+	state.state.currentParticipant.role;
+
+export const selectCurrentGameId = (state: GameStateStore) =>
+	state.state.game.id;

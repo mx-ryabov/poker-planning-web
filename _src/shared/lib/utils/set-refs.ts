@@ -1,8 +1,8 @@
-import { ForwardedRef, MutableRefObject } from "react";
+import { ForwardedRef, RefObject } from "react";
 
 export function setRefs<ElementType extends HTMLElement>(
-	localRef: MutableRefObject<ElementType | null>,
-	forwardRef: ForwardedRef<ElementType>,
+	localRef: RefObject<ElementType | null>,
+	forwardRef?: ForwardedRef<ElementType>,
 ) {
 	return (element: ElementType | null) => {
 		localRef.current = element;
