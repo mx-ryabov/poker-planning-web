@@ -1,5 +1,5 @@
 import { test, describe, expect, vi } from "vitest";
-import { render, screen } from "@/test/utilities";
+import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Button, ButtonSquare } from "./component";
 import { CheckIcon } from "../icon";
@@ -66,6 +66,22 @@ describe("Button Square", () => {
 		const onPressFn = vi.fn();
 		const { user, getByRole } = render(
 			<ButtonSquare icon={CheckIcon} isDisabled onPress={onPressFn} />,
+		);
+		const button = getByRole("button");
+
+		await user.click(button);
+
+		expect(onPressFn).not.toHaveBeenCalled();
+	});
+
+	test("isn't pressable when isPending", async () => {
+		const onPressFn = vi.fn();
+		const { user, getByRole } = render(
+			<ButtonSquare
+				icon={CheckIcon}
+				isPending={true}
+				onPress={onPressFn}
+			/>,
 		);
 		const button = getByRole("button");
 

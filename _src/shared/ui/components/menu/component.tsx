@@ -54,12 +54,12 @@ export function MenuItem(props: MenuItemProps) {
 				props.children,
 				(children, { selectionMode, isSelected, hasSubmenu }) => (
 					<>
+						{children}
 						{selectionMode !== "none" && (
-							<span className="flex items-center w-4">
+							<span className="flex items-center w-4 ml-auto">
 								{isSelected && <CheckIcon size={20} />}
 							</span>
 						)}
-						{children}
 						{hasSubmenu && <ArrowRightSimpleIcon size={20} />}
 					</>
 				),

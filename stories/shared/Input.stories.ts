@@ -46,6 +46,16 @@ export const InputError: Story = {
 	},
 };
 
+export const InputErrorWithErrorIcon: Story = {
+	args: {
+		label: "Label",
+		placeholder: "Placeholder",
+		startIcon: PeopleIcon,
+		withErrorIcon: true,
+		errors: ["This field is required"],
+	},
+};
+
 export const InputDisabled: Story = {
 	args: {
 		label: "Label",

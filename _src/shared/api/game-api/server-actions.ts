@@ -1,7 +1,13 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { CreateGameRequest, CreateGameResponse, GameParticipant } from "./dto";
+import {
+	CreateGameRequest,
+	CreateGameResponse,
+	CreateTicketForGameRequest,
+	GameParticipant,
+	GameTicket,
+} from "./dto";
 import { redirect } from "next/navigation";
 import { appFetchGet, appFetchPost } from "../../lib/utils/app-fetch";
 import { GetGameByIdResponse } from "./dto/get-game-by-id-response";
@@ -68,6 +74,25 @@ export async function joinAsGuest(
 		redirect(`/game/${gameId}`);
 	} else {
 		return `Joining as guest by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`;
+	}
+}
+
+export async function createTicket(
+	gameId: string,
+	data: CreateTicketForGameRequest,
+) {
+	const res = await appFetchPost<CreateTicketForGameRequest>(
+		`/games/${gameId}/ticket`,
+		data,
+	);
+
+	if (res.ok) {
+		const data: GameTicket = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Creating Ticket by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
 	}
 }
 

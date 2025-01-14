@@ -63,7 +63,7 @@ export function CreateGameFooter(props: Props) {
 				{formNavigation.stepData.number > 1 && (
 					<Button
 						variant="ghost"
-						iconLeft={ArrowLeftIcon}
+						contentLeft={ArrowLeftIcon({ size: 18 })}
 						aria-label="Back button"
 						title="Back"
 						type="button"
@@ -75,7 +75,7 @@ export function CreateGameFooter(props: Props) {
 					<Button
 						title="Continue"
 						aria-label="Continue button"
-						iconRight={ArrowRightIcon}
+						contentRight={ArrowRightIcon({ size: 18 })}
 						isDisabled={!formNavigation.stepData.isNextStepEnabled}
 						onPress={nextStep}
 						type="button"
@@ -87,7 +87,7 @@ export function CreateGameFooter(props: Props) {
 						title="Advanced Settings"
 						variant="outline"
 						aria-label="Advanced Settings button"
-						iconRight={SettingsIcon}
+						contentRight={SettingsIcon({ size: 18 })}
 						onPress={nextStep}
 						isDisabled={!formNavigation.stepData.isNextStepEnabled}
 						type="button"

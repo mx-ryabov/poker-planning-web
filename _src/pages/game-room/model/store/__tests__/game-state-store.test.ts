@@ -4,8 +4,11 @@ import { createGameStateStore } from "../game-state-store";
 import { GameManagementTab } from "../game-management-slice/game-managemet.model";
 import { GAME_MOCK } from "./game-state-store.mocks";
 import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
-import { generateParticipant } from "../../../__tests__/game-state-store.test-helpers";
-import { ParticipantRole } from "@/_src/shared/api";
+import {
+	generateParticipant,
+	generateTicket,
+} from "../../../__tests__/game-state-store.test-helpers";
+import { ParticipantRole, TicketType } from "@/_src/shared/api";
 
 describe("Game State Store", () => {
 	test("has a correct initial value", async () => {
@@ -18,6 +21,11 @@ describe("Game State Store", () => {
 		const state = result.current.getState();
 
 		expect(state.activeTab).toBe(null);
+		expect(state.liveStatus).toEqual(
+			expect.objectContaining({
+				state: "connected",
+			}),
+		);
 		expect(state.state).toStrictEqual({
 			game: GAME_MOCK,
 			currentParticipant: MASTER_PARTICIPANT,
@@ -59,6 +67,29 @@ describe("Game State Store", () => {
 			);
 			store.getState().setActiveTab(null);
 			expect(store.getState().activeTab).toBe(null);
+		});
+
+		test("changes liveStatus", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().liveStatus).toEqual(
+				expect.objectContaining({ state: "connected" }),
+			);
+
+			const reasonError = new Error("Error text");
+			store
+				.getState()
+				.setLiveStatus({ state: "reconnecting", reason: reasonError });
+			expect(store.getState().liveStatus).toEqual({
+				state: "reconnecting",
+				reason: reasonError,
+			});
 		});
 	});
 
@@ -172,6 +203,54 @@ describe("Game State Store", () => {
 						id: existingParticipant.id,
 					}),
 				]),
+			);
+		});
+
+		test("addTicketIfAbsent - adds a new ticket if it doesn't exists in the tickets", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.tickets).toHaveLength(0);
+			const newTicket = generateTicket({
+				title: "New Ticket 1",
+				identifier: "NT-1",
+				type: TicketType.Story,
+			});
+			store.getState().addTicketIfAbsent(newTicket);
+			expect(store.getState().state.game.tickets).toHaveLength(1);
+			expect(store.getState().state.game.tickets[0]).toStrictEqual(
+				newTicket,
+			);
+		});
+
+		test("addTicketIfAbsent - doesn't add a ticket if the ticket with such a number already exists in the tickets", async () => {
+			const existingTicket = generateTicket({
+				id: "123",
+			});
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: { ...GAME_MOCK, tickets: [existingTicket] },
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.tickets).toHaveLength(1);
+			const newTicket = generateTicket({
+				id: "123",
+				title: "New Ticket 1",
+				identifier: "NT-1",
+				type: TicketType.Story,
+			});
+			store.getState().addTicketIfAbsent(newTicket);
+			expect(store.getState().state.game.tickets).toHaveLength(1);
+			expect(store.getState().state.game.tickets[0]).toStrictEqual(
+				existingTicket,
 			);
 		});
 	});

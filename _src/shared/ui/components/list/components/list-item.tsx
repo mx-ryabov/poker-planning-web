@@ -5,6 +5,7 @@ import {
 } from "react-aria-components";
 import { CheckIcon } from "../../icon";
 import { cva } from "class-variance-authority";
+import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
 
 type ItemProps = ListBoxItemProps;
 
@@ -48,14 +49,18 @@ export function ListItem(props: ItemProps) {
 	return (
 		<ListBoxItem
 			{...props}
-			className={(renderProps) => listItemStyles(renderProps)}
+			className={mergeClassNames(listItemStyles, props.className)}
 		>
-			{composeRenderProps(props.children, (children, { isSelected }) => (
-				<>
-					{children}
-					{renderCheckState(isSelected)}
-				</>
-			))}
+			{composeRenderProps(
+				props.children,
+				(children, { isSelected, selectionMode }) => (
+					<>
+						{children}
+						{selectionMode !== "none" &&
+							renderCheckState(isSelected)}
+					</>
+				),
+			)}
 		</ListBoxItem>
 	);
 }

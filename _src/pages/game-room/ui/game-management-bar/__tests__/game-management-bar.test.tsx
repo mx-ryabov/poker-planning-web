@@ -5,8 +5,12 @@ import { GameManagementBar } from "../game-management-bar";
 import { GameManagementTab, GameStateProvider } from "../../../model";
 import { createGameStateStore } from "../../../model";
 import { GAME_MOCK } from "./game-management-bar.mock";
+import { MASTER_PARTICIPANT } from "@/_src/shared/mocks";
 
-const gameStateStore = createGameStateStore(GAME_MOCK);
+const gameStateStore = createGameStateStore({
+	game: GAME_MOCK,
+	currentParticipant: MASTER_PARTICIPANT,
+});
 function renderGameManagementBar() {
 	return render(
 		<GameStateProvider store={gameStateStore}>

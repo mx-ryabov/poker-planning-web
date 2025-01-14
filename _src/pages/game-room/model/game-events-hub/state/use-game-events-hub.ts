@@ -6,10 +6,14 @@ import { HubConnectionBuilder } from "@microsoft/signalr/dist/esm/HubConnectionB
 import { HttpTransportType } from "@microsoft/signalr/dist/esm/ITransport";
 import { useEffect, useMemo, useState } from "react";
 import {
+	DisconnectedEvent,
 	ParticipantJoinedEvent,
 	ParticipantLeftEvent,
+	ReconnectedEvent,
+	ReconnectingEvent,
+	TicketAddedEvent,
 } from "../events/game-events";
-import { GameEventType, GameEventTypeMap } from "../events";
+import { GameEventType } from "../events";
 import { GameEventListener } from "./use-game-events-hub.types";
 
 type Props = {
@@ -22,6 +26,7 @@ export function useGameEventsHub({
 	accessTokenFactory,
 }: Props): GameEventListener {
 	const gameEventTarget = useMemo(() => new EventTarget(), []);
+
 	const [connection, setConnection] = useState<HubConnection | null>(null);
 
 	useEffect(() => {
@@ -29,15 +34,27 @@ export function useGameEventsHub({
 			return;
 		}
 
-		const conn = new HubConnectionBuilder()
-			.withUrl(`http://localhost:5011/hubs/game?gameId=${gameId}`, {
+		let isCanceled = false;
+
+		const hubConnectionSetup = new HubConnectionBuilder().withUrl(
+			`http://localhost:5011/hubs/game?gameId=${gameId}`,
+			{
 				transport: HttpTransportType.WebSockets,
 				accessTokenFactory,
-			})
-			.build();
+			},
+		);
+
+		hubConnectionSetup.withAutomaticReconnect();
+
+		const conn = hubConnectionSetup.build();
+
 		conn.start()
 			.then(() => {
-				console.log("started");
+				if (isCanceled) {
+					return conn.stop();
+				}
+				gameEventTarget.dispatchEvent(new ReconnectedEvent());
+
 				setConnection(conn);
 			})
 			.catch((e) => {
@@ -45,10 +62,29 @@ export function useGameEventsHub({
 			});
 
 		return () => {
-			conn.stop();
+			isCanceled = true;
+
+			if (conn.state === HubConnectionState.Connected) {
+				conn.stop();
+			}
 			setConnection(null);
 		};
-	}, [setConnection, gameId, accessTokenFactory]);
+	}, [setConnection, gameId, accessTokenFactory, gameEventTarget]);
+
+	useEffect(() => {
+		if (!connection || connection.state !== HubConnectionState.Connected)
+			return;
+
+		connection.onreconnecting((error) => {
+			gameEventTarget.dispatchEvent(new ReconnectingEvent(error));
+		});
+		connection.onreconnected(() => {
+			gameEventTarget.dispatchEvent(new ReconnectedEvent());
+		});
+		connection.onclose((error) => {
+			gameEventTarget.dispatchEvent(new DisconnectedEvent(error));
+		});
+	}, [gameEventTarget, connection]);
 
 	useEffect(() => {
 		if (!connection || connection.state !== HubConnectionState.Connected) {
@@ -59,6 +95,9 @@ export function useGameEventsHub({
 		});
 		connection.on(GameEventType.ParticipantLeft, (data) => {
 			gameEventTarget.dispatchEvent(new ParticipantLeftEvent(data));
+		});
+		connection.on(GameEventType.TicketAdded, (data) => {
+			gameEventTarget.dispatchEvent(new TicketAddedEvent(data));
 		});
 	}, [connection, gameEventTarget]);
 

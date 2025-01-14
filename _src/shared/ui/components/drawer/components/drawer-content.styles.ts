@@ -80,7 +80,7 @@ export const dialogStyles = cva("w-full h-full flex outline-none", {
 	},
 });
 
-export const contentDefaultStyles = cva("p-6 shadow-lg bg-white w-max", {
+export const contentDefaultStyles = cva("shadow-lg bg-white w-max", {
 	variants: {
 		position: {
 			start: ["rounded-r-xl"],

@@ -1,6 +1,7 @@
 import { StateCreator } from "zustand";
 import { GameAsyncState } from "./game-async-state.model";
 import { GameAsyncSlice, GameStateStore } from "../game-state-store.model";
+import { GameTicket } from "@/_src/shared/api/game-api";
 
 export function createGameAsyncStateSliceCreator(
 	initialState: GameAsyncState,
@@ -44,6 +45,16 @@ export function createGameAsyncStateSliceCreator(
 				);
 				if (ind >= 0) {
 					state.state.game.participants.splice(ind, 1);
+				}
+			});
+		},
+		addTicketIfAbsent: (ticket: GameTicket) => {
+			set((state) => {
+				const isInList = state.state.game.tickets.some(
+					(t) => t.id === ticket.id,
+				);
+				if (!isInList) {
+					state.state.game.tickets.push(ticket);
 				}
 			});
 		},
