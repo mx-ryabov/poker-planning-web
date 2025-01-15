@@ -6,13 +6,13 @@ import {
 	SubmenuTrigger,
 	Menu as AriaMenu,
 	MenuItem as AriaMenuItem,
+	MenuSection as AriaMenuSection,
+	MenuSectionProps,
 	MenuItemProps,
 	composeRenderProps,
 	Separator,
 } from "react-aria-components";
 import { ArrowRightSimpleIcon, CheckIcon } from "../icon";
-import { List } from "../list";
-import { ListSectionProps } from "../list/components/list-section";
 import { listItemStyles } from "../list/components/list-item";
 
 type MenuContentProps<T> = AriaMenuProps<T> & Pick<PopoverProps, "placement">;
@@ -34,9 +34,9 @@ export function MenuContent<TDataItem extends object>(
 }
 
 export function MenuSection<TItemData extends object>(
-	props: ListSectionProps<TItemData>,
+	props: MenuSectionProps<TItemData>,
 ) {
-	return <List.Section {...props} />;
+	return <AriaMenuSection {...props} />;
 }
 
 export function MenuItem(props: MenuItemProps) {
