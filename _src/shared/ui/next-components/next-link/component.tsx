@@ -130,7 +130,7 @@ function NextCustomLink(
 
 	const linkStyles = () =>
 		twMerge(
-			"underline underline-offset-2 decoration-from-font hover:text-primary-500 transition-colors cursor-pointer outline-none",
+			"underline underline-offset-2 decoration-from-font hover:text-primary-500 transition-colors cursor-pointer outline-hidden",
 			renderProps.className,
 		);
 

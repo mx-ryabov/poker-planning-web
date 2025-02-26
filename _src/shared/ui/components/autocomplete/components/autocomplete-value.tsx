@@ -140,7 +140,7 @@ function AutocompleteMultipleValue() {
 					outlined={isDisabled}
 					disabledKeys={isDisabled ? "all" : listState.disabledKeys}
 					aria-label="Selected Items"
-					className="min-h-10 flex items-center py-2 outline-none"
+					className="min-h-10 flex items-center py-2 outline-hidden"
 					items={undefined}
 					onRemove={onSelectionRemove}
 				>
@@ -285,7 +285,7 @@ const TextFieldChip = ({
 	const mergedInputProps = mergeProps(inputProps, { onKeyDown });
 
 	return (
-		<Tag className="outline-none" textValue="textField" ref={tagRef}>
+		<Tag className="outline-hidden" textValue="textField" ref={tagRef}>
 			<TextField
 				{...mergedInputProps}
 				data-value={`${inputProps.value} `}
@@ -299,7 +299,7 @@ const TextFieldChip = ({
 					className={`
 						w-full min-w-1 
 						col-start-2 row-start-1 col-end-auto row-end-auto 
-						outline-none
+						outline-hidden
 						text-sm
 					`}
 					id="multiple-autocomplete-input"
@@ -316,17 +316,17 @@ const multipleValueStyles = cva(
 		"flex flex-row items-center justify-between",
 		"gap-2 w-full min-h-10 pl-3 pr-1",
 		"rounded-lg box-border border-2 border-neutral-100",
-		"focus-within:!border-primary-500",
+		"focus-within:border-primary-500!",
 		"group-hover:border-primary-400",
 	],
 	{
 		variants: {
 			hasError: {
-				true: ["!border-error-500"],
+				true: ["border-error-500!"],
 				false: [],
 			},
 			isDisabled: {
-				true: ["group-hover:!border-neutral-100", "bg-neutral-100"],
+				true: ["group-hover:border-neutral-100!", "bg-neutral-100"],
 				false: [],
 			},
 		},

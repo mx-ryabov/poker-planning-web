@@ -18,7 +18,7 @@ export function TicketItemTile({ data, onOpen }: Props) {
 
 	return (
 		<div
-			className="group w-full flex flex-col gap-2 border border-neutral-100 px-2 py-2 rounded-xl hover:border-neutral-200 hover:drop-shadow-sm transition-colors cursor-pointer"
+			className="group w-full flex flex-col gap-2 border border-neutral-100 px-2 py-2 rounded-xl hover:border-neutral-200 hover:drop-shadow-xs transition-colors cursor-pointer"
 			data-testid="ticket-list-item"
 			onClick={onContainerClick}
 		>

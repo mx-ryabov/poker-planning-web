@@ -67,7 +67,7 @@ export const AutocompleteList = forwardRef(
 				<div
 					{...listBoxProps}
 					ref={setRefs(listRef, ref)}
-					className="max-h-[inherit] overflow-auto outline-none flex flex-col gap-2"
+					className="max-h-[inherit] overflow-auto outline-hidden flex flex-col gap-2"
 				>
 					{renderedItems.length === 0 && renderEmptyState
 						? renderEmptyState()

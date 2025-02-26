@@ -19,7 +19,7 @@ const chip = cva(
 		"h-[21px] min-w-fit pl-2 pr-1",
 		"flex flex-row items-center",
 		"bg-neutral-100 text-neutral-500",
-		"rounded text-xs transition-all select-none outline-primary-500",
+		"rounded-sm text-xs transition-all select-none outline-primary-500",
 	],
 	{
 		variants: {
@@ -66,7 +66,7 @@ export function Chip(props: ChipProps) {
 						<AriaButton
 							slot="remove"
 							aria-label={`Remove ${props.textValue}`}
-							className="rounded hover:bg-neutral-200 active:hover:bg-neutral-300 transition-colors"
+							className="rounded-sm hover:bg-neutral-200 active:hover:bg-neutral-300 transition-colors"
 						>
 							<CloseIcon size={16} />
 						</AriaButton>

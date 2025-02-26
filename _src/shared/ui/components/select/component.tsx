@@ -129,7 +129,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				<FocusScope contain restoreFocus autoFocus>
 					<List
 						{...listProps}
-						className="max-h-[inherit] overflow-auto outline-none"
+						className="max-h-[inherit] overflow-auto outline-hidden"
 					>
 						{childRenderer}
 					</List>

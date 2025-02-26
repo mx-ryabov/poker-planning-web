@@ -99,7 +99,7 @@ export const InputWithConfirmation = forwardRef<HTMLInputElement, Props>(
 					aria-label="confirmation-popup"
 					triggerRef={inputContainerRef}
 					placement="bottom right"
-					className="flex flex-row gap-1 data-[entering]:animate-popup data-[exiting]:animate-popup-reverse"
+					className="flex flex-row gap-1 data-entering:animate-popup data-exiting:animate-popup-reverse"
 					isNonModal={true}
 					state={overlayTriggerState}
 				>

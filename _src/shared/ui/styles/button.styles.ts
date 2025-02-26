@@ -14,6 +14,7 @@ export const buttonStyles = cva(
 		"items-center",
 		"gap-x-2",
 		"w-fit",
+		"cursor-pointer",
 	],
 	{
 		variants: {
@@ -69,12 +70,12 @@ export const buttonStyles = cva(
 				true: [],
 			},
 			excludeFromFocus: {
-				true: ["outline-none!"],
+				true: ["outline-hidden!"],
 				false: [],
 			},
 			isFocused: {
 				true: ["outline-primary-500", "outline-offset-2"],
-				false: ["outline-none"],
+				false: ["outline-hidden"],
 			},
 		},
 		compoundVariants: [

@@ -68,7 +68,7 @@ export function GameManagementBar({ className }: Props) {
 								variant="ghost"
 								size="small"
 								aria-label={tabType}
-								className="bg-opacity-0 hover:text-neutral-300 group-data-[sliding-selector-element-active=true]:text-primary-500"
+								className="bg-white/0 hover:text-neutral-300 group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400"
 								onPress={onPanelSelected(
 									tabType as GameManagementTab,
 								)}

@@ -13,7 +13,7 @@ const collapseBtnStyles = cva(
 		"hover:border-primary-300 active:border-primary-500",
 		"bg-white text-neutral-200",
 		"hover:text-primary-300 active:text-primary-500",
-		"outline-none transition-colors",
+		"outline-hidden transition-colors",
 	],
 	{
 		variants: {

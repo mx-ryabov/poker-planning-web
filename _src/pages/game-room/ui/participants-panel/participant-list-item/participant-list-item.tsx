@@ -63,7 +63,7 @@ export function ParticipantListItem({
 									>
 										{option.icon({
 											size: 20,
-											className: "flex-shrink-0",
+											className: "shrink-0",
 										})}
 										{option.title}
 									</Menu.Item>

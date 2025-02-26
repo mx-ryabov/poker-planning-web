@@ -52,7 +52,7 @@ function Slide({ children, tab, index }: SlideProps) {
 			ref={slideRef}
 			data-testid={`game-management-panel-${tab}`}
 			aria-hidden={tab !== activeTab}
-			className="w-full h-full flex-shrink-0 transition-transform duration-300"
+			className="w-full h-full shrink-0 transition-transform duration-300"
 			style={{ visibility: activeTab === tab ? "visible" : "hidden" }}
 		>
 			{children}

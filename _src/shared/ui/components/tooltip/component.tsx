@@ -47,7 +47,7 @@ function Content(props: ContentProps) {
 		() =>
 			mergeClassNames(
 				"bg-neutral-500 text-neutral-100 text-sm px-3 py-2 rounded-lg shadow-lg",
-				"data-[entering]:animate-fade-in data-[exiting]:animate-fade-in-reverse",
+				"data-entering:animate-fade-in data-exiting:animate-fade-in-reverse",
 				className,
 			),
 		[className],

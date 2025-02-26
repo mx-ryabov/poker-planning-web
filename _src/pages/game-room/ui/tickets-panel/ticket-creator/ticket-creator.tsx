@@ -73,7 +73,7 @@ export function TicketCreator({ className, onSubmit }: TicketCreatorProps) {
 }
 
 const openerStyles = cva(
-	"flex-shrink-0 transition-all duration-150 ease-linear",
+	"shrink-0 transition-all duration-150 ease-linear",
 	{
 		variants: {
 			isOpened: {

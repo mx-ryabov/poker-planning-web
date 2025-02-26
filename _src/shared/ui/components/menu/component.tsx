@@ -26,11 +26,11 @@ export function MenuContent<TDataItem extends object>(
 	return (
 		<Popover
 			placement={props.placement}
-			className="min-w-[150px] data-[entering]:animate-popup data-[exiting]:animate-popup-reverse"
+			className="min-w-[150px] data-entering:animate-popup data-exiting:animate-popup-reverse"
 		>
 			<AriaMenu
 				{...props}
-				className="py-2 px-1 max-w-[180px] bg-white rounded-lg border border-neutral-100 drop-shadow outline outline-0 max-h-[inherit] overflow-auto no-scrollbar"
+				className="py-2 px-1 max-w-[180px] bg-white rounded-lg border border-neutral-100 drop-shadow-sm outline outline-0 max-h-[inherit] overflow-auto no-scrollbar"
 			/>
 		</Popover>
 	);

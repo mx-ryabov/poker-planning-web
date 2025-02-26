@@ -89,7 +89,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							</span>
 						)}
 						<AriaInput
-							className="outline-none w-full h-full placeholder:text-neutral-200 bg-white/0"
+							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0"
 							aria-label="input"
 							ref={setRefs(inputRef, ref)}
 						/>
@@ -127,14 +127,14 @@ const inputStyles = cva(
 		"w-full h-10 px-3",
 		"rounded-lg box-border border-2",
 		"text-sm transition-colors transition-[border-color] cursor-text",
-		"focus-within:!border-primary-500",
+		"focus-within:border-primary-500!",
 		"border-neutral-100",
 		"group-hover:border-primary-400",
 	],
 	{
 		variants: {
 			hasError: {
-				true: ["!border-error-500"],
+				true: ["border-error-500!"],
 				false: [],
 			},
 			hasEndContent: {
@@ -142,7 +142,7 @@ const inputStyles = cva(
 				false: [],
 			},
 			isDisabled: {
-				true: ["group-hover:!border-neutral-100", "bg-neutral-100"],
+				true: ["group-hover:border-neutral-100!", "bg-neutral-100"],
 				false: [],
 			},
 		},

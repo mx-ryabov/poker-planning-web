@@ -66,7 +66,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						}}
 					>
 						<AriaTextArea
-							className="outline-none w-full h-full placeholder:text-neutral-200 bg-white/0"
+							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0"
 							aria-label="textarea"
 							rows={4}
 							ref={setRefs(textAreaRef, ref)}
@@ -126,7 +126,7 @@ const textAreaStyles = cva(
 				className: [
 					"border-2 border-neutral-100",
 					"group-hover:border-primary-400",
-					"focus-within:border-primary-500 focus-within:group-hover:border-primary-500",
+					"focus-within:border-primary-500 group-hover:focus-within:border-primary-500",
 				],
 			},
 		],
