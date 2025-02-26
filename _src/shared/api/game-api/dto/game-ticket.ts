@@ -1,11 +1,11 @@
 export type GameTicket = {
 	id: string;
 	title: string;
-	description: string;
+	description?: string;
 	link?: string;
-	type?: TicketType;
+	type: TicketType;
 	identifier: string;
-	estimation?: string;
+	estimation: string | null;
 };
 
 export enum TicketType {

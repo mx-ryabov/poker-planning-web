@@ -7,13 +7,16 @@ import {
 	Menu as AriaMenu,
 	MenuItem as AriaMenuItem,
 	MenuSection as AriaMenuSection,
-	MenuSectionProps,
+	MenuSectionProps as AriaMenuSectionProps,
 	MenuItemProps,
 	composeRenderProps,
 	Separator,
+	Header,
+	Collection,
 } from "react-aria-components";
 import { ArrowRightSimpleIcon, CheckIcon } from "../icon";
 import { listItemStyles } from "../list/components/list-item";
+import { twMerge } from "tailwind-merge";
 
 type MenuContentProps<T> = AriaMenuProps<T> & Pick<PopoverProps, "placement">;
 
@@ -33,10 +36,46 @@ export function MenuContent<TDataItem extends object>(
 	);
 }
 
+type MenuSectionProps<TItemData extends object> =
+	AriaMenuSectionProps<TItemData> & {
+		title?: string;
+		className?: Partial<Record<"wrapper" | "title", string>>;
+	};
+
 export function MenuSection<TItemData extends object>(
 	props: MenuSectionProps<TItemData>,
 ) {
-	return <AriaMenuSection {...props} />;
+	const { children, title, className, ...restProps } = props;
+
+	const renderItems = () => {
+		if (typeof children === "function" && !!restProps.items) {
+			return (
+				<Collection items={restProps.items}>
+					{(item) => children(item)}
+				</Collection>
+			);
+		}
+		if (typeof children !== "function") {
+			return children;
+		}
+		return null;
+	};
+
+	return (
+		<AriaMenuSection {...restProps}>
+			{title && (
+				<Header
+					className={twMerge(
+						"px-2 py-1 text-xs text-neutral-500 font-medium",
+						className?.title,
+					)}
+				>
+					{title}
+				</Header>
+			)}
+			{renderItems()}
+		</AriaMenuSection>
+	);
 }
 
 export function MenuItem(props: MenuItemProps) {

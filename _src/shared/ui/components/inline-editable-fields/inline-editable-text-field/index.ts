@@ -1,0 +1,1 @@
+export { InlineEditableTextField } from "./component";

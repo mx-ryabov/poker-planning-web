@@ -63,3 +63,11 @@ export const InputDisabled: Story = {
 		isDisabled: true,
 	},
 };
+
+export const InputPending: Story = {
+	args: {
+		label: "Label",
+		placeholder: "Placeholder",
+		isPending: true,
+	},
+};

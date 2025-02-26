@@ -1,4 +1,4 @@
-import { test, describe, expect } from "vitest";
+import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { TicketList } from "../ticket-list";
@@ -13,6 +13,7 @@ import {
 	generateTicket,
 } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
+import { GameStateCotnext } from "../../../model/store/game-state-context";
 
 function renderComponent(props: {
 	hasTickets: boolean;
@@ -34,16 +35,18 @@ function renderComponent(props: {
 	});
 
 	return render(
-		<GameStateProvider store={gameStateStore}>
+		<GameStateCotnext.Provider value={gameStateStore}>
 			<TicketList>
 				{(ticketItemData) => (
 					<TicketListItem
 						key={ticketItemData.id}
+						isOpen={false}
+						onOpen={vi.fn()}
 						data={ticketItemData}
 					/>
 				)}
 			</TicketList>
-		</GameStateProvider>,
+		</GameStateCotnext.Provider>,
 	);
 }
 

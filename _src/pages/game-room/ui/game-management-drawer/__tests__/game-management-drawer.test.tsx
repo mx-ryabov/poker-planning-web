@@ -1,15 +1,12 @@
 import { test, describe, expect } from "vitest";
 import { act, render, within } from "@/test/utilities";
-import {
-	createGameStateStore,
-	GameManagementTab,
-	GameStateProvider,
-} from "../../../model";
+import { createGameStateStore, GameManagementTab } from "../../../model";
 import { GAME_MOCK } from "./game-management-drawer.mock";
 import { GameManagementDrawer } from "../game-management-drawer";
 import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
 import { generateParticipant } from "../../../__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
+import { GameStateCotnext } from "../../../model/store/game-state-context";
 
 const gameStateStore = createGameStateStore({
 	game: {
@@ -32,9 +29,9 @@ const gameStateStore = createGameStateStore({
 });
 function renderDrawer() {
 	return render(
-		<GameStateProvider store={gameStateStore}>
+		<GameStateCotnext.Provider value={gameStateStore}>
 			<GameManagementDrawer />
-		</GameStateProvider>,
+		</GameStateCotnext.Provider>,
 	);
 }
 

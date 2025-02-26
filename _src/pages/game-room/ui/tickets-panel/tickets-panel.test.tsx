@@ -5,7 +5,7 @@ import "@/__mocks__/intersection-observer";
 import { test, describe, expect, vi } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { createGameStateStore, GameStateProvider } from "../../model";
+import { createGameStateStore } from "../../model";
 import {
 	generateGame,
 	generateParticipant,
@@ -13,6 +13,7 @@ import {
 } from "../../__tests__/game-state-store.test-helpers";
 import { CreateTicketForGameRequest, ParticipantRole } from "@/_src/shared/api";
 import { TicketsPanel } from "./tickets-panel";
+import { GameStateCotnext } from "../../model/store/game-state-context";
 
 vi.mock("@/_src/shared/api", async (importOriginal) => ({
 	...(await importOriginal()),
@@ -39,9 +40,9 @@ function renderComponent() {
 	});
 
 	return render(
-		<GameStateProvider store={gameStateStore}>
+		<GameStateCotnext.Provider value={gameStateStore}>
 			<TicketsPanel />
-		</GameStateProvider>,
+		</GameStateCotnext.Provider>,
 	);
 }
 
@@ -50,7 +51,7 @@ describe("Tickets Panel", () => {
 		const { unmount, getAllByTestId, getByTestId, user } =
 			renderComponent();
 		const ticketItems = getAllByTestId("ticket-list-item");
-		const ticketCreatorOpener = getByTestId("ticket-creator-opener");
+		const ticketCreatorOpener = getByTestId("ticket-creator-toggler");
 
 		expect(ticketItems).toHaveLength(4);
 		await user.click(ticketCreatorOpener);
@@ -59,7 +60,7 @@ describe("Tickets Panel", () => {
 
 	test("creates a ticket and adds it to the list", async () => {
 		const { getAllByTestId, getByTestId, user } = renderComponent();
-		const ticketCreatorOpener = getByTestId("ticket-creator-opener");
+		const ticketCreatorOpener = getByTestId("ticket-creator-toggler");
 		await user.click(ticketCreatorOpener);
 		const ticketCreatorTextField = within(
 			getByTestId("ticket-creator-form"),

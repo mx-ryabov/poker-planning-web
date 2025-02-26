@@ -1,3 +1,4 @@
+"use server";
 import { appFetchGet } from "../../lib/utils/app-fetch";
 import { VotingSystem } from "./dto/voting-system";
 

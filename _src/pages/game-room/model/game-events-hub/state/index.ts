@@ -1,2 +1,5 @@
 export { useGameEventsHub } from "./use-game-events-hub";
-export type { GameEventListener } from "./use-game-events-hub.types";
+export type {
+	GameEventListener,
+	EventSubscriber,
+} from "./use-game-events-hub.types";

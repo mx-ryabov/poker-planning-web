@@ -62,11 +62,13 @@ function Content(props: ContentProps) {
 		>
 			{(renderProps) => (
 				<>
-					<OverlayArrow>
-						<svg width={8} height={8} viewBox="0 0 8 8">
-							{ARROW_PATH[renderProps.placement]}
-						</svg>
-					</OverlayArrow>
+					{renderProps.placement && (
+						<OverlayArrow>
+							<svg width={8} height={8} viewBox="0 0 8 8">
+								{ARROW_PATH[renderProps.placement]}
+							</svg>
+						</OverlayArrow>
+					)}
 					{typeof children === "function"
 						? children(renderProps)
 						: children}

@@ -1,6 +1,10 @@
 "use client";
 import { StateCreator } from "zustand";
-import { GameManagementTab, LiveStatus } from "./game-managemet.model";
+import {
+	GameManagementTab,
+	LiveStatus,
+	LiveStatusUpdaterFn,
+} from "./game-managemet.model";
 import { GameManagementSlice, GameStateStore } from "../game-state-store.model";
 
 export const createGameManagementSlice: StateCreator<
@@ -17,9 +21,13 @@ export const createGameManagementSlice: StateCreator<
 		set((state) => {
 			state.activeTab = tab;
 		}),
-	setLiveStatus: (status: LiveStatus) => {
+	setLiveStatus: (status: LiveStatus | LiveStatusUpdaterFn) => {
 		set((state) => {
-			state.liveStatus = status;
+			if (typeof status === "function") {
+				state.liveStatus = status(state.liveStatus);
+			} else {
+				state.liveStatus = status;
+			}
 		});
 	},
 });

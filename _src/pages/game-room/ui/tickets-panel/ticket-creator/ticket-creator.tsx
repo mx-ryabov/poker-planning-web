@@ -17,6 +17,7 @@ import { useClickOutside } from "@/_src/shared/lib";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cva } from "class-variance-authority";
 
 export type TicketCreatorSubmitActionData = { title: string; type: TicketType };
 export type TicketCreatorRenderFn = (renderProps: {
@@ -46,22 +47,45 @@ export function TicketCreator({ className, onSubmit }: TicketCreatorProps) {
 	const onBlur = useCallback(() => setFocused(false), []);
 
 	return (
-		<div className={twMerge("flex justify-end", cn)}>
-			{!focused && (
-				<ButtonSquare
-					icon={PlusIcon}
-					data-state="button"
-					data-testid="ticket-creator-opener"
-					className="shadow-lg shadow-primary-200"
-					onPress={() => setFocused(true)}
+		<div
+			className={twMerge(
+				"flex flex-row gap-2 justify-end items-center h-[58px]",
+				cn,
+			)}
+		>
+			{focused && (
+				<Form
+					className="w-full absolute"
+					onSubmit={onSubmit}
+					onBlur={onBlur}
 				/>
 			)}
-			{focused && (
-				<Form className={cn} onSubmit={onSubmit} onBlur={onBlur} />
-			)}
+			<ButtonSquare
+				icon={PlusIcon}
+				data-state="button"
+				data-testid="ticket-creator-toggler"
+				variant={focused ? "outline" : "default"}
+				className={openerStyles({ isOpened: focused })}
+				onPress={() => setFocused((prev) => !prev)}
+			/>
 		</div>
 	);
 }
+
+const openerStyles = cva(
+	"flex-shrink-0 transition-all duration-150 ease-linear",
+	{
+		variants: {
+			isOpened: {
+				true: [
+					"-translate-y-14 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
+				],
+				false: ["shadow-lg shadow-primary-200"],
+			},
+		},
+	},
+);
+
 type FormProps = {
 	className?: string;
 	onSubmit: (
@@ -137,7 +161,7 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 		}
 	}, [inputRef]);
 
-	useClickOutside([editorContainerRef], onBlur);
+	//useClickOutside([editorContainerRef], onBlur);
 
 	useEffect(() => {
 		focusOnTextField();

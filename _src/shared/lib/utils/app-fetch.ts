@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 
-const HOST = process.env.HOST;
+const HOST = process.env.NEXT_PUBLIC_HOST;
 
 export const appFetchGet = async <TQuery extends Record<string, string>>(
 	path: string,

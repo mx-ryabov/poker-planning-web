@@ -5,7 +5,7 @@ import {
 	useGameState,
 } from "../../model";
 import { TicketCreator, TicketCreatorSubmitActionData } from "./ticket-creator";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { TicketList } from "./ticket-list";
 import { TicketListItem } from "./ticket-list-item";
 import { TicketCreatorRenderFn } from "./ticket-creator/ticket-creator";
@@ -15,6 +15,7 @@ export function TicketsPanel() {
 	const currentRole = useGameState(selectCurrentRole);
 	const gameId = useGameState(selectCurrentGameId);
 	const addTicketIfAbsent = useGameState((state) => state.addTicketIfAbsent);
+	const updateTicket = useGameState((state) => state.updateTicket);
 
 	const scrollToListBottom = useCallback(() => {
 		const listEl = listRef.current;
@@ -48,9 +49,11 @@ export function TicketsPanel() {
 
 	const ticketCreatorClassNameRenderer: TicketCreatorRenderFn = useCallback(
 		({ state }) =>
-			`${state === "button" ? "fixed" : "sticky"} bottom-0 right-0 w-full`,
+			`${state === "button" ? "fixed" : "sticky"} bottom-0 right-0 max-w-full`,
 		[],
 	);
+
+	const [openedTicketId, setOpenedTicketId] = useState<string | null>(null);
 
 	return (
 		<div className="relative flex flex-col h-full">
@@ -59,6 +62,9 @@ export function TicketsPanel() {
 					<TicketListItem
 						key={ticketItemData.id}
 						data={ticketItemData}
+						isOpen={openedTicketId === ticketItemData.id}
+						onOpen={setOpenedTicketId}
+						onClose={() => setOpenedTicketId(null)}
 					/>
 				)}
 			</TicketList>

@@ -8,3 +8,4 @@ export type LiveStatus = {
 	state: "connected" | "reconnecting" | "disconnected";
 	reason?: Error;
 };
+export type LiveStatusUpdaterFn = (prevStatus: LiveStatus) => LiveStatus;

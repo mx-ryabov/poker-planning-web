@@ -54,7 +54,7 @@ export function useAutocompleteValue() {
 
 			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
 				e.preventDefault();
-				if (!overlayTriggerState.isOpen) {
+				if (!overlayTriggerState?.isOpen) {
 					open("full");
 					return;
 				} else {
@@ -63,24 +63,25 @@ export function useAutocompleteValue() {
 					}
 				}
 			}
-			if (e.key === "Enter") {
-				if (overlayTriggerState.isOpen) {
+			if (e.key === "Enter" && focusedKey) {
+				if (overlayTriggerState?.isOpen) {
 					e.preventDefault();
 					listState.selectionManager.select(focusedKey);
 				}
 			}
 			if (e.key === "Escape") {
-				overlayTriggerState.close();
+				overlayTriggerState?.close();
 			}
 			collectionProps.onKeyDown && collectionProps.onKeyDown(e);
 		},
 		[
 			collectionProps.onKeyDown,
-			overlayTriggerState.isOpen,
-			overlayTriggerState.close,
+			overlayTriggerState?.isOpen,
+			overlayTriggerState?.close,
 			open,
 			listState.selectionManager,
 			selectionMode,
+			collectionProps.onKeyDown,
 		],
 	);
 
@@ -92,14 +93,14 @@ export function useAutocompleteValue() {
 	);
 
 	const onFocus = useCallback(() => {
-		if (!overlayTriggerState.isOpen) {
+		if (!overlayTriggerState?.isOpen) {
 			open("full");
 		}
-	}, [overlayTriggerState.isOpen, open]);
+	}, [overlayTriggerState?.isOpen, open]);
 
 	const onBlur = useCallback(() => {
-		overlayTriggerState.close();
-	}, [overlayTriggerState.close]);
+		overlayTriggerState?.close();
+	}, [overlayTriggerState?.close]);
 
 	const inputProps: InputProps = useMemo(
 		() => ({
@@ -124,13 +125,13 @@ export function useAutocompleteValue() {
 		() => ({
 			isDisabled,
 			onPressStart: (e: PressEvent) => {
-				if (!overlayTriggerState.isOpen) {
+				if (!overlayTriggerState?.isOpen) {
 					inputRef.current?.focus();
 				}
 				toggle("full");
 			},
 		}),
-		[toggle, inputRef, overlayTriggerState.isOpen],
+		[toggle, inputRef, overlayTriggerState?.isOpen],
 	);
 
 	return {

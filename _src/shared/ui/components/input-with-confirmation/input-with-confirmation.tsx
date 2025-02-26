@@ -85,7 +85,7 @@ export const InputWithConfirmation = forwardRef<HTMLInputElement, Props>(
 		});
 
 		return (
-			<div {...focusWithinProps} ref={containerRef}>
+			<div {...focusWithinProps} className="w-full" ref={containerRef}>
 				<div ref={inputContainerRef}>
 					<Input
 						{...restProps}

@@ -97,6 +97,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 			icon,
 			role,
 			className,
+			style,
 		} = props;
 
 		const { buttonProps, isPressed } = useButton(
@@ -138,6 +139,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 				aria-label={buttonProps["aria-label"] || "icon button"}
 				data-focused={isFocused || undefined}
 				role={role || "button"}
+				style={style}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}
 			>
 				{isPending && (

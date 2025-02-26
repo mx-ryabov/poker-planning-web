@@ -4,11 +4,11 @@ import {
 	GetGameByIdResponse,
 } from "@/_src/shared/api/game-api";
 import {
-	useGameStateStore,
 	GameEventsProvider,
 	GameStateProvider,
 	useGameEventsDispatcher,
-	useGameEventsHub,
+	useGameEvents,
+	useGameStore,
 } from "../model";
 import { ReactNode } from "react";
 
@@ -27,15 +27,22 @@ export function GameRoomPageProvider({
 	currentParticipant,
 	children,
 }: Props) {
-	const eventListener = useGameEventsHub({ accessTokenFactory, gameId });
-	const gameStateStore = useGameStateStore({ game, currentParticipant });
-	useGameEventsDispatcher({ eventListener, gameStateStore });
-
 	return (
-		<GameEventsProvider value={eventListener}>
-			<GameStateProvider store={gameStateStore}>
+		<GameStateProvider initialAsyncState={{ game, currentParticipant }}>
+			<GameEventsProvider
+				accessTokenFactory={accessTokenFactory}
+				gameId={gameId}
+			>
+				<GameEventDispatcher />
 				{children}
-			</GameStateProvider>
-		</GameEventsProvider>
+			</GameEventsProvider>
+		</GameStateProvider>
 	);
+}
+
+function GameEventDispatcher() {
+	const eventSubscriber = useGameEvents();
+	const gameStateStore = useGameStore();
+	useGameEventsDispatcher({ eventSubscriber, gameStateStore });
+	return null;
 }

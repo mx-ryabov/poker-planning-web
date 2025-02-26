@@ -21,7 +21,16 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en-US">
-			<body className={`${inter.variable} font-sans`}>
+			<head>
+				{process.env.NODE_ENV === "development" &&
+					process.env.USE_REACT_SCAN === "true" && (
+						<script
+							src="https://unpkg.com/react-scan/dist/auto.global.js"
+							async
+						/>
+					)}
+			</head>
+			<body className={`${inter.variable} font-sans p-0`}>
 				<LocalizedStringProvider locale="en-US" />
 				{children}
 			</body>

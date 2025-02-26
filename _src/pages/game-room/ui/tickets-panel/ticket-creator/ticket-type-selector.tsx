@@ -23,31 +23,29 @@ export function TicketTypeSelector({
 	);
 
 	return (
-		<>
-			<Menu>
-				<Button
-					title=""
-					className="px-2"
-					contentLeft={selectedTypeObj?.icon}
-					variant="ghost"
-					size="small"
-					data-testid="ticket-type-selector"
-				/>
-				<Menu.Content
-					items={TASK_TYPES}
-					selectionMode="single"
-					selectedKeys={[value]}
-					onAction={(id: string | number) => onSelected(+id)}
-				>
-					{(taskType) => (
-						<Menu.Item key={taskType.type} id={taskType.type}>
-							{taskType.icon} {taskType.title}
-						</Menu.Item>
-					)}
-				</Menu.Content>
-				<input type="hidden" value={value} name="type" />
-			</Menu>
-		</>
+		<Menu>
+			<Button
+				title=""
+				className="px-2"
+				contentLeft={selectedTypeObj?.icon}
+				variant="ghost"
+				size="small"
+				data-testid="ticket-type-selector"
+			/>
+			<Menu.Content
+				items={TASK_TYPES}
+				selectionMode="single"
+				selectedKeys={[value]}
+				onAction={(id: string | number) => onSelected(+id)}
+			>
+				{(taskType) => (
+					<Menu.Item key={taskType.type} id={taskType.type}>
+						{taskType.icon} {taskType.title}
+					</Menu.Item>
+				)}
+			</Menu.Content>
+			<input type="hidden" value={value} name="type" />
+		</Menu>
 	);
 }
 

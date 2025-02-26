@@ -1,6 +1,7 @@
 import {
 	KeyboardEvent,
 	MutableRefObject,
+	RefObject,
 	useCallback,
 	useEffect,
 	useMemo,
@@ -43,10 +44,12 @@ function AutocompleteSingleValue() {
 		useAutocompleteValue();
 
 	const toggleListButton = useMemo(() => {
+		if (overlayTriggerState?.isOpen === null) return null;
+
 		return (
 			<Provider
 				values={[
-					[ButtonContext, { isPressed: overlayTriggerState.isOpen }],
+					[ButtonContext, { isPressed: overlayTriggerState?.isOpen }],
 				]}
 			>
 				<ButtonSquare
@@ -59,7 +62,7 @@ function AutocompleteSingleValue() {
 				/>
 			</Provider>
 		);
-	}, [overlayTriggerState.isOpen, toggleBtnProps]);
+	}, [overlayTriggerState?.isOpen, toggleBtnProps]);
 
 	return (
 		<Input {...inputProps} ref={inputRef} endContent={toggleListButton} />
@@ -81,7 +84,7 @@ function AutocompleteMultipleValue() {
 		return (
 			<Provider
 				values={[
-					[ButtonContext, { isPressed: overlayTriggerState.isOpen }],
+					[ButtonContext, { isPressed: overlayTriggerState?.isOpen }],
 				]}
 			>
 				<ButtonSquare
@@ -95,7 +98,7 @@ function AutocompleteMultipleValue() {
 				/>
 			</Provider>
 		);
-	}, [overlayTriggerState.isOpen, toggleBtnProps]);
+	}, [overlayTriggerState?.isOpen, toggleBtnProps]);
 
 	const selectedItems = useMemo(() => {
 		const items = selectedNodes.map((node) => {
@@ -185,7 +188,7 @@ function AutocompleteMultipleValue() {
 			className="group flex flex-col w-full relative"
 			onClick={() => {
 				const inputEl = inputRef?.current;
-				if (inputEl && !overlayTriggerState.isOpen) {
+				if (inputEl && !overlayTriggerState?.isOpen) {
 					inputEl.focus();
 				}
 			}}
@@ -220,7 +223,7 @@ function AutocompleteMultipleValue() {
 
 type TextFieldChipProps = {
 	inputProps: InputProps;
-	inputRef: MutableRefObject<HTMLInputElement>;
+	inputRef: RefObject<HTMLInputElement>;
 	removeLatestSelection: () => void;
 };
 

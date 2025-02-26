@@ -14,6 +14,7 @@ import {
 } from "react-aria-components";
 import { setRefs } from "@/_src/shared/lib";
 import { FieldErrorIcon } from "../field-error-icon";
+import { twMerge } from "tailwind-merge";
 
 type _InputProps = {
 	label: string;
@@ -21,6 +22,7 @@ type _InputProps = {
 	errors?: string[] | string;
 	withErrorIcon?: boolean;
 	endContent?: ReactNode;
+	isPending?: boolean;
 } & TextFieldProps &
 	Omit<AriaInputProps, "onChange" | "onKeyDown" | "onKeyUp" | "disabled">;
 
@@ -32,6 +34,8 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 			errors,
 			withErrorIcon,
 			endContent,
+			className,
+			isPending,
 			...restProps
 		} = props;
 
@@ -52,13 +56,14 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 			<TextField
 				className="group flex flex-col w-full"
 				{...restProps}
+				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
 				isInvalid={!!errors || restProps.isInvalid}
 			>
 				<Label aria-label="Label">
 					<span
 						className={labelStyles({
-							isDisabled: restProps.isDisabled,
+							isDisabled: restProps.isDisabled || isPending,
 							hasContent: !!label,
 						})}
 					>
@@ -66,11 +71,14 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 					</span>
 
 					<Group
-						className={inputStyles({
-							hasError: !!errors?.length,
-							hasEndContent: !!endContent,
-							isDisabled: restProps.isDisabled,
-						})}
+						className={twMerge(
+							inputStyles({
+								hasError: !!errors?.length,
+								hasEndContent: !!endContent,
+								isDisabled: restProps.isDisabled || isPending,
+							}),
+							className as string,
+						)}
 						onClick={() => {
 							inputRef.current?.focus();
 						}}
@@ -81,7 +89,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							</span>
 						)}
 						<AriaInput
-							className="outline-none w-full h-full placeholder:text-neutral-200"
+							className="outline-none w-full h-full placeholder:text-neutral-200 bg-white/0"
 							aria-label="input"
 							ref={setRefs(inputRef, ref)}
 						/>
@@ -91,6 +99,9 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 								errorMsg={error}
 								placement="top end"
 							/>
+						)}
+						{isPending && (
+							<div className="rounded-full w-4 aspect-square border-2 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
 						)}
 					</Group>
 				</Label>

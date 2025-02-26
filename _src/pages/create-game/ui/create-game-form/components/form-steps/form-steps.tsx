@@ -4,6 +4,7 @@ import { NameStep } from "./name-step";
 import { VotingSystemStep } from "./voting-system-step";
 import { CreatorNameStep } from "./creator-name-step";
 import { AdvancedSettingsStep } from "./advanced-settings-step";
+import { Suspense } from "react";
 
 const STEPS = {
 	[CreateGameFormSteps.Name]: NameStep,
@@ -35,11 +36,13 @@ export const FormSteps = ({
 						aria-labelledby={`step-${ind}-${stepName}`}
 						key={stepName}
 					>
-						<StepElement
-							isActive={currentStep === stepName}
-							onValidate={onStepValidate}
-							onNextStep={() => onNextStep(currentStep)}
-						/>
+						<Suspense fallback={"Loading..."}>
+							<StepElement
+								isActive={currentStep === stepName}
+								onValidate={onStepValidate}
+								onNextStep={() => onNextStep(currentStep)}
+							/>
+						</Suspense>
 					</div>
 				);
 			})}

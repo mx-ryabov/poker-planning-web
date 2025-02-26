@@ -1,7 +1,7 @@
 import { test, describe, expect, vi, afterEach } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { createGameStateStore, GameStateProvider } from "../../../../model";
+import { createGameStateStore } from "../../../../model";
 import {
 	MASTER_PARTICIPANT,
 	NEWLY_CREATED_GAME,
@@ -11,6 +11,7 @@ import { ParticipantListItem } from "../participant-list-item";
 import { GameParticipant } from "@/_src/shared/api";
 import { CURRENT_PARTICIPANT } from "./participant-list-item.mock";
 import { UserRemoveIcon } from "@/_src/shared/ui/components/icon/svg/user-remove.icon";
+import { GameStateCotnext } from "@/_src/pages/game-room/model/store/game-state-context";
 
 /* I hope I won't regret about this... 
 But I excuse it by saying that I don't rely on useParticipantMenuOptions specifics 
@@ -33,9 +34,9 @@ const gameStateStore = createGameStateStore({
 
 function renderComponent(participant: GameParticipant) {
 	return render(
-		<GameStateProvider store={gameStateStore}>
+		<GameStateCotnext.Provider value={gameStateStore}>
 			<ParticipantListItem participant={participant} />
-		</GameStateProvider>,
+		</GameStateCotnext.Provider>,
 	);
 }
 
