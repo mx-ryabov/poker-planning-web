@@ -106,20 +106,19 @@ export async function updateTicketById(
 	ticketId: string,
 	data: UpdateTicketForGameRequest,
 ): Promise<GameTicket> {
-	throw new Error(`Fake updateTicketById Error`);
-	// const res = await appFetchPut<{ data: UpdateTicketForGameRequest }>(
-	// 	`/games/${gameId}/ticket/${ticketId}`,
-	// 	{ data },
-	// );
+	const res = await appFetchPut<{ data: UpdateTicketForGameRequest }>(
+		`/games/${gameId}/ticket/${ticketId}`,
+		{ data },
+	);
 
-	// if (res.ok) {
-	// 	const data: GameTicket = await res.json();
-	// 	return data;
-	// } else {
-	// 	throw new Error(
-	// 		`Updating Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
-	// 	);
-	// }
+	if (res.ok) {
+		const data: GameTicket = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Updating Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
 }
 
 export async function getToken() {

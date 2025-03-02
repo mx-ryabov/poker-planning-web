@@ -11,6 +11,7 @@ import {
 	useGameStore,
 } from "../model";
 import { ReactNode } from "react";
+import { ToastProvider } from "@/_src/shared/ui/components/toast";
 
 interface Props {
 	accessTokenFactory: () => Promise<string>;
@@ -28,15 +29,17 @@ export function GameRoomPageProvider({
 	children,
 }: Props) {
 	return (
-		<GameStateProvider initialAsyncState={{ game, currentParticipant }}>
-			<GameEventsProvider
-				accessTokenFactory={accessTokenFactory}
-				gameId={gameId}
-			>
-				<GameEventDispatcher />
-				{children}
-			</GameEventsProvider>
-		</GameStateProvider>
+		<ToastProvider>
+			<GameStateProvider initialAsyncState={{ game, currentParticipant }}>
+				<GameEventsProvider
+					accessTokenFactory={accessTokenFactory}
+					gameId={gameId}
+				>
+					<GameEventDispatcher />
+					{children}
+				</GameEventsProvider>
+			</GameStateProvider>
+		</ToastProvider>
 	);
 }
 

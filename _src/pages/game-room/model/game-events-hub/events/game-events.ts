@@ -20,6 +20,12 @@ export class TicketAddedEvent extends BaseEvent<GameTicket> {
 	}
 }
 
+export class TicketUpdatedEvent extends BaseEvent<GameTicket> {
+	constructor(payload: GameTicket) {
+		super(GameEventType.TicketUpdated, payload);
+	}
+}
+
 export class ReconnectingEvent extends BaseEvent<Error | undefined> {
 	constructor(payload: Error | undefined) {
 		super(GameEventType.Reconnecting, payload);

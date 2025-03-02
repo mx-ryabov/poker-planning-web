@@ -4,6 +4,7 @@ import {
 	EventSubscriber,
 	GameEventType,
 	TicketAddedEvent,
+	TicketUpdatedEvent,
 } from "../../game-events-hub";
 import { useEffect } from "react";
 
@@ -17,6 +18,10 @@ export function useTicketsEvDis({ eventSubscriber, gameStateStore }: Props) {
 		gameStateStore,
 		(state) => state.addTicketIfAbsent,
 	);
+	const updateTicket = useStore(
+		gameStateStore,
+		(state) => state.updateTicket,
+	);
 
 	useEffect(() => {
 		const handler = ({ payload }: TicketAddedEvent) => {
@@ -26,4 +31,13 @@ export function useTicketsEvDis({ eventSubscriber, gameStateStore }: Props) {
 
 		return eventSubscriber(GameEventType.TicketAdded, handler);
 	}, [eventSubscriber, addTicketIfAbsent]);
+
+	useEffect(() => {
+		const handler = ({ payload }: TicketUpdatedEvent) => {
+			console.log("updated ticket", payload);
+			updateTicket(payload.id, payload);
+		};
+
+		return eventSubscriber(GameEventType.TicketUpdated, handler);
+	}, [eventSubscriber, updateTicket]);
 }

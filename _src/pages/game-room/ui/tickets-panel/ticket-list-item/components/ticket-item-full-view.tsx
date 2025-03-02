@@ -21,13 +21,13 @@ import {
 } from "@/_src/pages/game-room/model";
 import { MinusIcon } from "@/_src/shared/ui/components/icon/svg/minus.icon";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
-import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	InlineEditableTextarea,
 	InlineEditableTextField,
 } from "@/_src/shared/ui/components/inline-editable-fields";
+import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 
 type Props = {
 	data: GameTicket;
@@ -35,6 +35,7 @@ type Props = {
 };
 
 export function TicketItemFullView({ data, onClose }: Props) {
+	const toastState = useGlobalToast();
 	const gameId = useGameState(selectCurrentGameId);
 	const updateTicket = useGameState((state) => state.updateTicket);
 
@@ -44,22 +45,24 @@ export function TicketItemFullView({ data, onClose }: Props) {
 	});
 
 	const updateTicketAction: UpdateTicketAction = async (updatedData) => {
-		const resData = await updateTicketById(gameId, data.id, updatedData);
-		updateTicket(data.id, resData);
+		try {
+			const resData = await updateTicketById(
+				gameId,
+				data.id,
+				updatedData,
+			);
+			updateTicket(data.id, resData);
+		} catch (e) {
+			toastState?.add({
+				title: `Server Error`,
+				description: `${e instanceof Error ? e.message : e}`,
+				variant: "error",
+			});
+			throw e;
+		}
 	};
 
-	const { state, error, isPending, update } = useTicketItemState(
-		data,
-		updateTicketAction,
-	);
-
-	useEffect(() => {
-		console.log("Error: ", error);
-	}, [error]);
-
-	useEffect(() => {
-		console.log("Title", state.title);
-	}, [state.title]);
+	const { state, update } = useTicketItemState(data, updateTicketAction);
 
 	return (
 		<div
