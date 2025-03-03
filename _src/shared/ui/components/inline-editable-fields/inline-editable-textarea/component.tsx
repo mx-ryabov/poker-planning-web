@@ -32,6 +32,7 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 					}}
 					placeholder={placeholder}
 					className={editorViewStyles(styles.editorView)}
+					maxHeight={styles.editorView.maxHeight}
 					autoFocus
 					error={error}
 					withErrorIcon

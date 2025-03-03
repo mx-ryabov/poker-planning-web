@@ -4,12 +4,14 @@ export type ReadViewStyleProps = {
 	size?: "large" | "medium";
 	textSize?: "large" | "medium";
 	compensatedOffset?: boolean;
+	maxHeight?: number;
 };
 
 export const readViewStyles = cva(
 	[
-		"flex items-center",
+		"flex",
 		"rounded-lg border-2 border-white",
+		"whitespace-pre-line box-content overflow-hidden",
 		"hover:bg-neutral-100 transition-[background-color]",
 	],
 	{
@@ -64,6 +66,7 @@ export type EditorViewStyleProps = {
 	textSize?: "large" | "medium";
 	size?: "large" | "medium";
 	compensatedOffset?: boolean;
+	maxHeight?: number;
 };
 
 export const editorViewStyles = cva([""], {

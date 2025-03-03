@@ -18,6 +18,11 @@ export function ReadViewDefault(props: ReadViewDefaultProps) {
 				hasValue: !!value,
 				fieldType,
 			})}
+			style={{
+				maxHeight: styles.maxHeight
+					? `${styles.maxHeight}px`
+					: "inherit",
+			}}
 		>
 			{value || placeholder}
 		</div>

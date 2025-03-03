@@ -1,4 +1,12 @@
-import { forwardRef, RefObject, useRef } from "react";
+import {
+	FormEvent,
+	FormEventHandler,
+	forwardRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+} from "react";
 import {
 	FieldError,
 	Group,
@@ -12,6 +20,7 @@ import { WarningIcon } from "../icon/svg/warning.icon";
 import { twMerge } from "tailwind-merge";
 import { setRefs } from "@/_src/shared/lib/utils";
 import { cva } from "class-variance-authority";
+import { mergeProps } from "react-aria";
 
 type TextAreaProps = {
 	label?: string;
@@ -19,6 +28,7 @@ type TextAreaProps = {
 	withErrorIcon?: boolean;
 	placeholder?: string;
 	isPending?: boolean;
+	maxHeight?: number;
 } & TextFieldProps;
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -29,15 +39,31 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 			withErrorIcon,
 			className,
 			isPending,
+			maxHeight,
 			...restProps
 		} = props;
 
-		const textAreaRef = useRef<HTMLTextAreaElement>(null);
+		const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
+		useEffect(() => {
+			const textAreaEl = textAreaRef.current;
+			if (!textAreaEl) return;
+
+			textAreaEl.style.height = "auto";
+			textAreaEl.style.height = `${textAreaEl.scrollHeight}px`;
+		}, [textAreaRef]);
+
+		const onInternalInput: FormEventHandler<HTMLTextAreaElement> =
+			useCallback((ev: FormEvent<HTMLTextAreaElement>) => {
+				const el = ev.currentTarget;
+				el.style.height = "auto";
+				el.style.height = `${el.scrollHeight}px`;
+			}, []);
 
 		return (
 			<TextField
 				className="group flex flex-col w-full"
-				{...restProps}
+				{...mergeProps(restProps, { onInput: onInternalInput })}
 				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
 				isInvalid={!!error || restProps.isInvalid}
@@ -66,10 +92,15 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						}}
 					>
 						<AriaTextArea
-							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0"
+							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0 overflow-hidden"
 							aria-label="textarea"
 							rows={4}
 							ref={setRefs(textAreaRef, ref)}
+							style={{
+								maxHeight: maxHeight
+									? `${maxHeight}px`
+									: "inherit",
+							}}
 						/>
 						<div className="flex flex-col items-center gap-1 absolute top-2 right-2">
 							{withErrorIcon && (
