@@ -8,10 +8,11 @@ import { ReactNode, useCallback } from "react";
 
 type Props = {
 	data: GameTicket;
+	isReadOnly: boolean;
 	onOpen: (id: string) => void;
 };
 
-export function TicketItemTile({ data, onOpen }: Props) {
+export function TicketItemTile({ data, isReadOnly, onOpen }: Props) {
 	const onContainerClick = useCallback(() => {
 		onOpen(data.id);
 	}, [onOpen, data.id]);
@@ -36,14 +37,16 @@ export function TicketItemTile({ data, onOpen }: Props) {
 				<div className="flex flex-row gap-2"></div>
 			</div>
 			<div className="flex flex-row items-center gap-2">
-				<Button
-					title="Vote"
-					contentLeft={<CardsIcon size={18} />}
-					size="small"
-					variant="grayed-out"
-					className="drop-shadow-none rounded-lg text-primary-500"
-				/>
-				<p className="text-neutral-700">{data.title}</p>
+				{!isReadOnly && (
+					<Button
+						title="Vote"
+						contentLeft={<CardsIcon size={18} />}
+						size="small"
+						variant="grayed-out"
+						className="drop-shadow-none rounded-lg text-primary-500"
+					/>
+				)}
+				<p className="text-neutral-700 truncate">{data.title}</p>
 			</div>
 		</div>
 	);

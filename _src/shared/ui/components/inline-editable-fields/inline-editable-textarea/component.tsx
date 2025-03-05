@@ -7,7 +7,11 @@ import {
 	ReadViewDefault,
 } from "../shared";
 
-type InlineEditableTextareaProps = InlineEditableFieldProps;
+type InlineEditableTextareaProps = {
+	shouldConfirmOnEnter?: boolean;
+	keepEditViewOpenOnBlur?: boolean;
+	rows?: number;
+} & InlineEditableFieldProps;
 
 export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 	const {
@@ -16,6 +20,10 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 		placeholder,
 		styles,
 		error,
+		shouldConfirmOnEnter = false,
+		keepEditViewOpenOnBlur = true,
+		rows,
+		isDisabled,
 		onConfirm,
 		onEditorChange,
 	} = props;
@@ -30,11 +38,21 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 						renderProps.onChange(value);
 						onEditorChange && onEditorChange(value);
 					}}
+					onKeyDown={
+						shouldConfirmOnEnter
+							? (e) => {
+									if (e.key === "Enter") {
+										renderProps.confirm();
+									}
+								}
+							: undefined
+					}
 					placeholder={placeholder}
 					className={editorViewStyles(styles.editorView)}
 					maxHeight={styles.editorView.maxHeight}
 					autoFocus
 					error={error}
+					rows={rows}
 					withErrorIcon
 				/>
 			);
@@ -44,7 +62,14 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 			}
 			return EditorRender;
 		},
-		[styles.editorView, placeholder, error, onEditorChange],
+		[
+			styles.editorView,
+			placeholder,
+			error,
+			rows,
+			shouldConfirmOnEnter,
+			onEditorChange,
+		],
 	);
 
 	return (
@@ -52,13 +77,15 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 			value={value}
 			label={label}
 			editView={editView}
-			keepEditViewOpenOnBlur
+			keepEditViewOpenOnBlur={keepEditViewOpenOnBlur}
 			isInvalid={!!error}
+			isDisabled={isDisabled}
 			readView={() => (
 				<ReadViewDefault
 					value={value}
 					fieldType="textarea"
 					placeholder={placeholder}
+					isDisabled={isDisabled}
 					styles={styles.readView}
 				/>
 			)}

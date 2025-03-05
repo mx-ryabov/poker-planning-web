@@ -8,12 +8,7 @@ export type ReadViewStyleProps = {
 };
 
 export const readViewStyles = cva(
-	[
-		"flex",
-		"rounded-lg border-2 border-white",
-		"whitespace-pre-line box-content overflow-hidden",
-		"hover:bg-neutral-100 transition-[background-color]",
-	],
+	["flex", "rounded-lg border-2 border-white", "box-content overflow-hidden"],
 	{
 		variants: {
 			hasValue: {
@@ -26,7 +21,7 @@ export const readViewStyles = cva(
 			},
 			fieldType: {
 				input: ["truncate"],
-				textarea: ["py-2"],
+				textarea: ["py-2 whitespace-pre-line break-all"],
 			},
 			textSize: {
 				large: "text-lg",
@@ -35,6 +30,10 @@ export const readViewStyles = cva(
 			compensatedOffset: {
 				true: "px-2 -mx-2",
 				false: "",
+			},
+			isDisabled: {
+				true: [],
+				false: ["hover:bg-neutral-100 transition-[background-color]"],
 			},
 		},
 		compoundVariants: [

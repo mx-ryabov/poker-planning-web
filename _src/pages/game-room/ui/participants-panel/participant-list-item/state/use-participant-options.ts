@@ -1,10 +1,7 @@
 import { GameParticipant, ParticipantRole } from "@/_src/shared/api/game-api";
 import { useMemo } from "react";
 import { ParticipantMenuOption } from "../model/participant-menu-option";
-import {
-	KickOptionCreator,
-	AppointAsMasterOptionCreator,
-} from "./option-creators";
+import { KickOptionCreator } from "./option-creators";
 
 type Props = {
 	participantFromList: GameParticipant;
@@ -16,10 +13,7 @@ export function useParticipantMenuOptions({
 	participantFromList,
 }: Props) {
 	const options: ParticipantMenuOption[] = useMemo(() => {
-		const optionCreatorClasses = [
-			AppointAsMasterOptionCreator,
-			KickOptionCreator,
-		];
+		const optionCreatorClasses = [KickOptionCreator];
 
 		return optionCreatorClasses
 			.map((CreatorContructor) => {

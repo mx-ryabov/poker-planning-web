@@ -29,6 +29,7 @@ type TextAreaProps = {
 	placeholder?: string;
 	isPending?: boolean;
 	maxHeight?: number;
+	rows?: number;
 } & TextFieldProps;
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -40,6 +41,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 			className,
 			isPending,
 			maxHeight,
+			rows = 4,
 			...restProps
 		} = props;
 
@@ -94,7 +96,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						<AriaTextArea
 							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0 overflow-hidden"
 							aria-label="textarea"
-							rows={4}
+							rows={rows}
 							ref={setRefs(textAreaRef, ref)}
 							style={{
 								maxHeight: maxHeight

@@ -31,10 +31,11 @@ import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 
 type Props = {
 	data: GameTicket;
+	isReadOnly?: boolean;
 	onClose: () => void;
 };
 
-export function TicketItemFullView({ data, onClose }: Props) {
+export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 	const toastState = useGlobalToast();
 	const gameId = useGameState(selectCurrentGameId);
 	const updateTicket = useGameState((state) => state.updateTicket);
@@ -42,9 +43,11 @@ export function TicketItemFullView({ data, onClose }: Props) {
 	const { control } = useForm<TicketItemState>({
 		mode: "onChange",
 		resolver: zodResolver(TicketItemStateSchema),
+		disabled: isReadOnly,
 	});
 
 	const updateTicketAction: UpdateTicketAction = async (updatedData) => {
+		if (isReadOnly) return;
 		try {
 			const resData = await updateTicketById(
 				gameId,
@@ -97,7 +100,7 @@ export function TicketItemFullView({ data, onClose }: Props) {
 					control={control}
 					name="title"
 					render={({ field, fieldState }) => (
-						<InlineEditableTextField
+						<InlineEditableTextarea
 							value={state.title}
 							styles={{
 								readView: {
@@ -110,26 +113,33 @@ export function TicketItemFullView({ data, onClose }: Props) {
 									compensatedOffset: true,
 								},
 							}}
+							isDisabled={isReadOnly}
 							error={fieldState.error?.message}
+							keepEditViewOpenOnBlur={false}
+							shouldConfirmOnEnter
 							onEditorChange={field.onChange}
+							rows={1}
 							onConfirm={(value) => update("title", value)}
 						/>
 					)}
 				/>
-				<Button
-					title="Vote"
-					contentLeft={<CardsIcon size={18} />}
-					size="small"
-					variant="grayed-out"
-					className="drop-shadow-none rounded-lg text-primary-500"
-				/>
+				{!isReadOnly && (
+					<Button
+						title="Vote"
+						contentLeft={<CardsIcon size={18} />}
+						size="small"
+						variant="grayed-out"
+						className="drop-shadow-none rounded-lg text-primary-500"
+					/>
+				)}
 			</div>
 
 			<div className="flex flex-col gap-1">
 				<InlineEditableTextarea
 					label="Description"
 					value={state.description || ""}
-					placeholder="Edit description"
+					placeholder={isReadOnly ? "Empty" : "Edit description"}
+					isDisabled={isReadOnly}
 					styles={{
 						readView: {
 							textSize: "medium",
@@ -154,6 +164,7 @@ export function TicketItemFullView({ data, onClose }: Props) {
 						<InlineEditableTextField
 							value={state.estimation || ""}
 							placeholder="None"
+							isDisabled={isReadOnly}
 							styles={{
 								readView: {
 									textSize: "medium",

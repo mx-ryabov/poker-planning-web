@@ -22,6 +22,7 @@ export type InlineEditProps = {
 	value: string;
 	keepEditViewOpenOnBlur?: boolean;
 	isInvalid?: boolean;
+	isDisabled?: boolean;
 	onConfirm: (value: string) => void;
 	onCancel?: () => void;
 	editView: (renderProps: EditRenderProps) => ReactNode;
@@ -34,6 +35,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 		value,
 		keepEditViewOpenOnBlur = false,
 		isInvalid,
+		isDisabled,
 		onConfirm,
 		onCancel,
 		editView,
@@ -83,11 +85,13 @@ export const InlineEdit = (props: InlineEditProps) => {
 					<Button
 						onPress={overlayTriggerState.open}
 						className="text-left outline-primary-500 rounded-lg"
+						isDisabled={isDisabled}
 					>
 						{readView({ value: state.editorValue })}
 					</Button>
 				)}
 				{overlayTriggerState.isOpen &&
+					!isDisabled &&
 					editView({
 						value: state.editorValue,
 						onChange: state.setEditorValue,
@@ -100,13 +104,15 @@ export const InlineEdit = (props: InlineEditProps) => {
 					})}
 			</div>
 
-			{keepEditViewOpenOnBlur && overlayTriggerState.isOpen && (
-				<div className="flex justify-end w-full mt-2">
-					{renderActionButtons()}
-				</div>
-			)}
+			{keepEditViewOpenOnBlur &&
+				overlayTriggerState.isOpen &&
+				!isDisabled && (
+					<div className="flex justify-end w-full mt-2">
+						{renderActionButtons()}
+					</div>
+				)}
 
-			{!keepEditViewOpenOnBlur && (
+			{!keepEditViewOpenOnBlur && !isDisabled && (
 				<PopoverWithoutFocusManagment
 					aria-label={`${label} confirmation popup`}
 					className="data-entering:animate-popup data-exiting:animate-popup-reverse"

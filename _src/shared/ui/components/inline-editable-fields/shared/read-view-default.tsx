@@ -4,11 +4,12 @@ type ReadViewDefaultProps = {
 	styles: ReadViewStyleProps;
 	value: string;
 	fieldType: "input" | "textarea";
+	isDisabled?: boolean;
 	placeholder?: string;
 };
 
 export function ReadViewDefault(props: ReadViewDefaultProps) {
-	const { styles, value, placeholder, fieldType } = props;
+	const { styles, value, placeholder, isDisabled, fieldType } = props;
 
 	return (
 		<div
@@ -17,6 +18,7 @@ export function ReadViewDefault(props: ReadViewDefaultProps) {
 				compensatedOffset: !!styles.compensatedOffset,
 				hasValue: !!value,
 				fieldType,
+				isDisabled,
 			})}
 			style={{
 				maxHeight: styles.maxHeight

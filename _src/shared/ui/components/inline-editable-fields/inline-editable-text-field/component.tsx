@@ -16,6 +16,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 		placeholder,
 		styles,
 		error,
+		isDisabled,
 		onConfirm,
 		onEditorChange,
 	} = props;
@@ -62,9 +63,11 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 					value={value}
 					fieldType="input"
 					placeholder={placeholder}
+					isDisabled={isDisabled}
 					styles={styles.readView}
 				/>
 			)}
+			isDisabled={isDisabled}
 			onConfirm={onConfirm}
 			onCancel={() => {
 				onEditorChange && onEditorChange(value);
