@@ -30,7 +30,7 @@ export function MenuContent<TDataItem extends object>(
 		>
 			<AriaMenu
 				{...props}
-				className="py-2 px-1 max-w-[180px] bg-white rounded-lg border border-neutral-100 drop-shadow-sm outline outline-0 max-h-[inherit] overflow-auto no-scrollbar"
+				className="py-2 px-1 max-w-[180px] bg-white rounded-lg border border-neutral-100 drop-shadow-sm outline-0 overflow-auto no-scrollbar"
 			/>
 		</Popover>
 	);

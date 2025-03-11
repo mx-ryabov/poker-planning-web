@@ -79,9 +79,6 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							}),
 							className as string,
 						)}
-						onClick={() => {
-							inputRef.current?.focus();
-						}}
 					>
 						{startIcon && (
 							<span className="text-neutral-200">

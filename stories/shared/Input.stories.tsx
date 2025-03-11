@@ -1,4 +1,5 @@
-import { PeopleIcon } from "@/_src/shared/ui/components/icon";
+import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { ArrowDownIcon, PeopleIcon } from "@/_src/shared/ui/components/icon";
 import { Input } from "@/_src/shared/ui/components/input";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
@@ -34,6 +35,22 @@ export const InputWithStartIcon: Story = {
 		label: "Label",
 		placeholder: "Placeholder",
 		startIcon: PeopleIcon,
+	},
+};
+
+export const InputWithEndContent: Story = {
+	args: {
+		label: "Label",
+		placeholder: "Placeholder",
+		endContent: (
+			<ButtonSquare
+				icon={ArrowDownIcon}
+				size="small"
+				variant="ghost"
+				aria-label="autocomplete-toggle-button"
+				excludeFromTabOrder={true}
+			/>
+		),
 	},
 };
 

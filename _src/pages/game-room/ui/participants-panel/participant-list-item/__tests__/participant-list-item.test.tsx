@@ -17,8 +17,8 @@ import { GameStateCotnext } from "@/_src/pages/game-room/model/store/game-state-
 But I excuse it by saying that I don't rely on useParticipantMenuOptions specifics 
 rather on generic stuff + the hook itself is fully covered by Unit Tests */
 const optionAction = vi.fn();
-vi.mock("../state/use-participant-options", () => ({
-	useParticipantMenuOptions: () => [
+vi.mock("../state/use-participant-item-options", () => ({
+	useParticipantItemOptions: () => [
 		{
 			title: "Test Option",
 			icon: UserRemoveIcon,

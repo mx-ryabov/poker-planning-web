@@ -28,6 +28,8 @@ import {
 	InlineEditableTextField,
 } from "@/_src/shared/ui/components/inline-editable-fields";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
+import { TicketTypeSelector } from "../../ticket-type-selector";
+import { TicketItemMenu } from "./ticket-item-menu";
 
 type Props = {
 	data: GameTicket;
@@ -69,16 +71,21 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 
 	return (
 		<div
-			className="w-full flex flex-col gap-4 border border-neutral-100 px-4 py-3 rounded-xl text-neutral-500"
+			className="w-full flex flex-col gap-4 border border-neutral-200 px-4 py-3 rounded-xl text-neutral-500"
 			data-testid="ticket-list-item-full-view"
 		>
-			<div className="flex flex-col gap-2">
+			<div className="flex flex-col gap-1">
 				<div className="flex flex-row items-center justify-between">
 					<div className="flex flex-row items-center gap-2">
-						<div>
-							{data.type !== undefined
-								? TicketTypeToIconMap[data.type]
-								: null}
+						<div className="-ml-2">
+							{data.type !== undefined && (
+								<TicketTypeSelector
+									value={data.type}
+									onSelected={(value) =>
+										update("type", value)
+									}
+								/>
+							)}
 						</div>
 						<span className="text-xs text-neutral-300">
 							{data.identifier}
@@ -93,6 +100,10 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 								onPress={onClose}
 							/>
 							<Tooltip.Content>Collapse</Tooltip.Content>
+						</Tooltip>
+						<Tooltip delay={1000}>
+							<TicketItemMenu />
+							<Tooltip.Content>Options</Tooltip.Content>
 						</Tooltip>
 					</div>
 				</div>

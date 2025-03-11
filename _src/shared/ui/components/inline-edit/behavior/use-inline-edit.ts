@@ -36,6 +36,8 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 		(e: FocusEvent) => {
 			if (keepEditViewOpenOnBlur) return;
 
+			console.log("blur", isInvalid);
+
 			if (!isInvalid) {
 				confirmChanges();
 			} else {
@@ -97,6 +99,7 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 		placement: "bottom right",
 		isNonModal: true,
 		state: overlayTriggerState,
+		shouldCloseOnInteractOutside: () => false,
 		onDismiss: onConfirmChanges,
 	};
 

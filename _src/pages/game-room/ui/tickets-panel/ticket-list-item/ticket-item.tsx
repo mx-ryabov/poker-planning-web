@@ -20,7 +20,7 @@ export const TicketListItem = memo((props: Props) => {
 	const currentRole = useGameState(selectCurrentRole);
 
 	const isReadOnly = useMemo(
-		() => !checkPermissions("editTicket", currentRole),
+		() => !checkPermissions("EditTicket", currentRole),
 		[currentRole],
 	);
 

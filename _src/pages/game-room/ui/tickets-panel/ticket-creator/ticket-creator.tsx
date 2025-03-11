@@ -10,10 +10,9 @@ import {
 	useState,
 } from "react";
 import { twMerge } from "tailwind-merge";
-import { TicketTypeSelector } from "./ticket-type-selector";
+import { TicketTypeSelector } from "../ticket-type-selector";
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon, PlusIcon } from "@/_src/shared/ui/components/icon";
-import { useClickOutside } from "@/_src/shared/lib";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,19 +71,16 @@ export function TicketCreator({ className, onSubmit }: TicketCreatorProps) {
 	);
 }
 
-const openerStyles = cva(
-	"shrink-0 transition-all duration-150 ease-linear",
-	{
-		variants: {
-			isOpened: {
-				true: [
-					"-translate-y-14 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
-				],
-				false: ["shadow-lg shadow-primary-200"],
-			},
+const openerStyles = cva("shrink-0 transition-all duration-150 ease-linear", {
+	variants: {
+		isOpened: {
+			true: [
+				"-translate-y-14 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
+			],
+			false: ["shadow-lg shadow-primary-200"],
 		},
 	},
-);
+});
 
 type FormProps = {
 	className?: string;
@@ -157,11 +153,11 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 	const focusOnTextField = useCallback(() => {
 		const inputEl = inputRef.current;
 		if (inputEl) {
-			inputEl.focus();
+			// setTimeout is needed when we want to focus after selection in ticket type dropdown.
+			// since the selection event is fired on mouse down the focus on the selected option happens AFTER we focus on test field
+			setTimeout(() => inputEl.focus(), 0);
 		}
 	}, [inputRef]);
-
-	//useClickOutside([editorContainerRef], onBlur);
 
 	useEffect(() => {
 		focusOnTextField();

@@ -100,7 +100,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 			style,
 		} = props;
 
-		const { buttonProps, isPressed } = useButton(
+		const { buttonProps, isPressed: isPressedLocal } = useButton(
 			{
 				...props,
 				isDisabled: props.isDisabled || isPending,
@@ -113,6 +113,14 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 		});
 		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
+		const isPressed =
+			isPressedLocal ||
+			(
+				props as SquareButtonProps & {
+					isPressed?: boolean;
+				}
+			).isPressed;
+
 		return (
 			<button
 				className={twMerge(
@@ -121,13 +129,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 						variant,
 						form: "square",
 						// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
-						isPressed:
-							isPressed ||
-							(
-								props as SquareButtonProps & {
-									isPressed?: boolean;
-								}
-							).isPressed,
+						isPressed,
 						excludeFromFocus: props.excludeFromTabOrder,
 						isFocused: isFocusVisible,
 						isHovered,
@@ -138,6 +140,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 				ref={ref}
 				aria-label={buttonProps["aria-label"] || "icon button"}
 				data-focused={isFocused || undefined}
+				data-pressed={isPressed}
 				role={role || "button"}
 				style={style}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}

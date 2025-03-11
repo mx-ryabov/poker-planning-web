@@ -30,7 +30,6 @@ export function useTicketItemState(
 		return { ...state, ...optimisticState };
 	});
 
-	// TODO: move from the common state to an individual state inside TicketItemField
 	const update = useCallback(
 		<TField extends keyof TicketItemState>(
 			field: TField,

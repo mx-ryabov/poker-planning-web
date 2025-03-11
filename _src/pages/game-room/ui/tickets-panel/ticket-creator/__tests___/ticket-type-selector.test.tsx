@@ -3,7 +3,7 @@ import { render, within } from "@/test/utilities";
 import {
 	TicketTypeSelector,
 	TicketTypeSelectorProps,
-} from "../ticket-type-selector";
+} from "../../ticket-type-selector/ticket-type-selector";
 import { TicketType } from "@/_src/shared/api";
 
 function renderComponent({

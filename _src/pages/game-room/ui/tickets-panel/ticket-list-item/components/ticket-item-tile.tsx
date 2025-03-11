@@ -5,6 +5,7 @@ import { TicketBugIcon } from "@/_src/shared/ui/components/icon/svg/ticket-bug.i
 import { TicketStoryIcon } from "@/_src/shared/ui/components/icon/svg/ticket-story.icon";
 import { TicketTaskIcon } from "@/_src/shared/ui/components/icon/svg/ticket-task.icon";
 import { ReactNode, useCallback } from "react";
+import { TicketItemMenu } from "./ticket-item-menu";
 
 type Props = {
 	data: GameTicket;
@@ -19,7 +20,7 @@ export function TicketItemTile({ data, isReadOnly, onOpen }: Props) {
 
 	return (
 		<div
-			className="group w-full flex flex-col gap-2 border border-neutral-100 px-2 py-2 rounded-xl hover:border-neutral-200 hover:drop-shadow-xs transition-colors cursor-pointer"
+			className="group w-full flex flex-col gap-2 border border-neutral-100 p-2 rounded-xl hover:border-neutral-200 hover:shadow-xs transition-colors cursor-pointer"
 			data-testid="ticket-list-item"
 			onClick={onContainerClick}
 		>
@@ -34,7 +35,9 @@ export function TicketItemTile({ data, isReadOnly, onOpen }: Props) {
 						{data.identifier}
 					</span>
 				</div>
-				<div className="flex flex-row gap-2"></div>
+				<div className="flex flex-row gap-2">
+					<TicketItemMenu className="transition-opacity opacity-0 group-hover:opacity-100 data-[pressed=true]:opacity-100" />
+				</div>
 			</div>
 			<div className="flex flex-row items-center gap-2">
 				{!isReadOnly && (

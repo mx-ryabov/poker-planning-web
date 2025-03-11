@@ -40,8 +40,13 @@ export function AutocompleteValue({ selectionMode }: Props) {
 }
 
 function AutocompleteSingleValue() {
-	const { inputProps, overlayTriggerState, toggleBtnProps, inputRef } =
-		useAutocompleteValue();
+	const {
+		inputProps,
+		overlayTriggerState,
+		toggleBtnProps,
+		inputRef,
+		autocompleteValueContainerRef,
+	} = useAutocompleteValue();
 
 	const toggleListButton = useMemo(() => {
 		if (overlayTriggerState?.isOpen === null) return null;
@@ -65,7 +70,13 @@ function AutocompleteSingleValue() {
 	}, [overlayTriggerState?.isOpen, toggleBtnProps]);
 
 	return (
-		<Input {...inputProps} ref={inputRef} endContent={toggleListButton} />
+		<div className="w-full" ref={autocompleteValueContainerRef}>
+			<Input
+				{...inputProps}
+				ref={inputRef}
+				endContent={toggleListButton}
+			/>
+		</div>
 	);
 }
 
@@ -77,6 +88,7 @@ function AutocompleteMultipleValue() {
 		listState,
 		isDisabled,
 		selectedNodes,
+		autocompleteValueContainerRef,
 		inputRef,
 	} = useAutocompleteValue();
 
@@ -186,6 +198,7 @@ function AutocompleteMultipleValue() {
 	return (
 		<div
 			className="group flex flex-col w-full relative"
+			ref={autocompleteValueContainerRef}
 			onClick={() => {
 				const inputEl = inputRef?.current;
 				if (inputEl && !overlayTriggerState?.isOpen) {
