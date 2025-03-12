@@ -10,6 +10,7 @@ import {
 } from "./dto";
 import { redirect } from "next/navigation";
 import {
+	appFetchDelete,
 	appFetchGet,
 	appFetchPost,
 	appFetchPut,
@@ -117,6 +118,22 @@ export async function updateTicketById(
 	} else {
 		throw new Error(
 			`Updating Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function deleteTicketById(
+	gameId: string,
+	ticketId: string,
+): Promise<GameTicket> {
+	const res = await appFetchDelete(`/games/${gameId}/ticket/${ticketId}`);
+
+	if (res.ok) {
+		const data: GameTicket = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Deleting Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
 		);
 	}
 }

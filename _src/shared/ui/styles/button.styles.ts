@@ -3,6 +3,45 @@ import { cva } from "class-variance-authority";
 export type ButtonStylesProps = {
 	size?: "small" | "medium" | "large";
 	variant?: "default" | "outline" | "ghost" | "grayed-out";
+	appearance?: "primary" | "danger" | "warning" | "info" | "success";
+};
+
+export const COLOR_SCHEMES = {
+	primary: {
+		"--main-color": "var(--color-primary-500)",
+		"--main-light-color": "var(--color-primary-100)",
+		"--hovered-color": "var(--color-primary-600)",
+		"--pressed-color": "var(--color-primary-700)",
+		"--shadow-color": "var(--color-primary-900)",
+	},
+	danger: {
+		"--main-color": "var(--color-error-500)",
+		"--main-light-color": "var(--color-error-100)",
+		"--hovered-color": "var(--color-error-600)",
+		"--pressed-color": "var(--color-error-700)",
+		"--shadow-color": "var(--color-error-900)",
+	},
+	warning: {
+		"--main-color": "var(--color-warning-500)",
+		"--main-light-color": "var(--color-warning-100)",
+		"--hovered-color": "var(--color-warning-600)",
+		"--pressed-color": "var(--color-warning-700)",
+		"--shadow-color": "var(--color-warning-900)",
+	},
+	info: {
+		"--main-color": "var(--color-info-500)",
+		"--main-light-color": "var(--color-info-100)",
+		"--hovered-color": "var(--color-info-600)",
+		"--pressed-color": "var(--color-info-700)",
+		"--shadow-color": "var(--color-info-900)",
+	},
+	success: {
+		"--main-color": "var(--color-success-500)",
+		"--main-light-color": "var(--color-success-100)",
+		"--hovered-color": "var(--color-success-600)",
+		"--pressed-color": "var(--color-success-700)",
+		"--shadow-color": "var(--color-success-900)",
+	},
 };
 
 export const buttonStyles = cva(
@@ -15,6 +54,13 @@ export const buttonStyles = cva(
 		"gap-x-2",
 		"w-fit",
 		"cursor-pointer",
+		// We need all these colors (css variables) to be initialized for COLOR_SCHEMES
+		// They won't be applied anyway because of variants
+		"text-primary-500 text-primary-100 text-primary-600 text-primary-700 text-primary-900",
+		"text-error-500 text-error-100 text-error-600 text-error-700 text-error-900",
+		"text-warning-500 text-warning-100 text-warning-600 text-warning-700 text-warning-900",
+		"text-info-500 text-info-100 text-info-600 text-info-700 text-info-900",
+		"text-success-500 text-success-100 text-success-600 text-success-700 text-success-900",
 	],
 	{
 		variants: {
@@ -31,10 +77,10 @@ export const buttonStyles = cva(
 			},
 			variant: {
 				default: [
-					"bg-primary-500",
+					"bg-[var(--main-color)]",
 					"text-white",
 					"drop-shadow-md",
-					"shadow-primary-900",
+					"shadow-[var(--shadow-color)]",
 					"font-medium",
 				],
 				outline: [
@@ -45,14 +91,14 @@ export const buttonStyles = cva(
 
 					"font-medium",
 					"drop-shadow-md",
-					"shadow-primary-900",
+					"shadow-[var(--shadow-color)]",
 				],
 				ghost: ["bg-white", "text-neutral-500", "font-medium"],
 				"grayed-out": [
 					"bg-neutral-100",
 					"text-neutral-500",
 					"drop-shadow-md",
-					"shadow-primary-900",
+					"shadow-[var(--shadow-color)]",
 				],
 			},
 			form: {
@@ -74,7 +120,7 @@ export const buttonStyles = cva(
 				false: [],
 			},
 			isFocused: {
-				true: ["outline-primary-500", "outline-offset-2"],
+				true: ["outline-[var(--main-color)]", "outline-offset-2"],
 				false: ["outline-hidden"],
 			},
 		},
@@ -83,12 +129,12 @@ export const buttonStyles = cva(
 			{
 				isHovered: true,
 				variant: "default",
-				className: ["bg-primary-600"],
+				className: ["bg-[var(--hovered-color)]"],
 			},
 			{
 				isPressed: true,
 				variant: "default",
-				className: ["bg-primary-700"],
+				className: ["bg-[var(--pressed-color)]"],
 			},
 			{
 				isDisabled: true,
@@ -140,7 +186,10 @@ export const buttonStyles = cva(
 			{
 				isPressed: true,
 				variant: "grayed-out",
-				className: ["bg-primary-100", "text-primary-500"],
+				className: [
+					"bg-[var(--main-light-color)]",
+					"text-[var(--main-color)]",
+				],
 			},
 			{
 				isDisabled: true,

@@ -7,7 +7,11 @@ import {
 } from "react-aria-components";
 import { mergeProps, useButton, useFocusRing, useHover } from "react-aria";
 import { twMerge } from "tailwind-merge";
-import { buttonStyles, ButtonStylesProps } from "../../styles/button.styles";
+import {
+	buttonStyles,
+	ButtonStylesProps,
+	COLOR_SCHEMES,
+} from "../../styles/button.styles";
 
 type BaseButtonProps = { isPending?: boolean } & ButtonStylesProps &
 	ButtonProps &
@@ -28,6 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			title,
 			size = "medium",
 			variant = "default",
+			appearance = "primary",
 			isPending = false,
 			contentLeft,
 			contentRight,
@@ -50,6 +55,7 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 
 		return (
 			<button
+				style={COLOR_SCHEMES[appearance] as any}
 				className={twMerge(
 					buttonStyles({
 						size,
