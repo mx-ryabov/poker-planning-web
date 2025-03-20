@@ -125,12 +125,11 @@ export async function updateTicketById(
 export async function deleteTicketById(
 	gameId: string,
 	ticketId: string,
-): Promise<GameTicket> {
+): Promise<void> {
 	const res = await appFetchDelete(`/games/${gameId}/ticket/${ticketId}`);
 
 	if (res.ok) {
-		const data: GameTicket = await res.json();
-		return data;
+		await res.json();
 	} else {
 		throw new Error(
 			`Deleting Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,

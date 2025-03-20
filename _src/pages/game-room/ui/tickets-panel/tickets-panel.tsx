@@ -15,7 +15,6 @@ export function TicketsPanel() {
 	const currentRole = useGameState(selectCurrentRole);
 	const gameId = useGameState(selectCurrentGameId);
 	const addTicketIfAbsent = useGameState((state) => state.addTicketIfAbsent);
-	const updateTicket = useGameState((state) => state.updateTicket);
 
 	const scrollToListBottom = useCallback(() => {
 		const listEl = listRef.current;

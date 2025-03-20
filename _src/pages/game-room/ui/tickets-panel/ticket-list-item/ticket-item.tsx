@@ -6,6 +6,7 @@ import {
 	checkPermissions,
 	selectCurrentRole,
 	useGameState,
+	useTicketDelete,
 } from "../../../model";
 
 type Props = {
@@ -17,17 +18,22 @@ type Props = {
 
 export const TicketListItem = memo((props: Props) => {
 	const { data, isOpen, onOpen, onClose } = props;
+
 	const currentRole = useGameState(selectCurrentRole);
+	const { isDeleting, deleteTicket } = useTicketDelete({ ticket: data });
 
 	const isReadOnly = useMemo(
 		() => !checkPermissions("EditTicket", currentRole),
 		[currentRole],
 	);
 
+	if (isDeleting) return null;
+
 	if (!isOpen) {
 		return (
 			<TicketItemTile
 				onOpen={onOpen}
+				deleteTicket={deleteTicket}
 				data={data}
 				isReadOnly={isReadOnly}
 			/>
@@ -38,6 +44,7 @@ export const TicketListItem = memo((props: Props) => {
 		<TicketItemFullView
 			data={data}
 			isReadOnly={isReadOnly}
+			deleteTicket={deleteTicket}
 			onClose={onClose}
 		/>
 	);

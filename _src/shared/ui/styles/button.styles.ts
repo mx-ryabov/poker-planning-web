@@ -53,7 +53,6 @@ export const buttonStyles = cva(
 		"items-center",
 		"gap-x-2",
 		"w-fit",
-		"cursor-pointer",
 		// We need all these colors (css variables) to be initialized for COLOR_SCHEMES
 		// They won't be applied anyway because of variants
 		"text-primary-500 text-primary-100 text-primary-600 text-primary-700 text-primary-900",
@@ -110,7 +109,7 @@ export const buttonStyles = cva(
 			},
 			isDisabled: {
 				true: ["drop-shadow-none"],
-				false: [],
+				false: ["cursor-pointer"],
 			},
 			isHovered: {
 				true: [],
@@ -139,7 +138,7 @@ export const buttonStyles = cva(
 			{
 				isDisabled: true,
 				variant: "default",
-				className: ["bg-neutral-100", "text-neutral-400"],
+				className: ["bg-neutral-100!", "text-neutral-400"],
 			},
 			// Outline
 			{

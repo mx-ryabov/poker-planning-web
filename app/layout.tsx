@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { LocalizedStringProvider } from "@/_src/shared/ui/components/localized-string-provider";
+import { ConfirmationModalProvider } from "@/_src/shared/ui/components/modals";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -32,7 +33,9 @@ export default function RootLayout({
 			</head>
 			<body className={`${inter.variable} font-sans p-0`}>
 				<LocalizedStringProvider locale="en-US" />
-				{children}
+				<ConfirmationModalProvider>
+					{children}
+				</ConfirmationModalProvider>
 			</body>
 		</html>
 	);

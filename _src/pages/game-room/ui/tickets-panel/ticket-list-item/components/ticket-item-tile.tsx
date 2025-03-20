@@ -10,10 +10,16 @@ import { TicketItemMenu } from "./ticket-item-menu";
 type Props = {
 	data: GameTicket;
 	isReadOnly: boolean;
+	deleteTicket: () => void;
 	onOpen: (id: string) => void;
 };
 
-export function TicketItemTile({ data, isReadOnly, onOpen }: Props) {
+export function TicketItemTile({
+	data,
+	isReadOnly,
+	deleteTicket,
+	onOpen,
+}: Props) {
 	const onContainerClick = useCallback(() => {
 		onOpen(data.id);
 	}, [onOpen, data.id]);
@@ -36,7 +42,10 @@ export function TicketItemTile({ data, isReadOnly, onOpen }: Props) {
 					</span>
 				</div>
 				<div className="flex flex-row gap-2">
-					<TicketItemMenu className="transition-opacity opacity-0 group-hover:opacity-100 data-[pressed=true]:opacity-100" />
+					<TicketItemMenu
+						className="transition-opacity opacity-0 group-hover:opacity-100 data-[pressed=true]:opacity-100"
+						deleteTicket={deleteTicket}
+					/>
 				</div>
 			</div>
 			<div className="flex flex-row items-center gap-2">

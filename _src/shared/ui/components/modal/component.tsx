@@ -49,7 +49,7 @@ function Header({ children }: HeaderProps) {
 		return null;
 	}
 	return (
-		<div className="flex flex-row justify-between">
+		<div className="flex flex-row justify-between items-center">
 			{typeof children === "function"
 				? children({ close: triggerState.close })
 				: children}
@@ -63,14 +63,15 @@ type TitleProps = {
 };
 function Title({ children, className }: TitleProps) {
 	return (
-		<h2
+		<Heading
 			className={twMerge(
-				"text-2xl font-semibold text-neutral-700",
+				"text-xl font-semibold text-neutral-700",
 				className,
 			)}
+			slot="title"
 		>
 			{children}
-		</h2>
+		</Heading>
 	);
 }
 
@@ -112,7 +113,7 @@ export const Modal = Object.assign(DialogTrigger, {
 });
 
 const overlayStyles = cva(
-	"fixed inset-0 flex items-center justify-center w-full h-full bg-neutral-500/30 backdrop-blur",
+	"fixed inset-0 flex items-center justify-center w-full h-full bg-neutral-500/30 backdrop-blur z-10",
 	{
 		variants: {
 			isEntering: {

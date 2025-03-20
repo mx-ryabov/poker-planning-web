@@ -2,6 +2,7 @@ import { Button } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon, SettingsIcon } from "@/_src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn, within, expect } from "@storybook/test";
+import { useState } from "react";
 
 const meta = {
 	title: "Shared/Button",
@@ -65,12 +66,18 @@ export const DefaultMedium: Story = {
 	},
 };
 
-export const DefaultMediumPending: Story = {
-	args: {
-		...Default.args,
-		size: "medium",
-		isPending: true,
-	},
+export const DefaultMediumPending = (args: any) => {
+	const [isPending, setIsPending] = useState(false);
+	return (
+		<Button
+			title="Button"
+			form="default"
+			size="medium"
+			appearance="danger"
+			isPending={isPending}
+			onPress={() => setIsPending(true)}
+		/>
+	);
 };
 
 export const DefaultSmall: Story = {

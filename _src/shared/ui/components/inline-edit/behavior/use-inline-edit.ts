@@ -30,13 +30,12 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 	 */
 	const onFocusWithin = useCallback(() => {
 		overlayTriggerState.open();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [overlayTriggerState.open]);
 
 	const onBlurWithin = useCallback(
 		(e: FocusEvent) => {
-			if (keepEditViewOpenOnBlur) return;
-
-			console.log("blur", isInvalid);
+			if (keepEditViewOpenOnBlur || !overlayTriggerState.isOpen) return;
 
 			if (!isInvalid) {
 				confirmChanges();
@@ -45,7 +44,9 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 			}
 			overlayTriggerState.close();
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[
+			overlayTriggerState.isOpen,
 			overlayTriggerState.close,
 			confirmChanges,
 			keepEditViewOpenOnBlur,
@@ -70,11 +71,13 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 
 		confirmChanges();
 		overlayTriggerState.close();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [overlayTriggerState.close, confirmChanges, isInvalid]);
 
 	const onCancelChanges = useCallback(() => {
 		cancelChanges();
 		overlayTriggerState.close();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [overlayTriggerState.close, cancelChanges]);
 
 	/** END **/
@@ -100,7 +103,14 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 		isNonModal: true,
 		state: overlayTriggerState,
 		shouldCloseOnInteractOutside: () => false,
-		onDismiss: onConfirmChanges,
+		// onDismiss: () => {
+		// 	overlayTriggerState.close();
+		// 	// if (!isInvalid) {
+		// 	// 	confirmChanges();
+		// 	// } else {
+		// 	// 	cancelChanges();
+		// 	// }
+		// },
 	};
 
 	/** END **/

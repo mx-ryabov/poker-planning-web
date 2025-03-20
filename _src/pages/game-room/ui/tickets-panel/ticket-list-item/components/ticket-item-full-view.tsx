@@ -1,24 +1,6 @@
-import {
-	GameTicket,
-	TicketType,
-	updateTicketById,
-} from "@/_src/shared/api/game-api";
+import { GameTicket } from "@/_src/shared/api/game-api";
 import { Button, ButtonSquare } from "@/_src/shared/ui/components/button";
 import { CardsIcon } from "@/_src/shared/ui/components/icon/svg/cards.icon";
-import { TicketBugIcon } from "@/_src/shared/ui/components/icon/svg/ticket-bug.icon";
-import { TicketStoryIcon } from "@/_src/shared/ui/components/icon/svg/ticket-story.icon";
-import { TicketTaskIcon } from "@/_src/shared/ui/components/icon/svg/ticket-task.icon";
-import { ReactNode, useEffect } from "react";
-import {
-	TicketItemState,
-	TicketItemStateSchema,
-	UpdateTicketAction,
-	useTicketItemState,
-} from "../state/use-ticket-item-state";
-import {
-	selectCurrentGameId,
-	useGameState,
-} from "@/_src/pages/game-room/model";
 import { MinusIcon } from "@/_src/shared/ui/components/icon/svg/minus.icon";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
 import { Controller, useForm } from "react-hook-form";
@@ -27,47 +9,36 @@ import {
 	InlineEditableTextarea,
 	InlineEditableTextField,
 } from "@/_src/shared/ui/components/inline-editable-fields";
-import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { TicketTypeSelector } from "../../ticket-type-selector";
 import { TicketItemMenu } from "./ticket-item-menu";
+import {
+	TicketItemState,
+	TicketItemStateSchema,
+	useTicketUpdate,
+} from "@/_src/pages/game-room/model";
 
 type Props = {
 	data: GameTicket;
 	isReadOnly?: boolean;
+	deleteTicket: () => void;
 	onClose: () => void;
 };
 
-export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
-	const toastState = useGlobalToast();
-	const gameId = useGameState(selectCurrentGameId);
-	const updateTicket = useGameState((state) => state.updateTicket);
-
+export function TicketItemFullView({
+	data,
+	isReadOnly,
+	onClose,
+	deleteTicket,
+}: Props) {
 	const { control } = useForm<TicketItemState>({
 		mode: "onChange",
 		resolver: zodResolver(TicketItemStateSchema),
 		disabled: isReadOnly,
 	});
 
-	const updateTicketAction: UpdateTicketAction = async (updatedData) => {
-		if (isReadOnly) return;
-		try {
-			const resData = await updateTicketById(
-				gameId,
-				data.id,
-				updatedData,
-			);
-			updateTicket(data.id, resData);
-		} catch (e) {
-			toastState?.add({
-				title: `Server Error`,
-				description: `${e instanceof Error ? e.message : e}`,
-				variant: "error",
-			});
-			throw e;
-		}
-	};
+	const { optimisticData: state, updateByField } = useTicketUpdate(data);
 
-	const { state, update } = useTicketItemState(data, updateTicketAction);
+	if (!state) return null;
 
 	return (
 		<div
@@ -82,7 +53,7 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 								<TicketTypeSelector
 									value={data.type}
 									onSelected={(value) =>
-										update("type", value)
+										updateByField("type", value)
 									}
 								/>
 							)}
@@ -102,7 +73,7 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 							<Tooltip.Content>Collapse</Tooltip.Content>
 						</Tooltip>
 						<Tooltip delay={1000}>
-							<TicketItemMenu />
+							<TicketItemMenu deleteTicket={deleteTicket} />
 							<Tooltip.Content>Options</Tooltip.Content>
 						</Tooltip>
 					</div>
@@ -130,7 +101,10 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 							shouldConfirmOnEnter
 							onEditorChange={field.onChange}
 							rows={1}
-							onConfirm={(value) => update("title", value)}
+							onConfirm={(value) => {
+								console.log("onConfgirm");
+								updateByField("title", value);
+							}}
 						/>
 					)}
 				/>
@@ -161,7 +135,7 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 							compensatedOffset: true,
 						},
 					}}
-					onConfirm={(value) => update("description", value)}
+					onConfirm={(value) => updateByField("description", value)}
 				/>
 			</div>
 
@@ -186,7 +160,9 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 									size: "medium",
 								},
 							}}
-							onConfirm={(value) => update("estimation", value)}
+							onConfirm={(value) =>
+								updateByField("estimation", value)
+							}
 						/>
 					</div>
 				</div>
@@ -194,11 +170,3 @@ export function TicketItemFullView({ data, isReadOnly, onClose }: Props) {
 		</div>
 	);
 }
-
-const TicketTypeToIconMap: Record<TicketType, ReactNode> = {
-	[TicketType.Story]: (
-		<TicketStoryIcon size={20} className="text-success-500" />
-	),
-	[TicketType.Bug]: <TicketBugIcon size={20} className="text-error-500" />,
-	[TicketType.Task]: <TicketTaskIcon size={20} className="text-info-500" />,
-};

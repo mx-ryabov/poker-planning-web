@@ -8,7 +8,7 @@ export type ReadViewStyleProps = {
 };
 
 export const readViewStyles = cva(
-	["flex", "rounded-lg border-2 border-white", "box-content overflow-hidden"],
+	["flex", "rounded-lg border-2 border-white", "overflow-hidden"],
 	{
 		variants: {
 			hasValue: {
@@ -20,8 +20,8 @@ export const readViewStyles = cva(
 				medium: [],
 			},
 			fieldType: {
-				input: ["truncate"],
-				textarea: ["py-2 whitespace-pre-line break-all"],
+				input: ["truncate box-border"],
+				textarea: ["box-content py-2 whitespace-pre-line break-all"],
 			},
 			textSize: {
 				large: "text-lg",
@@ -50,7 +50,7 @@ export const readViewStyles = cva(
 			{
 				fieldType: "input",
 				compensatedOffset: false,
-				className: "px-3",
+				className: "px-3 items-center",
 			},
 			{
 				fieldType: "textarea",

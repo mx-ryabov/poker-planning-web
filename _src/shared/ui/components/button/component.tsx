@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { forwardRef, HTMLAttributes, ReactNode, useEffect } from "react";
 import { IconType } from "../icon/icon-builder";
 import {
 	ButtonContext,
@@ -12,6 +12,7 @@ import {
 	ButtonStylesProps,
 	COLOR_SCHEMES,
 } from "../../styles/button.styles";
+import { cva } from "class-variance-authority";
 
 type BaseButtonProps = { isPending?: boolean } & ButtonStylesProps &
 	ButtonProps &
@@ -53,6 +54,27 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 		});
 		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
+		if (isPending)
+			console.log(
+				buttonStyles({
+					size,
+					variant,
+					form: "default",
+					excludeFromFocus: props.excludeFromTabOrder,
+					// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
+					isPressed:
+						isPressed ||
+						(
+							props as LabeledButtonProps & {
+								isPressed?: boolean;
+							}
+						).isPressed,
+					isFocused: isFocusVisible,
+					isHovered,
+					isDisabled: props.isDisabled || isPending,
+				}),
+			);
+
 		return (
 			<button
 				style={COLOR_SCHEMES[appearance] as any}
@@ -82,9 +104,11 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 				aria-label={buttonProps["aria-label"] || "icon button"}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}
 			>
-				{isPending && (
-					<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
-				)}
+				<div className={spinnerStyles({ isActive: isPending })}>
+					<div>
+						<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+					</div>
+				</div>
 				{contentLeft}
 				{title}
 				{contentRight}
@@ -93,12 +117,22 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 	},
 );
 
+const spinnerStyles = cva("flex justify-center items-center", {
+	variants: {
+		isActive: {
+			true: "block animate-fade-in-with-resize *:animate-scale-up",
+			false: "hidden",
+		},
+	},
+});
+
 export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 	(props, ref) => {
 		[props, ref] = useContextProps(props, ref, ButtonContext);
 		const {
 			size = "medium",
 			variant = "default",
+			appearance = "primary",
 			isPending = false,
 			icon,
 			role,
@@ -148,12 +182,14 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 				data-focused={isFocused || undefined}
 				data-pressed={isPressed}
 				role={role || "button"}
-				style={style}
+				style={{ ...(COLOR_SCHEMES[appearance] as any), ...style }}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}
 			>
-				{isPending && (
-					<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
-				)}
+				<div className={spinnerStyles({ isActive: isPending })}>
+					<div>
+						<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+					</div>
+				</div>
 				{!isPending && icon({ size: ButtonIconSize[size] })}
 			</button>
 		);

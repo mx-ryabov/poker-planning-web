@@ -15,16 +15,16 @@ export interface PopoverWithoutFocusManagmentProps
 	state: OverlayTriggerState;
 	triggerRef: RefObject<HTMLDivElement | null>;
 	className?: string;
-	onDismiss: () => void;
+	//onDismiss: () => void;
 }
 
 export const PopoverWithoutFocusManagment = ({
 	state,
-	onDismiss,
+	//onDismiss,
 	...props
 }: PopoverWithoutFocusManagmentProps) => {
 	let popoverRef = useRef<HTMLDivElement | null>(null);
-	useClickOutside([props.triggerRef, popoverRef], onDismiss);
+	//useClickOutside([props.triggerRef, popoverRef], onDismiss);
 	let isExiting =
 		useExitAnimation(popoverRef, state.isOpen) || props.isExiting || false;
 

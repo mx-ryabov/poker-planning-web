@@ -12,6 +12,7 @@ import {
 	ReconnectedEvent,
 	ReconnectingEvent,
 	TicketAddedEvent,
+	TicketDeletedEvent,
 	TicketUpdatedEvent,
 } from "../events/game-events";
 import { GameEventType, GameEventTypeMap } from "../events";
@@ -102,6 +103,9 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		});
 		connection.on(GameEventType.TicketUpdated, (data) => {
 			gameEventTarget.dispatchEvent(new TicketUpdatedEvent(data));
+		});
+		connection.on(GameEventType.TicketDeleted, (data) => {
+			gameEventTarget.dispatchEvent(new TicketDeletedEvent(data));
 		});
 	}, [connection, gameEventTarget]);
 

@@ -71,6 +71,13 @@ export function createGameAsyncStateSliceCreator(
 				}
 			});
 		},
+		removeTicket: (ticketId: string) => {
+			set((state) => {
+				state.state.game.tickets = state.state.game.tickets.filter(
+					(t) => t.id !== ticketId,
+				);
+			});
+		},
 		revalidateAsyncState: (updatedState: GameAsyncState) => {
 			set((state) => {
 				state.state = updatedState;

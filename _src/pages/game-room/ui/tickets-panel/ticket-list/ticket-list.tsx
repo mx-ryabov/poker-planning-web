@@ -1,7 +1,12 @@
 import { GameTicket, ParticipantRole } from "@/_src/shared/api";
 import { ReactNode, Ref } from "react";
 import { twMerge } from "tailwind-merge";
-import { selectCurrentRole, selectTickets, useGameState } from "../../../model";
+import {
+	selectCurrentRole,
+	selectTickets,
+	useGameState,
+	useTicketDelete,
+} from "../../../model";
 import { ScrollShadow } from "@/_src/shared/ui/components/scroll-shadow";
 
 type Props = {

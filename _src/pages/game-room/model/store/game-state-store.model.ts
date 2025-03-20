@@ -21,6 +21,7 @@ export type GameAsyncSlice = {
 	kickParticipant: (participantId: string) => void;
 	addTicketIfAbsent: (ticket: GameTicket) => void;
 	updateTicket: (ticketId: string, data: Partial<UpdateGameTicket>) => void;
+	removeTicket: (ticketId: string) => void;
 	revalidateAsyncState: (updatedState: GameAsyncState) => void;
 };
 
