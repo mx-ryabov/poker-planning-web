@@ -14,6 +14,7 @@ import {
 } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
 import { GameStateCotnext } from "../../../model/store/game-state-context";
+import { AppProvider } from "@/_src/app";
 
 function renderComponent(props: {
 	hasTickets: boolean;
@@ -35,18 +36,21 @@ function renderComponent(props: {
 	});
 
 	return render(
-		<GameStateCotnext.Provider value={gameStateStore}>
-			<TicketList>
-				{(ticketItemData) => (
-					<TicketListItem
-						key={ticketItemData.id}
-						isOpen={false}
-						onOpen={vi.fn()}
-						data={ticketItemData}
-					/>
-				)}
-			</TicketList>
-		</GameStateCotnext.Provider>,
+		<AppProvider>
+			<GameStateCotnext.Provider value={gameStateStore}>
+				<TicketList>
+					{(ticketItemData) => (
+						<TicketListItem
+							key={ticketItemData.id}
+							isOpen={false}
+							onOpen={vi.fn()}
+							data={ticketItemData}
+							onClose={vi.fn()}
+						/>
+					)}
+				</TicketList>
+			</GameStateCotnext.Provider>
+		</AppProvider>,
 	);
 }
 

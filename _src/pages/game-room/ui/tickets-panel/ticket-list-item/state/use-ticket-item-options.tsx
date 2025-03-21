@@ -1,10 +1,10 @@
+import { useConfirmationModal } from "@/_src/app";
 import {
 	checkPermissions,
 	selectCurrentRole,
 	useGameState,
 } from "@/_src/pages/game-room/model";
 import { TrashIcon } from "@/_src/shared/ui/components/icon/svg/trash.icon";
-import { useConfirmationModal } from "@/_src/shared/ui/components/modals";
 import { useCallback, useMemo } from "react";
 
 type Props = {

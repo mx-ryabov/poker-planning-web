@@ -7,6 +7,7 @@ import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
 import { generateParticipant } from "../../../__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
 import { GameStateCotnext } from "../../../model/store/game-state-context";
+import { AppProvider } from "@/_src/app/providers";
 
 const gameStateStore = createGameStateStore({
 	game: {
@@ -29,9 +30,11 @@ const gameStateStore = createGameStateStore({
 });
 function renderDrawer() {
 	return render(
-		<GameStateCotnext.Provider value={gameStateStore}>
-			<GameManagementDrawer />
-		</GameStateCotnext.Provider>,
+		<AppProvider>
+			<GameStateCotnext.Provider value={gameStateStore}>
+				<GameManagementDrawer />
+			</GameStateCotnext.Provider>
+		</AppProvider>,
 	);
 }
 

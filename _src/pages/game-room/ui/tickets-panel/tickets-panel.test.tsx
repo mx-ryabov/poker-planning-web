@@ -14,6 +14,7 @@ import {
 import { CreateTicketForGameRequest, ParticipantRole } from "@/_src/shared/api";
 import { TicketsPanel } from "./tickets-panel";
 import { GameStateCotnext } from "../../model/store/game-state-context";
+import { AppProvider } from "@/_src/app";
 
 vi.mock("@/_src/shared/api", async (importOriginal) => ({
 	...(await importOriginal()),
@@ -40,9 +41,11 @@ function renderComponent() {
 	});
 
 	return render(
-		<GameStateCotnext.Provider value={gameStateStore}>
-			<TicketsPanel />
-		</GameStateCotnext.Provider>,
+		<AppProvider>
+			<GameStateCotnext.Provider value={gameStateStore}>
+				<TicketsPanel />
+			</GameStateCotnext.Provider>
+		</AppProvider>,
 	);
 }
 
