@@ -85,7 +85,7 @@ export function ToastRegion(props: ToastRegionProps) {
 		<div
 			{...mergeProps(regionProps, { onPointerEnter, onPointerLeave })}
 			ref={ref}
-			className="fixed left-6 bottom-6 w-80 max-h-[50vh]"
+			className="fixed bottom-6 left-6 max-h-[50vh] w-80"
 		>
 			{state.visibleToasts.toReversed().map((toast, index) => (
 				<Toast

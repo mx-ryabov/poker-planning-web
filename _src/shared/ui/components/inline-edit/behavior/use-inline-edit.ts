@@ -103,14 +103,6 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 		isNonModal: true,
 		state: overlayTriggerState,
 		shouldCloseOnInteractOutside: () => false,
-		// onDismiss: () => {
-		// 	overlayTriggerState.close();
-		// 	// if (!isInvalid) {
-		// 	// 	confirmChanges();
-		// 	// } else {
-		// 	// 	cancelChanges();
-		// 	// }
-		// },
 	};
 
 	/** END **/

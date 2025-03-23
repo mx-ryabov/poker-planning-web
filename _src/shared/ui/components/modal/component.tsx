@@ -21,15 +21,23 @@ function DialogTrigger({ children, ...props }: DialogTriggerProps) {
 	return <AriaDialogTrigger {...props}>{children}</AriaDialogTrigger>;
 }
 
-type DialogProps = AriaDialogProps & Omit<AriaModalOverlayProps, "children">;
+type DialogProps = AriaDialogProps &
+	Omit<AriaModalOverlayProps, "children"> & { "data-testid"?: string };
 
 function Dialog(props: DialogProps) {
 	const { children, ...restProps } = props;
 
 	return (
-		<AriaModalOverlay {...restProps} className={overlayStyles}>
+		<AriaModalOverlay
+			{...restProps}
+			className={overlayStyles}
+			data-testid="dialog-overlay"
+		>
 			<AriaModal className={modalStyles}>
-				<AriaDialog className="flex flex-col gap-4 px-2 py-1 bg-white">
+				<AriaDialog
+					className="flex flex-col gap-4 px-2 py-1 bg-white"
+					data-testid={restProps?.["data-testid"]}
+				>
 					{children}
 				</AriaDialog>
 			</AriaModal>

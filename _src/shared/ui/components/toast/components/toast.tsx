@@ -27,51 +27,34 @@ export function Toast(props: ToastProps) {
 
 	return (
 		<div
-			className={`
-                w-full py-1 absolute 
-                transition-all duration-300 
-                data-[animation=exiting]:animate-right-left-fade-in-reverse 
-                data-[animation=queued]:animate-up-bottom-fade-in
-				outline-0
-            `}
+			className={`absolute w-full py-1 outline-0 transition-all duration-300`}
 			{...toastProps}
+			data-testid={`toast-${restProps.toast.key}`}
 			aria-hidden="false"
-			data-animation={props.toast.animation}
 			style={{
 				zIndex: index * 10,
 			}}
-			onAnimationEnd={() => {
-				if (props.toast.animation === "exiting") {
-					state.remove(props.toast.key);
-				}
-			}}
 			ref={ref}
 		>
-			<div
-				className={`
-                    w-full px-3 py-4
-                    border border-neutral-100 rounded-xl bg-white
-                    drop-shadow-xs
-                `}
-			>
+			<div className="w-full rounded-xl border border-neutral-100 bg-white px-3 py-4 drop-shadow-xs">
 				<div className="flex flex-row gap-2" {...contentProps}>
-					<div data-icon className="my-1 w-4 h-4">
+					<div data-icon className="my-1 h-4 w-4">
 						{icons[props.toast.content?.variant || "neutral"]}
 					</div>
 					<div className="flex flex-col gap-1">
 						<h3
-							className="items-center text-neutral-500 text-base font-semibold"
+							className="items-center text-base font-semibold text-neutral-500"
 							{...titleProps}
 						>
 							{restProps.toast.content.title}
 						</h3>
-						<p className="text-neutral-500 text-sm">
+						<p className="text-sm text-neutral-500">
 							{restProps.toast.content?.description}
 						</p>
 					</div>
 				</div>
 				<ButtonSquare
-					className="absolute right-2 top-2 text-neutral-500"
+					className="absolute top-2 right-2 text-neutral-500"
 					variant="ghost"
 					size="small"
 					icon={CloseIcon}

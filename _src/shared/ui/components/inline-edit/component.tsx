@@ -63,13 +63,13 @@ export const InlineEdit = (props: InlineEditProps) => {
 			<div className="flex flex-row gap-1">
 				<ButtonSquare
 					variant="grayed-out"
-					className="w-8 h-8"
+					className="h-8 w-8"
 					icon={CheckIcon}
 					{...confirmBtnProps}
 				/>
 				<ButtonSquare
 					variant="grayed-out"
-					className="w-8 h-8"
+					className="h-8 w-8"
 					icon={CloseIcon}
 					{...cancelBtnProps}
 				/>
@@ -84,8 +84,9 @@ export const InlineEdit = (props: InlineEditProps) => {
 				{!overlayTriggerState.isOpen && (
 					<Button
 						onPress={overlayTriggerState.open}
-						className="text-left outline-primary-500 rounded-lg"
+						className="outline-primary-500 rounded-lg text-left"
 						isDisabled={isDisabled}
+						data-testid="read-view"
 					>
 						{readView({ value: state.editorValue })}
 					</Button>
@@ -107,7 +108,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 			{keepEditViewOpenOnBlur &&
 				overlayTriggerState.isOpen &&
 				!isDisabled && (
-					<div className="flex justify-end w-full mt-2">
+					<div className="mt-2 flex w-full justify-end">
 						{renderActionButtons()}
 					</div>
 				)}

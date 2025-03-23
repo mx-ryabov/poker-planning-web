@@ -1,4 +1,4 @@
-import { describe, test, vi } from "vitest";
+import { describe, test, vi, expect } from "vitest";
 import { Input } from "./component";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";

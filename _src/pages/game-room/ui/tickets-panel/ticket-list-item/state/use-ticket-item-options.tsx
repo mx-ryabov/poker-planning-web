@@ -21,7 +21,7 @@ export function useTicketItemOptions({ deleteTicket }: Props) {
 			contentMessage:
 				"Please confirm that you want to delete the ticket.",
 			confirmBtnText: "Delete",
-			confirm: deleteTicket,
+			onConfirm: deleteTicket,
 		});
 	}, [open, deleteTicket]);
 

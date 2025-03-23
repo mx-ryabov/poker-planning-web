@@ -9,26 +9,35 @@ export type ConfirmationModalState = {
 	title: string;
 	contentMessage: string;
 	confirmBtnText: string;
-	confirm: AsyncConfirm | SyncConfirm;
+	onConfirm: AsyncConfirm | SyncConfirm;
 };
-type Props = {
+export type ConfirmationModalProps = {
 	isOpen: boolean;
-	toggle: (isOpen: boolean) => void;
+	onOpenChange: (isOpen: boolean) => void;
 	state?: ConfirmationModalState;
 };
 
-export function ConfirmationModal({ isOpen, toggle, state }: Props) {
+export function ConfirmationModal({
+	isOpen,
+	onOpenChange,
+	state,
+}: ConfirmationModalProps) {
 	const [isPending, startTransition] = useTransition();
 
 	const confirm = useCallback(() => {
 		startTransition(async () => {
-			await state?.confirm();
-			toggle(false);
+			await state?.onConfirm();
+			onOpenChange(false);
 		});
-	}, [state, toggle]);
+	}, [state, onOpenChange]);
 
 	return (
-		<Modal.Dialog isDismissable isOpen={isOpen} onOpenChange={toggle}>
+		<Modal.Dialog
+			isDismissable
+			isOpen={isOpen}
+			onOpenChange={onOpenChange}
+			data-testid="confirmation-modal"
+		>
 			<Modal.Header>
 				{({ close }) => (
 					<>
@@ -37,6 +46,7 @@ export function ConfirmationModal({ isOpen, toggle, state }: Props) {
 							icon={CloseIcon}
 							variant="ghost"
 							size="small"
+							data-testid="dismiss-button"
 							onPress={close}
 						/>
 					</>
@@ -49,12 +59,14 @@ export function ConfirmationModal({ isOpen, toggle, state }: Props) {
 						<Button
 							title="Cancel"
 							onPress={close}
+							data-testid="cancel-button"
 							variant="ghost"
 						/>
 						<Button
 							title={state?.confirmBtnText || ""}
 							isPending={isPending}
 							onPress={confirm}
+							data-testid="confirm-button"
 							appearance="danger"
 						/>
 					</>

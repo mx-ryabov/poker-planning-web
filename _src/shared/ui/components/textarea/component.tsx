@@ -4,7 +4,6 @@ import {
 	forwardRef,
 	useCallback,
 	useEffect,
-	useMemo,
 	useRef,
 } from "react";
 import {
@@ -64,7 +63,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 
 		return (
 			<TextField
-				className="group flex flex-col w-full"
+				className="group flex w-full flex-col"
 				{...mergeProps(restProps, { onInput: onInternalInput })}
 				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
@@ -94,7 +93,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						}}
 					>
 						<AriaTextArea
-							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0 overflow-hidden"
+							className="h-full w-full overflow-hidden bg-white/0 outline-hidden placeholder:text-neutral-200"
 							aria-label="textarea"
 							rows={rows}
 							ref={setRefs(textAreaRef, ref)}
@@ -104,7 +103,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 									: "inherit",
 							}}
 						/>
-						<div className="flex flex-col items-center gap-1 absolute top-2 right-2">
+						<div className="absolute top-2 right-2 flex flex-col items-center gap-1">
 							{withErrorIcon && (
 								<FieldErrorIcon
 									errorMsg={error}
@@ -113,14 +112,14 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 								/>
 							)}
 							{isPending && (
-								<div className="rounded-full w-4 aspect-square border-2 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+								<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-200" />
 							)}
 						</div>
 					</Group>
 				</Label>
 
 				{!withErrorIcon && (
-					<FieldError className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1">
+					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}
 					</FieldError>

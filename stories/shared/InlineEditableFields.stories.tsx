@@ -1,4 +1,7 @@
-import { InlineEditableTextarea } from "@/_src/shared/ui/components/inline-editable-fields";
+import {
+	InlineEditableTextarea,
+	InlineEditableTextField,
+} from "@/_src/shared/ui/components/inline-editable-fields";
 import { useState } from "react";
 
 const meta = {
@@ -27,6 +30,32 @@ export const InlineEditableTextareaDefault = (args: any) => {
 				onConfirm={setValue}
 				label="Textarea Default"
 				placeholder="Edit textarea"
+				styles={{
+					readView: {
+						textSize: "medium",
+						compensatedOffset: true,
+					},
+					editorView: {
+						textSize: "medium",
+						compensatedOffset: true,
+					},
+				}}
+			/>
+		</div>
+	);
+};
+
+export const InlineEditableTextfieldDefault = (args: any) => {
+	const [value, setValue] = useState("");
+
+	return (
+		<div className="w-[300px]">
+			<InlineEditableTextField
+				value={value}
+				onConfirm={setValue}
+				label="Textarea Default"
+				placeholder="Edit textarea"
+				error="This is an error"
 				styles={{
 					readView: {
 						textSize: "medium",

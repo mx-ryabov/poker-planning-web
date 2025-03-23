@@ -1,3 +1,4 @@
+"use client";
 import {
 	createContext,
 	ReactNode,
@@ -35,7 +36,7 @@ export function ConfirmationModalProvider({ children }: Props) {
 			{children}
 			<ConfirmationModal
 				isOpen={isOpen}
-				toggle={setOpen}
+				onOpenChange={setOpen}
 				state={modalState}
 			/>
 		</ConfirmationModalContext.Provider>
