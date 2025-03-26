@@ -4,12 +4,13 @@ import { axe } from "jest-axe";
 import { buildTicketItemWrapper, TicketItemWrapperProps } from "./utility";
 import { TicketItemTile } from "../components/ticket-item-tile";
 import { ComponentProps } from "react";
-import { ParticipantRole, TicketType } from "@/_src/shared/api";
+import { GameTicket, ParticipantRole, TicketType } from "@/_src/shared/api";
 import { generateTicket } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 
 describe("TicketItemTile component", () => {
 	beforeEach(() => {
 		onTicketOpen.mockClear();
+		updateTicketById.mockClear();
 	});
 
 	test("renders correctly", async () => {
@@ -18,6 +19,7 @@ describe("TicketItemTile component", () => {
 		expect(getByText("Test Ticket")).toBeInTheDocument();
 		expect(getByText("TST-1")).toBeInTheDocument();
 		expect(getByTestId("icon-TicketStoryIcon")).toBeInTheDocument();
+		expect(getByTestId("ticket-estimation-read-view")).toBeInTheDocument();
 		expect(() => unmount()).not.toThrow();
 	});
 
@@ -35,13 +37,42 @@ describe("TicketItemTile component", () => {
 		expect(queryByTestId("vote-button")).not.toBeInTheDocument();
 	});
 
+	test("doesn't allow to change estimation when isEditable=false", async () => {
+		const { getByTestId } = renderComponent({
+			componentProps: { isEditable: false },
+		});
+		const estimation = getByTestId("ticket-estimation-read-view");
+		expect(estimation).toBeDisabled();
+	});
+
 	test("triggers onOpen with the provided id on the container click", async () => {
 		const { getByTestId, user } = renderComponent({});
 
 		await user.click(getByTestId("ticket-list-item"));
 
 		expect(onTicketOpen).toHaveBeenCalledTimes(1);
-		expect(onTicketOpen).toHaveBeenCalledWith("test-id");
+		expect(onTicketOpen).toHaveBeenCalledWith("test-ticket-id");
+	});
+
+	test("triggers updateTicketById with correct parameters when estimation edited", async () => {
+		const { getByTestId, user } = renderComponent({
+			componentProps: { isEditable: true },
+		});
+		const estimation = getByTestId("ticket-estimation-read-view");
+		await user.click(estimation);
+		const inputElement = getByTestId("ticket-estimation-editor");
+		await user.clear(inputElement);
+		await user.type(inputElement, "2");
+		const confirmBtn = getByTestId("ticket-estimation-confirm-button");
+		await user.click(confirmBtn);
+		expect(updateTicketById).toHaveBeenNthCalledWith(
+			1,
+			"test-game-id",
+			"test-ticket-id",
+			expect.objectContaining({
+				estimation: "2",
+			}),
+		);
 	});
 
 	test("can have options", async () => {
@@ -60,6 +91,11 @@ describe("TicketItemTile component", () => {
 const openModalFn = vi.fn();
 const onTicketOpen = vi.fn();
 const deleteTicket = vi.fn();
+const updateTicketById = vi.fn(
+	async (gameId: string, ticketId: string, data: GameTicket) => {
+		return { ...data, id: ticketId, gameId };
+	},
+);
 
 type Props = {
 	wrapperProps?: TicketItemWrapperProps;
@@ -68,7 +104,15 @@ type Props = {
 
 function renderComponent(props: Props) {
 	const {
-		wrapperProps = { currentRole: ParticipantRole.Master, openModalFn },
+		wrapperProps = {
+			currentRole: ParticipantRole.Master,
+			openModalFn,
+			apiFake: {
+				game: {
+					ticket: { updateTicketById },
+				},
+			},
+		},
 		componentProps,
 	} = props;
 	return render(
@@ -76,7 +120,7 @@ function renderComponent(props: Props) {
 			data={
 				componentProps?.data ||
 				generateTicket({
-					id: "test-id",
+					id: "test-ticket-id",
 					title: "Test Ticket",
 					description: "Test Description",
 					type: TicketType.Story,

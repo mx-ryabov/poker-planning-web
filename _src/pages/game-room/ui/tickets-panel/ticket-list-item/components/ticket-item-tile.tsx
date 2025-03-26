@@ -6,6 +6,8 @@ import { TicketStoryIcon } from "@/_src/shared/ui/components/icon/svg/ticket-sto
 import { TicketTaskIcon } from "@/_src/shared/ui/components/icon/svg/ticket-task.icon";
 import { ReactNode, useCallback } from "react";
 import { TicketItemMenu } from "./ticket-item-menu";
+import { InlineEditableTextField } from "@/_src/shared/ui/components/inline-editable-fields";
+import { useTicketUpdate } from "@/_src/pages/game-room/model";
 
 type Props = {
 	data: GameTicket;
@@ -16,6 +18,8 @@ type Props = {
 
 export function TicketItemTile(props: Props) {
 	const { data, isEditable, deleteTicket, onOpen } = props;
+
+	const { optimisticData: state, updateByField } = useTicketUpdate(data);
 
 	const onContainerClick = useCallback(() => {
 		onOpen(data.id);
@@ -45,7 +49,7 @@ export function TicketItemTile(props: Props) {
 					/>
 				</div>
 			</div>
-			<div className="flex flex-row items-center gap-2">
+			<div className="flex flex-row items-center justify-between gap-2">
 				{isEditable && (
 					<Button
 						title="Vote"
@@ -56,7 +60,28 @@ export function TicketItemTile(props: Props) {
 						className="text-primary-500 rounded-lg drop-shadow-none"
 					/>
 				)}
-				<p className="truncate text-neutral-700">{data.title}</p>
+				<p className="flex-1 truncate text-neutral-700">{data.title}</p>
+				<div className="w-12">
+					<InlineEditableTextField
+						value={state.estimation || ""}
+						placeholder="None"
+						id="ticket-estimation"
+						isDisabled={!isEditable}
+						styles={{
+							readView: {
+								textSize: "medium",
+								size: "medium",
+							},
+							editorView: {
+								textSize: "medium",
+								size: "medium",
+							},
+						}}
+						onConfirm={(value) =>
+							updateByField("estimation", value)
+						}
+					/>
+				</div>
 			</div>
 		</div>
 	);

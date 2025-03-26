@@ -145,7 +145,7 @@ export function TicketItemFullView(props: Props) {
 				</p>
 				<div className="flex flex-row items-center justify-between">
 					<p className="text-sm font-medium">Story Points</p>
-					<div className="w-16">
+					<div className="w-12">
 						<InlineEditableTextField
 							value={state.estimation || ""}
 							placeholder="None"
