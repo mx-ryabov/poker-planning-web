@@ -13,13 +13,19 @@ type Props = {
 	state: InlineEditState;
 	keepEditViewOpenOnBlur?: boolean;
 	isInvalid?: boolean;
+	id: string;
 };
 
 export function useInlineEdit<THTMLElement extends EditorElement>(
 	props: Props,
 ) {
-	const { overlayTriggerState, state, keepEditViewOpenOnBlur, isInvalid } =
-		props;
+	const {
+		overlayTriggerState,
+		state,
+		keepEditViewOpenOnBlur,
+		isInvalid,
+		id,
+	} = props;
 	const { confirmChanges, cancelChanges } = state;
 
 	const editorRef = useRef<THTMLElement | null>(null);
@@ -102,6 +108,7 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 		placement: "bottom right",
 		isNonModal: true,
 		state: overlayTriggerState,
+		id,
 		shouldCloseOnInteractOutside: () => false,
 	};
 

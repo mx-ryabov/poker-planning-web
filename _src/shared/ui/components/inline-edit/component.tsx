@@ -61,6 +61,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 		state,
 		keepEditViewOpenOnBlur,
 		isInvalid,
+		id,
 	});
 
 	const renderActionButtons = () => {
@@ -125,7 +126,6 @@ export const InlineEdit = (props: InlineEditProps) => {
 					aria-label={`${label} confirmation popup`}
 					className="data-entering:animate-popup data-exiting:animate-popup-reverse"
 					{...popoverProps}
-					id={id}
 				>
 					{renderActionButtons()}
 				</PopoverWithoutFocusManagment>
