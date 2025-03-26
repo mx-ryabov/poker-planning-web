@@ -23,6 +23,7 @@ type _InputProps = {
 	withErrorIcon?: boolean;
 	endContent?: ReactNode;
 	isPending?: boolean;
+	"data-testid"?: string;
 } & TextFieldProps &
 	Omit<AriaInputProps, "onChange" | "onKeyDown" | "onKeyUp" | "disabled">;
 
@@ -54,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 
 		return (
 			<TextField
-				className="group flex flex-col w-full"
+				className="group flex w-full flex-col"
 				{...restProps}
 				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
@@ -86,8 +87,9 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							</span>
 						)}
 						<AriaInput
-							className="outline-hidden w-full h-full placeholder:text-neutral-200 bg-white/0"
+							className="h-full w-full bg-white/0 outline-hidden placeholder:text-neutral-200"
 							aria-label="input"
+							data-testid={restProps["data-testid"]}
 							ref={setRefs(inputRef, ref)}
 						/>
 						{endContent}
@@ -98,13 +100,13 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							/>
 						)}
 						{isPending && (
-							<div className="rounded-full w-4 aspect-square border-2 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-200" />
 						)}
 					</Group>
 				</Label>
 
 				{!withErrorIcon && (
-					<FieldError className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1">
+					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}
 					</FieldError>

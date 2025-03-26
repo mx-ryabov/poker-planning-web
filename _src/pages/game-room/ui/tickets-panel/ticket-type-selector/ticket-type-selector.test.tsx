@@ -1,16 +1,22 @@
 import { test, describe, expect, vi } from "vitest";
 import { render, within } from "@/test/utilities";
+import { TicketType } from "@/_src/shared/api";
 import {
 	TicketTypeSelector,
 	TicketTypeSelectorProps,
-} from "../../ticket-type-selector/ticket-type-selector";
-import { TicketType } from "@/_src/shared/api";
+} from "./ticket-type-selector";
 
 function renderComponent({
 	value = TicketType.Story,
 	onSelected = vi.fn(),
 }: Partial<TicketTypeSelectorProps>) {
-	return render(<TicketTypeSelector value={value} onSelected={onSelected} />);
+	return render(
+		<TicketTypeSelector
+			value={value}
+			onSelected={onSelected}
+			isEditable={true}
+		/>,
+	);
 }
 
 describe("Ticket Type Selector", () => {

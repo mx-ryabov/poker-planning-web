@@ -8,6 +8,7 @@ describe("InlineEditableTextarea", () => {
 			<InlineEditableTextarea
 				label="Test Label"
 				value=""
+				id="test-id"
 				placeholder="Test Placeholder"
 				styles={{ editorView: {}, readView: {} }}
 				onConfirm={vi.fn()}
@@ -24,6 +25,7 @@ describe("InlineEditableTextarea", () => {
 			<InlineEditableTextarea
 				label="Test Label"
 				value="Test Value"
+				id="test-id"
 				placeholder="Test Placeholder"
 				styles={{ editorView: {}, readView: {} }}
 				onConfirm={vi.fn()}
@@ -31,7 +33,7 @@ describe("InlineEditableTextarea", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -46,6 +48,7 @@ describe("InlineEditableTextarea", () => {
 			<InlineEditableTextarea
 				label="Test Label"
 				value="Test Value"
+				id="test-id"
 				placeholder="Test Placeholder"
 				shouldConfirmOnEnter
 				styles={{ editorView: {}, readView: {} }}
@@ -54,7 +57,7 @@ describe("InlineEditableTextarea", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -70,6 +73,7 @@ describe("InlineEditableTextarea", () => {
 			<InlineEditableTextarea
 				label="Test Label"
 				value="Test Value"
+				id="test-id"
 				placeholder="Test Placeholder"
 				shouldConfirmOnEnter={false}
 				styles={{ editorView: {}, readView: {} }}
@@ -78,7 +82,7 @@ describe("InlineEditableTextarea", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -93,6 +97,7 @@ describe("InlineEditableTextarea", () => {
 			<InlineEditableTextarea
 				label="Test Label"
 				value=""
+				id="test-id"
 				styles={{ editorView: {}, readView: {} }}
 				onConfirm={vi.fn()}
 				onEditorChange={vi.fn()}
@@ -100,7 +105,7 @@ describe("InlineEditableTextarea", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const errorIcon = getByTestId("field-error-icon");

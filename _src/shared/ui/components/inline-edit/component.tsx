@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useId } from "react";
 import { useOverlayTriggerState } from "react-stately";
 import { ButtonSquare } from "../button";
 import { CheckIcon, CloseIcon } from "../icon";
@@ -23,6 +23,7 @@ export type InlineEditProps = {
 	keepEditViewOpenOnBlur?: boolean;
 	isInvalid?: boolean;
 	isDisabled?: boolean;
+	id?: string;
 	onConfirm: (value: string) => void;
 	onCancel?: () => void;
 	editView: (renderProps: EditRenderProps) => ReactNode;
@@ -36,11 +37,15 @@ export const InlineEdit = (props: InlineEditProps) => {
 		keepEditViewOpenOnBlur = false,
 		isInvalid,
 		isDisabled,
+		id: externalId,
 		onConfirm,
 		onCancel,
 		editView,
 		readView,
 	} = props;
+
+	const internalId = useId();
+	const id = externalId || internalId;
 
 	const state = useInlineEditState({ value, onConfirm, onCancel });
 	const overlayTriggerState = useOverlayTriggerState({});
@@ -65,10 +70,12 @@ export const InlineEdit = (props: InlineEditProps) => {
 					variant="grayed-out"
 					className="h-8 w-8"
 					icon={CheckIcon}
+					data-testid={`${id}-confirm-button`}
 					{...confirmBtnProps}
 				/>
 				<ButtonSquare
 					variant="grayed-out"
+					data-testid={`${id}-cancel-button`}
 					className="h-8 w-8"
 					icon={CloseIcon}
 					{...cancelBtnProps}
@@ -86,7 +93,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 						onPress={overlayTriggerState.open}
 						className="outline-primary-500 rounded-lg text-left"
 						isDisabled={isDisabled}
-						data-testid="read-view"
+						data-testid={`${id}-read-view`}
 					>
 						{readView({ value: state.editorValue })}
 					</Button>
@@ -118,6 +125,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 					aria-label={`${label} confirmation popup`}
 					className="data-entering:animate-popup data-exiting:animate-popup-reverse"
 					{...popoverProps}
+					id={id}
 				>
 					{renderActionButtons()}
 				</PopoverWithoutFocusManagment>

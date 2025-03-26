@@ -1,10 +1,11 @@
 import { test, describe, expect, vi } from "vitest";
-import { render, within } from "@/test/utilities";
+import { render } from "@/test/utilities";
+
+import { Button } from "@/_src/shared/ui/components/button";
 import {
 	ConfirmationModalProvider,
 	useConfirmationModal,
-} from "./confirmation-modal-provider";
-import { Button } from "@/_src/shared/ui/components/button";
+} from "../confirmation-modal-provider";
 
 type Props = {
 	title?: string;

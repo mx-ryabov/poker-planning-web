@@ -48,13 +48,13 @@ export function TicketCreator({ className, onSubmit }: TicketCreatorProps) {
 	return (
 		<div
 			className={twMerge(
-				"flex flex-row gap-2 justify-end items-center h-[58px]",
+				"flex h-[58px] flex-row items-center justify-end gap-2",
 				cn,
 			)}
 		>
 			{focused && (
 				<Form
-					className="w-full absolute"
+					className="absolute w-full"
 					onSubmit={onSubmit}
 					onBlur={onBlur}
 				/>
@@ -166,7 +166,7 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 	return (
 		<div className={className} ref={editorContainerRef}>
 			<form
-				className="flex flex-row items-center gap-1 p-2 w-full rounded-xl border border-neutral-100 shadow-lg bg-white"
+				className="flex w-full flex-row items-center gap-1 rounded-xl border border-neutral-100 bg-white p-2 shadow-lg"
 				data-state="creating"
 				action={submitAction}
 				ref={formRef}
@@ -182,6 +182,7 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 								focusOnTextField();
 							}}
 							value={field.value}
+							isEditable
 						/>
 					)}
 				/>

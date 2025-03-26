@@ -1,8 +1,8 @@
+import { useApi } from "@/_src/app";
 import {
 	selectCurrentGameId,
 	useGameState,
 } from "@/_src/pages/game-room/model";
-import { updateTicketById } from "@/_src/shared/api/game-api";
 import { GameTicket, TicketType } from "@/_src/shared/api/game-api/dto";
 import { useMutation } from "@/_src/shared/lib";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
@@ -21,6 +21,7 @@ export const TicketItemStateSchema = z.object({
 export type TicketItemState = z.infer<typeof TicketItemStateSchema>;
 
 export function useTicketUpdate(defaultData: GameTicket) {
+	const api = useApi();
 	const toastState = useGlobalToast();
 	const gameId = useGameState(selectCurrentGameId);
 	const updateTicket = useGameState((state) => state.updateTicket);
@@ -38,7 +39,8 @@ export function useTicketUpdate(defaultData: GameTicket) {
 		Omit<GameTicket, "id" | "identifier">
 	>({
 		validationSchema: TicketItemStateSchema,
-		mutateFn: (data) => updateTicketById(gameId, defaultData.id, data),
+		mutateFn: (data) =>
+			api.game.ticket.updateTicketById(gameId, defaultData.id, data),
 		onSuccess: (data) => {
 			updateTicket(defaultData.id, data);
 		},

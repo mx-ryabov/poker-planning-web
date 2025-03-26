@@ -20,6 +20,7 @@ function InlineEditRenderer({ isDisabled, isInvalid }: Props) {
 			<InlineEdit
 				label="Inline Edit Label"
 				value={value}
+				id="inline-edit"
 				editView={(renderProps) => (
 					<Input label="" {...renderProps} autoFocus />
 				)}
@@ -53,7 +54,7 @@ describe("InlineEdit", () => {
 		const { user, getByTestId } = renderInlineEdit();
 		await user.tab();
 
-		const actionButtons = getByTestId("action-buttons");
+		const actionButtons = getByTestId("inline-edit-action-buttons");
 		const buttons = within(actionButtons).getAllByRole("button");
 		expect(buttons).toHaveLength(2);
 		within(buttons[0]).getByTestId("icon-CheckIcon");
@@ -63,10 +64,10 @@ describe("InlineEdit", () => {
 	test("shows the provided editor, save and cancel buttons when the component (read view) is clicked", async () => {
 		const { user, getByTestId } = renderInlineEdit();
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
-		const actionButtons = getByTestId("action-buttons");
+		const actionButtons = getByTestId("inline-edit-action-buttons");
 		const buttons = within(actionButtons).getAllByRole("button");
 		expect(buttons).toHaveLength(2);
 		within(buttons[0]).getByTestId("icon-CheckIcon");
@@ -76,7 +77,7 @@ describe("InlineEdit", () => {
 	test("automatically focuses on the editor when it's opened", async () => {
 		const { user, getByRole, getByTestId } = renderInlineEdit();
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -88,9 +89,9 @@ describe("InlineEdit", () => {
 
 		await user.tab();
 		const textField = getByRole("textbox");
-		const buttons = within(getByTestId("action-buttons")).getAllByRole(
-			"button",
-		);
+		const buttons = within(
+			getByTestId("inline-edit-action-buttons"),
+		).getAllByRole("button");
 		expect(textField).toHaveFocus();
 		await user.tab();
 		expect(buttons[0]).toHaveFocus();
@@ -106,9 +107,11 @@ describe("InlineEdit", () => {
 		const { user, getByTestId, queryByTestId } = renderInlineEdit();
 
 		await user.tab();
-		getByTestId("action-buttons");
+		getByTestId("inline-edit-action-buttons");
 		await user.click(document.body);
-		expect(queryByTestId("action-buttons")).not.toBeInTheDocument();
+		expect(
+			queryByTestId("inline-edit-action-buttons"),
+		).not.toBeInTheDocument();
 	});
 
 	test("hides action buttons if loses focus from the text field or action buttons", async () => {
@@ -121,44 +124,46 @@ describe("InlineEdit", () => {
 		await user.tab();
 		// tab outside
 		await user.tab();
-		expect(queryByTestId("action-buttons")).not.toBeInTheDocument();
+		expect(
+			queryByTestId("inline-edit-action-buttons"),
+		).not.toBeInTheDocument();
 	});
 
 	test("doesn't hide actions buttons if focus is being changed between the text field and action buttons", async () => {
 		const { user, getByTestId } = renderInlineEdit();
 		await user.tab();
-		getByTestId("action-buttons");
+		getByTestId("inline-edit-action-buttons");
 		await user.tab();
-		getByTestId("action-buttons");
+		getByTestId("inline-edit-action-buttons");
 		await user.tab();
-		getByTestId("action-buttons");
+		getByTestId("inline-edit-action-buttons");
 		await user.tab({ shift: true });
-		getByTestId("action-buttons");
+		getByTestId("inline-edit-action-buttons");
 		await user.tab({ shift: true });
-		getByTestId("action-buttons");
+		getByTestId("inline-edit-action-buttons");
 	});
 
 	test("saves filled value when the save button is clicked", async () => {
 		const { user, getByTestId, getByRole } = renderInlineEdit();
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
 		await user.type(textField, "new value");
-		const [confirmBtn] = within(getByTestId("action-buttons")).getAllByRole(
-			"button",
-		);
+		const [confirmBtn] = within(
+			getByTestId("inline-edit-action-buttons"),
+		).getAllByRole("button");
 		await user.click(confirmBtn);
 
-		readView = getByTestId("read-view");
+		readView = getByTestId("inline-edit-read-view");
 		expect(readView).toHaveTextContent("Value: new value");
 	});
 
 	test("saves filled value when the save button is pressed with Enter", async () => {
 		const { user, getByRole, getByTestId } = renderInlineEdit();
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -167,7 +172,7 @@ describe("InlineEdit", () => {
 		await user.tab();
 		await user.keyboard("[Enter]");
 
-		readView = getByTestId("read-view");
+		readView = getByTestId("inline-edit-read-view");
 		expect(readView).toHaveTextContent("Value: new value");
 	});
 
@@ -175,7 +180,7 @@ describe("InlineEdit", () => {
 		const { user, getByRole, queryByTestId, getByTestId } =
 			renderInlineEdit();
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -185,14 +190,16 @@ describe("InlineEdit", () => {
 		await user.tab();
 		await user.tab();
 
-		expect(queryByTestId("action-buttons")).not.toBeInTheDocument();
+		expect(
+			queryByTestId("inline-edit-action-buttons"),
+		).not.toBeInTheDocument();
 		expect(textField).toHaveValue("new value");
 	});
 
 	test("reverts previous saved value if the cancel button is pressed after the text field value was changed", async () => {
 		const { user, getByRole, getByTestId } = renderInlineEdit();
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		let textField = getByRole("textbox");
@@ -214,11 +221,13 @@ describe("InlineEdit", () => {
 			isDisabled: true,
 		});
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 		expect(readView).toBeDisabled();
 		await user.click(readView);
-		expect(queryByTestId("action-buttons")).not.toBeInTheDocument();
+		expect(
+			queryByTestId("inline-edit-action-buttons"),
+		).not.toBeInTheDocument();
 	});
 
 	// the InlineEdit isn't responsible for showing the error message but the read view OR/AND editor are responsible for that
@@ -227,11 +236,11 @@ describe("InlineEdit", () => {
 			isInvalid: true,
 		});
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
-		const [confirmBtn] = within(getByTestId("action-buttons")).getAllByRole(
-			"button",
-		);
+		const [confirmBtn] = within(
+			getByTestId("inline-edit-action-buttons"),
+		).getAllByRole("button");
 		expect(confirmBtn).toBeDisabled();
 
 		let textField = getByRole("textbox");
@@ -239,7 +248,7 @@ describe("InlineEdit", () => {
 		await user.tab();
 		await user.tab();
 
-		readView = getByTestId("read-view");
+		readView = getByTestId("inline-edit-read-view");
 		expect(readView).toHaveTextContent("Value:");
 	});
 
@@ -248,7 +257,7 @@ describe("InlineEdit", () => {
 		let results = await axe(container);
 		expect(results).toHaveNoViolations();
 
-		let readView = getByTestId("read-view");
+		let readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		results = await axe(container);

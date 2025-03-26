@@ -1,6 +1,5 @@
 import {
 	setRefs,
-	useClickOutside,
 	useEnterAnimation,
 	useExitAnimation,
 } from "@/_src/shared/lib";
@@ -15,16 +14,15 @@ export interface PopoverWithoutFocusManagmentProps
 	state: OverlayTriggerState;
 	triggerRef: RefObject<HTMLDivElement | null>;
 	className?: string;
-	//onDismiss: () => void;
+	id: string;
 }
 
 export const PopoverWithoutFocusManagment = ({
 	state,
-	//onDismiss,
+	id,
 	...props
 }: PopoverWithoutFocusManagmentProps) => {
 	let popoverRef = useRef<HTMLDivElement | null>(null);
-	//useClickOutside([props.triggerRef, popoverRef], onDismiss);
 	let isExiting =
 		useExitAnimation(popoverRef, state.isOpen) || props.isExiting || false;
 
@@ -37,6 +35,7 @@ export const PopoverWithoutFocusManagment = ({
 			{...props}
 			state={state}
 			isExiting={isExiting}
+			id={id}
 			ref={popoverRef}
 		/>
 	);
@@ -49,6 +48,7 @@ interface PopoverInnerProps extends AriaPopoverProps {
 	isExiting: boolean;
 	triggerRef: RefObject<HTMLDivElement | null>;
 	className?: string;
+	id: string;
 }
 
 const PopoverWithoutFocusManagmentInner = forwardRef<
@@ -77,7 +77,7 @@ const PopoverWithoutFocusManagmentInner = forwardRef<
 			{...popoverProps}
 			onBlur={undefined}
 			ref={setRefs(popoverRef, ref)}
-			data-testid="action-buttons"
+			data-testid={`${props.id}-action-buttons`}
 			className={className}
 		>
 			{children}

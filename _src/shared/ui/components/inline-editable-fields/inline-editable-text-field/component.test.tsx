@@ -24,6 +24,7 @@ describe("InlineEditableTextField", () => {
 			<InlineEditableTextField
 				label="Test Label"
 				value="Test Value"
+				id="test-id"
 				placeholder="Test Placeholder"
 				styles={{ editorView: {}, readView: {} }}
 				onConfirm={vi.fn()}
@@ -31,7 +32,7 @@ describe("InlineEditableTextField", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -46,6 +47,7 @@ describe("InlineEditableTextField", () => {
 			<InlineEditableTextField
 				label="Test Label"
 				value="Test Value"
+				id="test-id"
 				placeholder="Test Placeholder"
 				styles={{ editorView: {}, readView: {} }}
 				onConfirm={onConfirm}
@@ -53,7 +55,7 @@ describe("InlineEditableTextField", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -68,6 +70,7 @@ describe("InlineEditableTextField", () => {
 			<InlineEditableTextField
 				label="Test Label"
 				value=""
+				id="test-id"
 				styles={{ editorView: {}, readView: {} }}
 				onConfirm={vi.fn()}
 				onEditorChange={vi.fn()}
@@ -75,7 +78,7 @@ describe("InlineEditableTextField", () => {
 			/>,
 		);
 
-		const readView = getByTestId("read-view");
+		const readView = getByTestId("test-id-read-view");
 		await user.click(readView);
 
 		const errorIcon = getByTestId("field-error-icon");

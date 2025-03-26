@@ -11,11 +11,13 @@ import { useMemo } from "react";
 export type TicketTypeSelectorProps = {
 	onSelected: (type: TicketType) => void;
 	value: TicketType;
+	isEditable?: boolean;
 };
 
 export function TicketTypeSelector({
 	onSelected,
 	value,
+	isEditable = true,
 }: TicketTypeSelectorProps) {
 	const selectedTypeObj = useMemo(
 		() => TASK_TYPES.find((t) => t.type === value),
@@ -31,6 +33,7 @@ export function TicketTypeSelector({
 				variant="ghost"
 				size="small"
 				data-testid="ticket-type-selector"
+				isDisabled={!isEditable}
 			/>
 			<Menu.Content
 				items={TASK_TYPES}

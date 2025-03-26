@@ -17,6 +17,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 		styles,
 		error,
 		isDisabled,
+		id,
 		onConfirm,
 		onEditorChange,
 	} = props;
@@ -41,6 +42,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 					}}
 					errors={error ? [error] : undefined}
 					withErrorIcon
+					data-testid={`${id}-editor`}
 				/>
 			);
 
@@ -58,6 +60,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			label={label}
 			editView={editView}
 			isInvalid={!!error}
+			id={id}
 			readView={() => (
 				<ReadViewDefault
 					value={value}

@@ -10,6 +10,7 @@ export type InlineEditableFieldProps = {
 	};
 	isDisabled?: boolean;
 	error?: string;
+	id?: string;
 	onConfirm: (value: string) => void;
 	onEditorChange?: (value: string) => void;
 };

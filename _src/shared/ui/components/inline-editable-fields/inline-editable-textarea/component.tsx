@@ -24,6 +24,7 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 		keepEditViewOpenOnBlur = true,
 		rows,
 		isDisabled,
+		id,
 		onConfirm,
 		onEditorChange,
 	} = props;
@@ -80,6 +81,7 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 			keepEditViewOpenOnBlur={keepEditViewOpenOnBlur}
 			isInvalid={!!error}
 			isDisabled={isDisabled}
+			id={id}
 			readView={() => (
 				<ReadViewDefault
 					value={value}

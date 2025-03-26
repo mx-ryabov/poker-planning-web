@@ -19,21 +19,18 @@ import {
 
 type Props = {
 	data: GameTicket;
-	isReadOnly?: boolean;
+	isEditable: boolean;
 	deleteTicket: () => void;
 	onClose: () => void;
 };
 
-export function TicketItemFullView({
-	data,
-	isReadOnly,
-	onClose,
-	deleteTicket,
-}: Props) {
+export function TicketItemFullView(props: Props) {
+	const { data, isEditable, deleteTicket, onClose } = props;
+
 	const { control } = useForm<TicketItemState>({
 		mode: "onChange",
 		resolver: zodResolver(TicketItemStateSchema),
-		disabled: isReadOnly,
+		disabled: !isEditable,
 	});
 
 	const { optimisticData: state, updateByField } = useTicketUpdate(data);
@@ -42,7 +39,7 @@ export function TicketItemFullView({
 
 	return (
 		<div
-			className="w-full flex flex-col gap-4 border border-neutral-200 px-4 py-3 rounded-xl text-neutral-500"
+			className="flex w-full flex-col gap-4 rounded-xl border border-neutral-200 px-4 py-3 text-neutral-500"
 			data-testid="ticket-list-item-full-view"
 		>
 			<div className="flex flex-col gap-1">
@@ -55,6 +52,7 @@ export function TicketItemFullView({
 									onSelected={(value) =>
 										updateByField("type", value)
 									}
+									isEditable={isEditable}
 								/>
 							)}
 						</div>
@@ -68,6 +66,7 @@ export function TicketItemFullView({
 								icon={MinusIcon}
 								variant="ghost"
 								size="small"
+								data-testid="collapse-button"
 								onPress={onClose}
 							/>
 							<Tooltip.Content>Collapse</Tooltip.Content>
@@ -95,26 +94,26 @@ export function TicketItemFullView({
 									compensatedOffset: true,
 								},
 							}}
-							isDisabled={isReadOnly}
+							id="ticket-title"
+							isDisabled={!isEditable}
 							error={fieldState.error?.message}
 							keepEditViewOpenOnBlur={false}
 							shouldConfirmOnEnter
 							onEditorChange={field.onChange}
 							rows={1}
 							onConfirm={(value) => {
-								console.log("onConfgirm");
 								updateByField("title", value);
 							}}
 						/>
 					)}
 				/>
-				{!isReadOnly && (
+				{isEditable && (
 					<Button
 						title="Vote"
 						contentLeft={<CardsIcon size={18} />}
 						size="small"
 						variant="grayed-out"
-						className="drop-shadow-none rounded-lg text-primary-500"
+						className="text-primary-500 rounded-lg drop-shadow-none"
 					/>
 				)}
 			</div>
@@ -123,8 +122,9 @@ export function TicketItemFullView({
 				<InlineEditableTextarea
 					label="Description"
 					value={state.description || ""}
-					placeholder={isReadOnly ? "Empty" : "Edit description"}
-					isDisabled={isReadOnly}
+					placeholder={!isEditable ? "Empty" : "Edit description"}
+					isDisabled={!isEditable}
+					id="ticket-description"
 					styles={{
 						readView: {
 							textSize: "medium",
@@ -143,13 +143,14 @@ export function TicketItemFullView({
 				<p className="text-base font-medium text-neutral-900">
 					Details
 				</p>
-				<div className="flex flex-row justify-between items-center">
-					<p className="font-medium text-sm">Story Points</p>
+				<div className="flex flex-row items-center justify-between">
+					<p className="text-sm font-medium">Story Points</p>
 					<div className="w-16">
 						<InlineEditableTextField
 							value={state.estimation || ""}
 							placeholder="None"
-							isDisabled={isReadOnly}
+							id="ticket-estimation"
+							isDisabled={!isEditable}
 							styles={{
 								readView: {
 									textSize: "medium",

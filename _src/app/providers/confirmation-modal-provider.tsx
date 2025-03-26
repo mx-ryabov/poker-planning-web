@@ -12,9 +12,8 @@ type ConfirmationModalContextProps = {
 	open: (modalState: ConfirmationModalState) => void;
 };
 
-const ConfirmationModalContext = createContext<ConfirmationModalContextProps>(
-	null!,
-);
+export const ConfirmationModalContext =
+	createContext<ConfirmationModalContextProps>(null!);
 
 type Props = {
 	children: ReactNode;

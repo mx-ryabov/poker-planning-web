@@ -3,10 +3,7 @@ import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { TicketList } from "../ticket-list";
 import { TicketListItem } from "../ticket-list-item";
-import {
-	createGameStateStore,
-	GameStateProvider,
-} from "@/_src/pages/game-room/model";
+import { createGameStateStore } from "@/_src/pages/game-room/model";
 import {
 	generateGame,
 	generateParticipant,

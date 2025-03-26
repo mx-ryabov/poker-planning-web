@@ -9,24 +9,21 @@ import { TicketItemMenu } from "./ticket-item-menu";
 
 type Props = {
 	data: GameTicket;
-	isReadOnly: boolean;
+	isEditable: boolean;
 	deleteTicket: () => void;
 	onOpen: (id: string) => void;
 };
 
-export function TicketItemTile({
-	data,
-	isReadOnly,
-	deleteTicket,
-	onOpen,
-}: Props) {
+export function TicketItemTile(props: Props) {
+	const { data, isEditable, deleteTicket, onOpen } = props;
+
 	const onContainerClick = useCallback(() => {
 		onOpen(data.id);
 	}, [onOpen, data.id]);
 
 	return (
 		<div
-			className="group w-full flex flex-col gap-2 border border-neutral-100 p-2 rounded-xl hover:border-neutral-200 hover:shadow-xs transition-colors cursor-pointer"
+			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-100 p-2 transition-colors hover:border-neutral-200 hover:shadow-xs"
 			data-testid="ticket-list-item"
 			onClick={onContainerClick}
 		>
@@ -43,22 +40,23 @@ export function TicketItemTile({
 				</div>
 				<div className="flex flex-row gap-2">
 					<TicketItemMenu
-						className="transition-opacity opacity-0 group-hover:opacity-100 data-[pressed=true]:opacity-100"
+						className="opacity-0 transition-opacity group-hover:opacity-100 data-[pressed=true]:opacity-100"
 						deleteTicket={deleteTicket}
 					/>
 				</div>
 			</div>
 			<div className="flex flex-row items-center gap-2">
-				{!isReadOnly && (
+				{isEditable && (
 					<Button
 						title="Vote"
 						contentLeft={<CardsIcon size={18} />}
 						size="small"
 						variant="grayed-out"
-						className="drop-shadow-none rounded-lg text-primary-500"
+						data-testid="vote-button"
+						className="text-primary-500 rounded-lg drop-shadow-none"
 					/>
 				)}
-				<p className="text-neutral-700 truncate">{data.title}</p>
+				<p className="truncate text-neutral-700">{data.title}</p>
 			</div>
 		</div>
 	);

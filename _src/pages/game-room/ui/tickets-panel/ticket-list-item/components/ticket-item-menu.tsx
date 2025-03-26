@@ -23,6 +23,7 @@ export function TicketItemMenu(props: Props) {
 				variant="ghost"
 				className={twMerge("shrink-0", className)}
 				size="small"
+				data-testid="ticket-item-menu"
 			/>
 			<Menu.Content placement="bottom end">
 				{options.map((option) => (
