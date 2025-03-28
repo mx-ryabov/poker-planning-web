@@ -5,15 +5,21 @@ export type ReadViewStyleProps = {
 	textSize?: "large" | "medium";
 	compensatedOffset?: boolean;
 	maxHeight?: number;
+	variant?: "ghost" | "filled";
+	width?: "full" | "content";
 };
 
 export const readViewStyles = cva(
 	["flex", "rounded-lg border-2 border-white", "overflow-hidden"],
 	{
 		variants: {
+			variant: {
+				ghost: "",
+				filled: "",
+			},
 			hasValue: {
 				true: ["text-neutral-500"],
-				false: ["text-neutral-200"],
+				false: ["text-neutral-400"],
 			},
 			size: {
 				large: [],
@@ -33,7 +39,9 @@ export const readViewStyles = cva(
 			},
 			isDisabled: {
 				true: [],
-				false: ["hover:bg-neutral-100 transition-[background-color]"],
+				false: [
+					"hover:bg-neutral-100 transition-[background-color] cursor-pointer",
+				],
 			},
 		},
 		compoundVariants: [
@@ -56,6 +64,12 @@ export const readViewStyles = cva(
 				fieldType: "textarea",
 				compensatedOffset: false,
 				className: "px-2",
+			},
+			{
+				isDisabled: false,
+				variant: "filled",
+				className:
+					"bg-neutral-100 hover:bg-neutral-200 text-neutral-500",
 			},
 		],
 	},

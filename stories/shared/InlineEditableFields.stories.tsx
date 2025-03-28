@@ -45,7 +45,7 @@ export const InlineEditableTextareaDefault = (args: any) => {
 	);
 };
 
-export const InlineEditableTextfieldDefault = (args: any) => {
+export const InlineEditableTextfieldMedium = (args: any) => {
 	const [value, setValue] = useState("");
 
 	return (
@@ -53,17 +53,97 @@ export const InlineEditableTextfieldDefault = (args: any) => {
 			<InlineEditableTextField
 				value={value}
 				onConfirm={setValue}
-				label="Textarea Default"
 				placeholder="Edit textarea"
 				error="This is an error"
+				isDisabled={false}
 				styles={{
 					readView: {
 						textSize: "medium",
-						compensatedOffset: true,
+						size: "medium",
 					},
 					editorView: {
 						textSize: "medium",
-						compensatedOffset: true,
+						size: "medium",
+					},
+				}}
+			/>
+		</div>
+	);
+};
+
+export const InlineEditableTextfieldMediumWithLabel = (args: any) => {
+	const [value, setValue] = useState("");
+
+	return (
+		<div className="w-[300px]">
+			<InlineEditableTextField
+				value={value}
+				label="Input with label"
+				onConfirm={setValue}
+				placeholder="Edit textarea"
+				error="This is an error"
+				isDisabled={false}
+				styles={{
+					readView: {
+						textSize: "medium",
+						size: "medium",
+					},
+					editorView: {
+						textSize: "medium",
+						size: "medium",
+					},
+				}}
+			/>
+		</div>
+	);
+};
+
+export const InlineEditableTextfieldLarge = (args: any) => {
+	const [value, setValue] = useState("");
+
+	return (
+		<div className="w-[300px]">
+			<InlineEditableTextField
+				value={value}
+				onConfirm={setValue}
+				placeholder="Edit textarea"
+				error="This is an error"
+				isDisabled={false}
+				styles={{
+					readView: {
+						textSize: "large",
+						size: "large",
+					},
+					editorView: {
+						textSize: "large",
+						size: "large",
+					},
+				}}
+			/>
+		</div>
+	);
+};
+
+export const InlineEditableTextfieldLargeWithLabel = (args: any) => {
+	const [value, setValue] = useState("");
+
+	return (
+		<div className="w-[300px]">
+			<InlineEditableTextField
+				value={value}
+				label="Input with label"
+				onConfirm={setValue}
+				placeholder="Edit textarea"
+				error="This is an error"
+				isDisabled={false}
+				styles={{
+					readView: {
+						textSize: "large",
+						size: "large",
+					},
+					editorView: {
+						textSize: "large",
+						size: "large",
 					},
 				}}
 			/>

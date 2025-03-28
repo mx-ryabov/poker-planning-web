@@ -18,6 +18,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 		error,
 		isDisabled,
 		id,
+		containerClassName,
 		onConfirm,
 		onEditorChange,
 	} = props;
@@ -51,7 +52,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			}
 			return EditorRender;
 		},
-		[styles.editorView, placeholder, error, onEditorChange],
+		[styles.editorView, placeholder, error, onEditorChange, id],
 	);
 
 	return (
@@ -61,12 +62,13 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			editView={editView}
 			isInvalid={!!error}
 			id={id}
+			containerClassName={containerClassName}
 			readView={() => (
 				<ReadViewDefault
 					value={value}
 					fieldType="input"
 					placeholder={placeholder}
-					isDisabled={isDisabled}
+					isDisabled={isDisabled || false}
 					styles={styles.readView}
 				/>
 			)}

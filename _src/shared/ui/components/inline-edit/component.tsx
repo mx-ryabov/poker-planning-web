@@ -1,4 +1,4 @@
-import { ReactNode, useId } from "react";
+import { ReactNode, useId, useMemo } from "react";
 import { useOverlayTriggerState } from "react-stately";
 import { ButtonSquare } from "../button";
 import { CheckIcon, CloseIcon } from "../icon";
@@ -6,6 +6,8 @@ import { PopoverWithoutFocusManagment } from "./components/popover-without-focus
 import { Button, Label } from "react-aria-components";
 import { useInlineEditState } from "./state/use-inline-edit-state";
 import { useInlineEdit } from "./behavior/use-inline-edit";
+import { twMerge } from "tailwind-merge";
+import { cva } from "class-variance-authority";
 
 export type EditRenderProps = {
 	onChange: (value: string) => void;
@@ -24,6 +26,7 @@ export type InlineEditProps = {
 	isInvalid?: boolean;
 	isDisabled?: boolean;
 	id?: string;
+	containerClassName?: string;
 	onConfirm: (value: string) => void;
 	onCancel?: () => void;
 	editView: (renderProps: EditRenderProps) => ReactNode;
@@ -38,6 +41,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 		isInvalid,
 		isDisabled,
 		id: externalId,
+		containerClassName,
 		onConfirm,
 		onCancel,
 		editView,
@@ -64,31 +68,42 @@ export const InlineEdit = (props: InlineEditProps) => {
 		id,
 	});
 
-	const renderActionButtons = () => {
+	const actionButtons = useMemo(() => {
 		return (
 			<div className="flex flex-row gap-1">
 				<ButtonSquare
-					variant="grayed-out"
-					className="h-8 w-8"
+					variant={keepEditViewOpenOnBlur ? "outline" : "grayed-out"}
+					className={actionBtnStyles({
+						withShadow: !keepEditViewOpenOnBlur,
+					})}
 					icon={CheckIcon}
 					data-testid={`${id}-confirm-button`}
 					{...confirmBtnProps}
 				/>
 				<ButtonSquare
-					variant="grayed-out"
+					variant={keepEditViewOpenOnBlur ? "outline" : "grayed-out"}
+					className={actionBtnStyles({
+						withShadow: !keepEditViewOpenOnBlur,
+					})}
 					data-testid={`${id}-cancel-button`}
-					className="h-8 w-8"
 					icon={CloseIcon}
 					{...cancelBtnProps}
 				/>
 			</div>
 		);
-	};
+	}, [confirmBtnProps, cancelBtnProps, id, keepEditViewOpenOnBlur]);
 
 	return (
-		<div {...focusWithinProps} className="w-full">
-			<div ref={viewContainerRef} className="flex flex-col">
-				<Label className="text-neutral-900">{label}</Label>
+		<div
+			{...focusWithinProps}
+			className={twMerge("w-full", containerClassName)}
+		>
+			<div ref={viewContainerRef} className="flex flex-col gap-1">
+				{label && (
+					<Label className="text-sm font-semibold text-neutral-500">
+						{label}
+					</Label>
+				)}
 				{!overlayTriggerState.isOpen && (
 					<Button
 						onPress={overlayTriggerState.open}
@@ -117,7 +132,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 				overlayTriggerState.isOpen &&
 				!isDisabled && (
 					<div className="mt-2 flex w-full justify-end">
-						{renderActionButtons()}
+						{actionButtons}
 					</div>
 				)}
 
@@ -127,9 +142,18 @@ export const InlineEdit = (props: InlineEditProps) => {
 					className="data-entering:animate-popup data-exiting:animate-popup-reverse"
 					{...popoverProps}
 				>
-					{renderActionButtons()}
+					{actionButtons}
 				</PopoverWithoutFocusManagment>
 			)}
 		</div>
 	);
 };
+
+const actionBtnStyles = cva("h-8 w-8 border-neutral-100", {
+	variants: {
+		withShadow: {
+			true: "",
+			false: "drop-shadow-none",
+		},
+	},
+});

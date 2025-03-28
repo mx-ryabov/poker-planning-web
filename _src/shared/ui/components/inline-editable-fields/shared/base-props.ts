@@ -4,6 +4,7 @@ export type InlineEditableFieldProps = {
 	label?: string;
 	value: string;
 	placeholder?: string;
+	containerClassName?: string;
 	styles: {
 		readView: ReadViewStyleProps;
 		editorView: EditorViewStyleProps;

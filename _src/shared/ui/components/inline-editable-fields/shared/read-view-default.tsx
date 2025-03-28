@@ -15,6 +15,7 @@ export function ReadViewDefault(props: ReadViewDefaultProps) {
 		<div
 			className={readViewStyles({
 				...styles,
+				variant: styles.variant || "ghost",
 				compensatedOffset: !!styles.compensatedOffset,
 				hasValue: !!value,
 				fieldType,

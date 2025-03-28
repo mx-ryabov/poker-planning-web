@@ -20,9 +20,9 @@ export default meta;
 
 export const ToastDefault = (args: any) => {
 	return (
-		<div className="w-full h-screen">
+		<div className="h-screen w-full">
 			<ToastProvider {...args}>
-				<div className="w-full h-full">
+				<div className="h-full w-full">
 					<ToastTrigger />
 				</div>
 			</ToastProvider>
@@ -35,10 +35,10 @@ function ToastTrigger() {
 	const toastState = useGlobalToast();
 
 	return (
-		<div className="grid grid-flow-row grid-cols-3 gap-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+		<div className="absolute top-1/2 left-1/2 grid -translate-x-1/2 -translate-y-1/2 grid-flow-row grid-cols-3 gap-2">
 			<Button
-				title="Toast Neutral!"
-				className="bg-neutral-500"
+				title="Neutral!"
+				appearance="neutral"
 				onPress={() => {
 					toastState?.add({
 						title: `Title loooong very very long #${increment}`,
@@ -50,8 +50,8 @@ function ToastTrigger() {
 				}}
 			/>
 			<Button
-				title="Toast Info!"
-				className="bg-info-500"
+				title="Info!"
+				appearance="info"
 				onPress={() => {
 					toastState?.add({
 						title: `Title loooong very very long #${increment}`,
@@ -63,8 +63,8 @@ function ToastTrigger() {
 				}}
 			/>
 			<Button
-				title="Toast Warning!"
-				className="bg-warning-500"
+				title="Warning!"
+				appearance="warning"
 				onPress={() => {
 					toastState?.add({
 						title: `Title loooong very very long #${increment}`,
@@ -76,8 +76,8 @@ function ToastTrigger() {
 				}}
 			/>
 			<Button
-				title="Toast Error!"
-				className="bg-error-500"
+				title="Error!"
+				appearance="danger"
 				onPress={() => {
 					toastState?.add({
 						title: `Title loooong very very long #${increment}`,
@@ -89,8 +89,8 @@ function ToastTrigger() {
 				}}
 			/>
 			<Button
-				title="Toast Success!"
-				className="bg-success-500"
+				title="Success!"
+				appearance="success"
 				onPress={() => {
 					toastState?.add({
 						title: `Title loooong very very long #${increment}`,
@@ -102,7 +102,7 @@ function ToastTrigger() {
 				}}
 			/>
 			<Button
-				title="Toast Dismissable!"
+				title="Dismissable!"
 				onPress={() => {
 					toastState?.add(
 						{

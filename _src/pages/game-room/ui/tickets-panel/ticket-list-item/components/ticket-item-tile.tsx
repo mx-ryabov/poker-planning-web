@@ -61,16 +61,18 @@ export function TicketItemTile(props: Props) {
 					/>
 				)}
 				<p className="flex-1 truncate text-neutral-700">{data.title}</p>
-				<div className="w-12">
+				<div className="flex w-12 justify-end">
 					<InlineEditableTextField
 						value={state.estimation || ""}
-						placeholder="None"
+						placeholder="–"
 						id="ticket-estimation"
+						containerClassName="w-max max-w-full"
 						isDisabled={!isEditable}
 						styles={{
 							readView: {
 								textSize: "medium",
 								size: "medium",
+								variant: "filled",
 							},
 							editorView: {
 								textSize: "medium",

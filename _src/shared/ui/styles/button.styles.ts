@@ -3,7 +3,13 @@ import { cva } from "class-variance-authority";
 export type ButtonStylesProps = {
 	size?: "small" | "medium" | "large";
 	variant?: "default" | "outline" | "ghost" | "grayed-out";
-	appearance?: "primary" | "danger" | "warning" | "info" | "success";
+	appearance?:
+		| "primary"
+		| "danger"
+		| "warning"
+		| "info"
+		| "success"
+		| "neutral";
 };
 
 export const COLOR_SCHEMES = {
@@ -22,10 +28,10 @@ export const COLOR_SCHEMES = {
 		"--shadow-color": "var(--color-error-900)",
 	},
 	warning: {
-		"--main-color": "var(--color-warning-500)",
+		"--main-color": "var(--color-warning-700)",
 		"--main-light-color": "var(--color-warning-100)",
 		"--hovered-color": "var(--color-warning-600)",
-		"--pressed-color": "var(--color-warning-700)",
+		"--pressed-color": "var(--color-warning-500)",
 		"--shadow-color": "var(--color-warning-900)",
 	},
 	info: {
@@ -36,11 +42,18 @@ export const COLOR_SCHEMES = {
 		"--shadow-color": "var(--color-info-900)",
 	},
 	success: {
-		"--main-color": "var(--color-success-500)",
+		"--main-color": "var(--color-success-700)",
 		"--main-light-color": "var(--color-success-100)",
 		"--hovered-color": "var(--color-success-600)",
-		"--pressed-color": "var(--color-success-700)",
+		"--pressed-color": "var(--color-success-500)",
 		"--shadow-color": "var(--color-success-900)",
+	},
+	neutral: {
+		"--main-color": "var(--color-neutral-500)",
+		"--main-light-color": "var(--color-neutral-100)",
+		"--hovered-color": "var(--color-neutral-600)",
+		"--pressed-color": "var(--color-neutral-700)",
+		"--shadow-color": "var(--color-neutral-900)",
 	},
 };
 
@@ -60,6 +73,7 @@ export const buttonStyles = cva(
 		"text-warning-500 text-warning-100 text-warning-600 text-warning-700 text-warning-900",
 		"text-info-500 text-info-100 text-info-600 text-info-700 text-info-900",
 		"text-success-500 text-success-100 text-success-600 text-success-700 text-success-900",
+		"text-neutral-500 text-neutral-100 text-neutral-600 text-neutral-700 text-neutral-900",
 	],
 	{
 		variants: {

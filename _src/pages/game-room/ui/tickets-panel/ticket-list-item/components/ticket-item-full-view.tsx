@@ -44,7 +44,7 @@ export function TicketItemFullView(props: Props) {
 		>
 			<div className="flex flex-col gap-1">
 				<div className="flex flex-row items-center justify-between">
-					<div className="flex flex-row items-center gap-2">
+					<div className="flex flex-row items-center gap-1">
 						<div className="-ml-2">
 							{data.type !== undefined && (
 								<TicketTypeSelector
@@ -140,21 +140,23 @@ export function TicketItemFullView(props: Props) {
 			</div>
 
 			<div className="flex flex-col">
-				<p className="text-base font-medium text-neutral-900">
+				<p className="text-sm font-semibold text-neutral-500">
 					Details
 				</p>
 				<div className="flex flex-row items-center justify-between">
-					<p className="text-sm font-medium">Story Points</p>
-					<div className="w-12">
+					<p className="text-sm">Story Points</p>
+					<div className="flex w-12 justify-end">
 						<InlineEditableTextField
 							value={state.estimation || ""}
 							placeholder="None"
 							id="ticket-estimation"
+							containerClassName="w-max max-w-full"
 							isDisabled={!isEditable}
 							styles={{
 								readView: {
 									textSize: "medium",
 									size: "medium",
+									variant: "filled",
 								},
 								editorView: {
 									textSize: "medium",

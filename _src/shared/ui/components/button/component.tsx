@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, ReactNode, useEffect } from "react";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { IconType } from "../icon/icon-builder";
 import {
 	ButtonContext,
@@ -106,7 +106,7 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			>
 				<div className={spinnerStyles({ isActive: isPending })}>
 					<div>
-						<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-6 rounded-full border-4 border-neutral-200" />
 					</div>
 				</div>
 				{contentLeft}
@@ -187,7 +187,7 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 			>
 				<div className={spinnerStyles({ isActive: isPending })}>
 					<div>
-						<div className="rounded-full w-6 aspect-square border-4 border-neutral-200 border-r-primary-500 animate-rotation-linear" />
+						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-6 rounded-full border-4 border-neutral-200" />
 					</div>
 				</div>
 				{!isPending && icon({ size: ButtonIconSize[size] })}
