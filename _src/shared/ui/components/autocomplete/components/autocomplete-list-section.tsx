@@ -11,13 +11,13 @@ export const AutocompleteListSection = <TReutrnData extends object>(
 	props: AutocompleteListSectionProps<TReutrnData>,
 ) => {
 	const { item } = props;
-	const listState = useContext(ListStateContext);
-
-	if (!listState.collection.getChildren) {
-		return null;
-	}
 
 	const title: ReactNode = useMemo(() => item.props.title, [item]);
+	const listState = useContext(ListStateContext);
+
+	if (listState && !listState.collection.getChildren) {
+		return null;
+	}
 
 	return (
 		<div className="flex flex-col">
@@ -30,14 +30,19 @@ export const AutocompleteListSection = <TReutrnData extends object>(
 					{title}
 				</Header>
 			)}
-			{[...listState.collection.getChildren(item.key)].map((node) => {
-				if (node.type === "item") {
-					return (
-						<AutocompleteListOption key={node.key} item={node} />
-					);
-				}
-				return null;
-			})}
+			{listState &&
+				listState.collection.getChildren &&
+				[...listState.collection.getChildren(item.key)].map((node) => {
+					if (node.type === "item") {
+						return (
+							<AutocompleteListOption
+								key={node.key}
+								item={node}
+							/>
+						);
+					}
+					return null;
+				})}
 		</div>
 	);
 };

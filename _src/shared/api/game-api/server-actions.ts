@@ -9,8 +9,14 @@ import {
 	GameTicket,
 } from "./dto";
 import { redirect } from "next/navigation";
-import { appFetchGet, appFetchPost } from "../../lib/utils/app-fetch";
+import {
+	appFetchDelete,
+	appFetchGet,
+	appFetchPost,
+	appFetchPut,
+} from "../../lib/utils/app-fetch";
 import { GetGameByIdResponse } from "./dto/get-game-by-id-response";
+import { UpdateTicketForGameRequest } from "./dto/update-ticket-for-game-request";
 
 export async function createGameAsGuest(request: CreateGameRequest) {
 	const res = await appFetchPost<CreateGameRequest>("/games", request);
@@ -92,6 +98,41 @@ export async function createTicket(
 	} else {
 		throw new Error(
 			`Creating Ticket by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function updateTicketById(
+	gameId: string,
+	ticketId: string,
+	data: UpdateTicketForGameRequest,
+): Promise<GameTicket> {
+	const res = await appFetchPut<{ data: UpdateTicketForGameRequest }>(
+		`/games/${gameId}/ticket/${ticketId}`,
+		{ data },
+	);
+
+	if (res.ok) {
+		const data: GameTicket = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Updating Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function deleteTicketById(
+	gameId: string,
+	ticketId: string,
+): Promise<void> {
+	const res = await appFetchDelete(`/games/${gameId}/ticket/${ticketId}`);
+
+	if (res.ok) {
+		await res.json();
+	} else {
+		throw new Error(
+			`Deleting Ticket by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
 		);
 	}
 }

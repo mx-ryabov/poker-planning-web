@@ -1,3 +1,3 @@
 export * from "./state";
 export * from "./events";
-export * from "./context";
+export * from "./providers";

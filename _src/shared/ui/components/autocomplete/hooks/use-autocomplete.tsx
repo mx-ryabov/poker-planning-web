@@ -82,7 +82,7 @@ export function useAutocomplete<TItemData extends object>(
 			width: getPopoverWidth(),
 		}),
 		className:
-			"p-1 data-[entering]:animate-popup data-[exiting]:animate-popup-reverse outline-none bg-white border border-neutral-100 rounded-lg drop-shadow-lg max-h-[inherit] overflow-hidden",
+			"p-1 data-entering:animate-popup data-exiting:animate-popup-reverse outline-hidden bg-white border border-neutral-100 rounded-lg drop-shadow-lg max-h-[inherit] overflow-hidden",
 		maxHeight: 300,
 		isNonModal: true,
 	};

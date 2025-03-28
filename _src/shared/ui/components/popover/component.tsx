@@ -62,12 +62,12 @@ const PopoverContent = forwardRef<HTMLElement, PopoverContentProps>(
 				style={() => ({
 					width: getPopoverWidth(),
 				})}
-				className="data-[entering]:animate-popup data-[exiting]:animate-popup-reverse"
+				className="data-entering:animate-popup data-exiting:animate-popup-reverse"
 			>
 				<Dialog
 					{...restProps}
 					className={
-						"outline-none bg-white border border-neutral-100 rounded-lg drop-shadow-lg max-h-[inherit] overflow-hidden " +
+						"outline-hidden bg-white border border-neutral-100 rounded-lg drop-shadow-lg max-h-[inherit] overflow-hidden " +
 						className
 					}
 				>

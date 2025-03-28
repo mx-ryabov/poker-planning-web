@@ -9,7 +9,7 @@ import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { MoreIcon } from "@/_src/shared/ui/components/icon";
 import { Avatar } from "@/_src/shared/ui/components/avatar";
 import { useMemo } from "react";
-import { useParticipantMenuOptions } from "./state/use-participant-options";
+import { useParticipantItemOptions } from "./state/use-participant-item-options";
 
 type ParticipantListItemProps = {
 	participant: GameParticipant;
@@ -25,10 +25,7 @@ export function ParticipantListItem({
 		[participantFromList.id, currentParticipant.id],
 	);
 
-	const options = useParticipantMenuOptions({
-		currentParticipantRole: currentParticipant.role,
-		participantFromList,
-	});
+	const options = useParticipantItemOptions(participantFromList);
 
 	return (
 		<div className="flex flex-row gap-3">
@@ -56,16 +53,10 @@ export function ParticipantListItem({
 						/>
 						<Menu.Content placement="bottom end">
 							<Menu.Section title="Options">
-								{options.map((option) => (
-									<Menu.Item
-										onAction={option.action}
-										key={option.title}
-									>
-										{option.icon({
-											size: 20,
-											className: "flex-shrink-0",
-										})}
-										{option.title}
+								{options.map(({ title, icon, action }) => (
+									<Menu.Item onAction={action} key={title}>
+										{icon}
+										{title}
 									</Menu.Item>
 								))}
 							</Menu.Section>

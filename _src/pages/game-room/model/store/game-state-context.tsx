@@ -1,23 +1,51 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useEffect, useRef } from "react";
 import { StoreApi, useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import { GameManagementSlice, GameStateStore } from "./game-state-store.model";
+import { createGameStateStore } from "./game-state-store";
+import { GameAsyncState } from "./game-async-state-slice/game-async-state.model";
 
 type GameStateContextProps = StoreApi<GameStateStore>;
 
-const GameStateCotnext = createContext<GameStateContextProps | null>(null);
+export const GameStateCotnext = createContext<GameStateContextProps | null>(
+	null,
+);
 
 type GameStateProviderProps = {
 	children: ReactNode;
-	store: StoreApi<GameStateStore>;
+	initialAsyncState: GameAsyncState;
 };
 
-export function GameStateProvider({ store, children }: GameStateProviderProps) {
+export function GameStateProvider({
+	initialAsyncState,
+	children,
+}: GameStateProviderProps) {
+	const storeRef = useRef<StoreApi<GameStateStore> | null>(null);
+	if (!storeRef.current) {
+		storeRef.current = createGameStateStore(initialAsyncState);
+	}
+
+	useEffect(() => {
+		const sotreState = storeRef.current?.getState();
+		if (sotreState) {
+			sotreState.revalidateAsyncState(initialAsyncState);
+		}
+	}, [storeRef, initialAsyncState]);
+
 	return (
-		<GameStateCotnext.Provider value={store}>
+		<GameStateCotnext.Provider value={storeRef.current}>
 			{children}
 		</GameStateCotnext.Provider>
 	);
+}
+
+export function useGameStore() {
+	const store = useContext(GameStateCotnext);
+	if (store === null) {
+		throw new Error("useGameStore must be used inside GameStateProvider");
+	}
+
+	return store;
 }
 
 export function useGameState<TReturn>(

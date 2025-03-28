@@ -32,20 +32,20 @@ describe("Ticket Creator", () => {
 		test("opens a creation form by clicking on the ticket", async () => {
 			const { user, getByRole, getByTestId } = renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			const form = getByTestId("ticket-creator-form");
 			within(form).getByTestId("ticket-type-selector");
 			within(form).getByRole("textbox");
 		});
 
-		test("closes an opened creation form when clicking outside", async () => {
-			const { user, getByRole, queryByTestId } = renderComponent({});
+		test("closes an opened creation form when clicking on close button", async () => {
+			const { user, getByTestId, queryByTestId } = renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			expect(queryByTestId("ticket-creator-form")).toBeInTheDocument();
-			await user.click(document.documentElement);
+			await user.click(formToggler);
 			expect(
 				queryByTestId("ticket-creator-form"),
 			).not.toBeInTheDocument();
@@ -54,21 +54,21 @@ describe("Ticket Creator", () => {
 
 	describe("Focus Management", () => {
 		test("focuses on input once opened", async () => {
-			const { user, getByRole } = renderComponent({});
+			const { user, getByRole, getByTestId } = renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			const textField = getByRole("textbox");
 
 			expect(textField).toHaveFocus();
 		});
 
 		test("focuses on the text field after ticket type selection", async () => {
-			const { user, getByRole, getByTestId, getAllByRole } =
+			const { user, getByRole, getByTestId, getAllByRole, debug } =
 				renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			const textField = getByRole("textbox");
 			const typeSelector = getByTestId("ticket-type-selector");
 			await user.click(typeSelector);
@@ -76,7 +76,7 @@ describe("Ticket Creator", () => {
 			expect(textField).not.toHaveFocus();
 
 			const types = getAllByRole("menuitemradio");
-			await user.click(types[1]);
+			await act(async () => await user.click(types[1]));
 
 			expect(textField).toHaveFocus();
 		});
@@ -86,18 +86,19 @@ describe("Ticket Creator", () => {
 		test("has ticket type selector and text field when empty", async () => {
 			const { user, getByRole, getByTestId } = renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			const form = getByTestId("ticket-creator-form");
 			within(form).getByTestId("ticket-type-selector");
 			within(form).getByRole("textbox");
 		});
 
 		test("shows submit button when the text field has at least one character", async () => {
-			const { user, getByRole, queryByTestId } = renderComponent({});
+			const { user, getByRole, queryByTestId, getByTestId } =
+				renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			const textField = getByRole("textbox");
 			expect(
 				queryByTestId("ticket-creator-submit"),
@@ -107,10 +108,11 @@ describe("Ticket Creator", () => {
 		});
 
 		test("hides submit button when the text field doesn't have any characters", async () => {
-			const { user, getByRole, queryByTestId } = renderComponent({});
+			const { user, getByRole, queryByTestId, getByTestId } =
+				renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 			const textField = getByRole("textbox");
 			expect(
 				queryByTestId("ticket-creator-submit"),
@@ -128,8 +130,8 @@ describe("Ticket Creator", () => {
 			const { user, getByRole, getByTestId, getAllByRole } =
 				renderComponent({ onSubmit: onSubmitFn });
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 
 			const textField = getByRole("textbox");
 			await user.type(textField, "ticket name");
@@ -151,11 +153,11 @@ describe("Ticket Creator", () => {
 
 		test("submits a form data when valid, the text field is focused and Enter is pressed", async () => {
 			const onSubmitFn = vi.fn().mockReturnValue({ ok: true });
-			const { user, getByRole, getByTestId, getAllByRole } =
+			const { user, getByRole, getByTestId, getAllByRole, debug } =
 				renderComponent({ onSubmit: onSubmitFn });
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 
 			const typeSelector = getByTestId("ticket-type-selector");
 			await user.click(typeSelector);
@@ -163,6 +165,7 @@ describe("Ticket Creator", () => {
 			const types = getAllByRole("menuitemradio");
 			await user.click(types[1]);
 
+			debug();
 			const textField = getByRole("textbox");
 			await user.type(textField, "ticket name");
 
@@ -192,8 +195,8 @@ describe("Ticket Creator", () => {
 				},
 			);
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 
 			const textField = getByRole("textbox");
 			await user.type(textField, "ticket name");
@@ -212,12 +215,12 @@ describe("Ticket Creator", () => {
 				ok: false,
 				error: "Server Error",
 			}));
-			const { user, getByRole } = renderComponent({
+			const { user, getByTestId } = renderComponent({
 				onSubmit: onSubmitFn,
 			});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 
 			await user.keyboard("[Enter]");
 
@@ -227,8 +230,8 @@ describe("Ticket Creator", () => {
 		test("shows a vlidation error when the text field is empty and dirty", async () => {
 			const { user, getByRole, getByTestId } = renderComponent({});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 
 			const textField = getByRole("textbox");
 			await user.type(textField, "ticket name");
@@ -248,8 +251,8 @@ describe("Ticket Creator", () => {
 				onSubmit: onSubmitFn,
 			});
 
-			const formOpener = getByRole("button");
-			await user.click(formOpener);
+			const formToggler = getByTestId("ticket-creator-toggler");
+			await user.click(formToggler);
 
 			const textField = getByRole("textbox");
 			await user.type(textField, "ticket name");
@@ -263,10 +266,10 @@ describe("Ticket Creator", () => {
 	});
 
 	test("doesn't violate any accessiblity rules", async () => {
-		const { container, getByRole, user } = renderComponent({});
+		const { container, getByTestId, user } = renderComponent({});
 
-		const formOpener = getByRole("button");
-		await user.click(formOpener);
+		const formToggler = getByTestId("ticket-creator-toggler");
+		await user.click(formToggler);
 
 		const results = await axe(container);
 		expect(results).toHaveNoViolations();

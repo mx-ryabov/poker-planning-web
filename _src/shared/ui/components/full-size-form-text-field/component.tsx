@@ -50,7 +50,7 @@ export const FullSizeFormTextInput = forwardRef(
 						ref={ref}
 						{...inputProps}
 						className={twMerge(
-							"min-w-[400px] h-20 text-6xl outline-none font-semibold text-neutral-500 placeholder:text-neutral-200",
+							"min-w-[400px] h-20 text-6xl outline-hidden font-semibold text-neutral-500 placeholder:text-neutral-200",
 							inputProps.className,
 						)}
 					/>
@@ -78,7 +78,7 @@ export const FullSizeFormTextInput = forwardRef(
 						className="absolute left-0 -bottom-3 translate-y-full"
 						data-testid="enter-shortcut"
 					>
-						<div className="py-1 px-2 border border-neutral-200 rounded text-sm text-neutral-300 animate-downOut">
+						<div className="py-1 px-2 border border-neutral-200 rounded-sm text-sm text-neutral-300 animate-downOut">
 							↵ Enter
 						</div>
 					</div>

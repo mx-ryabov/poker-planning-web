@@ -62,7 +62,6 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 		if (parsed.success) {
 			return await onSubmitAction(parsed.data);
 		}
-		console.log("check", parsed.error.message);
 
 		return parsed.error.message;
 	};

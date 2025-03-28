@@ -5,8 +5,8 @@ import {
 	NEWLY_CREATED_GAME,
 	MASTER_PARTICIPANT,
 } from "@/_src/shared/mocks/game";
-import { GameStateProvider } from "../../../model";
 import { UserBar } from "../user-bar";
+import { GameStateCotnext } from "../../../model/store/game-state-context";
 
 const gameStateStore = createGameStateStore({
 	game: NEWLY_CREATED_GAME,
@@ -14,9 +14,9 @@ const gameStateStore = createGameStateStore({
 });
 function renderUserBar({ onLogout = vi.fn() }: { onLogout?: () => void }) {
 	return render(
-		<GameStateProvider store={gameStateStore}>
+		<GameStateCotnext.Provider value={gameStateStore}>
 			<UserBar onLogout={onLogout} />
-		</GameStateProvider>,
+		</GameStateCotnext.Provider>,
 	);
 }
 

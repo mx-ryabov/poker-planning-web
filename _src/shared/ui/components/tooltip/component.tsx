@@ -47,7 +47,7 @@ function Content(props: ContentProps) {
 		() =>
 			mergeClassNames(
 				"bg-neutral-500 text-neutral-100 text-sm px-3 py-2 rounded-lg shadow-lg",
-				"data-[entering]:animate-fade-in data-[exiting]:animate-fade-in-reverse",
+				"data-entering:animate-fade-in data-exiting:animate-fade-in-reverse",
 				className,
 			),
 		[className],
@@ -62,11 +62,13 @@ function Content(props: ContentProps) {
 		>
 			{(renderProps) => (
 				<>
-					<OverlayArrow>
-						<svg width={8} height={8} viewBox="0 0 8 8">
-							{ARROW_PATH[renderProps.placement]}
-						</svg>
-					</OverlayArrow>
+					{renderProps.placement && (
+						<OverlayArrow>
+							<svg width={8} height={8} viewBox="0 0 8 8">
+								{ARROW_PATH[renderProps.placement]}
+							</svg>
+						</OverlayArrow>
+					)}
 					{typeof children === "function"
 						? children(renderProps)
 						: children}

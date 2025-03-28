@@ -3,13 +3,15 @@ import { GameAsyncState } from "./game-async-state-slice/game-async-state.model"
 import {
 	GameManagementTab,
 	LiveStatus,
+	LiveStatusUpdaterFn,
 } from "./game-management-slice/game-managemet.model";
+import { UpdateGameTicket } from "./game-async-state-slice/game-async-state.dto";
 
 export type GameManagementSlice = {
 	activeTab: GameManagementTab | null;
 	setActiveTab: (tab: GameManagementTab | null) => void;
 	liveStatus: LiveStatus;
-	setLiveStatus: (status: LiveStatus) => void;
+	setLiveStatus: (status: LiveStatus | LiveStatusUpdaterFn) => void;
 };
 
 export type GameAsyncSlice = {
@@ -18,6 +20,9 @@ export type GameAsyncSlice = {
 	disconnectParticipant: (userId: string) => void;
 	kickParticipant: (participantId: string) => void;
 	addTicketIfAbsent: (ticket: GameTicket) => void;
+	updateTicket: (ticketId: string, data: Partial<UpdateGameTicket>) => void;
+	removeTicket: (ticketId: string) => void;
+	revalidateAsyncState: (updatedState: GameAsyncState) => void;
 };
 
 export type GameStateStore = GameAsyncSlice & GameManagementSlice;

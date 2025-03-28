@@ -1,14 +1,14 @@
 import {
 	Collection,
 	Header,
-	Section,
-	SectionProps,
+	ListBoxSection,
+	ListBoxSectionProps,
 } from "react-aria-components";
 
 export type ListSectionProps<TItemData> = {
 	title?: string;
 	className?: Partial<Record<"wrapper" | "title", string>>;
-} & Omit<SectionProps<TItemData>, "className">;
+} & Omit<ListBoxSectionProps<TItemData>, "className">;
 
 export function ListSection<TItemData extends object>(
 	props: ListSectionProps<TItemData>,
@@ -30,7 +30,7 @@ export function ListSection<TItemData extends object>(
 	};
 
 	return (
-		<Section {...restProps} className={className?.wrapper}>
+		<ListBoxSection {...restProps} className={className?.wrapper}>
 			{title && (
 				<Header
 					className={`${DEFAULT_HEADER_CLASSNAME} ${className?.title || ""}`}
@@ -39,7 +39,7 @@ export function ListSection<TItemData extends object>(
 				</Header>
 			)}
 			{renderItems()}
-		</Section>
+		</ListBoxSection>
 	);
 }
 

@@ -41,13 +41,13 @@ export const modalStyles = cva("", {
 		},
 		position: {
 			start: [
-				"data-[entering]:animate-left-right-fade-in data-[exiting]:animate-left-right-fade-in-reverse",
+				"data-entering:animate-left-right-fade-in data-exiting:animate-left-right-fade-in-reverse",
 			],
 			end: [
-				"data-[entering]:animate-right-left-fade-in data-[exiting]:animate-right-left-fade-in-reverse",
+				"data-entering:animate-right-left-fade-in data-exiting:animate-right-left-fade-in-reverse",
 			],
 			bottom: [
-				"data-[entering]:animate-bottom-up-fade-in data-[exiting]:animate-bottom-up-fade-in-reverse",
+				"data-entering:animate-bottom-up-fade-in data-exiting:animate-bottom-up-fade-in-reverse",
 			],
 		},
 	},
@@ -71,7 +71,7 @@ export const modalStyles = cva("", {
 	],
 });
 
-export const dialogStyles = cva("w-full h-full flex outline-none", {
+export const dialogStyles = cva("w-full h-full flex outline-hidden", {
 	variants: {
 		orientation: {
 			vertical: ["flex-row"],

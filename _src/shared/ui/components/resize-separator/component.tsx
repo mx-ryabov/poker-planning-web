@@ -10,7 +10,7 @@ const separatorStyles = cva(
 
 		"before:content-[''] before:flex before:transition-all",
 		"before:absolute",
-		"before:bg-opacity-0 before:hover:bg-primary-500 before:active:bg-primary-700",
+		"before:bg-opacity-0 hover:before:bg-primary-500 active:before:bg-primary-700",
 	],
 	{
 		variants: {

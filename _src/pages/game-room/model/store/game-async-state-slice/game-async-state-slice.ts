@@ -2,6 +2,7 @@ import { StateCreator } from "zustand";
 import { GameAsyncState } from "./game-async-state.model";
 import { GameAsyncSlice, GameStateStore } from "../game-state-store.model";
 import { GameTicket } from "@/_src/shared/api/game-api";
+import { UpdateGameTicket } from "./game-async-state.dto";
 
 export function createGameAsyncStateSliceCreator(
 	initialState: GameAsyncState,
@@ -56,6 +57,30 @@ export function createGameAsyncStateSliceCreator(
 				if (!isInList) {
 					state.state.game.tickets.push(ticket);
 				}
+			});
+		},
+		updateTicket: (ticketId: string, data: Partial<UpdateGameTicket>) => {
+			set((state) => {
+				const ticketInd = state.state.game.tickets.findIndex(
+					(t) => t.id === ticketId,
+				);
+				if (ticketInd !== -1) {
+					Object.assign(state.state.game.tickets[ticketInd], {
+						...data,
+					});
+				}
+			});
+		},
+		removeTicket: (ticketId: string) => {
+			set((state) => {
+				state.state.game.tickets = state.state.game.tickets.filter(
+					(t) => t.id !== ticketId,
+				);
+			});
+		},
+		revalidateAsyncState: (updatedState: GameAsyncState) => {
+			set((state) => {
+				state.state = updatedState;
 			});
 		},
 	});

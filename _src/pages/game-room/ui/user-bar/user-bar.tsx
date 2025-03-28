@@ -29,7 +29,7 @@ export function UserBar({ onLogout }: Props) {
 			<Menu.Content placement="bottom end">
 				<Menu.Section title={currentParticipant.displayName}>
 					<Menu.Item isDisabled>
-						<ProfileIcon size={20} className="flex-shrink-0" />
+						<ProfileIcon size={20} className="shrink-0" />
 						<div className="flex flex-col">
 							<p>My Account</p>
 							<span className="text-xs w-max">

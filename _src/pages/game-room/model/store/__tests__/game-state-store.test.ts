@@ -253,5 +253,47 @@ describe("Game State Store", () => {
 				existingTicket,
 			);
 		});
+
+		test("updateTicket - updates the ticket with the provided id", async () => {
+			const existingTicket = generateTicket({
+				id: "123",
+			});
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: { ...GAME_MOCK, tickets: [existingTicket] },
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.tickets).toHaveLength(1);
+			const updatedTicket = {
+				title: "Updated Ticket 1",
+				type: TicketType.Bug,
+				description: "Updated description",
+			};
+			store.getState().updateTicket("123", updatedTicket);
+			expect(store.getState().state.game.tickets).toHaveLength(1);
+			expect(store.getState().state.game.tickets[0]).toEqual(
+				expect.objectContaining(updatedTicket),
+			);
+		});
+
+		test("removeTicket - removes the ticket with the provided id", async () => {
+			const existingTicket = generateTicket({
+				id: "123",
+			});
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: { ...GAME_MOCK, tickets: [existingTicket] },
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.tickets).toHaveLength(1);
+			store.getState().removeTicket("123");
+			expect(store.getState().state.game.tickets).toHaveLength(0);
+		});
 	});
 });

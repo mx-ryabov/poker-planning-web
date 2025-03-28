@@ -9,7 +9,7 @@ import {
 	ForwardedRef,
 	forwardRef,
 	HTMLAttributes,
-	MutableRefObject,
+	RefObject,
 	ReactNode,
 	useMemo,
 	useRef,
@@ -48,8 +48,12 @@ export const AutocompleteList = forwardRef(
 			shouldUseVirtualFocus = false,
 		} = props;
 
-		const listRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
-		const { listBoxProps } = useListBox({ ...props }, state, listRef);
+		const listRef: RefObject<HTMLDivElement | null> = useRef(null);
+		const { listBoxProps } = useListBox(
+			{ ...props, shouldUseVirtualFocus: false },
+			state,
+			listRef,
+		);
 
 		const renderedItems = useMemo(
 			() => [...state.collection],
@@ -67,7 +71,7 @@ export const AutocompleteList = forwardRef(
 				<div
 					{...listBoxProps}
 					ref={setRefs(listRef, ref)}
-					className="max-h-[inherit] overflow-auto outline-none flex flex-col gap-2"
+					className="max-h-[inherit] overflow-auto outline-hidden flex flex-col gap-2"
 				>
 					{renderedItems.length === 0 && renderEmptyState
 						? renderEmptyState()

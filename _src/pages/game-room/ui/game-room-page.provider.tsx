@@ -4,13 +4,14 @@ import {
 	GetGameByIdResponse,
 } from "@/_src/shared/api/game-api";
 import {
-	useGameStateStore,
 	GameEventsProvider,
 	GameStateProvider,
 	useGameEventsDispatcher,
-	useGameEventsHub,
+	useGameEvents,
+	useGameStore,
 } from "../model";
 import { ReactNode } from "react";
+import { ToastProvider } from "@/_src/shared/ui/components/toast";
 
 interface Props {
 	accessTokenFactory: () => Promise<string>;
@@ -27,15 +28,24 @@ export function GameRoomPageProvider({
 	currentParticipant,
 	children,
 }: Props) {
-	const eventListener = useGameEventsHub({ accessTokenFactory, gameId });
-	const gameStateStore = useGameStateStore({ game, currentParticipant });
-	useGameEventsDispatcher({ eventListener, gameStateStore });
-
 	return (
-		<GameEventsProvider value={eventListener}>
-			<GameStateProvider store={gameStateStore}>
-				{children}
+		<ToastProvider>
+			<GameStateProvider initialAsyncState={{ game, currentParticipant }}>
+				<GameEventsProvider
+					accessTokenFactory={accessTokenFactory}
+					gameId={gameId}
+				>
+					<GameEventDispatcher />
+					{children}
+				</GameEventsProvider>
 			</GameStateProvider>
-		</GameEventsProvider>
+		</ToastProvider>
 	);
+}
+
+function GameEventDispatcher() {
+	const eventSubscriber = useGameEvents();
+	const gameStateStore = useGameStore();
+	useGameEventsDispatcher({ eventSubscriber, gameStateStore });
+	return null;
 }

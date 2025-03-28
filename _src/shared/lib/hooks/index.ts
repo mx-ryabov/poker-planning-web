@@ -5,3 +5,4 @@ export * from "./use-resize-observable";
 export * from "./use-popover-force-position-update";
 export * from "./use-event-target-listener";
 export * from "./use-animation";
+export * from "./use-mutation";

@@ -906,7 +906,7 @@ describe("Autocomplete", () => {
 				expect(queryByRole("listbox")).not.toBeInTheDocument();
 			});
 
-			test("can be closed on blur", async () => {
+			test("can be closed on blur-sm", async () => {
 				const { getByTestId, queryByRole, user } =
 					renderAutocompleteMultiple({});
 

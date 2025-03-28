@@ -33,7 +33,7 @@ export const listItemStyles = cva(
 			},
 			isFocused: {
 				true: ["outline-2 outline-primary-500 outline"],
-				false: ["outline-none"],
+				false: ["outline-hidden"],
 			},
 		},
 	},

@@ -20,7 +20,11 @@ import {
 	useHover,
 	useLink,
 } from "react-aria";
-import { buttonStyles, ButtonStylesProps } from "../../styles/button.styles";
+import {
+	buttonStyles,
+	ButtonStylesProps,
+	COLOR_SCHEMES,
+} from "../../styles/button.styles";
 import { twMerge } from "tailwind-merge";
 /**
  * We need this implementation to use NextJS Link component
@@ -43,7 +47,11 @@ function NextLinkButton(
 	ref: ForwardedRef<HTMLAnchorElement>,
 ) {
 	[props, ref] = useContextProps(props, ref, LinkContext);
-	const { size = "medium", variant = "default" } = props;
+	const {
+		size = "medium",
+		variant = "default",
+		appearance = "primary",
+	} = props;
 
 	let { linkProps, isPressed } = useLink({ ...props, elementType: "a" }, ref);
 
@@ -80,6 +88,7 @@ function NextLinkButton(
 		<NextLink
 			ref={ref}
 			{...mergeProps(renderProps, linkProps, hoverProps, focusProps)}
+			style={COLOR_SCHEMES[appearance] as any}
 			className={btnStyles()}
 			href={props.href}
 			slot={props.slot || undefined}
@@ -130,7 +139,7 @@ function NextCustomLink(
 
 	const linkStyles = () =>
 		twMerge(
-			"underline underline-offset-2 decoration-from-font hover:text-primary-500 transition-colors cursor-pointer outline-none",
+			"underline underline-offset-2 decoration-from-font hover:text-primary-500 transition-colors cursor-pointer outline-hidden",
 			renderProps.className,
 		);
 

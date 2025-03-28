@@ -21,7 +21,7 @@ const selectContainerStyles = cva(
 				true: ["border-primary-500"],
 			},
 			isInvalid: {
-				true: ["!border-error-500"],
+				true: ["border-error-500!"],
 			},
 			isPressed: {
 				true: ["border-primary-500"],
@@ -30,7 +30,7 @@ const selectContainerStyles = cva(
 				true: ["border-primary-500"],
 			},
 			isDisabled: {
-				true: ["!border-neutral-100 bg-neutral-100"],
+				true: ["border-neutral-100! bg-neutral-100"],
 			},
 		},
 	},
@@ -39,7 +39,7 @@ const selectContainerStyles = cva(
 const labelStyles = cva(["block text-neutral-500 text-xs font-medium p-1"], {
 	variants: {
 		isDisabled: {
-			true: ["!text-neutral-400"],
+			true: ["text-neutral-400!"],
 		},
 	},
 });
@@ -111,14 +111,14 @@ const SingleSelectionValue = () => {
 			data-trigger="toggle-button"
 			aria-pressed={ctx.overlayTriggerState.isOpen ? "true" : "false"}
 			className={
-				"flex flex-row w-full h-full px-3 items-center justify-between group outline-none text-sm text-neutral-500 disabled:text-neutral-200"
+				"flex flex-row w-full h-full px-3 items-center justify-between group outline-hidden text-sm text-neutral-500 disabled:text-neutral-200"
 			}
 			onPress={ctx.overlayTriggerState.toggle}
 		>
 			{ctx.selectedItems[0]?.textValue || ctx.placeholder}
 			<ArrowDownIcon
 				size={16}
-				className="transition-transform group-aria-[pressed=true]:rotate-180"
+				className="transition-transform group-aria-pressed:rotate-180"
 			/>
 		</AriaButton>
 	);
@@ -150,7 +150,7 @@ const MultipleSelectionValue = () => {
 				isDisabled={ctx.isDisabled}
 				onPress={ctx.overlayTriggerState.toggle}
 				aria-label="Add Items"
-				className="flex flex-row items-center gap-2 text-xs text-neutral-500 bg-neutral-100 py-1 px-2 max-h-[21px] rounded"
+				className="flex flex-row items-center gap-2 text-xs text-neutral-500 bg-neutral-100 py-1 px-2 max-h-[21px] rounded-sm"
 			>
 				<PlusIcon size={16} />
 				{ctx.placeholder}

@@ -38,6 +38,7 @@ export function generateTicket(
 		type: TicketType.Story,
 		description: "",
 		identifier: "TEST-1",
+		estimation: null,
 		...overrideTicket,
 	};
 }

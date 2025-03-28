@@ -10,13 +10,13 @@ import {
 	useState,
 } from "react";
 import { twMerge } from "tailwind-merge";
-import { TicketTypeSelector } from "./ticket-type-selector";
+import { TicketTypeSelector } from "../ticket-type-selector";
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon, PlusIcon } from "@/_src/shared/ui/components/icon";
-import { useClickOutside } from "@/_src/shared/lib";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cva } from "class-variance-authority";
 
 export type TicketCreatorSubmitActionData = { title: string; type: TicketType };
 export type TicketCreatorRenderFn = (renderProps: {
@@ -46,22 +46,42 @@ export function TicketCreator({ className, onSubmit }: TicketCreatorProps) {
 	const onBlur = useCallback(() => setFocused(false), []);
 
 	return (
-		<div className={twMerge("flex justify-end", cn)}>
-			{!focused && (
-				<ButtonSquare
-					icon={PlusIcon}
-					data-state="button"
-					data-testid="ticket-creator-opener"
-					className="shadow-lg shadow-primary-200"
-					onPress={() => setFocused(true)}
+		<div
+			className={twMerge(
+				"flex h-[58px] flex-row items-center justify-end gap-2",
+				cn,
+			)}
+		>
+			{focused && (
+				<Form
+					className="absolute w-full"
+					onSubmit={onSubmit}
+					onBlur={onBlur}
 				/>
 			)}
-			{focused && (
-				<Form className={cn} onSubmit={onSubmit} onBlur={onBlur} />
-			)}
+			<ButtonSquare
+				icon={PlusIcon}
+				data-state="button"
+				data-testid="ticket-creator-toggler"
+				variant={focused ? "outline" : "default"}
+				className={openerStyles({ isOpened: focused })}
+				onPress={() => setFocused((prev) => !prev)}
+			/>
 		</div>
 	);
 }
+
+const openerStyles = cva("shrink-0 transition-all duration-150 ease-linear", {
+	variants: {
+		isOpened: {
+			true: [
+				"-translate-y-14 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
+			],
+			false: ["shadow-lg shadow-primary-200"],
+		},
+	},
+});
+
 type FormProps = {
 	className?: string;
 	onSubmit: (
@@ -133,11 +153,11 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 	const focusOnTextField = useCallback(() => {
 		const inputEl = inputRef.current;
 		if (inputEl) {
-			inputEl.focus();
+			// setTimeout is needed when we want to focus after selection in ticket type dropdown.
+			// since the selection event is fired on mouse down the focus on the selected option happens AFTER we focus on test field
+			setTimeout(() => inputEl.focus(), 0);
 		}
 	}, [inputRef]);
-
-	useClickOutside([editorContainerRef], onBlur);
 
 	useEffect(() => {
 		focusOnTextField();
@@ -146,7 +166,7 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 	return (
 		<div className={className} ref={editorContainerRef}>
 			<form
-				className="flex flex-row items-center gap-1 p-2 w-full rounded-xl border border-neutral-100 shadow-lg bg-white"
+				className="flex w-full flex-row items-center gap-1 rounded-xl border border-neutral-100 bg-white p-2 shadow-lg"
 				data-state="creating"
 				action={submitAction}
 				ref={formRef}
@@ -162,6 +182,7 @@ function Form({ className, onSubmit, onBlur }: FormProps) {
 								focusOnTextField();
 							}}
 							value={field.value}
+							isEditable
 						/>
 					)}
 				/>

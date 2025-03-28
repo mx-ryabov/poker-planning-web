@@ -11,6 +11,7 @@ type Props = {
 	isDisabled?: boolean;
 	className?: string;
 	placement?: TooltipProps["placement"];
+	size?: number;
 };
 
 export function FieldErrorIcon(props: Props) {
@@ -44,7 +45,7 @@ function TriggerElement(props: Omit<Props, "errorMsg">) {
 				className,
 			)}
 		>
-			{icon || <WarningIcon />}
+			{icon || <WarningIcon size={props.size} />}
 		</div>
 	);
 }

@@ -1,13 +1,17 @@
-import { useRef, useMemo, useContext, useCallback } from "react";
+import {
+	useRef,
+	useMemo,
+	useContext,
+	useCallback,
+	FocusEvent,
+	useEffect,
+} from "react";
 import { KeyboardEvent } from "@react-types/shared";
 import { useSelectableCollection } from "@react-aria/selection";
-import { ListKeyboardDelegate, PressEvent } from "react-aria";
+import { ListKeyboardDelegate, PressEvent, useFocusWithin } from "react-aria";
 import { InputProps } from "../../input";
 import { AutocompleteValueContext } from "../contexts/autocomplete-value-context";
-import {
-	ListStateContext,
-	OverlayTriggerStateContext,
-} from "react-aria-components";
+import { OverlayTriggerStateContext } from "react-aria-components";
 
 export function useAutocompleteValue() {
 	const {
@@ -28,6 +32,7 @@ export function useAutocompleteValue() {
 	const overlayTriggerState = useContext(OverlayTriggerStateContext);
 
 	const inputRef = useRef<HTMLInputElement>(null!);
+	const autocompleteValueContainerRef = useRef<HTMLDivElement>(null!);
 
 	const delegate = useMemo(
 		() =>
@@ -48,13 +53,20 @@ export function useAutocompleteValue() {
 		isVirtualized: true,
 	});
 
+	useEffect(() => {
+		const inputEl = inputRef.current;
+		if (!inputEl || !overlayTriggerState?.isOpen) return;
+
+		inputEl.focus();
+	}, [overlayTriggerState?.isOpen, inputRef]);
+
 	const onKeyDown = useCallback(
 		(e: KeyboardEvent) => {
 			const { isFocused, focusedKey } = listState.selectionManager;
 
 			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
 				e.preventDefault();
-				if (!overlayTriggerState.isOpen) {
+				if (!overlayTriggerState?.isOpen) {
 					open("full");
 					return;
 				} else {
@@ -63,24 +75,25 @@ export function useAutocompleteValue() {
 					}
 				}
 			}
-			if (e.key === "Enter") {
-				if (overlayTriggerState.isOpen) {
+			if (e.key === "Enter" && focusedKey) {
+				if (overlayTriggerState?.isOpen) {
 					e.preventDefault();
 					listState.selectionManager.select(focusedKey);
 				}
 			}
 			if (e.key === "Escape") {
-				overlayTriggerState.close();
+				overlayTriggerState?.close();
 			}
 			collectionProps.onKeyDown && collectionProps.onKeyDown(e);
 		},
 		[
 			collectionProps.onKeyDown,
-			overlayTriggerState.isOpen,
-			overlayTriggerState.close,
+			overlayTriggerState?.isOpen,
+			overlayTriggerState?.close,
 			open,
 			listState.selectionManager,
 			selectionMode,
+			collectionProps.onKeyDown,
 		],
 	);
 
@@ -92,14 +105,26 @@ export function useAutocompleteValue() {
 	);
 
 	const onFocus = useCallback(() => {
-		if (!overlayTriggerState.isOpen) {
+		if (!overlayTriggerState?.isOpen) {
 			open("full");
 		}
-	}, [overlayTriggerState.isOpen, open]);
+	}, [overlayTriggerState?.isOpen, open]);
 
-	const onBlur = useCallback(() => {
-		overlayTriggerState.close();
-	}, [overlayTriggerState.close]);
+	const onBlur = useCallback(
+		(e: FocusEvent<HTMLInputElement, Element>) => {
+			const containerEl = autocompleteValueContainerRef.current;
+			const listEl = listRef.current;
+			if (!containerEl || !listEl) return;
+
+			if (
+				!containerEl.contains(e.relatedTarget) &&
+				!listEl.contains(e.relatedTarget)
+			) {
+				overlayTriggerState?.close();
+			}
+		},
+		[overlayTriggerState?.close, autocompleteValueContainerRef, listRef],
+	);
 
 	const inputProps: InputProps = useMemo(
 		() => ({
@@ -117,20 +142,35 @@ export function useAutocompleteValue() {
 			onChange,
 			onBlur,
 		}),
-		[label, errorMessages, searchValue, onKeyDown, onChange, onFocus],
+		[
+			label,
+			errorMessages,
+			searchValue,
+			onKeyDown,
+			onChange,
+			onFocus,
+			isDisabled,
+			isInvalid,
+			placeholder,
+			onBlur,
+		],
 	);
 
 	const toggleBtnProps = useMemo(
 		() => ({
 			isDisabled,
-			onPressStart: (e: PressEvent) => {
-				if (!overlayTriggerState.isOpen) {
-					inputRef.current?.focus();
-				}
+			onPress: (e: PressEvent) => {
 				toggle("full");
 			},
+			// onMouseDown: (e: PressEvent) => {
+			// 	if (!overlayTriggerState?.isOpen) {
+			// 		//inputRef.current?.focus();
+			// 		console.log(e);
+			// 		open("full");
+			// 	}
+			// },
 		}),
-		[toggle, inputRef, overlayTriggerState.isOpen],
+		[toggle, inputRef, overlayTriggerState?.isOpen, isDisabled],
 	);
 
 	return {
@@ -138,6 +178,7 @@ export function useAutocompleteValue() {
 		listState,
 		inputProps,
 		inputRef,
+		autocompleteValueContainerRef,
 		overlayTriggerState,
 		toggleBtnProps,
 		selectedNodes,

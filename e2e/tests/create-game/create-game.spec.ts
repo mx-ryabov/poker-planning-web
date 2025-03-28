@@ -8,7 +8,7 @@ import {
 import { GET_VOTING_SYSTEMS, POST_GAMES } from "./create-game.mocks";
 
 // Unfortunately I can't use process.env.HOST because within this testing environment a syntax with assigning a varaible doesn't work properly
-const HOST = process.env.BE_HTTP_HOST;
+const HOST = process.env.NEXT_PUBLIC_HOST;
 test.use({
 	mswHandlers: [
 		[

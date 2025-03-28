@@ -23,7 +23,7 @@ const headerStyles = cva(
 	{
 		variants: {
 			active: {
-				true: ["translate-y-0 opacity-1"],
+				true: ["translate-y-0 opacity-100"],
 				false: ["translate-y-11 opacity-0"],
 			},
 		},

@@ -2,10 +2,11 @@ import { test, describe, expect } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { GameManagementBar } from "../game-management-bar";
-import { GameManagementTab, GameStateProvider } from "../../../model";
+import { GameManagementTab } from "../../../model";
 import { createGameStateStore } from "../../../model";
 import { GAME_MOCK } from "./game-management-bar.mock";
 import { MASTER_PARTICIPANT } from "@/_src/shared/mocks";
+import { GameStateCotnext } from "../../../model/store/game-state-context";
 
 const gameStateStore = createGameStateStore({
 	game: GAME_MOCK,
@@ -13,9 +14,9 @@ const gameStateStore = createGameStateStore({
 });
 function renderGameManagementBar() {
 	return render(
-		<GameStateProvider store={gameStateStore}>
+		<GameStateCotnext.Provider value={gameStateStore}>
 			<GameManagementBar />
-		</GameStateProvider>,
+		</GameStateCotnext.Provider>,
 	);
 }
 

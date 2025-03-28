@@ -4,7 +4,7 @@ import {
 } from "@microsoft/signalr/dist/esm/HubConnection";
 import { HubConnectionBuilder } from "@microsoft/signalr/dist/esm/HubConnectionBuilder";
 import { HttpTransportType } from "@microsoft/signalr/dist/esm/ITransport";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
 	DisconnectedEvent,
 	ParticipantJoinedEvent,
@@ -12,19 +12,21 @@ import {
 	ReconnectedEvent,
 	ReconnectingEvent,
 	TicketAddedEvent,
+	TicketDeletedEvent,
+	TicketUpdatedEvent,
 } from "../events/game-events";
-import { GameEventType } from "../events";
-import { GameEventListener } from "./use-game-events-hub.types";
+import { GameEventType, GameEventTypeMap } from "../events";
+import {
+	GameEventListener,
+	GameEventListenerCallback,
+} from "./use-game-events-hub.types";
 
 type Props = {
 	gameId: string;
 	accessTokenFactory: () => Promise<string>;
 };
 
-export function useGameEventsHub({
-	gameId,
-	accessTokenFactory,
-}: Props): GameEventListener {
+export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 	const gameEventTarget = useMemo(() => new EventTarget(), []);
 
 	const [connection, setConnection] = useState<HubConnection | null>(null);
@@ -37,7 +39,7 @@ export function useGameEventsHub({
 		let isCanceled = false;
 
 		const hubConnectionSetup = new HubConnectionBuilder().withUrl(
-			`http://localhost:5011/hubs/game?gameId=${gameId}`,
+			`${process.env.NEXT_PUBLIC_HOST}/hubs/game?gameId=${gameId}`,
 			{
 				transport: HttpTransportType.WebSockets,
 				accessTokenFactory,
@@ -99,14 +101,35 @@ export function useGameEventsHub({
 		connection.on(GameEventType.TicketAdded, (data) => {
 			gameEventTarget.dispatchEvent(new TicketAddedEvent(data));
 		});
+		connection.on(GameEventType.TicketUpdated, (data) => {
+			gameEventTarget.dispatchEvent(new TicketUpdatedEvent(data));
+		});
+		connection.on(GameEventType.TicketDeleted, (data) => {
+			gameEventTarget.dispatchEvent(new TicketDeletedEvent(data));
+		});
 	}, [connection, gameEventTarget]);
 
-	return {
-		add: gameEventTarget.addEventListener.bind(
-			gameEventTarget,
-		) as GameEventListener["add"],
-		remove: gameEventTarget.removeEventListener.bind(
-			gameEventTarget,
-		) as GameEventListener["remove"],
-	};
+	const eventSubscriber = useCallback(
+		<TType extends GameEventType>(
+			eventType: TType,
+			handler: GameEventListenerCallback<GameEventTypeMap[TType]>,
+			// eslint-disable-next-line no-undef
+			options?: AddEventListenerOptions | boolean,
+		) => {
+			(gameEventTarget.addEventListener as GameEventListener["add"])(
+				eventType,
+				handler,
+				options,
+			);
+
+			return () => {
+				(
+					gameEventTarget.removeEventListener as GameEventListener["remove"]
+				)(eventType, handler, options);
+			};
+		},
+		[gameEventTarget],
+	);
+
+	return eventSubscriber;
 }

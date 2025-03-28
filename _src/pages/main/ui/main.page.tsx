@@ -23,7 +23,7 @@ export function MainPage() {
 					</NextLinkButton>
 				</nav>
 			</header>
-			<div className="flex flex-row flex-grow items-center justify-between max-w-7xl w-full px-10">
+			<div className="flex flex-row grow items-center justify-between max-w-7xl w-full px-10">
 				<section>
 					<header className="mb-6">
 						<h1 className="text-6xl leading-normal font-bold text-neutral-700">

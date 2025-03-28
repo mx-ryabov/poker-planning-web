@@ -1,12 +1,13 @@
 import { GameTicket, ParticipantRole } from "@/_src/shared/api";
 import { ReactNode, Ref } from "react";
 import { twMerge } from "tailwind-merge";
-import { selectCurrentRole, selectTickets, useGameState } from "../../../model";
-import { ScrollShadow } from "@/_src/shared/ui/components/scroll-shadow";
 import {
-	UNSTABLE_ListLayout,
-	UNSTABLE_Virtualizer,
-} from "react-aria-components";
+	selectCurrentRole,
+	selectTickets,
+	useGameState,
+	useTicketDelete,
+} from "../../../model";
+import { ScrollShadow } from "@/_src/shared/ui/components/scroll-shadow";
 
 type Props = {
 	className?: string;
@@ -24,11 +25,15 @@ export function TicketList({ className, ref, children }: Props) {
 			data-testid="ticket-list"
 		>
 			{tickets.length > 0 ? (
-				<UNSTABLE_Virtualizer
-					layout={new UNSTABLE_ListLayout({ rowHeight: 78 })}
-				>
-					{tickets.map(children)}
-				</UNSTABLE_Virtualizer>
+				// <Virtualizer
+				// 	layout={ListLayout}
+				// 	layoutOptions={{
+				// 		rowHeight: 78,
+				// 		padding: 4,
+				// 		gap: 4,
+				// 	}}
+				// >
+				tickets.map(children)
 			) : (
 				<TicketListEmptyState />
 			)}

@@ -14,6 +14,7 @@ import {
 } from "react-aria-components";
 import { setRefs } from "@/_src/shared/lib";
 import { FieldErrorIcon } from "../field-error-icon";
+import { twMerge } from "tailwind-merge";
 
 type _InputProps = {
 	label: string;
@@ -21,6 +22,8 @@ type _InputProps = {
 	errors?: string[] | string;
 	withErrorIcon?: boolean;
 	endContent?: ReactNode;
+	isPending?: boolean;
+	"data-testid"?: string;
 } & TextFieldProps &
 	Omit<AriaInputProps, "onChange" | "onKeyDown" | "onKeyUp" | "disabled">;
 
@@ -32,6 +35,8 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 			errors,
 			withErrorIcon,
 			endContent,
+			className,
+			isPending,
 			...restProps
 		} = props;
 
@@ -50,15 +55,16 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 
 		return (
 			<TextField
-				className="group flex flex-col w-full"
+				className="group flex w-full flex-col"
 				{...restProps}
+				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
 				isInvalid={!!errors || restProps.isInvalid}
 			>
 				<Label aria-label="Label">
 					<span
 						className={labelStyles({
-							isDisabled: restProps.isDisabled,
+							isDisabled: restProps.isDisabled || isPending,
 							hasContent: !!label,
 						})}
 					>
@@ -66,14 +72,14 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 					</span>
 
 					<Group
-						className={inputStyles({
-							hasError: !!errors?.length,
-							hasEndContent: !!endContent,
-							isDisabled: restProps.isDisabled,
-						})}
-						onClick={() => {
-							inputRef.current?.focus();
-						}}
+						className={twMerge(
+							inputStyles({
+								hasError: !!errors?.length,
+								hasEndContent: !!endContent,
+								isDisabled: restProps.isDisabled || isPending,
+							}),
+							className as string,
+						)}
 					>
 						{startIcon && (
 							<span className="text-neutral-200">
@@ -81,8 +87,9 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							</span>
 						)}
 						<AriaInput
-							className="outline-none w-full h-full placeholder:text-neutral-200"
+							className="h-full w-full bg-white/0 outline-hidden placeholder:text-neutral-200"
 							aria-label="input"
+							data-testid={restProps["data-testid"]}
 							ref={setRefs(inputRef, ref)}
 						/>
 						{endContent}
@@ -92,11 +99,14 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 								placement="top end"
 							/>
 						)}
+						{isPending && (
+							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-200" />
+						)}
 					</Group>
 				</Label>
 
 				{!withErrorIcon && (
-					<FieldError className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1">
+					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}
 					</FieldError>
@@ -116,14 +126,14 @@ const inputStyles = cva(
 		"w-full h-10 px-3",
 		"rounded-lg box-border border-2",
 		"text-sm transition-colors transition-[border-color] cursor-text",
-		"focus-within:!border-primary-500",
+		"focus-within:border-primary-500!",
 		"border-neutral-100",
 		"group-hover:border-primary-400",
 	],
 	{
 		variants: {
 			hasError: {
-				true: ["!border-error-500"],
+				true: ["border-error-500!"],
 				false: [],
 			},
 			hasEndContent: {
@@ -131,7 +141,7 @@ const inputStyles = cva(
 				false: [],
 			},
 			isDisabled: {
-				true: ["group-hover:!border-neutral-100", "bg-neutral-100"],
+				true: ["group-hover:border-neutral-100!", "bg-neutral-100"],
 				false: [],
 			},
 		},

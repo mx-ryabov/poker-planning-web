@@ -1,4 +1,5 @@
 "use server";
+import { scan } from "react-scan";
 import {
 	getCurrentParticipant,
 	getGameById,
@@ -13,6 +14,13 @@ import { Logo } from "@/_src/shared/ui/components/logo";
 import { GameManagementBar } from "./game-management-bar";
 import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
+
+if (typeof window !== "undefined") {
+	scan({
+		enabled: true,
+		log: true, // logs render info to console (default: false)
+	});
+}
 
 type Params = Promise<{ id: string }>;
 interface PageProps {
