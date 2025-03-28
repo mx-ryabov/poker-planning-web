@@ -28,8 +28,6 @@ export function GameStateProvider({
 	useEffect(() => {
 		const sotreState = storeRef.current?.getState();
 		if (sotreState) {
-			console.log("STATE REVALIDATION!", initialAsyncState);
-
 			sotreState.revalidateAsyncState(initialAsyncState);
 		}
 	}, [storeRef, initialAsyncState]);
