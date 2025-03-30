@@ -83,5 +83,17 @@ export function createGameAsyncStateSliceCreator(
 				state.state = updatedState;
 			});
 		},
+		startVoting: (ticketId?: string) => {
+			set((state) => {
+				state.state.game.votingProcess.isActive = true;
+				state.state.game.votingProcess.ticketId = ticketId || null;
+			});
+		},
+		finishVoting: () => {
+			set((state) => {
+				state.state.game.votingProcess.isActive = false;
+				state.state.game.votingProcess.ticketId = null;
+			});
+		},
 	});
 }

@@ -18,7 +18,7 @@ type BaseButtonProps = { isPending?: boolean } & ButtonStylesProps &
 	ButtonProps &
 	HTMLAttributes<HTMLButtonElement>;
 
-type LabeledButtonProps = BaseButtonProps & {
+export type LabeledButtonProps = BaseButtonProps & {
 	title: string;
 	contentLeft?: ReactNode;
 	contentRight?: ReactNode;
@@ -53,27 +53,6 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			isDisabled: props.isDisabled || isPending,
 		});
 		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
-
-		if (isPending)
-			console.log(
-				buttonStyles({
-					size,
-					variant,
-					form: "default",
-					excludeFromFocus: props.excludeFromTabOrder,
-					// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
-					isPressed:
-						isPressed ||
-						(
-							props as LabeledButtonProps & {
-								isPressed?: boolean;
-							}
-						).isPressed,
-					isFocused: isFocusVisible,
-					isHovered,
-					isDisabled: props.isDisabled || isPending,
-				}),
-			);
 
 		return (
 			<button

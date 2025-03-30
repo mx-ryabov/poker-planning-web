@@ -23,6 +23,8 @@ export type GameAsyncSlice = {
 	updateTicket: (ticketId: string, data: Partial<UpdateGameTicket>) => void;
 	removeTicket: (ticketId: string) => void;
 	revalidateAsyncState: (updatedState: GameAsyncState) => void;
+	startVoting: (ticketId?: string) => void;
+	finishVoting: () => void;
 };
 
 export type GameStateStore = GameAsyncSlice & GameManagementSlice;

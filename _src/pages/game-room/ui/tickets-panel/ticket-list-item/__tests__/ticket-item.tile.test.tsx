@@ -27,7 +27,7 @@ describe("TicketItemTile component", () => {
 		const { getByTestId } = renderComponent({
 			componentProps: { isEditable: true },
 		});
-		expect(getByTestId("vote-button")).toBeInTheDocument();
+		expect(getByTestId("vote-button-test-ticket-id")).toBeInTheDocument();
 	});
 
 	test("doesn't have the vote button when not editable", async () => {

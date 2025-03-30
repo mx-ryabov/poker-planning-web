@@ -2,8 +2,7 @@ import { GameTicket } from "@/_src/shared/api/game-api";
 import { memo } from "react";
 import { TicketItemTile } from "./components/ticket-item-tile";
 import { TicketItemFullView } from "./components/ticket-item-full-view";
-import { useTicketDelete } from "../../../model";
-import { useIsTicketEditable } from "./state/use-is-ticket-editable";
+import { useTicketDelete, useIsTicketEditable } from "../../../model";
 
 type Props = {
 	data: GameTicket;
@@ -16,7 +15,6 @@ export const TicketListItem = memo((props: Props) => {
 	const { data, isOpen, onOpen, onClose } = props;
 
 	const isEditable = useIsTicketEditable();
-	console.log(isEditable);
 
 	const { isDeleting, deleteTicket } = useTicketDelete({ ticket: data });
 

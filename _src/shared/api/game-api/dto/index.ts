@@ -8,3 +8,4 @@ export * from "./game-voting-process";
 export * from "./get-game-by-id-response";
 export * from "./participant-role";
 export * from "./update-ticket-for-game-request";
+export * from "./game-vote";

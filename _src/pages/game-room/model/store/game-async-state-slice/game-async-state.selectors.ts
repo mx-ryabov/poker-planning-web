@@ -39,3 +39,12 @@ export const selectCurrentRole = (state: GameStateStore) =>
 
 export const selectCurrentGameId = (state: GameStateStore) =>
 	state.state.game.id;
+
+export const selectCurrentVotingSystem = (state: GameStateStore) =>
+	state.state.game.votingSystem;
+
+export const selectVotingSystemVotes = (state: GameStateStore) =>
+	state.state.game.votingSystem.votes.toSorted((a, b) => a.order - b.order);
+
+export const selectVotingProcess = (state: GameStateStore) =>
+	state.state.game.votingProcess;

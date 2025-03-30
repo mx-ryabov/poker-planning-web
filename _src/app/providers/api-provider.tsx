@@ -8,6 +8,8 @@ import {
 	getGameById,
 	joinAsGuest,
 	createGameAsGuest,
+	startVoting,
+	finishVoting,
 } from "../../shared/api/game-api/server-actions";
 
 export const API = {
@@ -15,6 +17,8 @@ export const API = {
 		getGameById,
 		joinAsGuest,
 		createGameAsGuest,
+		startVoting,
+		finishVoting,
 		ticket: { createTicket, updateTicketById, deleteTicketById },
 		participant: {
 			getCurrentParticipant,

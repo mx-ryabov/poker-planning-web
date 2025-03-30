@@ -1,6 +1,5 @@
 import { GameTicket } from "@/_src/shared/api/game-api";
-import { Button, ButtonSquare } from "@/_src/shared/ui/components/button";
-import { CardsIcon } from "@/_src/shared/ui/components/icon/svg/cards.icon";
+import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { MinusIcon } from "@/_src/shared/ui/components/icon/svg/minus.icon";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
 import { Controller, useForm } from "react-hook-form";
@@ -16,6 +15,7 @@ import {
 	TicketItemStateSchema,
 	useTicketUpdate,
 } from "@/_src/pages/game-room/model";
+import { VoteButton } from "../../../vote-button";
 
 type Props = {
 	data: GameTicket;
@@ -107,15 +107,17 @@ export function TicketItemFullView(props: Props) {
 						/>
 					)}
 				/>
-				{isEditable && (
-					<Button
-						title="Vote"
-						contentLeft={<CardsIcon size={18} />}
-						size="small"
-						variant="grayed-out"
-						className="text-primary-500 rounded-lg drop-shadow-none"
-					/>
-				)}
+				<VoteButton
+					title={{
+						notStarted: "Vote",
+						currentInProgress: "Finish Voting",
+						anotherInProgress: "Voting...",
+					}}
+					ticketId={data.id}
+					size="small"
+					variant="grayed-out"
+					className="text-primary-500 rounded-lg drop-shadow-none disabled:text-neutral-300"
+				/>
 			</div>
 
 			<div className="flex flex-col gap-1">

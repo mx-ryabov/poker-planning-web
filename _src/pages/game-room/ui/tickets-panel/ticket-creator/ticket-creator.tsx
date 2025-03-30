@@ -48,7 +48,7 @@ export function TicketCreator({ className, onSubmit }: TicketCreatorProps) {
 	return (
 		<div
 			className={twMerge(
-				"flex h-[58px] flex-row items-center justify-end gap-2",
+				"flex h-[58px] flex-row items-end justify-end gap-2",
 				cn,
 			)}
 		>
@@ -75,7 +75,7 @@ const openerStyles = cva("shrink-0 transition-all duration-150 ease-linear", {
 	variants: {
 		isOpened: {
 			true: [
-				"-translate-y-14 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
+				"-translate-y-17 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
 			],
 			false: ["shadow-lg shadow-primary-200"],
 		},

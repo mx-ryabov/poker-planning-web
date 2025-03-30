@@ -8,6 +8,7 @@ import { ReactNode, useCallback } from "react";
 import { TicketItemMenu } from "./ticket-item-menu";
 import { InlineEditableTextField } from "@/_src/shared/ui/components/inline-editable-fields";
 import { useTicketUpdate } from "@/_src/pages/game-room/model";
+import { VoteButton } from "../../../vote-button";
 
 type Props = {
 	data: GameTicket;
@@ -50,16 +51,18 @@ export function TicketItemTile(props: Props) {
 				</div>
 			</div>
 			<div className="flex flex-row items-center justify-between gap-2">
-				{isEditable && (
-					<Button
-						title="Vote"
-						contentLeft={<CardsIcon size={18} />}
-						size="small"
-						variant="grayed-out"
-						data-testid="vote-button"
-						className="text-primary-500 rounded-lg drop-shadow-none"
-					/>
-				)}
+				<VoteButton
+					title={{
+						notStarted: "Vote",
+						currentInProgress: "Finish Voting",
+						anotherInProgress: "Voting...",
+					}}
+					ticketId={data.id}
+					size="small"
+					variant="grayed-out"
+					data-testid={`vote-button-${data.id}`}
+					className="text-primary-500 rounded-lg drop-shadow-none disabled:text-neutral-300"
+				/>
 				<p className="flex-1 truncate text-neutral-700">{data.title}</p>
 				<div className="flex w-12 justify-end">
 					<InlineEditableTextField

@@ -137,6 +137,35 @@ export async function deleteTicketById(
 	}
 }
 
+export async function startVoting(
+	gameId: string,
+	ticketId?: string,
+): Promise<void> {
+	const res = await appFetchPut(`/games/${gameId}/start-voting`, {
+		ticketId,
+	});
+
+	if (res.ok) {
+		return;
+	} else {
+		throw new Error(
+			`Start Voting by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function finishVoting(gameId: string): Promise<void> {
+	const res = await appFetchPut(`/games/${gameId}/finish-voting`, {});
+
+	if (res.ok) {
+		return;
+	} else {
+		throw new Error(
+			`Finish Voting by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
 export async function getToken() {
 	const cookieStore = await cookies();
 	return cookieStore.get("token")?.value;
