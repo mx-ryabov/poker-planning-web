@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand";
 import { GameAsyncState } from "./game-async-state.model";
 import { GameAsyncSlice, GameStateStore } from "../game-state-store.model";
-import { GameTicket } from "@/_src/shared/api/game-api";
+import { GameTicket, GameVote } from "@/_src/shared/api/game-api";
 import { UpdateGameTicket } from "./game-async-state.dto";
 
 export function createGameAsyncStateSliceCreator(
@@ -93,6 +93,11 @@ export function createGameAsyncStateSliceCreator(
 			set((state) => {
 				state.state.game.votingProcess.isActive = false;
 				state.state.game.votingProcess.ticketId = null;
+			});
+		},
+		changeVote: (vote: GameVote | null) => {
+			set((state) => {
+				state.state.currentParticipant.vote = vote;
 			});
 		},
 	});

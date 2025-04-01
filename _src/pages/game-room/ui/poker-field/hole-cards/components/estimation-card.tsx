@@ -3,12 +3,14 @@ import { cva } from "class-variance-authority";
 type Props = {
 	rank: string;
 	suit: string;
-	isActive: boolean;
+	isSelected: boolean;
+	isHovered: boolean;
+	isFocusVisible: boolean;
 };
 export function EstimationCard(props: Props) {
-	const { rank, suit, isActive } = props;
+	const { rank, suit, isSelected, isHovered, isFocusVisible } = props;
 	return (
-		<div className={styles({ isActive })}>
+		<div className={styles({ isSelected, isHovered, isFocusVisible })}>
 			<div className="absolute top-1 left-1 w-14">{rank}</div>
 			<div className="absolute top-1/2 left-1/2 -translate-1/2">
 				{suit}
@@ -21,15 +23,22 @@ export function EstimationCard(props: Props) {
 const styles = cva(
 	[
 		"h-19 w-15 relative",
-		"rounded-lg border border-neutral-100",
-		"hover:border-primary-300 hover:-translate-y-1",
+		"rounded-lg border-2 border-neutral-100",
 		"text-base text-neutral-500",
 		"cursor-pointer transition-all",
 	],
 	{
 		variants: {
-			isActive: {
-				true: "",
+			isSelected: {
+				true: "-translate-y-2 border-primary-500",
+				false: "",
+			},
+			isHovered: {
+				true: "border-primary-300 -translate-y-1",
+				false: "",
+			},
+			isFocusVisible: {
+				true: "border-primary-300 -translate-y-1",
 				false: "",
 			},
 		},

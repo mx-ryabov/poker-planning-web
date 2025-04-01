@@ -47,6 +47,8 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 		return token;
 	};
 
+	console.log(currentParticipant);
+
 	return (
 		<GameRoomPageProvider
 			accessTokenFactory={accessTokenFactory}

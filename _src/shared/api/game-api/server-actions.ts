@@ -166,6 +166,21 @@ export async function finishVoting(gameId: string): Promise<void> {
 	}
 }
 
+export async function vote(
+	gameId: string,
+	voteId: string | null,
+): Promise<void> {
+	const res = await appFetchPut(`/games/${gameId}/vote`, { voteId });
+
+	if (res.ok) {
+		return;
+	} else {
+		throw new Error(
+			`Vote by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
 export async function getToken() {
 	const cookieStore = await cookies();
 	return cookieStore.get("token")?.value;

@@ -1,4 +1,8 @@
-import { GameParticipant, GameTicket } from "@/_src/shared/api/game-api";
+import {
+	GameParticipant,
+	GameTicket,
+	GameVote,
+} from "@/_src/shared/api/game-api";
 import { GameAsyncState } from "./game-async-state-slice/game-async-state.model";
 import {
 	GameManagementTab,
@@ -25,6 +29,7 @@ export type GameAsyncSlice = {
 	revalidateAsyncState: (updatedState: GameAsyncState) => void;
 	startVoting: (ticketId?: string) => void;
 	finishVoting: () => void;
+	changeVote: (vote: GameVote | null) => void;
 };
 
 export type GameStateStore = GameAsyncSlice & GameManagementSlice;

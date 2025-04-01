@@ -29,6 +29,10 @@ function PokerFieldInner(props: Props) {
 				className={holeCardsContainerStyles({
 					isActive: votingProcess.isActive,
 				})}
+				onAnimationEnd={(e) => {
+					// TODO: unmount component when it's hidden (i.e. use animation keyframes and onAnimationEnd)
+					console.log(e);
+				}}
 			>
 				{holeCards}
 			</div>

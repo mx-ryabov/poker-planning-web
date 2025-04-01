@@ -9,13 +9,16 @@ export type UseVoteButtonProps = {
 	title: Record<VotingStatus, string>;
 	contentLeft?: Partial<Record<VotingStatus, ReactElement>>;
 	isFinishingAlwaysAllowed?: boolean;
-} & Omit<LabeledButtonProps, "title" | "isDisabled" | "contentLeft">;
+} & Omit<
+	LabeledButtonProps,
+	"title" | "isDisabled" | "contentLeft" | "isPending"
+>;
 
 export function useVoteButton(
 	state: UseVoteButtonStateProps,
 	props: UseVoteButtonProps,
 ): RequiredFields<LabeledButtonProps, "onPress" | "isDisabled"> {
-	const { votingStatus, startVoting, finishVoting } = state;
+	const { isPending, votingStatus, startVoting, finishVoting } = state;
 	const { isFinishingAlwaysAllowed, contentLeft, title, ...btnProps } = props;
 
 	const isDisabled =
@@ -37,6 +40,7 @@ export function useVoteButton(
 		title: titleInner,
 		isDisabled,
 		contentLeft: contentLeftInner,
+		isPending,
 		onPress,
 	};
 }
