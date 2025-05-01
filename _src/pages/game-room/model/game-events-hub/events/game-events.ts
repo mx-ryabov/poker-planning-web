@@ -1,4 +1,8 @@
-import { GameParticipant, GameTicket } from "@/_src/shared/api/game-api";
+import {
+	GameParticipant,
+	GameTicket,
+	GameVotingResult,
+} from "@/_src/shared/api/game-api";
 import { BaseEvent } from "./base-event";
 import { GameEventType } from "./event-type";
 
@@ -47,5 +51,32 @@ export class ReconnectedEvent extends BaseEvent<void> {
 export class DisconnectedEvent extends BaseEvent<Error | undefined> {
 	constructor(payload: Error | undefined) {
 		super(GameEventType.Disconnected, payload);
+	}
+}
+
+export class VotingStartedEvent extends BaseEvent<{ ticketId: string | null }> {
+	constructor(payload: { ticketId: string | null }) {
+		super(GameEventType.VotingStarted, payload);
+	}
+}
+
+export class CardsRevealedEvent extends BaseEvent<void> {
+	constructor() {
+		super(GameEventType.CardsRevealed);
+	}
+}
+
+export class VotingFinishedEvent extends BaseEvent<GameVotingResult> {
+	constructor(votingResult: GameVotingResult) {
+		super(GameEventType.VotingFinished, votingResult);
+	}
+}
+
+export class ParticipantVotedEvent extends BaseEvent<{
+	participantId: string;
+	voteId: string | null;
+}> {
+	constructor(payload: { participantId: string; voteId: string | null }) {
+		super(GameEventType.ParticipantVoted, payload);
 	}
 }

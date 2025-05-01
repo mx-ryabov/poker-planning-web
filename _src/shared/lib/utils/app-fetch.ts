@@ -6,12 +6,16 @@ const HOST = process.env.NEXT_PUBLIC_HOST;
 export const appFetchGet = async <TQuery extends Record<string, string>>(
 	path: string,
 	query?: TQuery,
+	options?: { tags?: string[] },
 ): Promise<Response> => {
 	const params = new URLSearchParams(query);
 	const headers = await getHeaders();
 	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "GET",
 		headers,
+		next: {
+			tags: options?.tags,
+		},
 	});
 };
 

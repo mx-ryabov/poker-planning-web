@@ -4,37 +4,53 @@ import { selectVotingProcess, useGameState } from "../../model";
 import { ReactElement } from "react";
 import { PokerTable } from "./poker-table";
 import { HoleCards } from "./hole-cards";
+import { GameVotingStatus } from "@/_src/shared/api";
+import { VotingResults } from "./voting-results";
+import { PokerFieldProvider } from "./poker-field-provider";
 
 export function PokerField() {
 	return (
-		<PokerFieldInner
-			pokerTable={<PokerTable />}
-			holeCards={<HoleCards />}
-		/>
+		<PokerFieldProvider>
+			<PokerFieldInner
+				pokerTable={<PokerTable />}
+				holeCards={<HoleCards />}
+				votingResults={<VotingResults />}
+			/>
+		</PokerFieldProvider>
 	);
 }
 
 type Props = {
 	pokerTable: ReactElement;
 	holeCards: ReactElement;
+	votingResults: ReactElement;
 };
 function PokerFieldInner(props: Props) {
-	const { pokerTable, holeCards } = props;
+	const { pokerTable, holeCards, votingResults } = props;
 	const votingProcess = useGameState(selectVotingProcess);
 
 	return (
 		<div className="flex h-full w-full flex-col">
-			<div className="h-full w-full">{pokerTable}</div>
-			<div
-				className={holeCardsContainerStyles({
-					isActive: votingProcess.isActive,
-				})}
-				onAnimationEnd={(e) => {
-					// TODO: unmount component when it's hidden (i.e. use animation keyframes and onAnimationEnd)
-					console.log(e);
-				}}
-			>
-				{holeCards}
+			<div className="w-full-h-full flex-1 shrink">{pokerTable}</div>
+			<div>
+				{votingProcess.status === GameVotingStatus.InProgress && (
+					<div
+						className={holeCardsContainerStyles({
+							isActive:
+								votingProcess.status ===
+								GameVotingStatus.InProgress,
+						})}
+						onAnimationEnd={(e) => {
+							// TODO: unmount component when it's hidden (i.e. use animation keyframes and onAnimationEnd)
+							console.log(e);
+						}}
+					>
+						{holeCards}
+					</div>
+				)}
+				{votingProcess.status === GameVotingStatus.Revealed && (
+					<div>{votingResults}</div>
+				)}
 			</div>
 		</div>
 	);

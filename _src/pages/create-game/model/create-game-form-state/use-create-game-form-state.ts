@@ -32,7 +32,7 @@ const CreateGameFormSchema = z.object({
 export type CreateGameFormFormState = z.infer<typeof CreateGameFormSchema>;
 
 export type UseCreateGameFormStateProps = {
-	onSubmitAction: (_formState: CreateGameFormFormState) => Promise<string>;
+	onSubmitAction: (_formState: CreateGameFormFormState) => Promise<void>;
 };
 
 export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
@@ -50,7 +50,7 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 	});
 
 	const formActionHandler = async (
-		_prevState: string,
+		error: string | undefined,
 		formData: FormData,
 	) => {
 		const data = Object.fromEntries(formData);
@@ -60,13 +60,17 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 		});
 
 		if (parsed.success) {
-			return await onSubmitAction(parsed.data);
+			await onSubmitAction(parsed.data);
+			return "";
 		}
 
 		return parsed.error.message;
 	};
 
-	const [, formAction, isPending] = useActionState(formActionHandler, "");
+	const [error, formAction, isPending] = useActionState(
+		formActionHandler,
+		undefined,
+	);
 
 	return { clientFormMethods: methods, action: formAction, isPending };
 }

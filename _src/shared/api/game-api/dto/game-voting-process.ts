@@ -1,4 +1,7 @@
+import { GameTicket } from "./game-ticket";
+import { GameVotingStatus } from "./game-voting-status";
+
 export type GameVotingProcess = {
-	isActive: boolean;
-	ticketId: string | null;
+	status: GameVotingStatus;
+	ticket: GameTicket | null;
 };

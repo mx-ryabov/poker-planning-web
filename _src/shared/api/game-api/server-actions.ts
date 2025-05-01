@@ -7,6 +7,7 @@ import {
 	CreateTicketForGameRequest,
 	GameParticipant,
 	GameTicket,
+	GameVotingResult,
 } from "./dto";
 import { redirect } from "next/navigation";
 import {
@@ -17,6 +18,7 @@ import {
 } from "../../lib/utils/app-fetch";
 import { GetGameByIdResponse } from "./dto/get-game-by-id-response";
 import { UpdateTicketForGameRequest } from "./dto/update-ticket-for-game-request";
+import { revalidateTag } from "next/cache";
 
 export async function createGameAsGuest(request: CreateGameRequest) {
 	const res = await appFetchPost<CreateGameRequest>("/games", request);
@@ -29,12 +31,16 @@ export async function createGameAsGuest(request: CreateGameRequest) {
 		});
 		redirect(`/game/${data.id}`);
 	} else {
-		return `Game creation is failed. Status: ${res.status}. Message: ${res.statusText}`;
+		throw new Error(
+			`Game creation is failed. Status: ${res.status}. Message: ${res.statusText}`,
+		);
 	}
 }
 
 export async function getGameById(gameId: string) {
-	const res = await appFetchGet(`/games/${gameId}`);
+	const res = await appFetchGet(`/games/${gameId}`, undefined, {
+		tags: ["game-by-id"],
+	});
 
 	if (res.ok) {
 		const data: GetGameByIdResponse = await res.json();
@@ -139,7 +145,7 @@ export async function deleteTicketById(
 
 export async function startVoting(
 	gameId: string,
-	ticketId?: string,
+	ticketId: string | null,
 ): Promise<void> {
 	const res = await appFetchPut(`/games/${gameId}/start-voting`, {
 		ticketId,
@@ -154,16 +160,32 @@ export async function startVoting(
 	}
 }
 
-export async function finishVoting(gameId: string): Promise<void> {
-	const res = await appFetchPut(`/games/${gameId}/finish-voting`, {});
+export async function revealCards(gameId: string): Promise<void> {
+	const res = await appFetchPut(`/games/${gameId}/reveal-cards`, {});
 
 	if (res.ok) {
 		return;
 	} else {
 		throw new Error(
+			`Reveal Cards by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function finishVoting(gameId: string): Promise<GameVotingResult> {
+	const res = await appFetchPut(`/games/${gameId}/finish-voting`, {});
+
+	if (res.ok) {
+		return await res.json();
+	} else {
+		throw new Error(
 			`Finish Voting by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,
 		);
 	}
+}
+
+export async function revalidateGame() {
+	revalidateTag("game-by-id");
 }
 
 export async function vote(

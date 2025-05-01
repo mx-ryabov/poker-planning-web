@@ -1,63 +1,17 @@
-import { ParticipantRole } from "@/_src/shared/api";
-import {
-	selectCurrentGameId,
-	selectCurrentRole,
-	useGameState,
-} from "../../model";
-import { TicketCreator, TicketCreatorSubmitActionData } from "./ticket-creator";
-import { useCallback, useRef, useState } from "react";
-import { TicketList } from "./ticket-list";
-import { TicketListItem } from "./ticket-list-item";
-import { TicketCreatorRenderFn } from "./ticket-creator/ticket-creator";
-import { useApi } from "@/_src/app";
+import { useRef } from "react";
+import { cva } from "class-variance-authority";
+import { usePermissions } from "../../model/game-role-management/use-permissions";
+import { TicketCreator, TicketList, TicketListItem } from "./components";
+import { useScrollToListBottom } from "./behavior";
+import { useTicketItemOpenerState } from "./state";
 
 export function TicketsPanel() {
-	const api = useApi();
+	const isCreationAllowed = usePermissions("CreateTicket");
+
 	const listRef = useRef<HTMLDivElement | null>(null);
-	const currentRole = useGameState(selectCurrentRole);
-	const gameId = useGameState(selectCurrentGameId);
-	const addTicketIfAbsent = useGameState((state) => state.addTicketIfAbsent);
+	const scrollToListBottom = useScrollToListBottom(listRef);
 
-	const scrollToListBottom = useCallback(() => {
-		const listEl = listRef.current;
-		if (listEl) {
-			listEl.scrollTo({
-				top: listEl.scrollHeight,
-				behavior: "smooth",
-			});
-		}
-	}, [listRef]);
-
-	const onTicketCreatorSubmit = useCallback(
-		async (data: TicketCreatorSubmitActionData) => {
-			try {
-				const resData = await api.game.ticket.createTicket(
-					gameId,
-					data,
-				);
-				addTicketIfAbsent(resData);
-				scrollToListBottom();
-			} catch (e: unknown) {
-				let error: string;
-				if (e instanceof Error) {
-					error = e.message;
-				}
-				error = String(e);
-				return { ok: false, error };
-			}
-
-			return { ok: true };
-		},
-		[gameId, addTicketIfAbsent, scrollToListBottom, api],
-	);
-
-	const ticketCreatorClassNameRenderer: TicketCreatorRenderFn = useCallback(
-		({ state }) =>
-			`${state === "button" ? "fixed" : "sticky"} bottom-0 right-0 max-w-full`,
-		[],
-	);
-
-	const [openedTicketId, setOpenedTicketId] = useState<string | null>(null);
+	const { checkIfOpened, onClose, onOpen } = useTicketItemOpenerState();
 
 	return (
 		<div className="relative flex h-full flex-col">
@@ -66,18 +20,27 @@ export function TicketsPanel() {
 					<TicketListItem
 						key={ticketItemData.id}
 						data={ticketItemData}
-						isOpen={openedTicketId === ticketItemData.id}
-						onOpen={setOpenedTicketId}
-						onClose={() => setOpenedTicketId(null)}
+						isOpen={checkIfOpened(ticketItemData.id)}
+						onClose={onClose}
+						onOpen={onOpen}
 					/>
 				)}
 			</TicketList>
-			{currentRole === ParticipantRole.Master && (
+			{isCreationAllowed && (
 				<TicketCreator
-					className={ticketCreatorClassNameRenderer}
-					onSubmit={onTicketCreatorSubmit}
+					className={ticketCreatorStyles}
+					onSubmitSucceed={scrollToListBottom}
 				/>
 			)}
 		</div>
 	);
 }
+
+const ticketCreatorStyles = cva("bottom-0 right-0 max-w-full", {
+	variants: {
+		state: {
+			button: "fixed",
+			form: "sticky",
+		},
+	},
+});

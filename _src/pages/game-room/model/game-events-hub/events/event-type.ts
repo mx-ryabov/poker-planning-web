@@ -7,4 +7,8 @@ export enum GameEventType {
 	Reconnecting = "Reconnecting",
 	Reconnected = "Reconnected",
 	Disconnected = "Disconnected",
+	VotingStarted = "VotingStarted",
+	CardsRevealed = "CardsRevealed",
+	VotingFinished = "VotingFinished",
+	ParticipantVoted = "ParticipantVoted",
 }

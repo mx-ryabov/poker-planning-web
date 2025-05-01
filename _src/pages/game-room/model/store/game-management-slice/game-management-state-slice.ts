@@ -17,6 +17,7 @@ export const createGameManagementSlice: StateCreator<
 	liveStatus: {
 		state: "connected",
 	},
+	openedTicketId: null,
 	setActiveTab: (tab: GameManagementTab | null) =>
 		set((state) => {
 			state.activeTab = tab;
@@ -28,6 +29,11 @@ export const createGameManagementSlice: StateCreator<
 			} else {
 				state.liveStatus = status;
 			}
+		});
+	},
+	setOpenedTicketId: (ticketId: string | null) => {
+		set((state) => {
+			state.openedTicketId = ticketId;
 		});
 	},
 });

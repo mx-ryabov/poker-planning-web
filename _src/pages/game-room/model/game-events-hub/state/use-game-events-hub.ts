@@ -6,14 +6,18 @@ import { HubConnectionBuilder } from "@microsoft/signalr/dist/esm/HubConnectionB
 import { HttpTransportType } from "@microsoft/signalr/dist/esm/ITransport";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+	CardsRevealedEvent,
 	DisconnectedEvent,
 	ParticipantJoinedEvent,
 	ParticipantLeftEvent,
+	ParticipantVotedEvent,
 	ReconnectedEvent,
 	ReconnectingEvent,
 	TicketAddedEvent,
 	TicketDeletedEvent,
 	TicketUpdatedEvent,
+	VotingFinishedEvent,
+	VotingStartedEvent,
 } from "../events/game-events";
 import { GameEventType, GameEventTypeMap } from "../events";
 import {
@@ -71,7 +75,7 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 			}
 			setConnection(null);
 		};
-	}, [setConnection, gameId, accessTokenFactory, gameEventTarget]);
+	}, [setConnection, gameId, gameEventTarget]);
 
 	useEffect(() => {
 		if (!connection || connection.state !== HubConnectionState.Connected)
@@ -106,6 +110,21 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		});
 		connection.on(GameEventType.TicketDeleted, (data) => {
 			gameEventTarget.dispatchEvent(new TicketDeletedEvent(data));
+		});
+
+		connection.on(GameEventType.VotingStarted, (data) => {
+			gameEventTarget.dispatchEvent(new VotingStartedEvent(data));
+		});
+		connection.on(GameEventType.CardsRevealed, () => {
+			gameEventTarget.dispatchEvent(new CardsRevealedEvent());
+		});
+		connection.on(GameEventType.VotingFinished, (votingResult) => {
+			gameEventTarget.dispatchEvent(
+				new VotingFinishedEvent(votingResult),
+			);
+		});
+		connection.on(GameEventType.ParticipantVoted, (data) => {
+			gameEventTarget.dispatchEvent(new ParticipantVotedEvent(data));
 		});
 	}, [connection, gameEventTarget]);
 

@@ -4,7 +4,7 @@ import { z } from "zod";
 type UseMutateProps<TVariables = void, TData = unknown> = {
 	mutateFn: (variables: TVariables) => Promise<TData>;
 	onMutate?: (variables: TVariables) => void;
-	onSuccess?: (data: TData) => void;
+	onSuccess?: (data: TData, variables: TVariables) => void;
 	onError?: (error: Error, variables: TVariables) => void;
 	validationSchema?: z.ZodSchema<TVariables>;
 };
@@ -44,7 +44,7 @@ export function useMutation<TVariables = void, TData = unknown>(
 					try {
 						if (onMutate) onMutate(parsedData);
 						const mutatedData = await mutateFn(parsedData);
-						if (onSuccess) onSuccess(mutatedData);
+						if (onSuccess) onSuccess(mutatedData, variables);
 					} catch (e: unknown) {
 						const error =
 							e instanceof Error ? e : new Error(String(e));

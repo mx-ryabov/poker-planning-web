@@ -9,3 +9,6 @@ export * from "./get-game-by-id-response";
 export * from "./participant-role";
 export * from "./update-ticket-for-game-request";
 export * from "./game-vote";
+export * from "./game-voting-result";
+export * from "./game-voting-result-vote";
+export * from "./game-voting-status";
