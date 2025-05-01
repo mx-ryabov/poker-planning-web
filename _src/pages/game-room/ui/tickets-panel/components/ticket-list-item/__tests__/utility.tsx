@@ -1,16 +1,11 @@
-import { ApiFakeProvider, FakeApi } from "@/__mocks__/api-fake-provider";
-import { ConfirmationModalContext } from "@/_src/app";
+import { FakeApi } from "@/__mocks__/api-fake-provider";
 import { ConfirmationModalState } from "@/_src/app/modals";
+import { GameRoomFakeProviderWrapper } from "@/_src/pages/game-room/__mocks__";
 import {
 	generateGame,
 	generateParticipant,
 } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
-import {
-	GameStateProvider,
-	VotingAsyncStateProvider,
-} from "@/_src/pages/game-room/model";
 import { ParticipantRole } from "@/_src/shared/api/game-api";
-import { ReactNode } from "react";
 import { vi } from "vitest";
 
 export type TicketItemWrapperProps = {
@@ -23,26 +18,14 @@ export function buildTicketItemWrapper({
 	openModalFn = vi.fn(),
 	apiFake,
 }: TicketItemWrapperProps) {
-	return ({ children }: { children: ReactNode }) => {
-		return (
-			<ApiFakeProvider fakeApi={apiFake}>
-				<ConfirmationModalContext.Provider
-					value={{ open: openModalFn }}
-				>
-					<GameStateProvider
-						initialAsyncState={{
-							game: generateGame({ id: "test-game-id" }),
-							currentParticipant: generateParticipant({
-								role: currentRole,
-							}),
-						}}
-					>
-						<VotingAsyncStateProvider>
-							{children}
-						</VotingAsyncStateProvider>
-					</GameStateProvider>
-				</ConfirmationModalContext.Provider>
-			</ApiFakeProvider>
-		);
-	};
+	return GameRoomFakeProviderWrapper({
+		apiProps: apiFake,
+		confirmationModalContextProps: { open: openModalFn },
+		gameStateProps: {
+			game: generateGame({ id: "test-game-id" }),
+			currentParticipant: generateParticipant({
+				role: currentRole,
+			}),
+		},
+	});
 }

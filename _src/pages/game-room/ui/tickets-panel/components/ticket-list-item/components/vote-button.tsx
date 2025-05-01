@@ -33,6 +33,7 @@ export function VoteButton({ ticket }: Props) {
 				icon={CardsIcon}
 				variant="outline"
 				className="border-neutral-100 drop-shadow-none"
+				data-testid="vote-button-test-ticket-id"
 				size="small"
 				onPress={onPress}
 			/>

@@ -12,7 +12,7 @@ export interface VotingState {
 	isFinishVotingPending: boolean;
 }
 
-const VotingContext = createContext<VotingState | null>(null);
+export const VotingContext = createContext<VotingState | null>(null);
 
 type VotingProviderProps = {
 	children: ReactNode;

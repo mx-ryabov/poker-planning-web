@@ -5,12 +5,20 @@ import { test, describe, expect, vi, beforeEach, afterEach } from "vitest";
 import { act, render, waitFor, within } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { TicketCreator, TicketCreatorProps } from "../ticket-creator";
-import { TicketType } from "@/_src/shared/api/game-api/dto";
+import { GameTicket, TicketType } from "@/_src/shared/api/game-api/dto";
+import {
+	GameRoomFakeProviderWrapper,
+	GameRoomFakeProviderWrapperProps,
+} from "@/_src/pages/game-room/__mocks__";
+import { generateTicket } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 
 function renderComponent({
 	onSubmitSucceed = vi.fn(),
-}: Partial<TicketCreatorProps>) {
-	return render(<TicketCreator onSubmitSucceed={onSubmitSucceed} />);
+	...wrapperProps
+}: Partial<TicketCreatorProps> & GameRoomFakeProviderWrapperProps) {
+	return render(<TicketCreator onSubmitSucceed={onSubmitSucceed} />, {
+		wrapper: GameRoomFakeProviderWrapper(wrapperProps),
+	});
 }
 
 describe("Ticket Creator", () => {
@@ -86,7 +94,7 @@ describe("Ticket Creator", () => {
 
 	describe("Form Interaction", () => {
 		test("has ticket type selector and text field when empty", async () => {
-			const { user, getByRole, getByTestId } = renderComponent({});
+			const { user, getByTestId } = renderComponent({});
 
 			const formToggler = getByTestId("ticket-creator-toggler");
 			await user.click(formToggler);
@@ -128,9 +136,15 @@ describe("Ticket Creator", () => {
 		});
 
 		test("submits a form data when valid and the submit button is pressed", async () => {
-			const onSubmitFn = vi.fn().mockReturnValue({ ok: true });
+			const onSubmitSucceedFn = vi.fn();
+			const createTicketFn = vi.fn();
 			const { user, getByRole, getByTestId, getAllByRole } =
-				renderComponent({ onSubmitSucceed: onSubmitFn });
+				renderComponent({
+					onSubmitSucceed: onSubmitSucceedFn,
+					apiProps: {
+						game: { ticket: { createTicket: createTicketFn } },
+					},
+				});
 
 			const formToggler = getByTestId("ticket-creator-toggler");
 			await user.click(formToggler);
@@ -147,16 +161,23 @@ describe("Ticket Creator", () => {
 			const submitBtn = getByTestId("ticket-creator-submit");
 			await user.click(submitBtn);
 
-			expect(onSubmitFn).toHaveBeenNthCalledWith(1, {
-				type: TicketType.Task,
+			expect(onSubmitSucceedFn).toHaveBeenCalledOnce();
+			expect(createTicketFn).toHaveBeenNthCalledWith(1, "test-game-id", {
 				title: "ticket name",
+				type: TicketType.Task,
 			});
 		});
 
 		test("submits a form data when valid, the text field is focused and Enter is pressed", async () => {
-			const onSubmitFn = vi.fn().mockReturnValue({ ok: true });
-			const { user, getByRole, getByTestId, getAllByRole, debug } =
-				renderComponent({ onSubmitSucceed: onSubmitFn });
+			const onSubmitSucceedFn = vi.fn();
+			const createTicketFn = vi.fn();
+			const { user, getByRole, getByTestId, getAllByRole } =
+				renderComponent({
+					onSubmitSucceed: onSubmitSucceedFn,
+					apiProps: {
+						game: { ticket: { createTicket: createTicketFn } },
+					},
+				});
 
 			const formToggler = getByTestId("ticket-creator-toggler");
 			await user.click(formToggler);
@@ -167,32 +188,35 @@ describe("Ticket Creator", () => {
 			const types = getAllByRole("menuitemradio");
 			await user.click(types[1]);
 
-			debug();
 			const textField = getByRole("textbox");
 			await user.type(textField, "ticket name");
 
 			await user.keyboard("[Enter]");
 
-			expect(onSubmitFn).toHaveBeenNthCalledWith(1, {
-				type: TicketType.Task,
+			expect(onSubmitSucceedFn).toHaveBeenCalledOnce();
+			expect(createTicketFn).toHaveBeenNthCalledWith(1, "test-game-id", {
 				title: "ticket name",
+				type: TicketType.Task,
 			});
 		});
 	});
 
 	describe("Loading State Handling", () => {
 		test("disables the text field and shows pending state in the submit button when the form submitting", async () => {
-			const onSubmitFn = vi.fn(
-				async (): Promise<{ ok: boolean; error?: string }> => {
+			const createTicketFn = vi.fn(
+				async (gameId, ticketData): Promise<GameTicket> => {
 					return new Promise((resolve) => {
 						setTimeout(() => {
-							resolve({ ok: true });
+							resolve(generateTicket({ ...ticketData }));
 						}, 1000);
 					});
 				},
 			);
 			const { user, getByRole, getByTestId } = renderComponent({
-				onSubmitSucceed: onSubmitFn,
+				onSubmitSucceed: vi.fn(),
+				apiProps: {
+					game: { ticket: { createTicket: createTicketFn } },
+				},
 			});
 
 			const formToggler = getByTestId("ticket-creator-toggler");
@@ -211,12 +235,9 @@ describe("Ticket Creator", () => {
 
 	describe("Validation Handling", () => {
 		test("do nothing if the text field is empty and Enter pressed", async () => {
-			const onSubmitFn = vi.fn(async () => ({
-				ok: false,
-				error: "Server Error",
-			}));
+			const onSubmitSucceedFn = vi.fn();
 			const { user, getByTestId } = renderComponent({
-				onSubmitSucceed: onSubmitFn,
+				onSubmitSucceed: onSubmitSucceedFn,
 			});
 
 			const formToggler = getByTestId("ticket-creator-toggler");
@@ -224,7 +245,7 @@ describe("Ticket Creator", () => {
 
 			await user.keyboard("[Enter]");
 
-			expect(onSubmitFn).toHaveBeenCalledTimes(0);
+			expect(onSubmitSucceedFn).toHaveBeenCalledTimes(0);
 		});
 
 		test("shows a vlidation error when the text field is empty and dirty", async () => {
@@ -243,12 +264,14 @@ describe("Ticket Creator", () => {
 		});
 
 		test("shows a vlidation error when it's returned from the server", async () => {
-			const onSubmitFn = vi.fn(async () => ({
-				ok: false,
-				error: "Server Error",
-			}));
+			const createTicketFn = vi.fn(async () => {
+				throw new Error("Server Error");
+			});
 			const { user, getByRole, getByTestId } = renderComponent({
-				onSubmitSucceed: onSubmitFn,
+				onSubmitSucceed: vi.fn(),
+				apiProps: {
+					game: { ticket: { createTicket: createTicketFn } },
+				},
 			});
 
 			const formToggler = getByTestId("ticket-creator-toggler");

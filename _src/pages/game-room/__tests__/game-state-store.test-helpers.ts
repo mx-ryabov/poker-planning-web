@@ -26,6 +26,7 @@ export function generateParticipant(
 		userId: uuidv4(),
 		role: ParticipantRole.VotingMember,
 		...overrideParticipant,
+		vote: overrideParticipant.vote || null,
 	};
 }
 

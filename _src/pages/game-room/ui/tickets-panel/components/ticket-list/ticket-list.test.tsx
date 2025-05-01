@@ -3,53 +3,16 @@ import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { TicketList } from "../ticket-list";
 import { TicketListItem } from "../ticket-list-item";
-import { createGameStateStore } from "@/_src/pages/game-room/model";
 import {
 	generateGame,
 	generateParticipant,
 	generateTicket,
 } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
-import { GameStateCotnext } from "../../../model/store/game-state-context";
-import { AppProvider } from "@/_src/app";
-
-function renderComponent(props: {
-	hasTickets: boolean;
-	role: ParticipantRole;
-}) {
-	const { hasTickets, role } = props;
-	const gameStateStore = createGameStateStore({
-		game: generateGame({
-			tickets: hasTickets
-				? [
-						generateTicket({ title: "Ticket Name" }),
-						generateTicket({ title: "Ticket Name 2" }),
-						generateTicket({ title: "Ticket Name 3" }),
-						generateTicket({ title: "Ticket Name 4" }),
-					]
-				: [],
-		}),
-		currentParticipant: generateParticipant({ role }),
-	});
-
-	return render(
-		<AppProvider>
-			<GameStateCotnext.Provider value={gameStateStore}>
-				<TicketList>
-					{(ticketItemData) => (
-						<TicketListItem
-							key={ticketItemData.id}
-							isOpen={false}
-							onOpen={vi.fn()}
-							data={ticketItemData}
-							onClose={vi.fn()}
-						/>
-					)}
-				</TicketList>
-			</GameStateCotnext.Provider>
-		</AppProvider>,
-	);
-}
+import {
+	GameRoomFakeProviderWrapper,
+	GameRoomFakeProviderWrapperProps,
+} from "@/_src/pages/game-room/__mocks__";
 
 describe("Ticket List", () => {
 	test("renders successfully", async () => {
@@ -107,3 +70,44 @@ describe("Ticket List", () => {
 		expect(results).toHaveNoViolations();
 	});
 });
+
+function renderComponent(
+	props: {
+		hasTickets: boolean;
+		role: ParticipantRole;
+	} & GameRoomFakeProviderWrapperProps,
+) {
+	const { hasTickets, role, ...wrapperProps } = props;
+
+	return render(
+		<TicketList>
+			{(ticketItemData) => (
+				<TicketListItem
+					key={ticketItemData.id}
+					isOpen={false}
+					onOpen={vi.fn()}
+					data={ticketItemData}
+					onClose={vi.fn()}
+				/>
+			)}
+		</TicketList>,
+		{
+			wrapper: GameRoomFakeProviderWrapper({
+				...wrapperProps,
+				gameStateProps: {
+					game: generateGame({
+						tickets: hasTickets
+							? [
+									generateTicket({ title: "Ticket Name" }),
+									generateTicket({ title: "Ticket Name 2" }),
+									generateTicket({ title: "Ticket Name 3" }),
+									generateTicket({ title: "Ticket Name 4" }),
+								]
+							: [],
+					}),
+					currentParticipant: generateParticipant({ role }),
+				},
+			}),
+		},
+	);
+}

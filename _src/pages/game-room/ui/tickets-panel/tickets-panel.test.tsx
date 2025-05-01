@@ -20,39 +20,7 @@ import { TicketsPanel } from "./tickets-panel";
 import { GameStateCotnext } from "../../model/store/game-state-context";
 import { AppProvider } from "@/_src/app";
 import { ApiFakeProvider } from "@/__mocks__/api-fake-provider";
-
-const createTicket = vi.fn(
-	async (gameId: string, data: CreateTicketForGameRequest) => {
-		return generateTicket({ ...data });
-	},
-);
-
-function renderComponent() {
-	const gameStateStore = createGameStateStore({
-		game: generateGame({
-			id: "test-game-id",
-			tickets: [
-				generateTicket({ title: "Ticket Name" }),
-				generateTicket({ title: "Ticket Name 2" }),
-				generateTicket({ title: "Ticket Name 3" }),
-				generateTicket({ title: "Ticket Name 4" }),
-			],
-		}),
-		currentParticipant: generateParticipant({
-			role: ParticipantRole.Master,
-		}),
-	});
-
-	return render(
-		<AppProvider>
-			<ApiFakeProvider fakeApi={{ game: { ticket: { createTicket } } }}>
-				<GameStateCotnext.Provider value={gameStateStore}>
-					<TicketsPanel />
-				</GameStateCotnext.Provider>
-			</ApiFakeProvider>
-		</AppProvider>,
-	);
-}
+import { GameRoomFakeProviderWrapper } from "../../__mocks__";
 
 describe("Tickets Panel", () => {
 	test("renders succsesfully", async () => {
@@ -91,3 +59,33 @@ describe("Tickets Panel", () => {
 		expect(results).toHaveNoViolations();
 	});
 });
+
+const createTicket = vi.fn(
+	async (gameId: string, data: CreateTicketForGameRequest) => {
+		return generateTicket({ ...data });
+	},
+);
+
+function renderComponent() {
+	return render(<TicketsPanel />, {
+		wrapper: GameRoomFakeProviderWrapper({
+			apiProps: {
+				game: { ticket: { createTicket } },
+			},
+			gameStateProps: {
+				game: generateGame({
+					id: "test-game-id",
+					tickets: [
+						generateTicket({ title: "Ticket Name" }),
+						generateTicket({ title: "Ticket Name 2" }),
+						generateTicket({ title: "Ticket Name 3" }),
+						generateTicket({ title: "Ticket Name 4" }),
+					],
+				}),
+				currentParticipant: generateParticipant({
+					role: ParticipantRole.Master,
+				}),
+			},
+		}),
+	});
+}
