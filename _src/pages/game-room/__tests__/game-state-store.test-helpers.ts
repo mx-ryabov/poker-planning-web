@@ -1,6 +1,8 @@
 import {
 	GameParticipant,
 	GameTicket,
+	GameVotingResult,
+	GameVotingResultVote,
 	GetGameByIdResponse,
 	ParticipantRole,
 	TicketType,
@@ -41,6 +43,29 @@ export function generateTicket(
 		identifier: "TEST-1",
 		estimation: null,
 		...overrideTicket,
+	};
+}
+
+export function generateVotingResult(
+	overrideResult: Partial<GameVotingResult>,
+): GameVotingResult {
+	return {
+		id: uuidv4(),
+		ticketId: null,
+		createdAt: "date-time",
+		votes: [],
+		...overrideResult,
+	};
+}
+
+export function generateVotingResultVote(
+	overrideResultVote: Partial<GameVotingResultVote>,
+): GameVotingResultVote {
+	return {
+		id: uuidv4(),
+		vote: null,
+		participantId: "test-participant-id",
+		...overrideResultVote,
 	};
 }
 

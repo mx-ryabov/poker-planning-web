@@ -27,7 +27,7 @@ export function TicketItemTile(props: Props) {
 	return (
 		<div
 			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-100 p-2 transition-colors hover:border-neutral-200 hover:shadow-xs"
-			data-testid="ticket-list-item"
+			data-testid={`ticket-list-item-${data.id}`}
 			onClick={onContainerClick}
 		>
 			<div className="flex flex-row items-center justify-between">

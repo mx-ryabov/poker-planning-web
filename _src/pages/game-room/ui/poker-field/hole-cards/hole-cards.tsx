@@ -27,6 +27,7 @@ export function HoleCards() {
 						key={card.id}
 						id={card.id}
 						textValue={card.value}
+						data-testid={`card-${card.id}`}
 						className="outline-0"
 						aria-label={`Estimation Card with value = ${card.value}`}
 					>

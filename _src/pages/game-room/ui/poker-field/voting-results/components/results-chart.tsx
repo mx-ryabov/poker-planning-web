@@ -78,6 +78,7 @@ export function ResultsChart() {
 						},
 					],
 				}}
+				aria-label="Results chart"
 			/>
 			<ChartTooltip ref={chartTooltipRef} />
 

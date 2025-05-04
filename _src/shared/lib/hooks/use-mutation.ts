@@ -36,7 +36,8 @@ export function useMutation<TVariables = void, TData = unknown>(
 				const parsed = validationSchema.safeParse(variables);
 				isVarsValid = parsed.success;
 				if (parsed.success) parsedData = parsed.data;
-				if (!parsed.success) parsedError = parsed.error;
+				if (!parsed.success)
+					parsedError = new Error(parsed.error.errors[0].message);
 			}
 
 			if (isVarsValid) {
@@ -54,6 +55,7 @@ export function useMutation<TVariables = void, TData = unknown>(
 				});
 			} else {
 				setError(parsedError);
+				if (onError) onError(parsedError, variables);
 			}
 		},
 		[validationSchema, mutateFn, onError, onSuccess, onMutate],

@@ -31,7 +31,12 @@ function PokerFieldInner(props: Props) {
 
 	return (
 		<div className="flex h-full w-full flex-col">
-			<div className="w-full-h-full flex-1 shrink">{pokerTable}</div>
+			<div
+				className="w-full-h-full flex-1 shrink"
+				data-testid="poker-table-container"
+			>
+				{pokerTable}
+			</div>
 			<div>
 				{votingProcess.status === GameVotingStatus.InProgress && (
 					<div
@@ -44,12 +49,15 @@ function PokerFieldInner(props: Props) {
 							// TODO: unmount component when it's hidden (i.e. use animation keyframes and onAnimationEnd)
 							console.log(e);
 						}}
+						data-testid="hole-cards-container"
 					>
 						{holeCards}
 					</div>
 				)}
 				{votingProcess.status === GameVotingStatus.Revealed && (
-					<div>{votingResults}</div>
+					<div data-testid="voting-results-container">
+						{votingResults}
+					</div>
 				)}
 			</div>
 		</div>

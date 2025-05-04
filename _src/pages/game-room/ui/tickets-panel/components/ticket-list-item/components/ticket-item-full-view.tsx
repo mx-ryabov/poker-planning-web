@@ -40,7 +40,7 @@ export function TicketItemFullView(props: Props) {
 	return (
 		<div
 			className="flex w-full flex-col gap-4 rounded-xl border border-neutral-200 px-4 py-3 text-neutral-500"
-			data-testid="ticket-list-item-full-view"
+			data-testid={`ticket-list-item-full-view-${data.id}`}
 		>
 			<div className="flex flex-col gap-1">
 				<div className="flex flex-row items-center justify-between">

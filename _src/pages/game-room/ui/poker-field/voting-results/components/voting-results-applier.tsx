@@ -20,7 +20,7 @@ export function VotingResultsApplier() {
 	const results = useGameState(selectPreliminaryVotingResults);
 
 	const votesForApply = useMemo(
-		() => getUniqueVotes(results.filter((r) => r !== null)),
+		() => results.filter((r) => r !== null),
 		[results],
 	);
 	const mostPopularVoteForApply = useMemo(
@@ -28,12 +28,7 @@ export function VotingResultsApplier() {
 		[votesForApply],
 	);
 
-	if (
-		ticket === null ||
-		votesForApply.length === 0 ||
-		mostPopularVoteForApply === null
-	)
-		return null;
+	if (ticket === null) return null;
 
 	return (
 		<VotingResultsApplierInner
@@ -47,7 +42,7 @@ export function VotingResultsApplier() {
 type InnerProps = {
 	ticket: GameTicket;
 	votesForApply: GameVote[];
-	mostPopularVoteForApply: GameVote;
+	mostPopularVoteForApply?: GameVote;
 };
 function VotingResultsApplierInner(props: InnerProps) {
 	const { ticket, votesForApply, mostPopularVoteForApply } = props;
@@ -58,8 +53,8 @@ function VotingResultsApplierInner(props: InnerProps) {
 	const { finishVoting } = useVotingAsyncState();
 	const { updateByField } = useTicketUpdate(ticket);
 
-	const [selectedVoteId, setSelectedVoteId] = useState<Key>(
-		mostPopularVoteForApply.id,
+	const [selectedVoteId, setSelectedVoteId] = useState<Key | undefined>(
+		mostPopularVoteForApply?.id,
 	);
 	const selectedVote = useMemo(
 		() => votesForApply.find((v) => v.id === selectedVoteId),
@@ -111,29 +106,33 @@ function VotingResultsApplierInner(props: InnerProps) {
 
 	return (
 		<div className="flex flex-row items-end gap-2">
-			<div className="w-[120px]">
-				<Select
-					items={votesForApply}
-					selectedKeys={[selectedVoteId]}
-					aria-label="Estimation to apply"
-					selectionMode="single"
-					label="Estimation to apply"
-					onSelectionChange={onEstimationSelectionChange}
-				>
-					{(vote) => (
-						<Select.Item
-							key={vote.id}
-							id={vote.id}
-							textValue={`${vote.suit} ${vote.value}`}
-							aria-label={vote.value}
-						>
-							{vote.suit} {vote.value}
-						</Select.Item>
-					)}
-				</Select>
-			</div>
+			<Select
+				items={votesForApply}
+				selectedKeys={selectedVoteId ? [selectedVoteId] : []}
+				aria-label="Estimation to apply"
+				selectionMode="single"
+				placeholder="Select estimation"
+				label="Estimation to apply"
+				onSelectionChange={onEstimationSelectionChange}
+			>
+				{(vote) => (
+					<Select.Item
+						key={vote.id}
+						id={vote.id}
+						textValue={`${vote.suit} ${vote.value}`}
+						aria-label={vote.value}
+					>
+						{vote.suit} {vote.value}
+					</Select.Item>
+				)}
+			</Select>
 
-			<Button title="Apply" onPress={onApplyPress} />
+			<Button
+				title="Apply"
+				data-testid="apply-voting-results-btn"
+				isDisabled={!selectedVoteId}
+				onPress={onApplyPress}
+			/>
 		</div>
 	);
 }
@@ -153,33 +152,21 @@ function getHighestMostPopular(results: GameVote[]) {
 		}
 	}
 
-	let highestMostPopularResult: GameVote | null = null;
+	let highestMostPopularResult: GameVote | null | undefined = undefined;
 	let maxVoutesCount = 0;
+
 	for (let resCount of resultsCounts.values()) {
-		if (
-			resCount.count === maxVoutesCount &&
-			highestMostPopularResult !== null &&
-			highestMostPopularResult.order < resCount.vote.order
-		) {
-			highestMostPopularResult = resCount.vote;
-		}
 		if (resCount.count > maxVoutesCount) {
 			maxVoutesCount = resCount.count;
+			highestMostPopularResult = resCount.vote;
+		} else if (
+			resCount.count === maxVoutesCount &&
+			highestMostPopularResult &&
+			highestMostPopularResult.order < resCount.vote.order
+		) {
 			highestMostPopularResult = resCount.vote;
 		}
 	}
 
 	return highestMostPopularResult;
-}
-
-function getUniqueVotes(results: (GameVote | null)[]): GameVote[] {
-	const votesSet = new Set<string>();
-	return results.filter((r) => {
-		if (r === null) return false;
-		if (votesSet.has(r.id)) {
-			return false;
-		}
-		votesSet.add(r.id);
-		return true;
-	}) as GameVote[];
 }

@@ -30,8 +30,16 @@ export function PokerTable() {
 							highlightedVoteId === undefined ? "100%" : "40%",
 					}}
 				>
-					{isActionsVisible && <VotingActions />}
-					{!isActionsVisible && <VotingInfo />}
+					{isActionsVisible && (
+						<div data-testid="voting-actions">
+							<VotingActions />
+						</div>
+					)}
+					{!isActionsVisible && (
+						<div data-testid="voting-info">
+							<VotingInfo />
+						</div>
+					)}
 				</div>
 				<TablePlayersSeating>
 					{({ seatedParticipants, seatRowPosition }) => (
@@ -42,15 +50,24 @@ export function PokerTable() {
 							})}
 						>
 							{seatedParticipants.map((p) => (
-								<TablePlayer
+								<div
 									key={p.id}
-									name={p.displayName}
-									participant={p}
-									tablePosition={seatRowPosition}
-									isCurrentPlayer={
-										p.id === currentParticipant.id
-									}
-								/>
+									className={playerWrapperStyles({
+										isMutedBackground: isBackgroundMuted(
+											highlightedVoteId,
+											p.vote?.id || null,
+										),
+									})}
+								>
+									<TablePlayer
+										key={p.id}
+										participant={p}
+										tablePosition={seatRowPosition}
+										isCurrentPlayer={
+											p.id === currentParticipant.id
+										}
+									/>
+								</div>
 							))}
 						</div>
 					)}
@@ -59,6 +76,16 @@ export function PokerTable() {
 		</div>
 	);
 }
+
+const playerWrapperStyles = cva("transition-all", {
+	variants: {
+		isMutedBackground: {
+			true: "opacity-40",
+			false: "scale-110",
+			undefined: "scale-100",
+		},
+	},
+});
 
 const seatsRowStyles = cva("absolute flex justify-center", {
 	variants: {
@@ -70,3 +97,12 @@ const seatsRowStyles = cva("absolute flex justify-center", {
 		},
 	},
 });
+
+function isBackgroundMuted(
+	highlightedVoteId: string | null | undefined,
+	voteId: string | null,
+) {
+	return highlightedVoteId === undefined
+		? undefined
+		: highlightedVoteId !== voteId;
+}

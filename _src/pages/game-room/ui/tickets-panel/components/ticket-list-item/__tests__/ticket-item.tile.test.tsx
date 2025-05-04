@@ -27,7 +27,7 @@ describe("TicketItemTile component", () => {
 		const { getByTestId } = renderComponent({
 			componentProps: { isEditable: true },
 		});
-		expect(getByTestId("vote-button-test-ticket-id")).toBeInTheDocument();
+		expect(getByTestId(/vote-button-test/i)).toBeInTheDocument();
 	});
 
 	test("doesn't have the vote button when not editable", async () => {
@@ -48,7 +48,7 @@ describe("TicketItemTile component", () => {
 	test("triggers onOpen with the provided id on the container click", async () => {
 		const { getByTestId, user } = renderComponent({});
 
-		await user.click(getByTestId("ticket-list-item"));
+		await user.click(getByTestId(/ticket-list-item/i));
 
 		expect(onTicketOpen).toHaveBeenCalledTimes(1);
 		expect(onTicketOpen).toHaveBeenCalledWith("test-ticket-id");
@@ -77,7 +77,7 @@ describe("TicketItemTile component", () => {
 
 	test("can have options", async () => {
 		const { getByTestId } = renderComponent({});
-		expect(getByTestId("ticket-list-item")).toBeInTheDocument();
+		expect(getByTestId(/ticket-list-item/i)).toBeInTheDocument();
 	});
 
 	test("doesn't violate any accessiblity rules", async () => {

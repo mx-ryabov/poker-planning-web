@@ -7,12 +7,10 @@ type PokerFieldContextAction = {
 	setHighlightedVoteId: (voteId: string | null | undefined) => void;
 };
 
-const PokerFieldStateContext = createContext<PokerFieldContextValue | null>(
-	null,
-);
-const PokerFieldActionContext = createContext<PokerFieldContextAction | null>(
-	null,
-);
+export const PokerFieldStateContext =
+	createContext<PokerFieldContextValue | null>(null);
+export const PokerFieldActionContext =
+	createContext<PokerFieldContextAction | null>(null);
 
 type Props = {
 	children: ReactNode;

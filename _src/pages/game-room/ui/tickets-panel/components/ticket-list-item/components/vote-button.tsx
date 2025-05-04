@@ -15,15 +15,13 @@ type Props = {
 
 export function VoteButton({ ticket }: Props) {
 	const isAllowed = usePermissions("ChangeVoting");
-	const { startVoting, revealCards } = useVotingAsyncState();
+	const { startVoting } = useVotingAsyncState();
 
 	const status = useVoteButtonStatus(ticket.id);
 
 	const onPress = useCallback(() => {
-		if (status === "ready-to-vote" || status === "ready-to-revote")
-			startVoting(ticket.id);
-		if (status === "ready-to-reveal") revealCards();
-	}, [status, ticket, startVoting, revealCards]);
+		startVoting(ticket.id);
+	}, [ticket, startVoting]);
 
 	if (!isAllowed || status === "disabled") return null;
 
@@ -33,7 +31,7 @@ export function VoteButton({ ticket }: Props) {
 				icon={CardsIcon}
 				variant="outline"
 				className="border-neutral-100 drop-shadow-none"
-				data-testid="vote-button-test-ticket-id"
+				data-testid={`vote-button-test-${ticket.id}`}
 				size="small"
 				onPress={onPress}
 			/>
@@ -47,11 +45,7 @@ export function VoteButton({ ticket }: Props) {
 	);
 }
 
-type VoteButtonStatus =
-	| "ready-to-vote"
-	| "disabled"
-	| "ready-to-reveal"
-	| "ready-to-revote";
+type VoteButtonStatus = "ready-to-vote" | "disabled" | "under-vote";
 function useVoteButtonStatus(ticketId: string): VoteButtonStatus {
 	const votingProcess = useGameState(selectVotingProcess);
 
@@ -63,17 +57,11 @@ function useVoteButtonStatus(ticketId: string): VoteButtonStatus {
 	}
 
 	if (
-		votingProcess.status === GameVotingStatus.InProgress &&
+		(votingProcess.status === GameVotingStatus.InProgress ||
+			votingProcess.status === GameVotingStatus.Revealed) &&
 		votingProcess.ticket?.id === ticketId
 	) {
-		return "ready-to-reveal";
-	}
-
-	if (
-		votingProcess.status === GameVotingStatus.Revealed &&
-		votingProcess.ticket?.id === ticketId
-	) {
-		return "ready-to-revote";
+		return "under-vote";
 	}
 
 	return "ready-to-vote";

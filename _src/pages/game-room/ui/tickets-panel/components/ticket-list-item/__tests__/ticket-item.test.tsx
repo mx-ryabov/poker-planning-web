@@ -17,14 +17,14 @@ describe("TicketListItem component", () => {
 		const { unmount, getByTestId } = renderComponent({});
 
 		// we don't check all the fields since the closed and opened states are tested separately
-		expect(getByTestId("ticket-list-item")).toBeInTheDocument();
+		expect(getByTestId(/ticket-list-item/i)).toBeInTheDocument();
 		expect(() => unmount()).not.toThrow();
 	});
 
 	test("opens the ticket on click", async () => {
 		const { getByTestId } = renderComponent({});
 
-		getByTestId("ticket-list-item").click();
+		getByTestId(/ticket-list-item/i).click();
 
 		expect(onTicketOpen).toHaveBeenCalledTimes(1);
 		expect(onTicketOpen).toHaveBeenCalledWith("test-id");
@@ -34,7 +34,7 @@ describe("TicketListItem component", () => {
 		const { getByTestId } = renderComponent({
 			componentProps: { isOpen: true },
 		});
-		expect(getByTestId("ticket-list-item-full-view")).toBeInTheDocument();
+		expect(getByTestId(/ticket-list-item-full-view/i)).toBeInTheDocument();
 	});
 
 	test("doesn't violate any accessiblity rules", async () => {

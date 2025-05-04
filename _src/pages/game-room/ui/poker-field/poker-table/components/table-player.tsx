@@ -7,53 +7,51 @@ import {
 	selectVotingProcess,
 	useGameState,
 } from "@/_src/pages/game-room/model";
-import { usePokerFieldState } from "../../poker-field-provider";
 
-type Props = {
-	name: string;
+export type TablePlayerProps = {
 	isCurrentPlayer: boolean;
 	participant: GameParticipant;
 	tablePosition: "top" | "right" | "bottom" | "left";
 };
 
-export function TablePlayer(props: Props) {
-	const { name, isCurrentPlayer, participant, tablePosition } = props;
+export function TablePlayer(props: TablePlayerProps) {
+	const { isCurrentPlayer, participant, tablePosition } = props;
 
-	const { highlightedVoteId } = usePokerFieldState();
 	const votingStatus = useTablePlayerStatus(participant);
 
 	const initials = useMemo(() => {
-		return StringHelper.getFirstLetters(name, 2).toUpperCase();
-	}, [name]);
+		return StringHelper.getFirstLetters(
+			participant.displayName,
+			2,
+		).toUpperCase();
+	}, [participant.displayName]);
 
 	return (
-		<div
-			className={containerStyles({
-				isMutedBackground:
-					highlightedVoteId === undefined
-						? undefined
-						: highlightedVoteId !== (participant.vote?.id || null),
-			})}
-		>
+		<div className="relative h-10 w-10">
 			<div className="absolute inset-0 flex h-10 w-10 items-center justify-center rounded-lg border-2 border-white bg-neutral-100 text-base text-neutral-500 drop-shadow-sm">
 				{isCurrentPlayer ? "You" : initials}
 			</div>
-			<div className={nameStyles({ tablePosition })}>{name}</div>
+			<div className={nameStyles({ tablePosition })}>
+				{participant.displayName}
+			</div>
 			<div className={statusStyles({ tablePosition })}>
 				{votingStatus === "ready" && (
-					<div className="p-2">
+					<div className="p-2" data-testid="ready-status">
 						<CardFaceDownSvg />
 					</div>
 				)}
 				{votingStatus === "thinking" && (
-					<div className={thinkingStatusStyles({ tablePosition })}>
+					<div
+						className={thinkingStatusStyles({ tablePosition })}
+						data-testid="thinking-status"
+					>
 						<div className="bg-primary-500 h-1 w-1 animate-[simple-ping_linear_1s_infinite] rounded-full"></div>
 						<div className="bg-primary-500 h-1 w-1 animate-[simple-ping_linear_2s_infinite] rounded-full"></div>
 						<div className="bg-primary-500 h-1 w-1 animate-[simple-ping_linear_3s_infinite] rounded-full"></div>
 					</div>
 				)}
 				{votingStatus === "revealed" && participant.vote && (
-					<div className="p-5">
+					<div className="p-5" data-testid="revealed-status">
 						<div className="bg-primary-600 border-primary-100 text-primary-100 flex h-8 w-6 items-center justify-center rounded-sm border-2 text-base">
 							{participant.vote?.value}
 						</div>
@@ -110,16 +108,6 @@ const thinkingStatusStyles = cva(["flex gap-1 p-1"], {
 			left: "flex-col",
 			bottom: "flex-row",
 			right: "flex-col",
-		},
-	},
-});
-
-const containerStyles = cva("relative h-10 w-10 transition-all", {
-	variants: {
-		isMutedBackground: {
-			true: "opacity-40",
-			false: "scale-110",
-			undefined: "scale-100",
 		},
 	},
 });

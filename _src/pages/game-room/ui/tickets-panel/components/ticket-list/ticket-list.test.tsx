@@ -21,7 +21,7 @@ describe("Ticket List", () => {
 			role: ParticipantRole.Master,
 		});
 
-		const ticketItems = getAllByTestId("ticket-list-item");
+		const ticketItems = getAllByTestId(/ticket-list-item/i);
 
 		expect(ticketItems).toHaveLength(4);
 		expect(ticketItems[1]).toHaveTextContent(/ticket name 2/i);
@@ -36,7 +36,7 @@ describe("Ticket List", () => {
 				role: ParticipantRole.Master,
 			});
 
-			expect(queryAllByTestId("ticket-list-item")).toHaveLength(0);
+			expect(queryAllByTestId(/ticket-list-item/i)).toHaveLength(0);
 			getByText(/No issues in your game yet/i);
 		});
 
@@ -46,7 +46,7 @@ describe("Ticket List", () => {
 				role: ParticipantRole.Master,
 			});
 
-			expect(queryAllByTestId("ticket-list-item")).toHaveLength(0);
+			expect(queryAllByTestId(/ticket-list-item/i)).toHaveLength(0);
 			getByText(/Start creating them right now below/i);
 		});
 
@@ -56,7 +56,7 @@ describe("Ticket List", () => {
 				role: ParticipantRole.VotingMember,
 			});
 
-			expect(queryAllByTestId("ticket-list-item")).toHaveLength(0);
+			expect(queryAllByTestId(/ticket-list-item/i)).toHaveLength(0);
 			getByText(/Your game master works hard to start gambling/i);
 		});
 	});
