@@ -1,3 +1,4 @@
+import { GameVote } from "./game-vote";
 import { ParticipantRole } from "./participant-role";
 
 export type GameParticipant = {
@@ -6,4 +7,5 @@ export type GameParticipant = {
 	role: ParticipantRole;
 	online: boolean;
 	userId: string;
+	vote: GameVote | null;
 };

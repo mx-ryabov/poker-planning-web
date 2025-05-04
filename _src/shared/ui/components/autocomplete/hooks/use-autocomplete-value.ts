@@ -162,13 +162,6 @@ export function useAutocompleteValue() {
 			onPress: (e: PressEvent) => {
 				toggle("full");
 			},
-			// onMouseDown: (e: PressEvent) => {
-			// 	if (!overlayTriggerState?.isOpen) {
-			// 		//inputRef.current?.focus();
-			// 		console.log(e);
-			// 		open("full");
-			// 	}
-			// },
 		}),
 		[toggle, inputRef, overlayTriggerState?.isOpen, isDisabled],
 	);

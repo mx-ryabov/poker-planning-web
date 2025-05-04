@@ -5,7 +5,7 @@ import { GameManagementSlice, GameStateStore } from "./game-state-store.model";
 import { createGameStateStore } from "./game-state-store";
 import { GameAsyncState } from "./game-async-state-slice/game-async-state.model";
 
-type GameStateContextProps = StoreApi<GameStateStore>;
+export type GameStateContextProps = StoreApi<GameStateStore>;
 
 export const GameStateCotnext = createContext<GameStateContextProps | null>(
 	null,

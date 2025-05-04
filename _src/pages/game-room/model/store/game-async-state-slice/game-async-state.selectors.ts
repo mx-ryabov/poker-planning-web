@@ -34,8 +34,26 @@ export const selectTicketsCount = (state: GameStateStore) =>
 export const selectCurrentParticipant = (state: GameStateStore) =>
 	state.state.currentParticipant;
 
+export const selectCurrentVote = (state: GameStateStore) =>
+	state.state.currentParticipant.vote;
+
 export const selectCurrentRole = (state: GameStateStore) =>
 	state.state.currentParticipant.role;
 
 export const selectCurrentGameId = (state: GameStateStore) =>
 	state.state.game.id;
+
+export const selectCurrentVotingSystem = (state: GameStateStore) =>
+	state.state.game.votingSystem;
+
+export const selectVotingSystemVotes = (state: GameStateStore) =>
+	state.state.game.votingSystem.votes.toSorted((a, b) => a.order - b.order);
+
+export const selectVotingProcess = (state: GameStateStore) =>
+	state.state.game.votingProcess;
+
+export const selectLastVotingResult = (state: GameStateStore) =>
+	state.state.game.votingResults.at(-1);
+
+export const selectPreliminaryVotingResults = (state: GameStateStore) =>
+	state.state.game.participants.map((p) => p.vote);

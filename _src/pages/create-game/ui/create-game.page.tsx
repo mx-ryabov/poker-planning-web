@@ -7,12 +7,12 @@ import { CreateGameForm } from "./create-game-form";
 
 interface Props {
 	votingSystems: VotingSystem[];
-	createGameAsGuest: (_req: CreateGameRequest) => Promise<string>;
+	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
 }
 
 export const CreateGamePage = ({ votingSystems, createGameAsGuest }: Props) => {
 	return (
-		<div className="flex-1 h-screen">
+		<div className="h-screen flex-1">
 			<VotingSystemsProvider value={votingSystems}>
 				<CreateGameForm createGameAsGuest={createGameAsGuest} />
 			</VotingSystemsProvider>

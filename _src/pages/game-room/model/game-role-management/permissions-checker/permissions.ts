@@ -21,8 +21,12 @@ export const GAME_PERMISSIONS: GamePermissions = {
 			]),
 		},
 	],
-	[RestrictedGameActions.StartVoting]: createSimplePermission([
+	[RestrictedGameActions.ChangeVoting]: createSimplePermission([
 		ParticipantRole.Master,
+	]),
+	[RestrictedGameActions.CreateTicket]: createSimplePermission([
+		ParticipantRole.Master,
+		ParticipantRole.Manager,
 	]),
 	[RestrictedGameActions.EditTicket]: createSimplePermission([
 		ParticipantRole.Master,

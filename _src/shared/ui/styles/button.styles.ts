@@ -99,7 +99,7 @@ export const buttonStyles = cva(
 				outline: [
 					"bg-white",
 					"text-neutral-500",
-					"border-2",
+					"border",
 					"border-neutral-500",
 
 					"font-medium",

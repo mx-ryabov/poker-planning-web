@@ -1,7 +1,12 @@
 import { StateCreator } from "zustand";
 import { GameAsyncState } from "./game-async-state.model";
 import { GameAsyncSlice, GameStateStore } from "../game-state-store.model";
-import { GameTicket } from "@/_src/shared/api/game-api";
+import {
+	GameTicket,
+	GameVote,
+	GameVotingResult,
+	GameVotingStatus,
+} from "@/_src/shared/api/game-api";
 import { UpdateGameTicket } from "./game-async-state.dto";
 
 export function createGameAsyncStateSliceCreator(
@@ -81,6 +86,53 @@ export function createGameAsyncStateSliceCreator(
 		revalidateAsyncState: (updatedState: GameAsyncState) => {
 			set((state) => {
 				state.state = updatedState;
+			});
+		},
+		startVoting: (ticketId: string | null) => {
+			set((state) => {
+				state.state.game.votingProcess.status =
+					GameVotingStatus.InProgress;
+				const ticket =
+					state.state.game.tickets.find((t) => t.id === ticketId) ||
+					null;
+
+				state.state.game.votingProcess.ticket = ticket;
+			});
+		},
+		finishVoting: (result: GameVotingResult) => {
+			set((state) => {
+				state.state.game.votingProcess.status =
+					GameVotingStatus.Inactive;
+				state.state.game.votingProcess.ticket = null;
+				state.state.game.votingResults.push(result);
+			});
+		},
+		revealCards: () => {
+			set((state) => {
+				state.state.game.votingProcess.status =
+					GameVotingStatus.Revealed;
+			});
+		},
+		changeVote: (vote: GameVote | null) => {
+			set((state) => {
+				state.state.currentParticipant.vote = vote;
+			});
+		},
+		changeVoteForParticipant: (
+			particpantId: string,
+			voteId: string | null,
+		) => {
+			set((state) => {
+				const vote =
+					state.state.game.votingSystem.votes.find(
+						(v) => v.id === voteId,
+					) || null;
+				const votedParticipant = state.state.game.participants.find(
+					(p) => p.id === particpantId,
+				);
+				if (votedParticipant) {
+					votedParticipant.vote = vote;
+				}
 			});
 		},
 	});

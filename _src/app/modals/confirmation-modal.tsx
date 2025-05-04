@@ -1,4 +1,8 @@
-import { Button, ButtonSquare } from "@/_src/shared/ui/components/button";
+import {
+	Button,
+	ButtonSquare,
+	LabeledButtonProps,
+} from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon/svg/close.icon";
 import { Modal } from "@/_src/shared/ui/components/modal";
 import { useCallback, useTransition } from "react";
@@ -9,6 +13,7 @@ export type ConfirmationModalState = {
 	title: string;
 	contentMessage: string;
 	confirmBtnText: string;
+	confirmBtnAppearence?: LabeledButtonProps["appearance"];
 	onConfirm: AsyncConfirm | SyncConfirm;
 };
 export type ConfirmationModalProps = {
@@ -67,7 +72,7 @@ export function ConfirmationModal({
 							isPending={isPending}
 							onPress={confirm}
 							data-testid="confirm-button"
-							appearance="danger"
+							appearance={state?.confirmBtnAppearence}
 						/>
 					</>
 				)}

@@ -4,6 +4,7 @@ import { GameStateStore } from "../store/game-state-store.model";
 import { useConnectionsEvDis } from "./events-dispatchers/use-connections-ev-dis";
 import { useParticipantsEvDis } from "./events-dispatchers/use-participants-ev-dis";
 import { useTicketsEvDis } from "./events-dispatchers/use-tickets-ev-dis";
+import { useGameEvDis } from "./events-dispatchers/use-game-ev-dis";
 
 type Props = {
 	eventSubscriber: EventSubscriber;
@@ -17,4 +18,5 @@ export function useGameEventsDispatcher({
 	useConnectionsEvDis({ eventSubscriber, gameStateStore });
 	useParticipantsEvDis({ eventSubscriber, gameStateStore });
 	useTicketsEvDis({ eventSubscriber, gameStateStore });
+	useGameEvDis({ eventSubscriber, gameStateStore });
 }

@@ -1,42 +1,14 @@
 import { test, describe, expect } from "vitest";
 import { act, render, within } from "@/test/utilities";
 import { createGameStateStore, GameManagementTab } from "../../../model";
-import { GAME_MOCK } from "./game-management-drawer.mock";
 import { GameManagementDrawer } from "../game-management-drawer";
-import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
-import { generateParticipant } from "../../../__tests__/game-state-store.test-helpers";
+import {
+	generateGame,
+	generateParticipant,
+	generateTicket,
+} from "../../../__tests__/game-state-store.test-helpers";
 import { ParticipantRole } from "@/_src/shared/api";
-import { GameStateCotnext } from "../../../model/store/game-state-context";
-import { AppProvider } from "@/_src/app/providers";
-
-const gameStateStore = createGameStateStore({
-	game: {
-		...GAME_MOCK,
-		participants: [
-			...GAME_MOCK.participants,
-			generateParticipant({
-				role: ParticipantRole.VotingMember,
-				displayName: "active voting memeber",
-				online: true,
-			}),
-			generateParticipant({
-				role: ParticipantRole.VotingMember,
-				displayName: "inactive voting memeber",
-				online: false,
-			}),
-		],
-	},
-	currentParticipant: { ...MASTER_PARTICIPANT, online: true },
-});
-function renderDrawer() {
-	return render(
-		<AppProvider>
-			<GameStateCotnext.Provider value={gameStateStore}>
-				<GameManagementDrawer />
-			</GameStateCotnext.Provider>
-		</AppProvider>,
-	);
-}
+import { GameRoomFakeProviderWrapper } from "../../../__mocks__";
 
 describe("Game Management Drawer", () => {
 	test("renders correctly", async () => {
@@ -202,7 +174,7 @@ describe("Game Management Drawer", () => {
 	});
 
 	test("closes the drawer if the active tab is null", async () => {
-		const { user, getByTestId, queryByTestId } = renderDrawer();
+		const { queryByTestId } = renderDrawer();
 
 		act(() =>
 			gameStateStore
@@ -219,3 +191,39 @@ describe("Game Management Drawer", () => {
 		).not.toBeInTheDocument();
 	});
 });
+
+const gameStateStore = createGameStateStore({
+	game: generateGame({
+		id: "test-game-id",
+		participants: [
+			generateParticipant({
+				role: ParticipantRole.VotingMember,
+				displayName: "active voting memeber 1",
+				online: true,
+			}),
+			generateParticipant({
+				role: ParticipantRole.VotingMember,
+				displayName: "active voting memeber 2",
+				online: true,
+			}),
+			generateParticipant({
+				role: ParticipantRole.VotingMember,
+				displayName: "inactive voting memeber",
+				online: false,
+			}),
+		],
+		tickets: [generateTicket({}), generateTicket({})],
+	}),
+	currentParticipant: generateParticipant({
+		role: ParticipantRole.Master,
+		online: true,
+	}),
+});
+
+function renderDrawer() {
+	return render(<GameManagementDrawer />, {
+		wrapper: GameRoomFakeProviderWrapper({
+			gameStateStore,
+		}),
+	});
+}

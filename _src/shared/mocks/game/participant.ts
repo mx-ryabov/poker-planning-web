@@ -6,6 +6,7 @@ export const MASTER_PARTICIPANT: GameParticipant = {
 	role: ParticipantRole.Master,
 	online: false,
 	userId: "3cd5bbba-0a58-40fd-904e-db59b41197b1",
+	vote: null,
 };
 
 export const MANAGER_PARTICIPANT: GameParticipant = {
@@ -14,6 +15,7 @@ export const MANAGER_PARTICIPANT: GameParticipant = {
 	role: ParticipantRole.Manager,
 	online: false,
 	userId: "3cd5bbba-0a58-40fd-904e-db59b41197b2",
+	vote: null,
 };
 
 export const VOTING_MEMBER_PARTICIPANT: GameParticipant = {
@@ -22,6 +24,7 @@ export const VOTING_MEMBER_PARTICIPANT: GameParticipant = {
 	role: ParticipantRole.VotingMember,
 	online: false,
 	userId: "3cd5bbba-0a58-40fd-904e-db59b41197b3",
+	vote: null,
 };
 
 export const SPECTATOR_PARTICIPANT: GameParticipant = {
@@ -30,4 +33,5 @@ export const SPECTATOR_PARTICIPANT: GameParticipant = {
 	role: ParticipantRole.Spectator,
 	online: false,
 	userId: "3cd5bbba-0a58-40fd-904e-db59b41197b4",
+	vote: null,
 };

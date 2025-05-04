@@ -7,8 +7,13 @@ import { MASTER_PARTICIPANT } from "@/_src/shared/mocks/game/participant";
 import {
 	generateParticipant,
 	generateTicket,
+	generateVotingResult,
 } from "../../../__tests__/game-state-store.test-helpers";
-import { ParticipantRole, TicketType } from "@/_src/shared/api";
+import {
+	GameVotingStatus,
+	ParticipantRole,
+	TicketType,
+} from "@/_src/shared/api";
 
 describe("Game State Store", () => {
 	test("has a correct initial value", async () => {
@@ -90,6 +95,23 @@ describe("Game State Store", () => {
 				state: "reconnecting",
 				reason: reasonError,
 			});
+		});
+
+		test("changes openedTicketId", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().openedTicketId).toBeNull();
+
+			store.getState().setOpenedTicketId("ticketId");
+			expect(store.getState().openedTicketId).toEqual("ticketId");
+			store.getState().setOpenedTicketId(null);
+			expect(store.getState().openedTicketId).toEqual(null);
 		});
 	});
 
@@ -294,6 +316,206 @@ describe("Game State Store", () => {
 			expect(store.getState().state.game.tickets).toHaveLength(1);
 			store.getState().removeTicket("123");
 			expect(store.getState().state.game.tickets).toHaveLength(0);
+		});
+
+		test("startVoting - changes voting process status to InProgress and assign null to the voting process ticket if null was provided", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: { ...GAME_MOCK, tickets: [] },
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.Inactive,
+			);
+			store.getState().startVoting(null);
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.InProgress,
+			);
+			expect(store.getState().state.game.votingProcess.ticket).toBeNull();
+		});
+
+		test("startVoting - changes voting process status to InProgress and assign an according ticket to the voting process if ticketId was provided", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						tickets: [generateTicket({ id: "ticket-id" })],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.Inactive,
+			);
+			store.getState().startVoting("ticket-id");
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.InProgress,
+			);
+			expect(store.getState().state.game.votingProcess.ticket).toEqual(
+				expect.objectContaining({ id: "ticket-id" }),
+			);
+		});
+
+		test("revealCards - changes voting process status to Revealed", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						tickets: [generateTicket({ id: "ticket-id" })],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.Inactive,
+			);
+			store.getState().revealCards();
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.Revealed,
+			);
+		});
+
+		test("finishVoting - changes voting process status to Inactive, reset the voting process ticket and saves the provided voting results", async () => {
+			const ticketForVote = generateTicket({ id: "ticket-id" });
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						votingProcess: {
+							status: GameVotingStatus.InProgress,
+							ticket: ticketForVote,
+						},
+						tickets: [ticketForVote],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.InProgress,
+			);
+			expect(store.getState().state.game.votingResults).toHaveLength(0);
+
+			store.getState().finishVoting(
+				generateVotingResult({
+					id: "voting-result-id",
+				}),
+			);
+			expect(store.getState().state.game.votingProcess.status).toBe(
+				GameVotingStatus.Inactive,
+			);
+			expect(store.getState().state.game.votingResults).toHaveLength(1);
+			expect(store.getState().state.game.votingResults[0]).toEqual(
+				expect.objectContaining({ id: "voting-result-id" }),
+			);
+		});
+
+		test("changeVote - changes selected vote for the current participant", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						tickets: [generateTicket({ id: "ticket-id" })],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.currentParticipant.vote).toBeNull();
+
+			const vote = GAME_MOCK.votingSystem.votes[0];
+			store.getState().changeVote(vote);
+
+			expect(store.getState().state.currentParticipant.vote).toBe(vote);
+		});
+
+		test("changeVote - resets selected vote for the current participant", async () => {
+			const vote = GAME_MOCK.votingSystem.votes[0];
+
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						tickets: [generateTicket({ id: "ticket-id" })],
+					},
+					currentParticipant: { ...MASTER_PARTICIPANT, vote },
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.currentParticipant.vote).toBe(vote);
+
+			store.getState().changeVote(null);
+
+			expect(store.getState().state.currentParticipant.vote).toBeNull();
+		});
+
+		test("changeVoteForParticipant - changes a participant's vote", async () => {
+			const selectedVote = GAME_MOCK.votingSystem.votes[0];
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						participants: [
+							generateParticipant({ id: "test-participant-id" }),
+						],
+						tickets: [generateTicket({ id: "ticket-id" })],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.game.participants[0].vote).toBeNull();
+
+			store
+				.getState()
+				.changeVoteForParticipant(
+					"test-participant-id",
+					selectedVote.id,
+				);
+
+			expect(store.getState().state.game.participants[0].vote).toBe(
+				selectedVote,
+			);
+		});
+
+		test("changeVoteForParticipant - resets a participant's vote", async () => {
+			const selectedVote = GAME_MOCK.votingSystem.votes[0];
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						participants: [
+							generateParticipant({
+								id: "test-participant-id",
+								vote: selectedVote,
+							}),
+						],
+						tickets: [generateTicket({ id: "ticket-id" })],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+			expect(store.getState().state.game.participants[0].vote).toBe(
+				selectedVote,
+			);
+
+			store
+				.getState()
+				.changeVoteForParticipant("test-participant-id", null);
+
+			expect(store.getState().state.game.participants[0].vote).toBeNull();
 		});
 	});
 });

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { ConfirmationModal, ConfirmationModalState } from "../modals";
 
-type ConfirmationModalContextProps = {
+export type ConfirmationModalContextProps = {
 	open: (modalState: ConfirmationModalState) => void;
 };
 

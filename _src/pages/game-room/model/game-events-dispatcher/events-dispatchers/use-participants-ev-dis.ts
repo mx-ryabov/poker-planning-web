@@ -5,6 +5,7 @@ import {
 	GameEventType,
 	ParticipantJoinedEvent,
 	ParticipantLeftEvent,
+	ParticipantVotedEvent,
 } from "../../game-events-hub";
 import { useEffect } from "react";
 
@@ -25,6 +26,10 @@ export function useParticipantsEvDis({
 		gameStateStore,
 		(state) => state.disconnectParticipant,
 	);
+	const changeVoteForParticipant = useStore(
+		gameStateStore,
+		(state) => state.changeVoteForParticipant,
+	);
 
 	useEffect(() => {
 		const handler = ({ payload }: ParticipantJoinedEvent) => {
@@ -42,4 +47,14 @@ export function useParticipantsEvDis({
 
 		return eventSubscriber(GameEventType.ParticipantLeft, handler);
 	}, [eventSubscriber, disconnectParticipant]);
+
+	useEffect(() => {
+		const handler = ({ payload }: ParticipantVotedEvent) => {
+			console.log(payload.participantId, payload.voteId);
+
+			changeVoteForParticipant(payload.participantId, payload.voteId);
+		};
+
+		return eventSubscriber(GameEventType.ParticipantVoted, handler);
+	}, [eventSubscriber, changeVoteForParticipant]);
 }

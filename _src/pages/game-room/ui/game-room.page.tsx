@@ -14,6 +14,7 @@ import { Logo } from "@/_src/shared/ui/components/logo";
 import { GameManagementBar } from "./game-management-bar";
 import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
+import { PokerField } from "./poker-field";
 
 if (typeof window !== "undefined") {
 	scan({
@@ -53,16 +54,18 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 			currentParticipant={currentParticipant}
 			game={game}
 		>
-			<div className="flex flex-row h-screen w-full overflow-hidden">
-				<div className="flex flex-col w-full">
-					<header className="w-full flex flex-row justify-between p-6 relative">
+			<div className="flex h-screen w-full flex-row overflow-hidden">
+				<div className="flex w-full flex-col">
+					<header className="relative flex w-full flex-row justify-between p-6">
 						<NextLink href="/">
 							<Logo />
 						</NextLink>
 						<GameManagementBar className="absolute left-1/2 -translate-x-1/2" />
 						<UserBar onLogout={logout} />
 					</header>
-					<main></main>
+					<main className="h-full w-full">
+						<PokerField />
+					</main>
 				</div>
 
 				<GameManagementDrawer />

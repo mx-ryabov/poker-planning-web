@@ -9,6 +9,7 @@ import {
 	useGameEventsDispatcher,
 	useGameEvents,
 	useGameStore,
+	VotingAsyncStateProvider,
 } from "../model";
 import { ReactNode } from "react";
 import { ToastProvider } from "@/_src/shared/ui/components/toast";
@@ -35,8 +36,10 @@ export function GameRoomPageProvider({
 					accessTokenFactory={accessTokenFactory}
 					gameId={gameId}
 				>
-					<GameEventDispatcher />
-					{children}
+					<VotingAsyncStateProvider>
+						<GameEventDispatcher />
+						{children}
+					</VotingAsyncStateProvider>
 				</GameEventsProvider>
 			</GameStateProvider>
 		</ToastProvider>

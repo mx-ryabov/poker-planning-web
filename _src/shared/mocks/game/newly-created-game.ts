@@ -1,11 +1,14 @@
-import { GetGameByIdResponse } from "@/_src/shared/api/game-api";
+import {
+	GetGameByIdResponse,
+	GameVotingStatus,
+} from "@/_src/shared/api/game-api";
 
 export const NEWLY_CREATED_GAME: GetGameByIdResponse = {
 	id: "4671d10f-ddc9-45e9-815b-b1becda060a8",
 	name: "Test And Test",
 	link: "9d9d87f5-4f8b-402d-9f3b-8d886831c19c",
 	settings: { isAutoRevealCards: false },
-	votingProcess: { isActive: false, ticketId: null },
+	votingProcess: { status: GameVotingStatus.Inactive, ticket: null },
 	votingSystem: {
 		id: "6a113d25-34c9-4b49-985c-2df6dd67650c",
 		name: "Fibonacci",
@@ -76,7 +79,9 @@ export const NEWLY_CREATED_GAME: GetGameByIdResponse = {
 			online: true,
 			role: 0,
 			userId: "3cd5bbba-0a58-40fd-904e-db59b41197b0",
+			vote: null,
 		},
 	],
 	tickets: [],
+	votingResults: [],
 };

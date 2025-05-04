@@ -15,7 +15,7 @@ import { FormSteps } from "./components/form-steps";
 import { useCreateGameFormState } from "../../model";
 
 interface Props {
-	createGameAsGuest: (_req: CreateGameRequest) => Promise<string>;
+	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
 }
 
 export const CreateGameForm = ({ createGameAsGuest }: Props) => {
@@ -68,7 +68,7 @@ function CreateGameFormBase({ createGameAsGuest }: Props) {
 
 	return (
 		<FormProvider {...clientFormMethods}>
-			<form className="w-full h-full flex" ref={formRef} action={action}>
+			<form className="flex h-full w-full" ref={formRef} action={action}>
 				<Header className="fixed top-0" />
 				<FormSteps
 					currentStep={step}

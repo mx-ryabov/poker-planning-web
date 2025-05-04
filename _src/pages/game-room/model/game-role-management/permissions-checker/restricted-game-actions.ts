@@ -1,8 +1,9 @@
 export const RestrictedGameActions = {
 	KickParticipant: "KickParticipant",
-	StartVoting: "StartVoting",
+	ChangeVoting: "ChangeVoting",
 	EditTicket: "EditTicket",
 	DeleteTicket: "DeleteTicket",
+	CreateTicket: "CreateTicket",
 } as const;
 
 export type RestrictedGameActionsType =

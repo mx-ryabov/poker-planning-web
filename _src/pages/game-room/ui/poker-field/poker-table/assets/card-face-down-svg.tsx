@@ -1,0 +1,202 @@
+export function CardFaceDownSvg() {
+	return (
+		<svg
+			width="50"
+			height="59"
+			viewBox="0 0 50 59"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<g filter="url(#filter0_d_182_2263)">
+				<rect
+					x="13"
+					y="13.5"
+					width="24"
+					height="32"
+					rx="4"
+					fill="#845EC2"
+				/>
+				<rect
+					x="14"
+					y="14.5"
+					width="22"
+					height="30"
+					rx="3"
+					stroke="#EFE4FF"
+					strokeWidth="2"
+				/>
+			</g>
+			<line
+				x1="14.8232"
+				y1="22.3232"
+				x2="21.8232"
+				y2="15.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="28.8232"
+				y1="44.3232"
+				x2="35.8232"
+				y2="37.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="14.8232"
+				y1="27.3232"
+				x2="26.8232"
+				y2="15.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="23.8232"
+				y1="44.3232"
+				x2="35.8232"
+				y2="32.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="14.8232"
+				y1="32.3232"
+				x2="31.8232"
+				y2="15.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="14.8232"
+				y1="37.3232"
+				x2="35.8232"
+				y2="16.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="14.8232"
+				y1="42.3232"
+				x2="35.8232"
+				y2="21.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				x1="17.8232"
+				y1="44.3232"
+				x2="35.8232"
+				y2="26.3232"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="9.8995"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 36 22.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="9.8995"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 22 44.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="16.9706"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 36 27.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="16.9706"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 27 44.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="24.0416"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 36 32.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="29.6985"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 36 37.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="29.6985"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 36 42.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<line
+				y1="-0.25"
+				x2="25.4558"
+				y2="-0.25"
+				transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 33 44.5)"
+				stroke="#EFE4FF"
+				strokeWidth="0.5"
+			/>
+			<defs>
+				<filter
+					id="filter0_d_182_2263"
+					x="0"
+					y="0.5"
+					width="50"
+					height="58"
+					filterUnits="userSpaceOnUse"
+					colorInterpolationFilters="sRGB"
+				>
+					<feFlood floodOpacity="0" result="BackgroundImageFix" />
+					<feColorMatrix
+						in="SourceAlpha"
+						type="matrix"
+						values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+						result="hardAlpha"
+					/>
+					<feMorphology
+						radius="3"
+						operator="dilate"
+						in="SourceAlpha"
+						result="effect1_dropShadow_182_2263"
+					/>
+					<feOffset />
+					<feGaussianBlur stdDeviation="5" />
+					<feComposite in2="hardAlpha" operator="out" />
+					<feColorMatrix
+						type="matrix"
+						values="0 0 0 0 0.215652 0 0 0 0 0.196675 0 0 0 0 0.246615 0 0 0 0.15 0"
+					/>
+					<feBlend
+						mode="normal"
+						in2="BackgroundImageFix"
+						result="effect1_dropShadow_182_2263"
+					/>
+					<feBlend
+						mode="normal"
+						in="SourceGraphic"
+						in2="effect1_dropShadow_182_2263"
+						result="shape"
+					/>
+				</filter>
+			</defs>
+		</svg>
+	);
+}

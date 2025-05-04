@@ -14,6 +14,7 @@ const selectContainerStyles = cva(
 		"flex items-center relative overflow-hidden transition-all",
 		"min-h-10 w-full py-2",
 		"border-2 border-neutral-100 rounded-lg box-border",
+		"cursor-pointer",
 	],
 	{
 		variants: {
@@ -110,9 +111,7 @@ const SingleSelectionValue = () => {
 			isDisabled={ctx.isDisabled}
 			data-trigger="toggle-button"
 			aria-pressed={ctx.overlayTriggerState.isOpen ? "true" : "false"}
-			className={
-				"flex flex-row w-full h-full px-3 items-center justify-between group outline-hidden text-sm text-neutral-500 disabled:text-neutral-200"
-			}
+			className="group flex h-full w-full cursor-pointer flex-row items-center justify-between gap-2 px-3 text-sm text-neutral-500 outline-hidden disabled:text-neutral-200"
 			onPress={ctx.overlayTriggerState.toggle}
 		>
 			{ctx.selectedItems[0]?.textValue || ctx.placeholder}
@@ -150,7 +149,7 @@ const MultipleSelectionValue = () => {
 				isDisabled={ctx.isDisabled}
 				onPress={ctx.overlayTriggerState.toggle}
 				aria-label="Add Items"
-				className="flex flex-row items-center gap-2 text-xs text-neutral-500 bg-neutral-100 py-1 px-2 max-h-[21px] rounded-sm"
+				className="flex max-h-[21px] flex-row items-center gap-2 rounded-sm bg-neutral-100 px-2 py-1 text-xs text-neutral-500"
 			>
 				<PlusIcon size={16} />
 				{ctx.placeholder}
