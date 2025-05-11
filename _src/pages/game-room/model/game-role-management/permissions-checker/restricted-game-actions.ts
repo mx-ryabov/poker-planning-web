@@ -4,6 +4,7 @@ export const RestrictedGameActions = {
 	EditTicket: "EditTicket",
 	DeleteTicket: "DeleteTicket",
 	CreateTicket: "CreateTicket",
+	ChangeGameSettings: "ChangeGameSettings",
 } as const;
 
 export type RestrictedGameActionsType =

@@ -42,6 +42,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 
 	const {
 		listProps,
+		fieldProps,
 		childRenderer,
 		labelProps,
 		errorMessageProps,
@@ -64,6 +65,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 		() => ({
 			label,
 			labelProps,
+			fieldProps,
 			overlayTriggerState,
 			triggerRef,
 			placeholder,
@@ -86,6 +88,9 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 			},
 		}),
 		[
+			label,
+			labelProps,
+			fieldProps,
 			overlayTriggerState,
 			placeholder,
 			isDisabled,
@@ -109,7 +114,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				<span
 					{...errorMessageProps}
 					role="alert"
-					className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1"
+					className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium"
 				>
 					<WarningIcon size={12} thikness="bold" />
 					{errorMessages[0]}

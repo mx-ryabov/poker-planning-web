@@ -1,12 +1,14 @@
 import { GameEventType } from "./event-type";
 import {
 	CardsRevealedEvent,
+	CurrentParticipantUpdatedEvent,
 	DisconnectedEvent,
 	ParticipantJoinedEvent,
 	ParticipantLeftEvent,
 	ParticipantVotedEvent,
 	ReconnectedEvent,
 	ReconnectingEvent,
+	SettingsUpdatedEvent,
 	TicketAddedEvent,
 	TicketDeletedEvent,
 	TicketUpdatedEvent,
@@ -27,4 +29,6 @@ export type GameEventTypeMap = {
 	[GameEventType.CardsRevealed]: CardsRevealedEvent;
 	[GameEventType.VotingFinished]: VotingFinishedEvent;
 	[GameEventType.ParticipantVoted]: ParticipantVotedEvent;
+	[GameEventType.SettingsUpdated]: SettingsUpdatedEvent;
+	[GameEventType.CurrentParticipantUpdated]: CurrentParticipantUpdatedEvent;
 };

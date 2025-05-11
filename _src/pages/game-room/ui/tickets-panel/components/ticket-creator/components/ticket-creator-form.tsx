@@ -5,7 +5,7 @@ import {
 	useRef,
 	KeyboardEvent,
 } from "react";
-import { useApi } from "@/_src/app";
+import { useApi } from "@/_src/shared/providers";
 import {
 	selectCurrentGameId,
 	useGameState,
@@ -19,6 +19,7 @@ import { TicketTypeSelector } from "../../ticket-type-selector";
 import { Input } from "@/_src/shared/ui/components/input";
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon } from "@/_src/shared/ui/components/icon";
+import { GameSchemaBuildersMap } from "@/_src/entities/game";
 
 type Props = {
 	className?: string;
@@ -95,10 +96,10 @@ export function TicketCreatorForm({ className, onSubmitSucceed }: Props) {
  */
 
 const TicketCreatorFormSchema = z.object({
-	title: z.string().min(1, "Don't be silent"),
-	type: z.nativeEnum(TicketType, {
-		required_error: "Don't you forgot anything? (Ticket Type)",
-	}),
+	title: GameSchemaBuildersMap.ticket.title("Don't be silent"),
+	type: GameSchemaBuildersMap.ticket.type(
+		"Don't you forgot anything? (Ticket Type)",
+	),
 });
 
 type TicketCreatorFormState = z.infer<typeof TicketCreatorFormSchema>;

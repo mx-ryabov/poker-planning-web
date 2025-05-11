@@ -12,3 +12,5 @@ export * from "./game-vote";
 export * from "./game-voting-result";
 export * from "./game-voting-result-vote";
 export * from "./game-voting-status";
+export * from "./update-game-settigns-request";
+export * from "./update-game-settings-response";

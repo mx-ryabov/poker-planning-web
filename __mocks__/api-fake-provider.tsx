@@ -1,9 +1,9 @@
-import {
-	ApiContextProps,
-	ApiContext,
-	API,
-} from "@/_src/app/providers/api-provider";
 import { DeepPartial } from "@/_src/shared/lib";
+import {
+	API,
+	ApiContext,
+	ApiContextProps,
+} from "@/_src/shared/providers/api-provider";
 import { ReactNode } from "react";
 import { vi } from "vitest";
 

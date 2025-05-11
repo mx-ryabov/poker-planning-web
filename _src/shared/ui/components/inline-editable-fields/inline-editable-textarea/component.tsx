@@ -80,14 +80,14 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 			editView={editView}
 			keepEditViewOpenOnBlur={keepEditViewOpenOnBlur}
 			isInvalid={!!error}
-			isDisabled={isDisabled}
+			isDisabled={!!isDisabled}
 			id={id}
 			readView={() => (
 				<ReadViewDefault
 					value={value}
 					fieldType="textarea"
 					placeholder={placeholder}
-					isDisabled={isDisabled}
+					isDisabled={!!isDisabled}
 					styles={styles.readView}
 				/>
 			)}

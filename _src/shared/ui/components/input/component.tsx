@@ -1,5 +1,13 @@
 "use client";
-import { forwardRef, ReactNode, RefObject, useMemo, useRef } from "react";
+import {
+	forwardRef,
+	ReactNode,
+	RefObject,
+	useCallback,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { IconType } from "../icon/icon-builder";
 import { WarningIcon } from "../icon";
 import { cva } from "class-variance-authority";
@@ -15,6 +23,7 @@ import {
 import { setRefs } from "@/_src/shared/lib";
 import { FieldErrorIcon } from "../field-error-icon";
 import { twMerge } from "tailwind-merge";
+import { mergeProps } from "react-aria";
 
 type _InputProps = {
 	label: string;
@@ -37,26 +46,44 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 			endContent,
 			className,
 			isPending,
+			validate,
 			...restProps
 		} = props;
 
 		const inputRef: RefObject<HTMLInputElement | null> =
 			useRef<HTMLInputElement>(null);
 
-		const error = useMemo(
-			() =>
+		const [innerError, setInnerError] = useState<string | true | null>(
+			null,
+		);
+		const onValidationCheck = useCallback(
+			(value: string) => {
+				if (!validate) return;
+				const error = validate(value) || null;
+				setInnerError(Array.isArray(error) ? error[0] : error);
+			},
+			[validate],
+		);
+
+		const error = useMemo(() => {
+			const outerError =
 				typeof errors === "string"
 					? errors
-					: errors?.length
+					: Array.isArray(errors)
 						? errors[0]
-						: undefined,
-			[errors],
-		);
+						: undefined;
+
+			return outerError || innerError;
+		}, [errors, innerError]);
+
+		const mergedProps = mergeProps(restProps, {
+			onChange: onValidationCheck,
+		});
 
 		return (
 			<TextField
 				className="group flex w-full flex-col"
-				{...restProps}
+				{...mergedProps}
 				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
 				isInvalid={!!errors || restProps.isInvalid}
@@ -93,7 +120,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							ref={setRefs(inputRef, ref)}
 						/>
 						{endContent}
-						{withErrorIcon && (
+						{withErrorIcon && typeof error === "string" && (
 							<FieldErrorIcon
 								errorMsg={error}
 								placement="top end"
@@ -105,7 +132,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 					</Group>
 				</Label>
 
-				{!withErrorIcon && (
+				{!withErrorIcon && typeof error === "string" && (
 					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}

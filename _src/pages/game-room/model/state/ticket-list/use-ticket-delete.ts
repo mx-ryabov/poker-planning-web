@@ -3,7 +3,7 @@ import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { selectCurrentGameId, useGameState } from "../../store";
 import { useCallback } from "react";
 import { useMutation } from "@/_src/shared/lib";
-import { useApi } from "@/_src/app";
+import { useApi } from "@/_src/shared/providers";
 
 type Props = {
 	ticket: GameTicket;

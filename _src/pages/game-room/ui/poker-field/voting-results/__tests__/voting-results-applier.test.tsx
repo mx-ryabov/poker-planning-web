@@ -16,8 +16,7 @@ import {
 	GameVotingProcess,
 	GameVotingStatus,
 } from "@/_src/shared/api";
-import { aw } from "vitest/dist/chunks/reporters.DAfKSDh5.js";
-import { ConfirmationModalProvider } from "@/_src/app/providers/confirmation-modal-provider";
+import { ConfirmationModalProvider } from "@/_src/shared/providers/confirmation-modal-provider";
 
 describe("Voting Results Applier", () => {
 	test("renders correctly", async () => {

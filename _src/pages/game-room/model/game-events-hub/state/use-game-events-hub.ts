@@ -7,12 +7,14 @@ import { HttpTransportType } from "@microsoft/signalr/dist/esm/ITransport";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
 	CardsRevealedEvent,
+	CurrentParticipantUpdatedEvent,
 	DisconnectedEvent,
 	ParticipantJoinedEvent,
 	ParticipantLeftEvent,
 	ParticipantVotedEvent,
 	ReconnectedEvent,
 	ReconnectingEvent,
+	SettingsUpdatedEvent,
 	TicketAddedEvent,
 	TicketDeletedEvent,
 	TicketUpdatedEvent,
@@ -75,7 +77,7 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 			}
 			setConnection(null);
 		};
-	}, [setConnection, gameId, gameEventTarget]);
+	}, [setConnection, gameId, gameEventTarget, accessTokenFactory]);
 
 	useEffect(() => {
 		if (!connection || connection.state !== HubConnectionState.Connected)
@@ -125,6 +127,15 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		});
 		connection.on(GameEventType.ParticipantVoted, (data) => {
 			gameEventTarget.dispatchEvent(new ParticipantVotedEvent(data));
+		});
+
+		connection.on(GameEventType.SettingsUpdated, (data) => {
+			gameEventTarget.dispatchEvent(new SettingsUpdatedEvent(data));
+		});
+		connection.on(GameEventType.CurrentParticipantUpdated, (data) => {
+			gameEventTarget.dispatchEvent(
+				new CurrentParticipantUpdatedEvent(data),
+			);
 		});
 	}, [connection, gameEventTarget]);
 

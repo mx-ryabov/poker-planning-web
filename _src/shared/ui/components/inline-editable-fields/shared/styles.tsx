@@ -5,75 +5,75 @@ export type ReadViewStyleProps = {
 	textSize?: "large" | "medium";
 	compensatedOffset?: boolean;
 	maxHeight?: number;
-	variant?: "ghost" | "filled";
+	variant?: "ghost" | "filled" | "bordered";
 	width?: "full" | "content";
 };
 
-export const readViewStyles = cva(
-	["flex", "rounded-lg border-2 border-white", "overflow-hidden"],
-	{
-		variants: {
-			variant: {
-				ghost: "",
-				filled: "",
-			},
-			hasValue: {
-				true: ["text-neutral-500"],
-				false: ["text-neutral-400"],
-			},
-			size: {
-				large: [],
-				medium: [],
-			},
-			fieldType: {
-				input: ["truncate box-border"],
-				textarea: ["box-content py-2 whitespace-pre-line break-all"],
-			},
-			textSize: {
-				large: "text-lg",
-				medium: "text-sm",
-			},
-			compensatedOffset: {
-				true: "px-2 -mx-2",
-				false: "",
-			},
-			isDisabled: {
-				true: [],
-				false: [
-					"hover:bg-neutral-100 transition-[background-color] cursor-pointer",
-				],
-			},
+export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
+	variants: {
+		variant: {
+			ghost: "border-2 border-white",
+			filled: "border-2 border-white",
+			bordered: "border-2 border-neutral-100",
 		},
-		compoundVariants: [
-			{
-				fieldType: "input",
-				size: "large",
-				className: ["h-10"],
-			},
-			{
-				fieldType: "input",
-				size: "medium",
-				className: ["h-8"],
-			},
-			{
-				fieldType: "input",
-				compensatedOffset: false,
-				className: "px-3 items-center",
-			},
-			{
-				fieldType: "textarea",
-				compensatedOffset: false,
-				className: "px-2",
-			},
-			{
-				isDisabled: false,
-				variant: "filled",
-				className:
-					"bg-neutral-100 hover:bg-neutral-200 text-neutral-500",
-			},
-		],
+		hasValue: {
+			true: ["text-neutral-500"],
+			false: ["text-neutral-400"],
+		},
+		size: {
+			large: [],
+			medium: [],
+		},
+		fieldType: {
+			input: ["truncate box-border"],
+			textarea: ["box-content py-2 whitespace-pre-line break-all"],
+		},
+		textSize: {
+			large: "text-lg",
+			medium: "text-sm",
+		},
+		compensatedOffset: {
+			true: "px-2 -mx-2",
+			false: "",
+		},
+		isDisabled: {
+			true: [],
+			false: ["transition-all cursor-pointer"],
+		},
 	},
-);
+	compoundVariants: [
+		{
+			fieldType: "input",
+			size: "large",
+			className: ["h-10"],
+		},
+		{
+			fieldType: "input",
+			size: "medium",
+			className: ["h-8"],
+		},
+		{
+			fieldType: "input",
+			compensatedOffset: false,
+			className: "px-3 items-center",
+		},
+		{
+			fieldType: "textarea",
+			compensatedOffset: false,
+			className: "px-3",
+		},
+		{
+			isDisabled: false,
+			variant: "filled",
+			className: "bg-neutral-100 hover:bg-neutral-200 text-neutral-500",
+		},
+		{
+			isDisabled: false,
+			variant: "bordered",
+			className: "hover:border-primary-500",
+		},
+	],
+});
 
 export type EditorViewStyleProps = {
 	textSize?: "large" | "medium";

@@ -113,6 +113,7 @@ const SingleSelectionValue = () => {
 			aria-pressed={ctx.overlayTriggerState.isOpen ? "true" : "false"}
 			className="group flex h-full w-full cursor-pointer flex-row items-center justify-between gap-2 px-3 text-sm text-neutral-500 outline-hidden disabled:text-neutral-200"
 			onPress={ctx.overlayTriggerState.toggle}
+			{...ctx.fieldProps}
 		>
 			{ctx.selectedItems[0]?.textValue || ctx.placeholder}
 			<ArrowDownIcon
@@ -150,6 +151,7 @@ const MultipleSelectionValue = () => {
 				onPress={ctx.overlayTriggerState.toggle}
 				aria-label="Add Items"
 				className="flex max-h-[21px] flex-row items-center gap-2 rounded-sm bg-neutral-100 px-2 py-1 text-xs text-neutral-500"
+				{...ctx.fieldProps}
 			>
 				<PlusIcon size={16} />
 				{ctx.placeholder}

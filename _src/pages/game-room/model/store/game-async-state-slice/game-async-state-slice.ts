@@ -2,12 +2,13 @@ import { StateCreator } from "zustand";
 import { GameAsyncState } from "./game-async-state.model";
 import { GameAsyncSlice, GameStateStore } from "../game-state-store.model";
 import {
+	GameParticipant,
 	GameTicket,
 	GameVote,
 	GameVotingResult,
 	GameVotingStatus,
 } from "@/_src/shared/api/game-api";
-import { UpdateGameTicket } from "./game-async-state.dto";
+import { UpdateGameSettings, UpdateGameTicket } from "./game-async-state.dto";
 
 export function createGameAsyncStateSliceCreator(
 	initialState: GameAsyncState,
@@ -133,6 +134,39 @@ export function createGameAsyncStateSliceCreator(
 				if (votedParticipant) {
 					votedParticipant.vote = vote;
 				}
+			});
+		},
+		updateSettings: (data: UpdateGameSettings) => {
+			set((state) => {
+				let { game } = state.state;
+				game.name = data.name;
+				game.settings.isAutoRevealCards = data.isAutoRevealCards;
+				game.settings.autoRevealPeriod = data.autoRevealPeriod;
+				data.updatedParticipants.forEach((p) => {
+					let participantForUpdate = game.participants.find(
+						(lp) => lp.id === p.id,
+					);
+					if (participantForUpdate) {
+						participantForUpdate = Object.assign(
+							participantForUpdate,
+							p,
+						);
+					}
+				});
+			});
+		},
+		updateCurrentParticipant: (
+			data: GameParticipant,
+			onUpdate?: (
+				oldData: GameParticipant,
+				newData: GameParticipant,
+			) => void,
+		) => {
+			set((state) => {
+				let { currentParticipant } = state.state;
+				const oldData = { ...currentParticipant };
+				currentParticipant = Object.assign(currentParticipant, data);
+				if (onUpdate) onUpdate(oldData, data);
 			});
 		},
 	});

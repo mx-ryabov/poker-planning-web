@@ -1,4 +1,4 @@
-import { useApi } from "@/_src/app";
+import { useApi } from "@/_src/shared/providers";
 import {
 	selectCurrentGameId,
 	selectVotingSystemVotes,

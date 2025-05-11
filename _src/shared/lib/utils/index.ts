@@ -2,3 +2,4 @@
 //export * from "./app-fetch";
 export * from "./set-refs";
 export { StringHelper } from "./string-helper";
+export { buildFieldValidator } from "./build-field-validator";
