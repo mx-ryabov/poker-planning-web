@@ -55,6 +55,7 @@ export const SelectValue = () => {
 		triggerRef,
 		label,
 		labelProps,
+		id,
 	} = useContext(SelectValueContext);
 
 	const labelComponent = useMemo(
@@ -91,7 +92,7 @@ export const SelectValue = () => {
 							isFocused: isFocusWithin,
 							isDisabled,
 						})}
-						data-testid="select-value-container"
+						data-testid={`${id}-select-value-container`}
 						data-focused={isFocusWithin}
 						ref={triggerRef}
 					>

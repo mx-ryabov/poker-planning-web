@@ -20,6 +20,7 @@ export type SelectValueContextProps = {
 	selectionMode: Exclude<SelectionMode, "none">;
 	disabledKeys?: Key[];
 	selectedItems: { textValue: string; key: Key }[];
+	id?: string;
 	onSelectionRemove: (keys: Set<Key>) => void;
 };
 

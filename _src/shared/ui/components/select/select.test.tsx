@@ -635,7 +635,7 @@ describe("Select", () => {
 				onSelectionChange: onSelectionChangeFn,
 			});
 
-			const valueContainer = getByTestId("select-value-container");
+			const valueContainer = getByTestId(/select-value-container/i);
 			const trigger = within(valueContainer).getByRole("button");
 			await user.click(trigger);
 			const list = getByRole("listbox");
@@ -662,7 +662,7 @@ describe("Select", () => {
 				onSelectionChange: onSelectionChangeFn,
 			});
 
-			const valueContainer = getByTestId("select-value-container");
+			const valueContainer = getByTestId(/select-value-container/i);
 			const trigger = within(valueContainer).getByRole("button");
 			await user.click(trigger);
 			const list = getByRole("listbox");
@@ -694,7 +694,7 @@ describe("Select", () => {
 				onSelectionChange: onSelectionChangeFn,
 			});
 
-			const valueContainer = getByTestId("select-value-container");
+			const valueContainer = getByTestId(/select-value-container/i);
 			const trigger = within(valueContainer).getByRole("button");
 			await user.click(trigger);
 			const list = getByRole("listbox");
@@ -741,7 +741,7 @@ describe("Select", () => {
 			});
 
 			const trigger = getByRole("button");
-			const valueContainer = getByTestId("select-value-container");
+			const valueContainer = getByTestId(/select-value-container/i);
 			await user.click(trigger);
 			const list = getByRole("listbox");
 			const options = within(list).getAllByRole("option");
@@ -824,7 +824,7 @@ describe("Select", () => {
 			);
 
 			const trigger = getByRole("button");
-			const valueContainer = getByTestId("select-value-container");
+			const valueContainer = getByTestId(/select-value-container/i);
 			await user.click(trigger);
 			const list = getByRole("listbox");
 			const options = within(list).getAllByRole("option");

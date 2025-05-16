@@ -9,7 +9,7 @@ const ToastContext = createContext<ToastState<ToastContent> | null>(null);
 type ToastProviderProps = {
 	children: ReactNode;
 };
-// TODO: Move to app folder
+
 export function ToastProvider({ children }: ToastProviderProps) {
 	const state = useToastState<ToastContent>({
 		maxVisibleToasts: 3,

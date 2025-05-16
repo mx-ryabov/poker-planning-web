@@ -52,10 +52,15 @@ export function AutoRevealCardsField({
 	return (
 		<div className="flex flex-col gap-2 px-1">
 			<span className="text-sm text-neutral-500">Auto-reveal cards</span>
-			<div className="flex flex-row gap-2">
+			<div
+				className="flex flex-row gap-2"
+				data-testid="auto-reveal-cards-field"
+			>
 				<Switch
 					isSelected={value.isAutoRevealCards}
 					isDisabled={isReadonly}
+					data-testid="auto-reveal-cards-switch"
+					aria-label="Auto-reveal cards"
 					onChange={onIsAutoRevealChange}
 				/>
 				<div className="flex flex-row items-center gap-2">
@@ -71,6 +76,7 @@ export function AutoRevealCardsField({
 								textSize: "medium",
 							},
 						}}
+						id="auto-reveal-period-input"
 						type="number"
 						validate={autoRevealPeriodValidateInner}
 						isDisabled={isReadonly || !value.isAutoRevealCards}

@@ -29,7 +29,7 @@ export function GameNameField({
 				},
 			}}
 			isDisabled={isReadonly}
-			id="ticket-title"
+			id="game-name-field"
 			validate={validate}
 			onConfirm={onConfirm}
 		/>

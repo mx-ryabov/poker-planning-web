@@ -14,4 +14,5 @@ export type InlineEditableFieldProps = {
 	id?: string;
 	onConfirm: (value: string) => void;
 	onEditorChange?: (value: string) => void;
+	"data-testid"?: string;
 };

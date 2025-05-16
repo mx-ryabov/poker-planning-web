@@ -46,6 +46,7 @@ export function GameMasterSelector({
 			onSelectionChange={onSelectionChange}
 			isDisabled={isReadonly}
 			aria-label="Game master"
+			id="game-master-selector"
 		>
 			{(p) => (
 				<Select.Item

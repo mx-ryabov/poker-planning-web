@@ -10,7 +10,7 @@ import { AriaFieldProps, FocusScope } from "react-aria";
 import { SelectValue } from "./components/select-value";
 import { UseSelectProps, useSelect } from "./hooks/use-select";
 import { WarningIcon } from "../icon";
-import { useMemo, useRef } from "react";
+import { useId, useMemo, useRef } from "react";
 import { useClickOutside } from "@/_src/shared/lib";
 import { SelectValueContext, SelectValueContextProps } from "./utils/contexts";
 import { Separator } from "../separator";
@@ -34,8 +34,11 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 		isDisabled,
 		children,
 		items,
+		id: externalId,
 		...restProps
 	} = props;
+	const internalId = useId();
+	const id = externalId || internalId;
 	const popoverRef = useRef(null);
 
 	const listState = useListState({ ...props, selectionMode });
@@ -86,6 +89,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 					listState.selectionManager.toggleSelection(key);
 				});
 			},
+			id,
 		}),
 		[
 			label,
@@ -98,6 +102,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 			listState,
 			triggerRef,
 			selectionMode,
+			id,
 		],
 	);
 
@@ -135,6 +140,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 					<List
 						{...listProps}
 						className="max-h-[inherit] overflow-auto outline-hidden"
+						data-testid={`${id}-list`}
 					>
 						{childRenderer}
 					</List>
