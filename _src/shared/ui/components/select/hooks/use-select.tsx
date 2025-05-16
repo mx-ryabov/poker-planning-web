@@ -27,7 +27,7 @@ export function useSelect<TItemData extends object>(
 		triggerRef,
 	);
 
-	const { labelProps, errorMessageProps } = useField(restProps);
+	const { labelProps, errorMessageProps, fieldProps } = useField(restProps);
 
 	const onSelectionChange = useCallback(
 		(keys: Iterable<Key>) => {
@@ -109,6 +109,7 @@ export function useSelect<TItemData extends object>(
 
 	return {
 		listProps,
+		fieldProps,
 		childRenderer,
 		labelProps,
 		errorMessageProps,

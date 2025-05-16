@@ -1,13 +1,16 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
 	editorViewStyles,
 	InlineEditableFieldProps,
 	ReadViewDefault,
 } from "../shared";
 import { EditRenderProps, InlineEdit } from "../../inline-edit";
-import { Input } from "../../input";
+import { Input, InputProps } from "../../input";
 
-type InlineEditableTextFieldProps = InlineEditableFieldProps;
+export type InlineEditableTextFieldProps = InlineEditableFieldProps & {
+	validate?: InputProps["validate"];
+	type?: InputProps["type"];
+};
 
 export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 	const {
@@ -19,9 +22,24 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 		isDisabled,
 		id,
 		containerClassName,
+		type,
+		validate,
 		onConfirm,
 		onEditorChange,
 	} = props;
+
+	const [isInvalidInner, setIsInvalidInner] = useState(false);
+
+	const validateInner = useCallback(
+		(value: string) => {
+			if (!validate) return null;
+
+			const err = validate(value);
+			setIsInvalidInner(!!err);
+			return err;
+		},
+		[validate],
+	);
 
 	const editView = useCallback(
 		(renderProps: EditRenderProps) => {
@@ -29,6 +47,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 				<Input
 					label=""
 					{...renderProps}
+					defaultValue={value}
 					onChange={(value) => {
 						renderProps.onChange(value);
 						onEditorChange && onEditorChange(value);
@@ -36,11 +55,13 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 					placeholder={placeholder}
 					className={editorViewStyles(styles.editorView)}
 					autoFocus
+					type={type}
 					onKeyDown={(e) => {
 						if (e.key === "Enter") {
 							renderProps.confirm();
 						}
 					}}
+					validate={validateInner}
 					errors={error ? [error] : undefined}
 					withErrorIcon
 					data-testid={`${id}-editor`}
@@ -52,7 +73,16 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			}
 			return EditorRender;
 		},
-		[styles.editorView, placeholder, error, onEditorChange, id],
+		[
+			styles.editorView,
+			placeholder,
+			error,
+			onEditorChange,
+			id,
+			validateInner,
+			type,
+			value,
+		],
 	);
 
 	return (
@@ -60,7 +90,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			value={value}
 			label={label}
 			editView={editView}
-			isInvalid={!!error}
+			isInvalid={!!error || isInvalidInner}
 			id={id}
 			containerClassName={containerClassName}
 			readView={() => (

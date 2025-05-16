@@ -6,7 +6,10 @@ import {
 	useContext,
 	useState,
 } from "react";
-import { ConfirmationModal, ConfirmationModalState } from "../modals";
+import {
+	ConfirmationModal,
+	ConfirmationModalState,
+} from "../ui/components/modals";
 
 export type ConfirmationModalContextProps = {
 	open: (modalState: ConfirmationModalState) => void;

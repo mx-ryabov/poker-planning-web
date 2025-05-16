@@ -13,6 +13,7 @@ import {
 	finishVoting,
 	revalidateGame,
 	vote,
+	updateSettings,
 } from "../../shared/api/game-api/server-actions";
 
 export const API = {
@@ -25,6 +26,7 @@ export const API = {
 		finishVoting,
 		revalidateGame,
 		vote,
+		updateSettings,
 		ticket: { createTicket, updateTicketById, deleteTicketById },
 		participant: {
 			getCurrentParticipant,

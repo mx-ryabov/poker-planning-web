@@ -1,23 +1,26 @@
 import {
 	DOMAttributes,
 	LabelHTMLAttributes,
-	MutableRefObject,
+	RefObject,
 	createContext,
 } from "react";
 import { Key, OverlayTriggerState } from "react-stately";
 import { SelectionMode } from "react-aria-components";
+import { AriaLabelingProps, DOMProps } from "@react-types/shared";
 
 export type SelectValueContextProps = {
 	label?: string;
 	labelProps: DOMAttributes<any> | LabelHTMLAttributes<HTMLLabelElement>;
+	fieldProps: AriaLabelingProps & DOMProps;
 	overlayTriggerState: OverlayTriggerState;
-	triggerRef: MutableRefObject<HTMLDivElement | null>;
+	triggerRef: RefObject<HTMLDivElement | null>;
 	placeholder?: string;
 	isDisabled?: boolean;
 	isInvalid?: boolean;
 	selectionMode: Exclude<SelectionMode, "none">;
 	disabledKeys?: Key[];
 	selectedItems: { textValue: string; key: Key }[];
+	id?: string;
 	onSelectionRemove: (keys: Set<Key>) => void;
 };
 

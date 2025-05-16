@@ -36,4 +36,7 @@ export const GAME_PERMISSIONS: GamePermissions = {
 		ParticipantRole.Master,
 		ParticipantRole.Manager,
 	]),
+	[RestrictedGameActions.ChangeGameSettings]: createSimplePermission([
+		ParticipantRole.Master,
+	]),
 };

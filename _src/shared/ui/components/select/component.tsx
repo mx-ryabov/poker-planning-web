@@ -10,7 +10,7 @@ import { AriaFieldProps, FocusScope } from "react-aria";
 import { SelectValue } from "./components/select-value";
 import { UseSelectProps, useSelect } from "./hooks/use-select";
 import { WarningIcon } from "../icon";
-import { useMemo, useRef } from "react";
+import { useId, useMemo, useRef } from "react";
 import { useClickOutside } from "@/_src/shared/lib";
 import { SelectValueContext, SelectValueContextProps } from "./utils/contexts";
 import { Separator } from "../separator";
@@ -34,14 +34,18 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 		isDisabled,
 		children,
 		items,
+		id: externalId,
 		...restProps
 	} = props;
+	const internalId = useId();
+	const id = externalId || internalId;
 	const popoverRef = useRef(null);
 
 	const listState = useListState({ ...props, selectionMode });
 
 	const {
 		listProps,
+		fieldProps,
 		childRenderer,
 		labelProps,
 		errorMessageProps,
@@ -64,6 +68,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 		() => ({
 			label,
 			labelProps,
+			fieldProps,
 			overlayTriggerState,
 			triggerRef,
 			placeholder,
@@ -84,8 +89,12 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 					listState.selectionManager.toggleSelection(key);
 				});
 			},
+			id,
 		}),
 		[
+			label,
+			labelProps,
+			fieldProps,
 			overlayTriggerState,
 			placeholder,
 			isDisabled,
@@ -93,6 +102,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 			listState,
 			triggerRef,
 			selectionMode,
+			id,
 		],
 	);
 
@@ -109,7 +119,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				<span
 					{...errorMessageProps}
 					role="alert"
-					className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1"
+					className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium"
 				>
 					<WarningIcon size={12} thikness="bold" />
 					{errorMessages[0]}
@@ -130,6 +140,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 					<List
 						{...listProps}
 						className="max-h-[inherit] overflow-auto outline-hidden"
+						data-testid={`${id}-list`}
 					>
 						{childRenderer}
 					</List>

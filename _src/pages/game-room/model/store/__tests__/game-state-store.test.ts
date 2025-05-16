@@ -517,5 +517,100 @@ describe("Game State Store", () => {
 
 			expect(store.getState().state.game.participants[0].vote).toBeNull();
 		});
+
+		test("updateSettings - updates game settings, name, and participants", async () => {
+			const participant1 = generateParticipant({
+				id: "test-participant-id-1",
+				displayName: "Old name 1",
+				role: ParticipantRole.Master,
+			});
+			const participant2 = generateParticipant({
+				id: "test-participant-id-2",
+				displayName: "Old name 2",
+				role: ParticipantRole.VotingMember,
+			});
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+						name: "Old name",
+						settings: {
+							...GAME_MOCK.settings,
+							isAutoRevealCards: false,
+							autoRevealPeriod: 0,
+						},
+						participants: [participant1, participant2],
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+			store.getState().updateSettings({
+				name: "New name",
+				isAutoRevealCards: true,
+				autoRevealPeriod: 10,
+				updatedParticipants: [
+					{
+						...participant1,
+						displayName: "New name 1",
+						role: ParticipantRole.VotingMember,
+					},
+					{
+						...participant2,
+						displayName: "New name 1",
+						role: ParticipantRole.Master,
+					},
+				],
+			});
+			expect(store.getState().state.game.name).toBe("New name");
+			expect(store.getState().state.game.settings).toEqual(
+				expect.objectContaining({
+					isAutoRevealCards: true,
+					autoRevealPeriod: 10,
+				}),
+			);
+			expect(store.getState().state.game.participants).toEqual(
+				expect.arrayContaining([
+					expect.objectContaining({
+						id: "test-participant-id-1",
+						displayName: "New name 1",
+						role: ParticipantRole.VotingMember,
+					}),
+					expect.objectContaining({
+						id: "test-participant-id-2",
+						displayName: "New name 1",
+						role: ParticipantRole.Master,
+					}),
+				]),
+			);
+		});
+
+		test("updateCurrentParticipant - updates currentParticipant", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: {
+						...GAME_MOCK,
+					},
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().state.currentParticipant).toEqual(
+				MASTER_PARTICIPANT,
+			);
+			const updatedParticipant = {
+				...MASTER_PARTICIPANT,
+				displayName: "Updated name",
+				role: ParticipantRole.VotingMember,
+			};
+			store.getState().updateCurrentParticipant(updatedParticipant);
+			expect(store.getState().state.currentParticipant).toEqual(
+				expect.objectContaining({
+					displayName: "Updated name",
+					role: ParticipantRole.VotingMember,
+				}),
+			);
+		});
 	});
 });

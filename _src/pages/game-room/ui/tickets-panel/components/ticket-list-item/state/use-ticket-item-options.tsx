@@ -1,11 +1,11 @@
-import { useConfirmationModal } from "@/_src/app";
+import { useCallback, useMemo } from "react";
+import { useConfirmationModal } from "@/_src/shared/providers";
 import {
 	checkPermissions,
 	selectCurrentRole,
 	useGameState,
 } from "@/_src/pages/game-room/model";
 import { TrashIcon } from "@/_src/shared/ui/components/icon/svg/trash.icon";
-import { useCallback, useMemo } from "react";
 
 type Props = {
 	deleteTicket: () => void;

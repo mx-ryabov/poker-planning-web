@@ -10,7 +10,10 @@ import {
 	LiveStatus,
 	LiveStatusUpdaterFn,
 } from "./game-management-slice/game-managemet.model";
-import { UpdateGameTicket } from "./game-async-state-slice/game-async-state.dto";
+import {
+	UpdateGameSettings,
+	UpdateGameTicket,
+} from "./game-async-state-slice/game-async-state.dto";
 
 export type GameManagementSlice = {
 	activeTab: GameManagementTab | null;
@@ -37,6 +40,11 @@ export type GameAsyncSlice = {
 	changeVoteForParticipant: (
 		participantId: string,
 		voteId: string | null,
+	) => void;
+	updateSettings: (data: UpdateGameSettings) => void;
+	updateCurrentParticipant: (
+		data: GameParticipant,
+		onUpdate?: (oldData: GameParticipant, newData: GameParticipant) => void,
 	) => void;
 };
 

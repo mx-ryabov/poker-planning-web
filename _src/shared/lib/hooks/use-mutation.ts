@@ -1,4 +1,4 @@
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { z } from "zod";
 
 type UseMutateProps<TVariables = void, TData = unknown> = {
@@ -36,8 +36,9 @@ export function useMutation<TVariables = void, TData = unknown>(
 				const parsed = validationSchema.safeParse(variables);
 				isVarsValid = parsed.success;
 				if (parsed.success) parsedData = parsed.data;
-				if (!parsed.success)
+				if (!parsed.success) {
 					parsedError = new Error(parsed.error.errors[0].message);
+				}
 			}
 
 			if (isVarsValid) {

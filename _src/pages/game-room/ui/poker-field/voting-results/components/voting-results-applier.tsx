@@ -11,8 +11,8 @@ import { Button } from "@/_src/shared/ui/components/button";
 import { Select } from "@/_src/shared/ui/components/select";
 import type { Key, Selection } from "@react-types/shared";
 import { useCallback, useMemo, useState } from "react";
-import { useConfirmationModal } from "@/_src/app";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
+import { useConfirmationModal } from "@/_src/shared/providers";
 
 export function VotingResultsApplier() {
 	const { ticket } = useGameState(selectVotingProcess);

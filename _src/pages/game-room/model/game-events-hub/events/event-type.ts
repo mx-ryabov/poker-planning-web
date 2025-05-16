@@ -11,4 +11,6 @@ export enum GameEventType {
 	CardsRevealed = "CardsRevealed",
 	VotingFinished = "VotingFinished",
 	ParticipantVoted = "ParticipantVoted",
+	SettingsUpdated = "SettingsUpdated",
+	CurrentParticipantUpdated = "CurrentParticipantUpdated",
 }

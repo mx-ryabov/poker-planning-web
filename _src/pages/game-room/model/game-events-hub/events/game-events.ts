@@ -2,6 +2,7 @@ import {
 	GameParticipant,
 	GameTicket,
 	GameVotingResult,
+	UpdateGameSettingsResponse,
 } from "@/_src/shared/api/game-api";
 import { BaseEvent } from "./base-event";
 import { GameEventType } from "./event-type";
@@ -78,5 +79,17 @@ export class ParticipantVotedEvent extends BaseEvent<{
 }> {
 	constructor(payload: { participantId: string; voteId: string | null }) {
 		super(GameEventType.ParticipantVoted, payload);
+	}
+}
+
+export class SettingsUpdatedEvent extends BaseEvent<UpdateGameSettingsResponse> {
+	constructor(newSettings: UpdateGameSettingsResponse) {
+		super(GameEventType.SettingsUpdated, newSettings);
+	}
+}
+
+export class CurrentParticipantUpdatedEvent extends BaseEvent<GameParticipant> {
+	constructor(updatedparticipant: GameParticipant) {
+		super(GameEventType.CurrentParticipantUpdated, updatedparticipant);
 	}
 }

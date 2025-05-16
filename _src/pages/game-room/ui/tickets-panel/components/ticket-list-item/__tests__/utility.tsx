@@ -1,5 +1,5 @@
 import { FakeApi } from "@/__mocks__/api-fake-provider";
-import { ConfirmationModalState } from "@/_src/app/modals";
+import { ConfirmationModalState } from "@/_src/shared/ui/components/modals";
 import { GameRoomFakeProviderWrapper } from "@/_src/pages/game-room/__mocks__";
 import {
 	generateGame,

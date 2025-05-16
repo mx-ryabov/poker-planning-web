@@ -2,12 +2,13 @@ import { StoreApi, useStore } from "zustand";
 import {
 	EventSubscriber,
 	GameEventType,
+	SettingsUpdatedEvent,
 	VotingFinishedEvent,
 	VotingStartedEvent,
 } from "../../game-events-hub";
 import { GameStateStore } from "../../store/game-state-store.model";
 import { useEffect } from "react";
-import { useApi } from "@/_src/app";
+import { useApi } from "@/_src/shared/providers";
 
 type Props = {
 	eventSubscriber: EventSubscriber;
@@ -21,6 +22,10 @@ export function useGameEvDis({ eventSubscriber, gameStateStore }: Props) {
 	const finishVoting = useStore(
 		gameStateStore,
 		(state) => state.finishVoting,
+	);
+	const updateSettings = useStore(
+		gameStateStore,
+		(state) => state.updateSettings,
 	);
 
 	useEffect(() => {
@@ -47,4 +52,12 @@ export function useGameEvDis({ eventSubscriber, gameStateStore }: Props) {
 
 		return eventSubscriber(GameEventType.VotingFinished, handler);
 	}, [eventSubscriber, finishVoting, api]);
+
+	useEffect(() => {
+		const handler = ({ payload }: SettingsUpdatedEvent) => {
+			updateSettings(payload);
+		};
+
+		return eventSubscriber(GameEventType.SettingsUpdated, handler);
+	}, [eventSubscriber, updateSettings]);
 }

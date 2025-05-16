@@ -1,6 +1,6 @@
 "use client";
 
-import { StringHelper } from "@/_src/shared/lib/utils/string-helper";
+import { GameSchemaBuildersMap } from "@/_src/entities/game";
 import { Color } from "@/_src/shared/ui/colors";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
@@ -21,13 +21,10 @@ type Props = {
 };
 
 const GameJoinFormSchema = z.object({
-	displayName: z
-		.string()
-		.min(1, "Don't be shy!")
-		.max(50, "Maybe you have a short name?")
-		.transform((val) =>
-			StringHelper.cleanUpString(val, { onlyWords: true }),
-		),
+	displayName: GameSchemaBuildersMap.participant.name(
+		"Don't be shy!",
+		"Maybe you have a short name?",
+	),
 });
 
 export function GameJoinForm({ gameId, onSubmit }: Props) {
@@ -65,9 +62,9 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 	const error = formState.errors.displayName?.message || serverError;
 
 	return (
-		<form action={submitAction} className="w-full h-full flex">
-			<div className="w-full h-full flex flex-row px-10">
-				<div className="w-full h-full flex flex-col shrink-0 basis-full justify-center px-10">
+		<form action={submitAction} className="flex h-full w-full">
+			<div className="flex h-full w-full flex-row px-10">
+				<div className="flex h-full w-full shrink-0 basis-full flex-col justify-center px-10">
 					<Controller
 						control={control}
 						name="displayName"
@@ -89,25 +86,25 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 			</div>
 
 			<footer
-				className="w-full flex justify-between px-10 pb-10 items-center fixed bottom-0"
+				className="fixed bottom-0 flex w-full items-center justify-between px-10 pb-10"
 				role="footer"
 			>
 				<section data-testid="auth-section">
-					<p className="flex flex-row text-neutral-300 item-center text-sm">
+					<p className="item-center flex flex-row text-sm text-neutral-300">
 						<ProfileIcon
 							color={Color.Neutral300}
 							className="mr-2"
 						/>
 						<NextLink
 							href="/sign-in"
-							className="text-neutral-900 mr-1 leading-relaxed"
+							className="mr-1 leading-relaxed text-neutral-900"
 						>
 							Login
 						</NextLink>
 						<span>or</span>
 						<NextLink
 							href="/sign-up"
-							className="text-neutral-900 mx-1 leading-relaxed"
+							className="mx-1 leading-relaxed text-neutral-900"
 						>
 							Sign Up
 						</NextLink>

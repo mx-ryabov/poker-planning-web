@@ -13,23 +13,15 @@ export const Switch = forwardRef(
 		const inputRef = useObjectRef(ref);
 		return (
 			<Checkbox
-				className="group flex flex-row items-center gap-2 cursor-pointer"
+				className="group flex cursor-pointer flex-row items-center gap-2"
 				inputRef={inputRef}
 				{...checkboxProps}
 			>
 				<div
 					data-testid="switch-container"
-					className="block h-[24px] w-[42px] rounded-[24px] bg-neutral-200 relative cursor-pointer transition-all shadow-inner
-                group-has-checked:bg-primary-500 group-has-[:checked]:checked-state
-                group-has-disabled:bg-neutral-100
-				  group-data-[focused=true]:outline group-data-[focused=true]:outline-offset-2 group-data-[focused=true]:outline-primary-500"
+					className="group-has-checked:bg-primary-500 group-has-[:checked]:checked-state group-data-[focused=true]:outline-primary-500 relative block h-[24px] min-h-[24px] w-[42px] min-w-[42px] shrink cursor-pointer rounded-[24px] bg-neutral-200 shadow-inner transition-all group-has-disabled:bg-neutral-100 group-data-[focused=true]:outline group-data-[focused=true]:outline-offset-2"
 				>
-					<div
-						className="w-[16px] h-[16px] rounded-[16px] bg-white absolute top-1 transition-all translate-x-1 flex items-center justify-center drop-shadow-md
-                    group-has-checked:translate-x-[21px]
-                    group-active:w-[20px] group-active:group-has-checked:translate-x-[17px]
-                    group-has-disabled:bg-neutral-300"
-					></div>
+					<div className="absolute top-1 flex h-[16px] w-[16px] translate-x-1 items-center justify-center rounded-[16px] bg-white drop-shadow-md transition-all group-active:w-[20px] group-has-checked:translate-x-[21px] group-active:group-has-checked:translate-x-[17px] group-has-disabled:bg-neutral-300"></div>
 				</div>
 
 				<div className="flex flex-col">

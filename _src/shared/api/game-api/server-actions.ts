@@ -8,6 +8,7 @@ import {
 	GameParticipant,
 	GameTicket,
 	GameVotingResult,
+	UpdateGameSettingsRequest,
 } from "./dto";
 import { redirect } from "next/navigation";
 import {
@@ -19,6 +20,7 @@ import {
 import { GetGameByIdResponse } from "./dto/get-game-by-id-response";
 import { UpdateTicketForGameRequest } from "./dto/update-ticket-for-game-request";
 import { revalidateTag } from "next/cache";
+import { UpdateGameSettingsResponse } from "./dto/update-game-settings-response";
 
 export async function createGameAsGuest(request: CreateGameRequest) {
 	const res = await appFetchPost<CreateGameRequest>("/games", request);
@@ -199,6 +201,25 @@ export async function vote(
 	} else {
 		throw new Error(
 			`Vote by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
+export async function updateSettings(
+	gameId: string,
+	body: UpdateGameSettingsRequest,
+) {
+	const res = await appFetchPut<UpdateGameSettingsRequest>(
+		`/games/${gameId}/settings`,
+		body,
+	);
+
+	if (res.ok) {
+		const data: UpdateGameSettingsResponse = await res.json();
+		return data;
+	} else {
+		throw new Error(
+			`Updating GameSettings by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
 		);
 	}
 }

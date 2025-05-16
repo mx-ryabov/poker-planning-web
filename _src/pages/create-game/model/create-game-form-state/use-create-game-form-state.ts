@@ -1,32 +1,22 @@
-import { StringHelper } from "@/_src/shared/lib";
+import { GameSchemaBuildersMap } from "@/_src/entities/game";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const CreateGameFormSchema = z.object({
-	name: z
-		.string()
-		.min(1, "You have to come up with something. The name can't be empty")
-		.max(
-			50,
-			"Statistically, 50 can be painful. For your brain, to perceive the information.",
-		)
-		.transform((val) => StringHelper.cleanUpString(val)),
-	votingSystemId: z
-		.string({
-			required_error:
-				"Choose a voting system. Otherwise your team won't be happy.",
-		})
-		.uuid(),
-	creatorName: z
-		.string()
-		.min(1, "Don't be shy!")
-		.max(50, "Maybe you have a short name?")
-		.transform((val) =>
-			StringHelper.cleanUpString(val, { onlyWords: true }),
-		),
-	isAutoRevealCards: z.boolean().optional(),
+	name: GameSchemaBuildersMap.name(
+		"You have to come up with something. The name can't be empty",
+		"Statistically, 50 can be painful. For your brain, to perceive the information.",
+	),
+	votingSystemId: GameSchemaBuildersMap.votingSystemId(
+		"Choose a voting system. Otherwise your team won't be happy.",
+	),
+	creatorName: GameSchemaBuildersMap.participant.name(
+		"Don't be shy!",
+		"Maybe you have a short name?",
+	),
+	isAutoRevealCards: GameSchemaBuildersMap.settings.isAutoRevealCards(),
 });
 
 export type CreateGameFormFormState = z.infer<typeof CreateGameFormSchema>;

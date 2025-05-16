@@ -16,6 +16,7 @@ import {
 	useTicketUpdate,
 } from "@/_src/pages/game-room/model";
 import { VoteButton } from "./vote-button";
+import { Label } from "react-aria-components";
 
 type Props = {
 	data: GameTicket;
@@ -111,8 +112,10 @@ export function TicketItemFullView(props: Props) {
 			</div>
 
 			<div className="flex flex-col gap-1">
+				<Label className="text-sm font-semibold text-neutral-500">
+					Description
+				</Label>
 				<InlineEditableTextarea
-					label="Description"
 					value={state.description || ""}
 					placeholder={!isEditable ? "Empty" : "Edit description"}
 					isDisabled={!isEditable}

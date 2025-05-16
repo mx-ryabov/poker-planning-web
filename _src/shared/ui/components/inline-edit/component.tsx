@@ -100,7 +100,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 		>
 			<div ref={viewContainerRef} className="flex flex-col gap-1">
 				{label && (
-					<Label className="text-sm font-semibold text-neutral-500">
+					<Label className="px-1 text-xs font-medium text-neutral-500">
 						{label}
 					</Label>
 				)}

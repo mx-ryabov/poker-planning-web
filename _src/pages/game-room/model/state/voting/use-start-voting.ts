@@ -1,4 +1,4 @@
-import { useApi } from "@/_src/app";
+import { useApi } from "@/_src/shared/providers";
 import { useMutation } from "@/_src/shared/lib";
 import { selectCurrentGameId, useGameState } from "../../store";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";

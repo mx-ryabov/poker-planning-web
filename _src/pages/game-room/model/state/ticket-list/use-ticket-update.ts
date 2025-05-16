@@ -1,21 +1,22 @@
-import { useApi } from "@/_src/app";
+import { useApi } from "@/_src/shared/providers";
+import { GameSchemaBuildersMap } from "@/_src/entities/game";
 import {
 	selectCurrentGameId,
 	useGameState,
 } from "@/_src/pages/game-room/model";
-import { GameTicket, TicketType } from "@/_src/shared/api/game-api/dto";
+import { GameTicket } from "@/_src/shared/api/game-api/dto";
 import { useMutation } from "@/_src/shared/lib";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { useCallback, useOptimistic } from "react";
 import { z } from "zod";
 
 export const TicketItemStateSchema = z.object({
-	title: z.string().min(1, "Title can't be empty"),
-	description: z.string().optional(),
-	estimation: z.string().nullable(),
-	type: z.nativeEnum(TicketType, {
-		required_error: "Don't you forgot anything? (Ticket Type)",
-	}),
+	title: GameSchemaBuildersMap.ticket.title("Title can't be empty"),
+	description: GameSchemaBuildersMap.ticket.description(),
+	estimation: GameSchemaBuildersMap.ticket.estimation(),
+	type: GameSchemaBuildersMap.ticket.type(
+		"Don't you forgot anything? (Ticket Type)",
+	),
 });
 
 export type TicketItemState = z.infer<typeof TicketItemStateSchema>;

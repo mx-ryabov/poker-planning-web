@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppProvider } from "@/_src/app/providers";
+import { AppProvider } from "@/_src/shared/providers";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -30,7 +30,7 @@ export default function RootLayout({
 						/>
 					)}
 			</head>
-			<body className={`${inter.variable} font-sans p-0`}>
+			<body className={`${inter.variable} p-0 font-sans`}>
 				<AppProvider>{children}</AppProvider>
 			</body>
 		</html>
