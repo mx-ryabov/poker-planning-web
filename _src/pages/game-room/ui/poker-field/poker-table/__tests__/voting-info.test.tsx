@@ -21,6 +21,7 @@ describe("Voting Info", () => {
 			votingProcess: {
 				status: GameVotingStatus.Inactive,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -32,6 +33,7 @@ describe("Voting Info", () => {
 			votingProcess: {
 				status: GameVotingStatus.InProgress,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -45,6 +47,7 @@ describe("Voting Info", () => {
 				ticket: generateTicket({
 					identifier: "test-ticket-identifier",
 				}),
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -68,6 +71,7 @@ function renderComponent({
 	votingProcess = {
 		status: GameVotingStatus.Inactive,
 		ticket: null,
+		startTime: new Date().toString(),
 	},
 }: RenderProps) {
 	return render(<VotingInfo />, {

@@ -8,6 +8,7 @@ import {
 	GameParticipant,
 	GameTicket,
 	GameVotingResult,
+	StartVotingResult,
 	UpdateGameSettingsRequest,
 } from "./dto";
 import { redirect } from "next/navigation";
@@ -148,13 +149,14 @@ export async function deleteTicketById(
 export async function startVoting(
 	gameId: string,
 	ticketId: string | null,
-): Promise<void> {
+): Promise<StartVotingResult> {
 	const res = await appFetchPut(`/games/${gameId}/start-voting`, {
 		ticketId,
 	});
 
 	if (res.ok) {
-		return;
+		const data: StartVotingResult = await res.json();
+		return data;
 	} else {
 		throw new Error(
 			`Start Voting by GameId and TicketId is falied. Status: ${res.status}. Message: ${res.statusText}`,

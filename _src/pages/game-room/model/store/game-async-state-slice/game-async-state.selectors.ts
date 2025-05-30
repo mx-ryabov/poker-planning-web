@@ -60,3 +60,6 @@ export const selectLastVotingResult = (state: GameStateStore) =>
 
 export const selectPreliminaryVotingResults = (state: GameStateStore) =>
 	state.state.game.participants.map((p) => p.vote);
+
+export const selectGameSettings = (state: GameStateStore) =>
+	state.state.game.settings;

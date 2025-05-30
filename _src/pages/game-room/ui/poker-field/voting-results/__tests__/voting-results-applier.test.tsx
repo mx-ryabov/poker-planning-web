@@ -29,6 +29,7 @@ describe("Voting Results Applier", () => {
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -40,6 +41,7 @@ describe("Voting Results Applier", () => {
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: generateTicket({}),
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -51,6 +53,7 @@ describe("Voting Results Applier", () => {
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: generateTicket({}),
+				startTime: new Date().toString(),
 			},
 			participants: [
 				generateParticipant({
@@ -73,6 +76,7 @@ describe("Voting Results Applier", () => {
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: generateTicket({}),
+				startTime: new Date().toString(),
 			},
 			participants: [
 				generateParticipant({
@@ -96,6 +100,7 @@ describe("Voting Results Applier", () => {
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: generateTicket({}),
+				startTime: new Date().toString(),
 			},
 			participants: [
 				generateParticipant({
@@ -120,6 +125,7 @@ describe("Voting Results Applier", () => {
 				ticket: generateTicket({
 					identifier: "test-ticket-identifier",
 				}),
+				startTime: new Date().toString(),
 			},
 			participants: [
 				generateParticipant({
@@ -151,6 +157,7 @@ describe("Voting Results Applier", () => {
 					id: "test-ticket-id",
 					identifier: "test-ticket-identifier",
 				}),
+				startTime: new Date().toString(),
 			},
 			participants: [
 				generateParticipant({
@@ -192,6 +199,7 @@ describe("Voting Results Applier", () => {
 					id: "test-ticket-id",
 					identifier: "test-ticket-identifier",
 				}),
+				startTime: new Date().toString(),
 			},
 			participants: [
 				generateParticipant({
@@ -231,6 +239,7 @@ describe("Voting Results Applier", () => {
 						id: "test-ticket-id",
 						identifier: "test-ticket-identifier",
 					}),
+					startTime: new Date().toString(),
 				},
 				participants: [
 					generateParticipant({
@@ -268,6 +277,7 @@ describe("Voting Results Applier", () => {
 						id: "test-ticket-id",
 						identifier: "test-ticket-identifier",
 					}),
+					startTime: new Date().toString(),
 				},
 				participants: [
 					generateParticipant({
@@ -311,6 +321,7 @@ function renderComponent({
 	votingProcess = {
 		status: GameVotingStatus.Revealed,
 		ticket: generateTicket({}),
+		startTime: new Date().toString(),
 	},
 	updateByField = vi.fn(),
 	finishVoting = vi.fn(),

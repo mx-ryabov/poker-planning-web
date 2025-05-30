@@ -11,6 +11,7 @@ import { usePokerFieldState } from "../poker-field-provider";
 import { VotingInfo } from "./components/voting-info";
 import { cva } from "class-variance-authority";
 import { TablePlayersSeating } from "./components/table-players-seating";
+import { VotingTimer } from "./components/voting-timer";
 
 export function PokerTable() {
 	const isActionsVisible = usePermissions("ChangeVoting");
@@ -24,7 +25,7 @@ export function PokerTable() {
 				<TableSvg />
 
 				<div
-					className="absolute top-1/2 left-1/2 -translate-1/2"
+					className="absolute top-1/2 left-1/2 flex -translate-1/2 flex-col gap-2"
 					style={{
 						opacity:
 							highlightedVoteId === undefined ? "100%" : "40%",
@@ -40,6 +41,7 @@ export function PokerTable() {
 							<VotingInfo />
 						</div>
 					)}
+					<VotingTimer />
 				</div>
 				<TablePlayersSeating>
 					{({ seatedParticipants, seatRowPosition }) => (

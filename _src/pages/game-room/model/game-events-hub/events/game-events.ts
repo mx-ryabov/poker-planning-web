@@ -2,6 +2,7 @@ import {
 	GameParticipant,
 	GameTicket,
 	GameVotingResult,
+	StartVotingResult,
 	UpdateGameSettingsResponse,
 } from "@/_src/shared/api/game-api";
 import { BaseEvent } from "./base-event";
@@ -55,8 +56,11 @@ export class DisconnectedEvent extends BaseEvent<Error | undefined> {
 	}
 }
 
-export class VotingStartedEvent extends BaseEvent<{ ticketId: string | null }> {
-	constructor(payload: { ticketId: string | null }) {
+type VotingStartedEventPayload = {
+	ticketId: string | null;
+} & StartVotingResult;
+export class VotingStartedEvent extends BaseEvent<VotingStartedEventPayload> {
+	constructor(payload: VotingStartedEventPayload) {
 		super(GameEventType.VotingStarted, payload);
 	}
 }

@@ -330,7 +330,9 @@ describe("Game State Store", () => {
 			expect(store.getState().state.game.votingProcess.status).toBe(
 				GameVotingStatus.Inactive,
 			);
-			store.getState().startVoting(null);
+			store
+				.getState()
+				.startVoting(null, { startTime: new Date().toString() });
 			expect(store.getState().state.game.votingProcess.status).toBe(
 				GameVotingStatus.InProgress,
 			);
@@ -352,7 +354,9 @@ describe("Game State Store", () => {
 			expect(store.getState().state.game.votingProcess.status).toBe(
 				GameVotingStatus.Inactive,
 			);
-			store.getState().startVoting("ticket-id");
+			store
+				.getState()
+				.startVoting("ticket-id", { startTime: new Date().toString() });
 			expect(store.getState().state.game.votingProcess.status).toBe(
 				GameVotingStatus.InProgress,
 			);
@@ -391,6 +395,7 @@ describe("Game State Store", () => {
 						votingProcess: {
 							status: GameVotingStatus.InProgress,
 							ticket: ticketForVote,
+							startTime: new Date().toString(),
 						},
 						tickets: [ticketForVote],
 					},

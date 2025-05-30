@@ -7,6 +7,7 @@ import {
 	GameVote,
 	GameVotingResult,
 	GameVotingStatus,
+	StartVotingResult,
 } from "@/_src/shared/api/game-api";
 import { UpdateGameSettings, UpdateGameTicket } from "./game-async-state.dto";
 
@@ -89,7 +90,7 @@ export function createGameAsyncStateSliceCreator(
 				state.state = updatedState;
 			});
 		},
-		startVoting: (ticketId: string | null) => {
+		startVoting: (ticketId: string | null, data: StartVotingResult) => {
 			set((state) => {
 				state.state.game.votingProcess.status =
 					GameVotingStatus.InProgress;
@@ -98,6 +99,7 @@ export function createGameAsyncStateSliceCreator(
 					null;
 
 				state.state.game.votingProcess.ticket = ticket;
+				state.state.game.votingProcess.startTime = data.startTime;
 			});
 		},
 		finishVoting: (result: GameVotingResult) => {
@@ -105,11 +107,13 @@ export function createGameAsyncStateSliceCreator(
 				state.state.game.votingProcess.status =
 					GameVotingStatus.Inactive;
 				state.state.game.votingProcess.ticket = null;
+				state.state.game.votingProcess.startTime = null;
 				state.state.game.votingResults.push(result);
 			});
 		},
 		revealCards: () => {
 			set((state) => {
+				state.state.game.votingProcess.startTime = null;
 				state.state.game.votingProcess.status =
 					GameVotingStatus.Revealed;
 			});
