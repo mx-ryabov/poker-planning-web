@@ -6,7 +6,8 @@ export async function getVotingSystems(): Promise<VotingSystem[]> {
 	const res = await appFetchGet("/voting-systems");
 
 	if (!res.ok) {
-		throw new Error(res.statusText);
+		const errorDeatils = await res.text();
+		throw new Error(errorDeatils);
 	}
 
 	return res.json();

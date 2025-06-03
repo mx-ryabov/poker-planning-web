@@ -220,9 +220,8 @@ export async function updateSettings(
 		const data: UpdateGameSettingsResponse = await res.json();
 		return data;
 	} else {
-		throw new Error(
-			`Updating GameSettings by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
-		);
+		const errorDeatils = await res.text();
+		throw new Error(JSON.parse(errorDeatils).detail);
 	}
 }
 
