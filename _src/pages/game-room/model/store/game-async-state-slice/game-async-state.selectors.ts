@@ -1,3 +1,4 @@
+import { GameVotingStatus } from "@/_src/shared/api";
 import { RoleLevels } from "../../constants";
 import { GameStateStore } from "../game-state-store.model";
 
@@ -55,8 +56,14 @@ export const selectVotingSystemVotes = (state: GameStateStore) =>
 export const selectVotingProcess = (state: GameStateStore) =>
 	state.state.game.votingProcess;
 
+export const selectIfVotingStatusIsInProgress = (state: GameStateStore) =>
+	state.state.game.votingProcess.status === GameVotingStatus.InProgress;
+
 export const selectLastVotingResult = (state: GameStateStore) =>
 	state.state.game.votingResults.at(-1);
 
 export const selectPreliminaryVotingResults = (state: GameStateStore) =>
 	state.state.game.participants.map((p) => p.vote);
+
+export const selectGameSettings = (state: GameStateStore) =>
+	state.state.game.settings;

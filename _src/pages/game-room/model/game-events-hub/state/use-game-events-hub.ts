@@ -77,7 +77,8 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 			}
 			setConnection(null);
 		};
-	}, [setConnection, gameId, gameEventTarget, accessTokenFactory]);
+		// avoid putting accessTokenFactory to the dependency array since every time when we revalidate async state the reconnection happens
+	}, [setConnection, gameId, gameEventTarget]);
 
 	useEffect(() => {
 		if (!connection || connection.state !== HubConnectionState.Connected)

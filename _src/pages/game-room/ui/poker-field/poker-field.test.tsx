@@ -25,6 +25,7 @@ describe("Poker Field", () => {
 			votingProcess: {
 				status: GameVotingStatus.Inactive,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -39,6 +40,7 @@ describe("Poker Field", () => {
 			votingProcess: {
 				status: GameVotingStatus.InProgress,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 		getByTestId("hole-cards-container");
@@ -52,6 +54,7 @@ describe("Poker Field", () => {
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 		getByTestId("voting-results-container");
@@ -74,6 +77,7 @@ function renderComponent({
 	votingProcess = {
 		status: GameVotingStatus.Inactive,
 		ticket: null,
+		startTime: new Date().toString(),
 	},
 }: RenderProps) {
 	return render(<PokerField />, {

@@ -3,6 +3,7 @@ import {
 	GameTicket,
 	GameVote,
 	GameVotingResult,
+	StartVotingResult,
 } from "@/_src/shared/api/game-api";
 import { GameAsyncState } from "./game-async-state-slice/game-async-state.model";
 import {
@@ -33,7 +34,7 @@ export type GameAsyncSlice = {
 	updateTicket: (ticketId: string, data: Partial<UpdateGameTicket>) => void;
 	removeTicket: (ticketId: string) => void;
 	revalidateAsyncState: (updatedState: GameAsyncState) => void;
-	startVoting: (ticketId: string | null) => void;
+	startVoting: (ticketId: string | null, data: StartVotingResult) => void;
 	finishVoting: (votingResult: GameVotingResult) => void;
 	revealCards: () => void;
 	changeVote: (vote: GameVote | null) => void;

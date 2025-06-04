@@ -8,7 +8,11 @@ export const NEWLY_CREATED_GAME: GetGameByIdResponse = {
 	name: "Test And Test",
 	link: "9d9d87f5-4f8b-402d-9f3b-8d886831c19c",
 	settings: { isAutoRevealCards: false, autoRevealPeriod: 120 },
-	votingProcess: { status: GameVotingStatus.Inactive, ticket: null },
+	votingProcess: {
+		status: GameVotingStatus.Inactive,
+		ticket: null,
+		startTime: new Date().toString(),
+	},
 	votingSystem: {
 		id: "6a113d25-34c9-4b49-985c-2df6dd67650c",
 		name: "Fibonacci",

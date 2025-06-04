@@ -2,6 +2,11 @@ import { Switch } from "@/_src/shared/ui/components/switch";
 import { InlineEditableTextField } from "@/_src/shared/ui/components/inline-editable-fields";
 import { QuestionIcon } from "@/_src/shared/ui/components/icon/svg/question.icon";
 import { useCallback } from "react";
+import {
+	selectIfVotingStatusIsInProgress,
+	selectVotingProcess,
+	useGameState,
+} from "../../../model";
 
 type AutoRevealCardsFieldValue = {
 	autoRevealPeriod: number;
@@ -21,6 +26,10 @@ export function AutoRevealCardsField({
 	onChange,
 	autoRevealPeriodValidate,
 }: Props) {
+	const isVotingStatusInProgress = useGameState(
+		selectIfVotingStatusIsInProgress,
+	);
+
 	const onIsAutoRevealChange = useCallback(
 		(isSelected: boolean) => {
 			onChange({
@@ -79,7 +88,11 @@ export function AutoRevealCardsField({
 						id="auto-reveal-period-input"
 						type="number"
 						validate={autoRevealPeriodValidateInner}
-						isDisabled={isReadonly || !value.isAutoRevealCards}
+						isDisabled={
+							isReadonly ||
+							!value.isAutoRevealCards ||
+							isVotingStatusInProgress
+						}
 						value={String(value.autoRevealPeriod)}
 						onConfirm={onAutoRevealPeriodConfirm}
 					/>

@@ -25,6 +25,7 @@ describe("Voting Actions", () => {
 			votingProcess: {
 				status: GameVotingStatus.Inactive,
 				ticket: null,
+				startTime: new Date().toString(),
 			},
 		});
 
@@ -171,6 +172,7 @@ function renderComponent(props: RenderComponentProps = {}) {
 					votingProcess: {
 						status: GameVotingStatus.Inactive,
 						ticket: null,
+						startTime: new Date().toString(),
 						...props.votingProcess,
 					},
 				}),

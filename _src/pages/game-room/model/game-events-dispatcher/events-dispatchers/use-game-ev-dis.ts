@@ -30,7 +30,7 @@ export function useGameEvDis({ eventSubscriber, gameStateStore }: Props) {
 
 	useEffect(() => {
 		const handler = ({ payload }: VotingStartedEvent) => {
-			startVoting(payload.ticketId);
+			startVoting(payload.ticketId, payload);
 		};
 
 		return eventSubscriber(GameEventType.VotingStarted, handler);
