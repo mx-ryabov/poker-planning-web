@@ -2,6 +2,7 @@ const localesPlugin = require('@react-aria/optimize-locales-plugin');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   webpack(config, {isServer}) {
     if (!isServer) {
       // Don't include any locale strings in the client JS bundle.
