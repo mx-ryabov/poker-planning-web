@@ -4,7 +4,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-RUN corepack enable pnpm && pnpm install
+RUN corepack enable pnpm && pnpm install --frozen-lockfile --prod --child-concurrency=2
 
 FROM base AS builder
 WORKDIR /app
