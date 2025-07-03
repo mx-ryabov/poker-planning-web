@@ -19,12 +19,12 @@ export default function Error({
 		process.env.NODE_ENV === "development" ? error.message : null;
 
 	return (
-		<div className="w-full h-dvh flex flex-col items-center justify-center gap-8">
+		<div className="flex h-dvh w-full flex-col items-center justify-center gap-8">
 			<div className="flex flex-col items-center">
-				<h1 className="text-5xl font-bold leading-normal text-neutral-500 text-center mb-2">
+				<h1 className="mb-2 text-center text-5xl leading-normal font-bold text-neutral-900">
 					Oops!
 				</h1>
-				<p className="text-base text-neutral-500 text-center">
+				<p className="text-center text-base text-neutral-900">
 					Something went wrong...
 					<br />
 					<span className="italic">{devInfo}</span>

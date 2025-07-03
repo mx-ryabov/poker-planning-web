@@ -7,9 +7,7 @@ export function VotingResults() {
 
 	return (
 		<div className="flex flex-row items-center justify-center gap-4">
-			<div className="relative h-[200px] w-[200px]">
-				<ResultsChart />
-			</div>
+			<ResultsChart />
 			{isChangeVotingAllowed && <VotingResultsApplier />}
 		</div>
 	);

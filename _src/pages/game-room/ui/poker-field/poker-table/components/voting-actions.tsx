@@ -40,7 +40,7 @@ export function VotingActions() {
 						onPress={onStartVoting}
 						isPending={isStartVotingPending}
 					/>
-					<p className="w-40 text-center text-xs text-neutral-500">
+					<p className="w-40 text-center text-xs text-neutral-800">
 						Or choose a ticket for voting in the Issues List
 					</p>
 				</div>
@@ -54,11 +54,11 @@ export function VotingActions() {
 						isPending={isRevealCardsPending}
 					/>
 					{votingProcess.ticket === null ? (
-						<p className="text-sm text-neutral-500">
+						<p className="text-sm text-neutral-900">
 							Regular Voting in progress
 						</p>
 					) : (
-						<div className="flex flex-row gap-1 text-sm text-neutral-500">
+						<div className="flex flex-row gap-1 text-sm text-neutral-900">
 							The ticket{" "}
 							<TicketLink
 								identifier={votingProcess.ticket.identifier}

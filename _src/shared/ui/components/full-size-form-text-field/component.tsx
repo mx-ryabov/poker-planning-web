@@ -36,7 +36,7 @@ export const FullSizeFormTextInput = forwardRef(
 
 		return (
 			<label
-				className="flex flex-col relative"
+				className="relative flex flex-col"
 				data-testid={`${inputProps.name || ""}-text-field-container`}
 			>
 				<span className="label mb-4 text-lg text-neutral-900">
@@ -50,16 +50,16 @@ export const FullSizeFormTextInput = forwardRef(
 						ref={ref}
 						{...inputProps}
 						className={twMerge(
-							"min-w-[400px] h-20 text-6xl outline-hidden font-semibold text-neutral-500 placeholder:text-neutral-200",
+							"h-20 min-w-[400px] text-6xl font-semibold text-neutral-900 outline-hidden placeholder:text-neutral-400",
 							inputProps.className,
 						)}
 					/>
 				</div>
 
-				<div className="flex flex-row gap-1 h-5">
+				<div className="flex h-5 flex-row gap-1">
 					{maxLength && charsCount > 0 && (
 						<span
-							className={`text-sm ${charsCount > maxLength ? "text-error-600 font-semibold" : "text-neutral-300"}`}
+							className={`text-sm ${charsCount > maxLength ? "text-error-600 font-semibold" : "text-neutral-700"}`}
 							data-testid="length-state"
 						>
 							{charsCount}/{maxLength}
@@ -75,10 +75,10 @@ export const FullSizeFormTextInput = forwardRef(
 
 				{charsCount > 0 && (
 					<div
-						className="absolute left-0 -bottom-3 translate-y-full"
+						className="absolute -bottom-3 left-0 translate-y-full"
 						data-testid="enter-shortcut"
 					>
-						<div className="py-1 px-2 border border-neutral-200 rounded-sm text-sm text-neutral-300 animate-downOut">
+						<div className="animate-downOut rounded-sm border border-neutral-600 px-2 py-1 text-sm text-neutral-700">
 							↵ Enter
 						</div>
 					</div>

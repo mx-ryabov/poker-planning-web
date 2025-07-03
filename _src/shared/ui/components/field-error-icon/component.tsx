@@ -41,7 +41,7 @@ function TriggerElement(props: Omit<Props, "errorMsg">) {
 			ref={ref}
 			data-testid="field-error-icon"
 			className={twMerge(
-				"p-1 rounded-md transition-colors text-error-600",
+				"text-error-700 rounded-md p-1 transition-colors",
 				className,
 			)}
 		>

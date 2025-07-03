@@ -9,11 +9,12 @@ const collapseBtnStyles = cva(
 		"flex items-center justify-center",
 		"absolute",
 		"w-8 h-8",
-		"border-2 border-neutral-100 rounded-full",
-		"hover:border-primary-300 active:border-primary-500",
-		"bg-white text-neutral-200",
-		"hover:text-primary-300 active:text-primary-500",
+		"border-2 border-neutral-300 rounded-full",
+		"hover:border-primary-600 active:border-primary-700",
+		"bg-white text-neutral-400",
+		"hover:text-primary-600 active:text-primary-700",
 		"outline-hidden transition-colors",
+		"cursor-pointer",
 	],
 	{
 		variants: {
@@ -40,7 +41,7 @@ export function Separator({
 }: SeparatorProps) {
 	const direction = position === "start" ? "right/bottom" : "left/top";
 	return (
-		<div className="h-full relative z-10" data-testid="drawer-separator">
+		<div className="relative z-10 h-full" data-testid="drawer-separator">
 			<ResizeSeparator
 				orientation="vertical"
 				direction={direction}

@@ -61,10 +61,10 @@ export function DrawerHeader() {
 
 	return (
 		<header
-			className="h-12 mx-6 mt-6"
+			className="mx-6 mt-6 h-12"
 			data-testid="game-management-drawer-header"
 		>
-			<div className="w-full h-full relative flex flex-col overflow-hidden">
+			<div className="relative flex h-full w-full flex-col overflow-hidden">
 				{headers.map((header) => (
 					<div
 						key={header.tab}
@@ -76,12 +76,12 @@ export function DrawerHeader() {
 						{header.icon({
 							size: 42,
 							thikness: "light",
-							color: Color.Neutral700,
+							color: Color.Neutral900,
 						})}
 						<div className="flex flex-col justify-center">
 							<Drawer.Heading>{header.title}</Drawer.Heading>
 							{header?.subTitle && (
-								<p className="text-neutral-300 text-xs">
+								<p className="text-xs text-neutral-700">
 									{header?.subTitle}
 								</p>
 							)}

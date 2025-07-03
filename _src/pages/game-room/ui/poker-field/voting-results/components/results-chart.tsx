@@ -27,82 +27,107 @@ export function ResultsChart() {
 		dataVoteIds: chartData.dataVoteIds,
 	});
 
+	console.log(chartData);
+
 	return (
-		<div className="relative h-full w-full">
-			<Doughnut
-				options={{
-					cutout: "75%",
-					plugins: {
-						tooltip: {
-							enabled: false,
-							position: "nearest",
-							external: tooltipManager({
-								chartTooltipRef,
-								labelCountMap: chartData.dataMap,
-								votesCount: results.length,
-							}),
-						},
-					},
-					onHover,
-				}}
-				data={{
-					labels: chartData.labels,
-
-					datasets: [
-						{
-							data: chartData.data,
-							circumference: 240,
-							borderRadius: 12,
-							rotation: -120,
-							offset: 15,
-							hoverBackgroundColor: (ctx) => {
-								const index = ctx.dataIndex;
-								if (hoveredGroupIndex === null) {
-									return CHART_ACTIVE_HOVER_COLORS[index];
-								}
-								if (hoveredGroupIndex === index) {
-									return CHART_ACTIVE_COLORS[index];
-								}
-								return CHART_INACTIVE_HOVER_COLORS[index];
-							},
-							backgroundColor: (ctx) => {
-								const index = ctx.dataIndex;
-								if (hoveredGroupIndex === null) {
-									return CHART_ACTIVE_COLORS[index];
-								}
-								if (hoveredGroupIndex === index) {
-									return CHART_ACTIVE_COLORS[index];
-								}
-								return CHART_INACTIVE_COLORS[index];
+		<div className="relative flex flex-row items-center gap-8">
+			<div className="relative h-[200px] w-[200px]">
+				<Doughnut
+					options={{
+						cutout: "75%",
+						plugins: {
+							tooltip: {
+								enabled: false,
+								position: "nearest",
+								external: tooltipManager({
+									chartTooltipRef,
+									labelCountMap: chartData.dataMap,
+									votesCount: results.length,
+								}),
 							},
 						},
-					],
-				}}
-				aria-label="Results chart"
-			/>
-			<ChartTooltip ref={chartTooltipRef} />
+						onHover,
+					}}
+					data={{
+						labels: chartData.labels,
 
-			<div className="absolute inset-0 -z-10 flex flex-col items-center justify-center gap-2">
-				{chartData.mostPopularLabel !== null && (
-					<>
-						<div className="pt-6 text-xl font-bold text-neutral-500">
-							{chartData.mostPopularLabel}
+						datasets: [
+							{
+								data: chartData.data,
+								circumference: 240,
+								borderRadius: 12,
+								rotation: -120,
+								offset: 15,
+								hoverBackgroundColor: (ctx) => {
+									const index = ctx.dataIndex;
+									if (hoveredGroupIndex === null) {
+										return CHART_ACTIVE_HOVER_COLORS[index];
+									}
+									if (hoveredGroupIndex === index) {
+										return CHART_ACTIVE_COLORS[index];
+									}
+									return CHART_INACTIVE_HOVER_COLORS[index];
+								},
+								backgroundColor: (ctx) => {
+									const index = ctx.dataIndex;
+									if (hoveredGroupIndex === null) {
+										return CHART_ACTIVE_COLORS[index];
+									}
+									if (hoveredGroupIndex === index) {
+										return CHART_ACTIVE_COLORS[index];
+									}
+									return CHART_INACTIVE_COLORS[index];
+								},
+							},
+						],
+					}}
+					aria-label="Results chart"
+				/>
+				<ChartTooltip ref={chartTooltipRef} />
+
+				<div className="absolute inset-0 -z-10 flex flex-col items-center justify-center gap-2">
+					{chartData.mostPopularLabel !== null && (
+						<>
+							<div className="pt-6 text-xl font-bold text-neutral-900">
+								{chartData.mostPopularLabel}
+							</div>
+							<div className="text-center text-xs font-medium text-neutral-700">
+								Recommended
+								<br />
+								Estimation
+							</div>
+						</>
+					)}
+					{chartData.mostPopularLabel === null && (
+						<div className="flex flex-col items-center gap-1 font-medium text-neutral-900">
+							<span className="text-lg font-bold">
+								Rebellion!
+							</span>
+							<span className="text-center text-sm">
+								Nobody voted 😲
+							</span>
 						</div>
-						<div className="text-center text-xs font-medium text-neutral-300">
-							Recommended
-							<br />
-							Estimation
-						</div>
-					</>
-				)}
-				{chartData.mostPopularLabel === null && (
-					<div className="flex flex-col items-center gap-1 font-medium text-neutral-500">
-						<span className="text-lg font-bold">Rebellion!</span>
-						<span className="text-center text-sm">
-							Nobody voted 😲
+					)}
+				</div>
+			</div>
+
+			<div className="flex flex-row gap-6 rounded-2xl bg-neutral-100 px-8 py-4">
+				{chartData.labelCountEntries.map((entry, ind) => (
+					<div className="flex flex-col items-center gap-2" key={ind}>
+						<span className="text-lg text-neutral-900">
+							{entry[0]}
 						</span>
+						<span className="text-xs text-neutral-900">
+							{entry[1]} times
+						</span>
+						<div
+							className="h-[18px] w-[50px] rounded-full"
+							style={{
+								backgroundColor: chartData.backgroundColor[ind],
+							}}
+						></div>
 					</div>
-				)}
+				))}
 			</div>
 		</div>
 	);

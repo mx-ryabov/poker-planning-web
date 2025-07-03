@@ -26,11 +26,11 @@ export function MenuContent<TDataItem extends object>(
 	return (
 		<Popover
 			placement={props.placement}
-			className="min-w-[150px] data-entering:animate-popup data-exiting:animate-popup-reverse"
+			className="data-entering:animate-popup data-exiting:animate-popup-reverse min-w-[150px]"
 		>
 			<AriaMenu
 				{...props}
-				className="py-2 px-1 max-w-[180px] bg-white rounded-lg border border-neutral-100 drop-shadow-sm outline-0 overflow-auto no-scrollbar"
+				className="no-scrollbar max-w-[180px] overflow-auto rounded-lg border border-neutral-300 bg-white px-1 py-2 outline-0 drop-shadow-sm"
 			/>
 		</Popover>
 	);
@@ -66,7 +66,7 @@ export function MenuSection<TItemData extends object>(
 			{title && (
 				<Header
 					className={twMerge(
-						"px-2 py-1 text-xs text-neutral-500 font-medium",
+						"px-2 py-1 text-xs font-medium text-neutral-900",
 						className?.title,
 					)}
 				>
@@ -95,7 +95,7 @@ export function MenuItem(props: MenuItemProps) {
 					<>
 						{children}
 						{selectionMode !== "none" && (
-							<span className="flex items-center w-4 ml-auto">
+							<span className="ml-auto flex w-4 items-center">
 								{isSelected && <CheckIcon size={20} />}
 							</span>
 						)}

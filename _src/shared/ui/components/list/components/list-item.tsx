@@ -19,14 +19,14 @@ export const listItemStyles = cva(
 	{
 		variants: {
 			isHovered: {
-				true: ["bg-neutral-100"],
+				true: ["bg-neutral-300"],
 			},
 			isPressed: {
-				true: ["bg-neutral-200"],
+				true: ["bg-neutral-400"],
 			},
 			isDisabled: {
-				true: ["text-neutral-200"],
-				false: ["text-neutral-500 cursor-pointer"],
+				true: ["text-neutral-400"],
+				false: ["text-neutral-900 cursor-pointer"],
 			},
 			isSelected: {
 				true: ["bg-primary-100 hover:bg-initial text-primary-500"],
@@ -41,7 +41,7 @@ export const listItemStyles = cva(
 
 export function ListItem(props: ItemProps) {
 	const renderCheckState = (isSelected: boolean) => (
-		<div className="w-[20px] h-[20px] ml-auto scale-100">
+		<div className="ml-auto h-[20px] w-[20px] scale-100">
 			{isSelected && <CheckIcon size={20} />}
 		</div>
 	);

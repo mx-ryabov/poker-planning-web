@@ -18,7 +18,7 @@ const chip = cva(
 	[
 		"h-[21px] min-w-fit pl-2 pr-1",
 		"flex flex-row items-center",
-		"bg-neutral-100 text-neutral-500",
+		"bg-neutral-200",
 		"rounded-sm text-xs transition-all select-none outline-primary-500",
 	],
 	{
@@ -28,8 +28,8 @@ const chip = cva(
 				false: [],
 			},
 			disabled: {
-				true: ["text-neutral-300"],
-				false: ["cursor-pointer"],
+				true: ["text-neutral-600 hover:cursor-not-allowed"],
+				false: ["cursor-pointer text-neutral-900"],
 			},
 		},
 		compoundVariants: [
@@ -66,7 +66,7 @@ export function Chip(props: ChipProps) {
 						<AriaButton
 							slot="remove"
 							aria-label={`Remove ${props.textValue}`}
-							className="rounded-sm hover:bg-neutral-200 active:hover:bg-neutral-300 transition-colors"
+							className="cursor-pointer rounded-sm transition-colors hover:bg-neutral-300 active:hover:bg-neutral-300"
 						>
 							<CloseIcon size={16} />
 						</AriaButton>
@@ -103,7 +103,7 @@ export function ChipGroup<TItem extends object>({
 					items={items}
 					ref={tagListRef}
 					renderEmptyState={renderEmptyState}
-					className={"flex flex-row gap-2 flex-wrap " + className}
+					className={"flex flex-row flex-wrap gap-2 " + className}
 				>
 					{children}
 				</TagList>

@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: "Poker Planning App",
+	title: "Poker Planning",
 };
 
 export default function RootLayout({

@@ -7,7 +7,7 @@ type Props = {
 export function ChartTooltip({ ref }: Props) {
 	return (
 		<div
-			className="pointer-events-none absolute z-50 flex w-max flex-col gap-2 rounded-sm bg-neutral-500 px-4 py-3 text-white"
+			className="pointer-events-none absolute z-50 flex w-max flex-col gap-2 rounded-sm bg-neutral-900 px-4 py-3 text-white"
 			style={{ display: "none" }}
 			ref={ref}
 		>

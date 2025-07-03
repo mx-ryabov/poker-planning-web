@@ -45,7 +45,7 @@ export function useSelect<TItemData extends object>(
 
 	const renderEmptyState = useCallback(
 		() => (
-			<div className="flex flex-row items-center gap-2 px-2 py-1 text-sm text-neutral-500">
+			<div className="flex flex-row items-center gap-2 px-2 py-1 text-sm text-neutral-900">
 				<SadManIcon size={16} />
 				The list is empty.
 			</div>

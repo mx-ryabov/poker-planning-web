@@ -36,25 +36,25 @@ export function Toast(props: ToastProps) {
 			}}
 			ref={ref}
 		>
-			<div className="w-full rounded-xl border border-neutral-100 bg-white px-3 py-4 drop-shadow-xs">
+			<div className="w-full rounded-xl border border-neutral-300 bg-white px-3 py-4 drop-shadow-xs">
 				<div className="flex flex-row gap-2" {...contentProps}>
 					<div data-icon className="my-1 h-4 w-4">
 						{icons[props.toast.content?.variant || "neutral"]}
 					</div>
 					<div className="flex flex-col gap-1">
 						<h3
-							className="items-center text-base font-semibold text-neutral-500"
+							className="items-center text-base font-semibold text-neutral-900"
 							{...titleProps}
 						>
 							{restProps.toast.content.title}
 						</h3>
-						<p className="text-sm text-neutral-500">
+						<p className="text-sm text-neutral-900">
 							{restProps.toast.content?.description}
 						</p>
 					</div>
 				</div>
 				<ButtonSquare
-					className="absolute top-2 right-2 text-neutral-500"
+					className="absolute top-2 right-2 text-neutral-900"
 					variant="ghost"
 					size="small"
 					icon={CloseIcon}
@@ -67,16 +67,16 @@ export function Toast(props: ToastProps) {
 
 const icons = {
 	neutral: null,
-	info: <InfoIcon size={16} thikness="bold" className="text-info-500" />,
+	info: <InfoIcon size={16} thikness="bold" className="text-info-600" />,
 	warning: (
-		<WarningIcon size={16} thikness="bold" className="text-warning-500" />
+		<WarningIcon size={16} thikness="bold" className="text-warning-600" />
 	),
-	error: <ErrorIcon size={16} thikness="bold" className="text-error-500" />,
+	error: <ErrorIcon size={16} thikness="bold" className="text-error-600" />,
 	success: (
 		<SuccessCircleIcon
 			size={16}
 			thikness="bold"
-			className="text-success-500"
+			className="text-success-600"
 		/>
 	),
 };

@@ -152,7 +152,7 @@ function AutocompleteMultipleValue() {
 					outlined={isDisabled}
 					disabledKeys={isDisabled ? "all" : listState.disabledKeys}
 					aria-label="Selected Items"
-					className="min-h-10 flex items-center py-2 outline-hidden"
+					className="flex min-h-10 items-center py-2 outline-hidden"
 					items={undefined}
 					onRemove={onSelectionRemove}
 				>
@@ -187,7 +187,7 @@ function AutocompleteMultipleValue() {
 	const placeholder = useMemo(() => {
 		if (selectedItems.length === 0 && !inputProps.value) {
 			return (
-				<span className="absolute left-4 text-sm text-neutral-400">
+				<span className="absolute left-4 text-sm text-neutral-500">
 					{inputProps.placeholder}
 				</span>
 			);
@@ -197,7 +197,7 @@ function AutocompleteMultipleValue() {
 
 	return (
 		<div
-			className="group flex flex-col w-full relative"
+			className="group relative flex w-full flex-col"
 			ref={autocompleteValueContainerRef}
 			onClick={() => {
 				const inputEl = inputRef?.current;
@@ -226,7 +226,7 @@ function AutocompleteMultipleValue() {
 				{placeholder}
 				{toggleListButton}
 			</Group>
-			<FieldError className="w-full text-xs font-medium p-1 text-error-600 flex flex-row items-center gap-1">
+			<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 				<WarningIcon size={12} thikness="bold" />
 				{inputProps.errors?.length ? inputProps.errors[0] : null}
 			</FieldError>
@@ -302,19 +302,10 @@ const TextFieldChip = ({
 			<TextField
 				{...mergedInputProps}
 				data-value={`${inputProps.value} `}
-				className={`
-					inline-grid grid-cols-[0px_min-content] w-min 
-					after:invisible after:content-[attr(data-value)] 
-					after:row-start-1 after:col-start-2 after:col-end-auto after:row-end-auto
-				`}
+				className={`inline-grid w-min grid-cols-[0px_min-content] after:invisible after:col-start-2 after:col-end-auto after:row-start-1 after:row-end-auto after:content-[attr(data-value)]`}
 			>
 				<AriaInput
-					className={`
-						w-full min-w-1 
-						col-start-2 row-start-1 col-end-auto row-end-auto 
-						outline-hidden
-						text-sm
-					`}
+					className={`col-start-2 col-end-auto row-start-1 row-end-auto w-full min-w-1 text-sm outline-hidden`}
 					id="multiple-autocomplete-input"
 					ref={inputRef}
 					placeholder=""

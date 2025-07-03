@@ -35,7 +35,7 @@ function Dialog(props: DialogProps) {
 		>
 			<AriaModal className={modalStyles}>
 				<AriaDialog
-					className="flex flex-col gap-4 px-2 py-1 bg-white"
+					className="flex flex-col gap-4 bg-white px-2 py-1"
 					data-testid={restProps?.["data-testid"]}
 				>
 					{children}
@@ -57,7 +57,7 @@ function Header({ children }: HeaderProps) {
 		return null;
 	}
 	return (
-		<div className="flex flex-row justify-between items-center">
+		<div className="flex flex-row items-center justify-between">
 			{typeof children === "function"
 				? children({ close: triggerState.close })
 				: children}
@@ -73,7 +73,7 @@ function Title({ children, className }: TitleProps) {
 	return (
 		<Heading
 			className={twMerge(
-				"text-xl font-semibold text-neutral-700",
+				"text-xl font-semibold text-neutral-900",
 				className,
 			)}
 			slot="title"
@@ -121,7 +121,7 @@ export const Modal = Object.assign(DialogTrigger, {
 });
 
 const overlayStyles = cva(
-	"fixed inset-0 flex items-center justify-center w-full h-full bg-neutral-500/30 backdrop-blur z-10",
+	"fixed inset-0 flex items-center justify-center w-full h-full bg-neutral-900/30 backdrop-blur z-10",
 	{
 		variants: {
 			isEntering: {

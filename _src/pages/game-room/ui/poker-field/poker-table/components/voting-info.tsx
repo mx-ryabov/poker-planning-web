@@ -12,10 +12,10 @@ export function VotingInfo() {
 		<div>
 			{votingProcess.status === GameVotingStatus.Inactive && (
 				<div>
-					<h3 className="text-center font-semibold text-neutral-700">
+					<h3 className="text-center font-semibold text-neutral-900">
 						Time to relax!
 					</h3>
-					<p className="text-center text-sm text-neutral-500">
+					<p className="text-center text-sm text-neutral-700">
 						Discuss your pets with colleagues. Or discuss colleagues
 						with your pets.
 					</p>
@@ -24,11 +24,11 @@ export function VotingInfo() {
 			{votingProcess.status !== GameVotingStatus.Inactive && (
 				<div>
 					{votingProcess.ticket === null ? (
-						<p className="text-neutral-500">
+						<p className="text-neutral-900">
 							Regular Voting in progress
 						</p>
 					) : (
-						<div className="flex flex-row gap-2">
+						<div className="flex flex-row gap-2 text-neutral-700">
 							The ticket{" "}
 							<TicketLink
 								identifier={votingProcess.ticket.identifier}

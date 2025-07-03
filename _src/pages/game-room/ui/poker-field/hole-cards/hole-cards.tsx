@@ -8,7 +8,7 @@ export function HoleCards() {
 
 	return (
 		<div className="flex flex-col items-center gap-4">
-			<p className="text-sm text-neutral-500">
+			<p className="text-sm text-neutral-800">
 				{selectedCard.size === 0
 					? "How long would it take you to complete this task?👇"
 					: "You’re done! Let’s wait for the others🤏"}

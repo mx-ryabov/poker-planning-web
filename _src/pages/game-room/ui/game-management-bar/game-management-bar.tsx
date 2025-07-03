@@ -68,7 +68,7 @@ export function GameManagementBar({ className }: Props) {
 								variant="ghost"
 								size="small"
 								aria-label={tabType}
-								className="bg-white/0 hover:text-neutral-300 group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400"
+								className="group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400 bg-white/0 text-neutral-900 hover:text-neutral-600"
 								onPress={onPanelSelected(
 									tabType as GameManagementTab,
 								)}
@@ -82,8 +82,8 @@ export function GameManagementBar({ className }: Props) {
 			</SlidingSelector>
 			{barState === "error" && (
 				<span className="absolute -top-1 -right-1 flex h-4 w-4">
-					<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-error-500 opacity-75"></span>
-					<span className="relative inline-flex items-center justify-center rounded-full h-4 w-4 bg-white border-2 border-error-500 text-center text-[9px] font-black text-error-500">
+					<span className="bg-error-500 absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
+					<span className="border-error-500 text-error-500 relative inline-flex h-4 w-4 items-center justify-center rounded-full border-2 bg-white text-center text-[9px] font-black">
 						!
 					</span>
 				</span>

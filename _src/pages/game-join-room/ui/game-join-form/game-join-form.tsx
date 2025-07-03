@@ -90,11 +90,8 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 				role="footer"
 			>
 				<section data-testid="auth-section">
-					<p className="item-center flex flex-row text-sm text-neutral-300">
-						<ProfileIcon
-							color={Color.Neutral300}
-							className="mr-2"
-						/>
+					<p className="item-center flex flex-row text-sm text-neutral-600">
+						<ProfileIcon className="mr-2" />
 						<NextLink
 							href="/sign-in"
 							className="mr-1 leading-relaxed text-neutral-900"

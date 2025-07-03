@@ -7,12 +7,12 @@ import { StepProps } from "./types";
 export function AdvancedSettingsStep(_: StepProps) {
 	const { control } = useFormContext<CreateGameFormFormState>();
 	return (
-		<div className="w-full h-full flex shrink-0 basis-full justify-center pl-10 flex-col">
+		<div className="flex h-full w-full shrink-0 basis-full flex-col justify-center pl-10">
 			<p className="label mb-4 text-lg text-neutral-900">
 				Advanced settings
 			</p>
 			<div
-				className="flex flex-col mb-6"
+				className="mb-6 flex flex-col"
 				data-testid="advanced-settings-fields-container"
 			>
 				<Controller
@@ -30,7 +30,7 @@ export function AdvancedSettingsStep(_: StepProps) {
 				/>
 			</div>
 			<p
-				className="flex flex-row items-center gap-1 text-sm text-neutral-300"
+				className="flex flex-row items-center gap-1 text-sm text-neutral-700"
 				data-testid="advanced-settings-step-description"
 			>
 				<InfoIcon /> You can change all settings during the game
