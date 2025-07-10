@@ -16,12 +16,14 @@ type AnimatedFadeInProps = {
 	children: ReactElement<ChildProps> | ReactElement<ChildProps>[];
 	animateOnScroll?: boolean;
 	delay?: number;
+	className?: string;
 };
 
 export function AnimatedFadeIn({
 	children,
-	animateOnScroll = true,
+	animateOnScroll = false,
 	delay = 0,
+	className,
 }: AnimatedFadeInProps) {
 	const containerRef = useRef<HTMLElement | null>(null);
 
@@ -29,7 +31,11 @@ export function AnimatedFadeIn({
 		() => {
 			if (!containerRef.current) return;
 
-			containerRef.current.classList.remove("initially-hidden");
+			setTimeout(
+				() =>
+					containerRef.current?.classList.remove("initially-hidden"),
+				(delay || 0) * 1000,
+			);
 
 			let elements: Element[] = [];
 			if (
@@ -38,6 +44,34 @@ export function AnimatedFadeIn({
 				elements.push(...Array.from(containerRef.current.children));
 			} else {
 				elements.push(containerRef.current);
+			}
+
+			const animationFromProps: gsap.TweenVars = {
+				y: 50,
+				opacity: 0,
+			};
+			const animationToProps: gsap.TweenVars = {
+				y: 0,
+				opacity: 1,
+				stagger: 0.1,
+				duration: 0.5,
+				delay,
+				ease: "sine.inOut",
+			};
+
+			if (animateOnScroll) {
+				gsap.fromTo(elements, animationFromProps, {
+					...animationToProps,
+					scrollTrigger: {
+						trigger: containerRef.current,
+						start: "top 80%",
+						once: true,
+						scroller:
+							document.getElementsByClassName("scroller")[0],
+					},
+				});
+			} else {
+				gsap.fromTo(elements, animationFromProps, animationToProps);
 			}
 		},
 		{
@@ -60,7 +94,7 @@ export function AnimatedFadeIn({
 		<div
 			ref={containerRef as RefObject<HTMLDivElement>}
 			data-animated-text-wrapper="true"
-			className="initially-hidden"
+			className={twMerge("initially-hidden", className)}
 		>
 			{children}
 		</div>

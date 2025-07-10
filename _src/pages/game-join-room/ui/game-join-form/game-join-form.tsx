@@ -1,7 +1,6 @@
 "use client";
 
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
-import { Color } from "@/_src/shared/ui/colors";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";

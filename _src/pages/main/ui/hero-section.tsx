@@ -7,8 +7,13 @@ import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 
 export function HeroSection() {
 	return (
-		<section className="relative flex w-full flex-col" id="hero">
-			<div className="position absolute inset-0 bg-[linear-gradient(180deg,_#F4F0FA_0%,_#FAF7FD_50%,_#FFFFFF_100%)]"></div>
+		<section className="relative flex w-full flex-col pb-20" id="hero">
+			<div className="position absolute inset-0 bg-[linear-gradient(180deg,_#F4F0FA_0%,_#FAF7FD_50%,_#FFFFFF_100%)]">
+				<div className="absolute inset-0 size-full bg-[url(/noise.png)] opacity-70" />
+				<div className="bg-secondary-300 absolute top-[15px] -left-[20px] h-[400px] w-[400px] rounded-full opacity-50 blur-3xl"></div>
+				<div className="bg-warning-300 absolute top-[300px] left-[40%] h-[500px] w-[500px] rounded-full opacity-50 blur-3xl"></div>
+				<div className="bg-primary-300 absolute top-[100px] right-0 h-[600px] w-[600px] rounded-full opacity-50 blur-3xl"></div>
+			</div>
 			<div className="mx-auto w-full max-w-5xl pt-40 text-center">
 				{/* Main Headline */}
 				<div className="relative perspective-distant">
@@ -59,23 +64,31 @@ export function HeroSection() {
 				</AnimatedText>
 
 				{/* CTA Buttons */}
-				<div className="relative mb-16 flex flex-col justify-center gap-4 sm:flex-row">
-					<NextLinkButton
-						className="no-underline"
-						href="/create-game"
-						size="large"
-					>
-						Start Estimating Now
-					</NextLinkButton>
-					<NextLinkButton
-						size="large"
-						className="px-8 no-underline"
-						variant="outline"
-						href="#subscribe"
-					>
-						Get Updates
-					</NextLinkButton>
-				</div>
+				<AnimatedFadeIn
+					delay={0.5}
+					className="relative mb-16 flex flex-col justify-center gap-4 sm:flex-row"
+				>
+					<div>
+						<NextLinkButton
+							className="no-underline"
+							href="/create-game"
+							size="large"
+						>
+							Start Estimating Now
+						</NextLinkButton>
+					</div>
+
+					<div>
+						<NextLinkButton
+							size="large"
+							className="px-8 no-underline"
+							variant="outline"
+							href="#subscribe"
+						>
+							Get Updates
+						</NextLinkButton>
+					</div>
+				</AnimatedFadeIn>
 			</div>
 
 			{/* Dashboard Preview */}
@@ -123,9 +136,10 @@ export function HeroSection() {
 				</div>
 
 				{/* Dashboard Card */}
-				<AnimatedFadeIn>
+				<AnimatedFadeIn delay={1}>
 					<Image
 						className="rounded-2xl"
+						priority
 						src={GamePreview}
 						alt="Game Preview"
 					/>

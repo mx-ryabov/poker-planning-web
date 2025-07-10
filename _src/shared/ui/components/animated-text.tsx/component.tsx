@@ -75,12 +75,10 @@ export function AnimatedText({
 				stagger: 0.1,
 				ease: "power4.out",
 				duration: 1,
-				delay: 0,
+				delay,
 			};
 
 			if (animateOnScroll) {
-				console.log(linesRef.current, containerRef.current);
-
 				gsap.to(linesRef.current, {
 					...animationProps,
 					scrollTrigger: {

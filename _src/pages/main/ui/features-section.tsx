@@ -3,11 +3,12 @@ import GameVotingResults from "@public/game-voting-results-2.webp";
 import IssueManagementImg from "@public/issue-management.svg";
 import PokerTableSvg from "@public/poker-table.png";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 
 export function FeaturesSection() {
 	return (
 		<section
-			className="mx-auto max-w-7xl px-4 py-20 pt-40 sm:px-6 lg:px-8"
+			className="mx-auto max-w-7xl px-4 py-20 pt-20 sm:px-6 lg:px-8"
 			id="features"
 		>
 			<div className="mb-16 text-center">
@@ -22,7 +23,10 @@ export function FeaturesSection() {
 				</AnimatedText>
 			</div>
 
-			<div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
+			<AnimatedFadeIn
+				animateOnScroll
+				className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2"
+			>
 				<div className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8">
 					<h3 className="text-3xl font-medium text-neutral-900">
 						Real-time Voting Updates
@@ -37,6 +41,7 @@ export function FeaturesSection() {
 					<div className="relative flex h-[300px] w-full overflow-hidden rounded-2xl">
 						<Image
 							className="h-full w-full rounded-2xl object-contain"
+							loading="lazy"
 							src={PokerTableSvg}
 							alt="Real-Time Voting Updates"
 						/>
@@ -57,13 +62,17 @@ export function FeaturesSection() {
 						<Image
 							className="h-full w-full rounded-2xl contain-content"
 							src={IssueManagementImg}
+							loading="lazy"
 							alt="Real-Time Voting Updates"
 						/>
 					</div>
 				</div>
-			</div>
+			</AnimatedFadeIn>
 
-			<div className="grid grid-cols-2 gap-8 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8">
+			<AnimatedFadeIn
+				animateOnScroll
+				className="grid grid-cols-2 gap-8 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8"
+			>
 				<div className="flex flex-col gap-4">
 					<h3 className="text-neutral text-3xl font-medium text-neutral-900">
 						Performance Overview
@@ -83,12 +92,13 @@ export function FeaturesSection() {
 					<Image
 						src={GameVotingResults}
 						height={300}
+						loading="lazy"
 						width={600}
 						className="rounded-2xl object-contain"
 						alt="Game Voting Results"
 					/>
 				</div>
-			</div>
+			</AnimatedFadeIn>
 		</section>
 	);
 }

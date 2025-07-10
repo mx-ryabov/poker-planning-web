@@ -1,3 +1,4 @@
+import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
 
 export function HowItWorksSection() {
@@ -18,7 +19,10 @@ export function HowItWorksSection() {
 				</AnimatedText>
 			</div>
 
-			<div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+			<AnimatedFadeIn
+				animateOnScroll
+				className="grid grid-cols-1 gap-8 md:grid-cols-3"
+			>
 				<div className="text-center">
 					<div className="bg-primary-100 mb-6 flex h-48 items-center justify-center rounded-lg">
 						<div className="text-center">
@@ -78,7 +82,7 @@ export function HowItWorksSection() {
 						charts, and apply final estimations to your issues
 					</p>
 				</div>
-			</div>
+			</AnimatedFadeIn>
 		</section>
 	);
 }
