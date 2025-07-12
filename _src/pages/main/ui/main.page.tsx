@@ -1,3 +1,4 @@
+"use client";
 import { ComingSoonSection } from "./coming-soon-section";
 import { HeroSection } from "./hero-section";
 import { FeaturesSection } from "./features-section";
@@ -6,12 +7,17 @@ import { SubscribeSection } from "./subscribe-section";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { BottomGlassEffect } from "./bottom-glass-effect";
+import { useRef } from "react";
 
 export function MainPage() {
+	const containerRef = useRef(null);
 	return (
-		<div className="scroller relative flex h-lvh flex-col items-center overflow-y-scroll scroll-smooth">
-			<Header />
-			<main className="w-full pb-20">
+		<div className="scroller relative flex h-lvh w-full flex-col items-center overflow-y-scroll scroll-smooth">
+			<Header containerRef={containerRef} />
+			<main
+				className="-mt-[72px] w-full origin-top-right"
+				ref={containerRef}
+			>
 				<HeroSection />
 
 				<FeaturesSection />
@@ -21,8 +27,9 @@ export function MainPage() {
 				<ComingSoonSection />
 
 				<SubscribeSection />
+
+				<Footer />
 			</main>
-			<Footer />
 			<BottomGlassEffect />
 		</div>
 	);

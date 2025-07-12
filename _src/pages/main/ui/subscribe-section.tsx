@@ -38,7 +38,7 @@ export function SubscribeSection() {
 			id="subscribe"
 		>
 			<div className="mt-12 text-center">
-				<div className="mx-auto max-w-2xl border-purple-200 bg-gradient-to-r from-purple-100 to-blue-100 p-6">
+				<div className="mx-auto max-w-2xl p-6">
 					<AnimatedText>
 						<h2 className="mb-4 text-4xl font-bold text-neutral-900">
 							Want to be the first to know?

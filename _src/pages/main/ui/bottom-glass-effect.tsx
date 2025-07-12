@@ -1,6 +1,9 @@
 export function BottomGlassEffect() {
 	return (
-		<div className="pointer-events-none fixed right-0 bottom-0 left-0 z-10 h-[100px] w-full">
+		<div
+			id="bottom-glass-effect"
+			className="pointer-events-none fixed right-0 bottom-0 left-0 z-10 h-[100px] w-full"
+		>
 			<div className="absolute inset-0 overflow-hidden">
 				{Array.from(new Array(8)).map((_, ind) => (
 					<div
