@@ -7,7 +7,7 @@ export const ListWrapper = forwardRef<
 	ListBoxProps<object> & AriaListBoxOptions<object>
 >(({ children, className, renderEmptyState, ...restProps }, ref) => {
 	const defaultEmptyState = () => (
-		<span className="text-sm text-neutral-500">No results found.</span>
+		<span className="text-sm text-neutral-800">No results found.</span>
 	);
 
 	return (

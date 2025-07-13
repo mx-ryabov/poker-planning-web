@@ -119,7 +119,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 				</Label>
 
 				{!withErrorIcon && (
-					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
+					<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}
 					</FieldError>

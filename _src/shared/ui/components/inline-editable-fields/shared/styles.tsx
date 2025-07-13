@@ -18,7 +18,7 @@ export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
 		},
 		hasValue: {
 			true: ["text-neutral-900"],
-			false: ["text-neutral-600"],
+			false: ["text-neutral-700"],
 		},
 		size: {
 			large: [],

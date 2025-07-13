@@ -187,7 +187,7 @@ function AutocompleteMultipleValue() {
 	const placeholder = useMemo(() => {
 		if (selectedItems.length === 0 && !inputProps.value) {
 			return (
-				<span className="absolute left-4 text-sm text-neutral-500">
+				<span className="absolute left-4 text-sm text-neutral-800">
 					{inputProps.placeholder}
 				</span>
 			);
@@ -226,7 +226,7 @@ function AutocompleteMultipleValue() {
 				{placeholder}
 				{toggleListButton}
 			</Group>
-			<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
+			<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 				<WarningIcon size={12} thikness="bold" />
 				{inputProps.errors?.length ? inputProps.errors[0] : null}
 			</FieldError>
@@ -340,14 +340,14 @@ const multipleValueStyles = cva(
 const multipleValueLabelStyles = cva(["w-full text-xs font-medium p-1 block"], {
 	variants: {
 		isDisabled: {
-			true: ["text-neutral-300"],
+			true: ["text-neutral-700"],
 			false: [],
 		},
 	},
 	compoundVariants: [
 		{
 			isDisabled: false,
-			class: ["text-neutral-500"],
+			class: ["text-neutral-900"],
 		},
 	],
 });
