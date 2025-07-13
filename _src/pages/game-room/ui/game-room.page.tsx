@@ -63,6 +63,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 								src={LogoSvg}
 								alt="Logo"
 								height={24}
+								width={175}
 								priority
 							/>
 						</NextLink>

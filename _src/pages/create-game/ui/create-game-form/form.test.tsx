@@ -119,7 +119,7 @@ const helper = ({
 const renderForm = ({
 	submitMock,
 }: {
-	submitMock: (_req: CreateGameRequest) => Promise<string>;
+	submitMock: (_req: CreateGameRequest) => Promise<void>;
 }) => {
 	const renderResult = render(
 		<CreateGameForm createGameAsGuest={submitMock} />,

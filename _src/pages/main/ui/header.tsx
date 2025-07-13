@@ -1,7 +1,6 @@
 "use client";
 import "./header.css";
 import { RefObject, useRef, useState } from "react";
-import { Logo } from "@/_src/shared/ui/components/logo";
 import {
 	NextLink,
 	NextLinkButton,
@@ -16,6 +15,8 @@ import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { Modal, ModalOverlay } from "react-aria-components";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
+import Image from "next/image";
+import LogoSvg from "@public/logo.svg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -245,7 +246,13 @@ export function Header({ containerRef }: HeaderProps) {
 			<div className="mx-auto flex h-full w-full flex-row justify-between px-6 py-4 md:max-w-2xl lg:max-w-4xl xl:max-w-5xl xl:gap-6">
 				<AnimatedFadeIn>
 					<NextLink href="/#hero" className="z-20 flex items-center">
-						<Logo />
+						<Image
+							src={LogoSvg}
+							alt="Logo"
+							height={24}
+							width={175}
+							priority
+						/>
 					</NextLink>
 				</AnimatedFadeIn>
 

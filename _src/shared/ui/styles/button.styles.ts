@@ -15,10 +15,10 @@ export type ButtonStylesProps = {
 
 export const COLOR_SCHEMES = {
 	primary: {
-		"--main-color": "var(--color-primary-500)",
+		"--main-color": "var(--color-primary-600)",
 		"--main-light-color": "var(--color-primary-100)",
-		"--hovered-color": "var(--color-primary-600)",
-		"--pressed-color": "var(--color-primary-700)",
+		"--hovered-color": "var(--color-primary-700)",
+		"--pressed-color": "var(--color-primary-800)",
 		"--shadow-color": "var(--color-primary-900)",
 		"--text-color": "var(--color-white)",
 	},
