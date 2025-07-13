@@ -24,7 +24,7 @@ const openerStyles = cva("shrink-0 transition-all duration-150 ease-linear", {
 	variants: {
 		isOpened: {
 			true: [
-				"-translate-y-17 rounded-full rotate-45 border border-neutral-100 h-8 w-8",
+				"-translate-y-17 rounded-full rotate-45 border border-neutral-400 h-8 w-8",
 			],
 			false: ["shadow-lg shadow-primary-200"],
 		},

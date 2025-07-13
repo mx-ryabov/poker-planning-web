@@ -91,7 +91,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 				<Label aria-label="Label">
 					<span
 						className={labelStyles({
-							isDisabled: restProps.isDisabled || isPending,
+							isDisabled: !!restProps.isDisabled || !!isPending,
 							hasContent: !!label,
 						})}
 					>
@@ -103,18 +103,19 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							inputStyles({
 								hasError: !!errors?.length,
 								hasEndContent: !!endContent,
-								isDisabled: restProps.isDisabled || isPending,
+								isDisabled:
+									!!restProps.isDisabled || !!isPending,
 							}),
 							className as string,
 						)}
 					>
 						{startIcon && (
-							<span className="text-neutral-200">
+							<span className="text-neutral-500">
 								{startIcon({ size: 12, thikness: "bold" })}
 							</span>
 						)}
 						<AriaInput
-							className="h-full w-full bg-white/0 outline-hidden placeholder:text-neutral-200"
+							className="h-full w-full bg-white/0 outline-hidden placeholder:text-neutral-600"
 							aria-label="input"
 							data-testid={restProps["data-testid"]}
 							ref={setRefs(inputRef, ref)}
@@ -127,13 +128,13 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							/>
 						)}
 						{isPending && (
-							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-200" />
+							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-500" />
 						)}
 					</Group>
 				</Label>
 
 				{!withErrorIcon && typeof error === "string" && (
-					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
+					<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}
 					</FieldError>
@@ -151,16 +152,16 @@ const inputStyles = cva(
 	[
 		"peer flex items-center gap-2 relative overflow-hidden",
 		"w-full h-10 px-3",
-		"rounded-lg box-border border-2",
+		"rounded-lg box-border border border-neutral-300",
 		"text-sm transition-colors transition-[border-color] cursor-text",
 		"focus-within:border-primary-500!",
-		"border-neutral-100",
+		"border-2",
 		"group-hover:border-primary-400",
 	],
 	{
 		variants: {
 			hasError: {
-				true: ["border-error-500!"],
+				true: ["border-error-700!"],
 				false: [],
 			},
 			hasEndContent: {
@@ -168,7 +169,11 @@ const inputStyles = cva(
 				false: [],
 			},
 			isDisabled: {
-				true: ["group-hover:border-neutral-100!", "bg-neutral-100"],
+				true: [
+					"group-hover:border-neutral-300!",
+					"bg-neutral-200",
+					"group-hover:cursor-not-allowed",
+				],
 				false: [],
 			},
 		},
@@ -178,7 +183,7 @@ const inputStyles = cva(
 const labelStyles = cva(["w-full text-xs font-medium block"], {
 	variants: {
 		isDisabled: {
-			true: ["text-neutral-300"],
+			true: ["text-neutral-900"],
 			false: [],
 		},
 		hasContent: {
@@ -188,7 +193,7 @@ const labelStyles = cva(["w-full text-xs font-medium block"], {
 	compoundVariants: [
 		{
 			isDisabled: false,
-			class: ["text-neutral-500"],
+			class: ["text-neutral-900"],
 		},
 	],
 });

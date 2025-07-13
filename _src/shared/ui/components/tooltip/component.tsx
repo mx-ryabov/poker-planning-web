@@ -1,6 +1,6 @@
 import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
 import { ReactNode, useMemo } from "react";
-import { Placement, PlacementAxis } from "react-aria";
+import { PlacementAxis } from "react-aria";
 import {
 	TooltipTrigger as TooltipTriggerAria,
 	Tooltip as TooltipAria,
@@ -46,7 +46,7 @@ function Content(props: ContentProps) {
 	const mergedClassName = useMemo(
 		() =>
 			mergeClassNames(
-				"bg-neutral-500 text-neutral-100 text-sm px-3 py-2 rounded-lg shadow-lg",
+				"bg-neutral-900 text-neutral-100 text-sm px-3 py-2 rounded-lg shadow-lg",
 				"data-entering:animate-fade-in data-exiting:animate-fade-in-reverse",
 				className,
 			),
@@ -64,7 +64,12 @@ function Content(props: ContentProps) {
 				<>
 					{renderProps.placement && (
 						<OverlayArrow>
-							<svg width={8} height={8} viewBox="0 0 8 8">
+							<svg
+								className="text-neutral-900"
+								width={8}
+								height={8}
+								viewBox="0 0 8 8"
+							>
 								{ARROW_PATH[renderProps.placement]}
 							</svg>
 						</OverlayArrow>

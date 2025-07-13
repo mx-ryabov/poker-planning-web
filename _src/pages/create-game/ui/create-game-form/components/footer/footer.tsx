@@ -35,24 +35,24 @@ export function CreateGameFooter(props: Props) {
 	return (
 		<footer
 			className={twMerge(
-				"w-full flex justify-between px-10 pb-10 items-center",
+				"flex w-full items-center justify-between px-10 pb-10",
 				props.className,
 			)}
 			role="footer"
 		>
 			<section data-testid="auth-section">
-				<p className="flex flex-row text-neutral-300 item-center text-sm">
-					<ProfileIcon color={Color.Neutral300} className="mr-2" />
+				<p className="item-center flex flex-row text-sm text-neutral-600">
+					<ProfileIcon className="mr-2" />
 					<NextLink
 						href="/sign-in"
-						className="text-neutral-900 mr-1 leading-relaxed"
+						className="mr-1 leading-relaxed text-neutral-900"
 					>
 						Login
 					</NextLink>
 					<span>or</span>
 					<NextLink
 						href="/sign-up"
-						className="text-neutral-900 mx-1 leading-relaxed"
+						className="mx-1 leading-relaxed text-neutral-900"
 					>
 						Sign Up
 					</NextLink>

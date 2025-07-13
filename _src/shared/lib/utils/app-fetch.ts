@@ -26,11 +26,14 @@ export const appFetchPost = async <TRequest extends object>(
 ): Promise<Response> => {
 	const params = new URLSearchParams(query);
 
-	return await fetch(`${HOST}/api${path}?${params.toString()}`, {
+	const res = await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "POST",
 		headers: await getHeaders(),
 		body: JSON.stringify(body),
 	});
+	console.log("res", res);
+
+	return res;
 };
 
 export const appFetchPut = async <TRequest extends object>(

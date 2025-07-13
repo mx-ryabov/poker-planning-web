@@ -1,7 +1,6 @@
 "use client";
 
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
-import { Color } from "@/_src/shared/ui/colors";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";
@@ -90,11 +89,8 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 				role="footer"
 			>
 				<section data-testid="auth-section">
-					<p className="item-center flex flex-row text-sm text-neutral-300">
-						<ProfileIcon
-							color={Color.Neutral300}
-							className="mr-2"
-						/>
+					<p className="item-center flex flex-row text-sm text-neutral-600">
+						<ProfileIcon className="mr-2" />
 						<NextLink
 							href="/sign-in"
 							className="mr-1 leading-relaxed text-neutral-900"

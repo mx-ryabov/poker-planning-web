@@ -47,13 +47,13 @@ const _RadioGroup = forwardRef<HTMLDivElement, RadioGrouProps>((props, ref) => {
 	);
 });
 
-const radioStyles = cva(["text-neutral-500", "transition-colors"], {
+const radioStyles = cva(["text-neutral-900", "transition-colors"], {
 	variants: {
 		variant: {
 			default: [],
 			"content-inside": [
 				"flex items-center",
-				"border rounded-full border-neutral-200",
+				"border rounded-full border-neutral-500",
 				"h-14 px-8 max-w-fit",
 				"cursor-pointer text-xl",
 			],
@@ -155,7 +155,7 @@ const Description = (props: TextProps) => {
 		<Text
 			slot="description"
 			{...restProps}
-			className="flex flex-row items-center gap-1 text-sm text-neutral-400 mt-1"
+			className="mt-1 flex flex-row items-center gap-1 text-sm text-neutral-700"
 		>
 			{children}
 		</Text>

@@ -36,7 +36,7 @@ export function TicketCreatorForm({ className, onSubmitSucceed }: Props) {
 	return (
 		<div className={className}>
 			<form
-				className="flex w-full flex-row items-center gap-1 rounded-xl border border-neutral-100 bg-white p-2 shadow-lg"
+				className="flex w-full flex-row items-center gap-1 rounded-xl border border-neutral-300 bg-white p-2 shadow-lg"
 				data-state="creating"
 				action={submitAction}
 				ref={formRef}

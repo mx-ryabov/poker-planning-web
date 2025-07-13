@@ -40,7 +40,7 @@ describe("", () => {
 	});
 
 	test("shows recommended (most popular) estimation", async () => {
-		const { getByText } = renderComponent({
+		const { getByText, getAllByText } = renderComponent({
 			participants: [
 				generateParticipant({
 					vote: {
@@ -69,7 +69,7 @@ describe("", () => {
 			],
 		});
 
-		getByText("suit 1 value 1");
+		expect(getAllByText(/suit 1 value 1/i)).not.toHaveLength(0);
 		getByText(/recommended/i);
 		getByText(/estimation/i);
 	});

@@ -1,4 +1,5 @@
-import { Logo } from "@/_src/shared/ui/components/logo";
+import Image from "next/image";
+import LogoSvg from "@public/logo.svg";
 import { useCreateGameFormNavigation } from "../../../../model";
 import { twMerge } from "tailwind-merge";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
@@ -14,13 +15,19 @@ export const CreateGameHeader = (props: Props) => {
 	return (
 		<header
 			className={twMerge(
-				"flex flex-row w-full px-9 py-5 justify-between items-center",
+				"flex w-full flex-row items-center justify-between px-9 py-5",
 				props.className,
 			)}
 			role="header"
 		>
 			<NextLink href="/">
-				<Logo />
+				<Image
+					src={LogoSvg}
+					alt="Logo"
+					height={24}
+					width={175}
+					priority
+				/>
 			</NextLink>
 			<Stepper
 				stepsLength={formState.stepsLength}

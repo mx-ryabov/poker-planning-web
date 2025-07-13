@@ -26,7 +26,7 @@ export function TicketItemTile(props: Props) {
 
 	return (
 		<div
-			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-100 p-2 transition-colors hover:border-neutral-200 hover:shadow-xs"
+			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-200 p-2 transition-colors hover:border-neutral-300 hover:shadow-xs"
 			data-testid={`ticket-list-item-${data.id}`}
 			onClick={onContainerClick}
 		>
@@ -37,7 +37,7 @@ export function TicketItemTile(props: Props) {
 							? TicketTypeToIconMap[data.type]
 							: null}
 					</div>
-					<span className="text-xs text-neutral-300">
+					<span className="text-xs text-neutral-700">
 						{data.identifier}
 					</span>
 				</div>
@@ -50,7 +50,7 @@ export function TicketItemTile(props: Props) {
 			</div>
 			<div className="flex flex-row items-center justify-between gap-2">
 				<VoteButton ticket={data} />
-				<p className="flex-1 truncate text-neutral-700">{data.title}</p>
+				<p className="flex-1 truncate text-neutral-900">{data.title}</p>
 				<div className="flex w-12 justify-end">
 					<InlineEditableTextField
 						value={state.estimation || ""}
@@ -81,8 +81,8 @@ export function TicketItemTile(props: Props) {
 
 const TicketTypeToIconMap: Record<TicketType, ReactNode> = {
 	[TicketType.Story]: (
-		<TicketStoryIcon size={20} className="text-success-500" />
+		<TicketStoryIcon size={20} className="text-success-600" />
 	),
-	[TicketType.Bug]: <TicketBugIcon size={20} className="text-error-500" />,
-	[TicketType.Task]: <TicketTaskIcon size={20} className="text-info-500" />,
+	[TicketType.Bug]: <TicketBugIcon size={20} className="text-error-600" />,
+	[TicketType.Task]: <TicketTaskIcon size={20} className="text-info-600" />,
 };

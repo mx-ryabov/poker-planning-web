@@ -14,11 +14,11 @@ export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
 		variant: {
 			ghost: "border-2 border-white",
 			filled: "border-2 border-white",
-			bordered: "border-2 border-neutral-100",
+			bordered: "border-2 border-neutral-300",
 		},
 		hasValue: {
-			true: ["text-neutral-500"],
-			false: ["text-neutral-400"],
+			true: ["text-neutral-900"],
+			false: ["text-neutral-700"],
 		},
 		size: {
 			large: [],
@@ -37,7 +37,7 @@ export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
 			false: "",
 		},
 		isDisabled: {
-			true: [],
+			true: ["cursor-not-allowed"],
 			false: ["transition-all cursor-pointer"],
 		},
 	},
@@ -65,7 +65,7 @@ export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
 		{
 			isDisabled: false,
 			variant: "filled",
-			className: "bg-neutral-100 hover:bg-neutral-200 text-neutral-500",
+			className: "bg-neutral-200 hover:bg-neutral-300 text-neutral-900",
 		},
 		{
 			isDisabled: false,

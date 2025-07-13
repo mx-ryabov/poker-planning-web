@@ -28,7 +28,7 @@ export function TablePlayer(props: TablePlayerProps) {
 
 	return (
 		<div className="relative h-10 w-10">
-			<div className="absolute inset-0 flex h-10 w-10 items-center justify-center rounded-lg border-2 border-white bg-neutral-100 text-base text-neutral-500 drop-shadow-sm">
+			<div className="absolute inset-0 flex h-10 w-10 items-center justify-center rounded-lg border-2 border-white bg-neutral-300 text-base text-neutral-900 drop-shadow-sm">
 				{isCurrentPlayer ? "You" : initials}
 			</div>
 			<div className={nameStyles({ tablePosition })}>
@@ -79,7 +79,7 @@ function useTablePlayerStatus(participant: GameParticipant): TabelPlayerStatus {
 	return "thinking";
 }
 
-const nameStyles = cva(["text-center text-xs text-neutral-500", "absolute"], {
+const nameStyles = cva(["text-center text-xs text-neutral-900", "absolute"], {
 	variants: {
 		tablePosition: {
 			top: "top-0 left-1/2 -translate-x-1/2 -translate-y-full pb-2",

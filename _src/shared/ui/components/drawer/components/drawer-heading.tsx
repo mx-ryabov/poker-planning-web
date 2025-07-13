@@ -8,7 +8,7 @@ export function DrawerHeading({ children, className, ...restProps }: Props) {
 		<Heading
 			{...restProps}
 			slot="title"
-			className={twMerge("text-lg text-neutral-700", className)}
+			className={twMerge("text-lg text-neutral-900", className)}
 		>
 			{children}
 		</Heading>

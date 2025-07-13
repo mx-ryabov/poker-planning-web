@@ -100,7 +100,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 		>
 			<div ref={viewContainerRef} className="flex flex-col gap-1">
 				{label && (
-					<Label className="px-1 text-xs font-medium text-neutral-500">
+					<Label className="px-1 text-xs font-medium text-neutral-900">
 						{label}
 					</Label>
 				)}
@@ -149,7 +149,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 	);
 };
 
-const actionBtnStyles = cva("h-8 w-8 border-neutral-100", {
+const actionBtnStyles = cva("h-8 w-8 border-neutral-300", {
 	variants: {
 		withShadow: {
 			true: "",

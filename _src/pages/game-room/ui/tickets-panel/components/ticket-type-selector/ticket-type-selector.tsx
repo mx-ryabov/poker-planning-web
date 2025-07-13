@@ -54,17 +54,17 @@ export function TicketTypeSelector({
 
 const TASK_TYPES = [
 	{
-		icon: <TicketStoryIcon className="text-success-500" size={18} />,
+		icon: <TicketStoryIcon className="text-success-600" size={18} />,
 		title: "Story",
 		type: TicketType.Story,
 	},
 	{
-		icon: <TicketTaskIcon className="text-info-500" size={18} />,
+		icon: <TicketTaskIcon className="text-info-600" size={18} />,
 		title: "Ticket",
 		type: TicketType.Task,
 	},
 	{
-		icon: <TicketBugIcon className="text-error-500" size={18} />,
+		icon: <TicketBugIcon className="text-error-600" size={18} />,
 		title: "Bug",
 		type: TicketType.Bug,
 	},

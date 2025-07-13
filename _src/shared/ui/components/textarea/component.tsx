@@ -93,7 +93,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						}}
 					>
 						<AriaTextArea
-							className="h-full w-full overflow-hidden bg-white/0 outline-hidden placeholder:text-neutral-200"
+							className="h-full w-full overflow-hidden bg-white/0 outline-hidden placeholder:text-neutral-600"
 							aria-label="textarea"
 							rows={rows}
 							ref={setRefs(textAreaRef, ref)}
@@ -112,14 +112,14 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 								/>
 							)}
 							{isPending && (
-								<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-200" />
+								<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-500" />
 							)}
 						</div>
 					</Group>
 				</Label>
 
 				{!withErrorIcon && (
-					<FieldError className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
+					<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
 						<WarningIcon size={12} thikness="bold" />
 						{error}
 					</FieldError>
@@ -156,7 +156,7 @@ const textAreaStyles = cva(
 				hasError: false,
 				isDisabled: false,
 				className: [
-					"border-2 border-neutral-100",
+					"border-2 border-neutral-300",
 					"group-hover:border-primary-400",
 					"focus-within:border-primary-500 group-hover:focus-within:border-primary-500",
 				],
@@ -168,7 +168,7 @@ const textAreaStyles = cva(
 const labelStyles = cva(["w-full text-xs font-medium block"], {
 	variants: {
 		isDisabled: {
-			true: ["text-neutral-300"],
+			true: ["text-neutral-600"],
 			false: [],
 		},
 		hasContent: {
@@ -178,7 +178,7 @@ const labelStyles = cva(["w-full text-xs font-medium block"], {
 	compoundVariants: [
 		{
 			isDisabled: false,
-			class: ["text-neutral-500"],
+			class: ["text-neutral-900"],
 		},
 	],
 });

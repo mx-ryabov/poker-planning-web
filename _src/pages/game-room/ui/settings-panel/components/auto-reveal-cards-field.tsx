@@ -60,7 +60,7 @@ export function AutoRevealCardsField({
 
 	return (
 		<div className="flex flex-col gap-2 px-1">
-			<span className="text-sm text-neutral-500">Auto-reveal cards</span>
+			<span className="text-sm text-neutral-900">Auto-reveal cards</span>
 			<div
 				className="flex flex-row gap-2"
 				data-testid="auto-reveal-cards-field"
@@ -96,11 +96,11 @@ export function AutoRevealCardsField({
 						value={String(value.autoRevealPeriod)}
 						onConfirm={onAutoRevealPeriodConfirm}
 					/>
-					<span className="text-xs text-neutral-300">seconds</span>
+					<span className="text-xs text-neutral-700">seconds</span>
 				</div>
 			</div>
 
-			<div className="flex flex-row items-center gap-2 text-xs text-neutral-300">
+			<div className="flex flex-row items-center gap-2 text-xs text-neutral-700">
 				<QuestionIcon thikness="light" />
 				<span>
 					Let the system automatically reveal the cards after everyone

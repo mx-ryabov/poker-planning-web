@@ -13,7 +13,7 @@ const selectContainerStyles = cva(
 	[
 		"flex items-center relative overflow-hidden transition-all",
 		"min-h-10 w-full py-2",
-		"border-2 border-neutral-100 rounded-lg box-border",
+		"border-2 border-neutral-300 rounded-lg box-border",
 		"cursor-pointer",
 	],
 	{
@@ -31,16 +31,19 @@ const selectContainerStyles = cva(
 				true: ["border-primary-500"],
 			},
 			isDisabled: {
-				true: ["border-neutral-100! bg-neutral-100"],
+				true: [
+					"border-neutral-100! bg-neutral-200 hover:cursor-not-allowed",
+				],
 			},
 		},
 	},
 );
 
-const labelStyles = cva(["block text-neutral-500 text-xs font-medium p-1"], {
+const labelStyles = cva(["block text-xs font-medium p-1"], {
 	variants: {
 		isDisabled: {
-			true: ["text-neutral-400!"],
+			true: ["text-neutral-700"],
+			false: ["text-neutral-900"],
 		},
 	},
 });
@@ -112,7 +115,7 @@ const SingleSelectionValue = () => {
 			isDisabled={ctx.isDisabled}
 			data-trigger="toggle-button"
 			aria-pressed={ctx.overlayTriggerState.isOpen ? "true" : "false"}
-			className="group flex h-full w-full cursor-pointer flex-row items-center justify-between gap-2 px-3 text-sm text-neutral-500 outline-hidden disabled:text-neutral-200"
+			className="group flex h-full w-full cursor-pointer flex-row items-center justify-between gap-2 px-3 text-sm text-neutral-900 outline-hidden disabled:text-neutral-600"
 			onPress={ctx.overlayTriggerState.toggle}
 			{...ctx.fieldProps}
 		>
@@ -151,7 +154,7 @@ const MultipleSelectionValue = () => {
 				isDisabled={ctx.isDisabled}
 				onPress={ctx.overlayTriggerState.toggle}
 				aria-label="Add Items"
-				className="flex max-h-[21px] flex-row items-center gap-2 rounded-sm bg-neutral-100 px-2 py-1 text-xs text-neutral-500"
+				className="flex max-h-[21px] flex-row items-center gap-2 rounded-sm bg-neutral-300 px-2 py-1 text-xs text-neutral-900 hover:disabled:cursor-not-allowed"
 				{...ctx.fieldProps}
 			>
 				<PlusIcon size={16} />

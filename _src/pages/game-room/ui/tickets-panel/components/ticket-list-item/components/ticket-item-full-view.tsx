@@ -40,7 +40,7 @@ export function TicketItemFullView(props: Props) {
 
 	return (
 		<div
-			className="flex w-full flex-col gap-4 rounded-xl border border-neutral-200 px-4 py-3 text-neutral-500"
+			className="flex w-full flex-col gap-4 rounded-xl border border-neutral-300 px-4 py-3 text-neutral-900"
 			data-testid={`ticket-list-item-full-view-${data.id}`}
 		>
 			<div className="flex flex-col gap-1">
@@ -57,7 +57,7 @@ export function TicketItemFullView(props: Props) {
 								/>
 							)}
 						</div>
-						<span className="text-xs text-neutral-300">
+						<span className="text-xs text-neutral-700">
 							{data.identifier}
 						</span>
 					</div>
@@ -112,7 +112,7 @@ export function TicketItemFullView(props: Props) {
 			</div>
 
 			<div className="flex flex-col gap-1">
-				<Label className="text-sm font-semibold text-neutral-500">
+				<Label className="text-sm font-medium text-neutral-900">
 					Description
 				</Label>
 				<InlineEditableTextarea
@@ -135,9 +135,7 @@ export function TicketItemFullView(props: Props) {
 			</div>
 
 			<div className="flex flex-col">
-				<p className="text-sm font-semibold text-neutral-500">
-					Details
-				</p>
+				<p className="text-sm font-medium text-neutral-900">Details</p>
 				<div className="flex flex-row items-center justify-between">
 					<p className="text-sm">Story Points</p>
 					<div className="flex w-12 justify-end">

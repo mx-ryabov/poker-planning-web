@@ -23,22 +23,22 @@ export function EstimationCard(props: Props) {
 const styles = cva(
 	[
 		"h-19 w-15 relative",
-		"rounded-lg border-2 border-neutral-100",
-		"text-base text-neutral-500",
+		"rounded-lg border-2 border-neutral-200",
+		"text-base text-neutral-900",
 		"cursor-pointer transition-all",
 	],
 	{
 		variants: {
 			isSelected: {
-				true: "-translate-y-2 border-primary-500",
+				true: "-translate-y-2 border-primary-600",
 				false: "",
 			},
 			isHovered: {
-				true: "border-primary-300 -translate-y-1",
+				true: "border-primary-400 -translate-y-1",
 				false: "",
 			},
 			isFocusVisible: {
-				true: "border-primary-300 -translate-y-1",
+				true: "border-primary-400 -translate-y-1",
 				false: "",
 			},
 		},

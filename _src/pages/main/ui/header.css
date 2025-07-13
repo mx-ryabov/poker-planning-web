@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@layer components {
+	.link::after {
+		content: "";
+		display: block;
+		position: absolute;
+		height: 2px;
+		width: 100%;
+		background-color: var(--color-neutral-600);
+		bottom: 0;
+		left: 0;
+		right: 0;
+		transition: transform 0.3s;
+		transform: translateX(-100%) translateY(100%);
+	}
+
+	.link:hover.link::after {
+		transform: translateX(0%) translateY(0%);
+	}
+
+	.animate-opened-menu-btn {
+		animation: opened-menu-btn-animate 0.5s;
+	}
+
+	@keyframes opened-menu-btn-animate {
+		0% {
+			opacity: 0;
+			transform: translateX(-5px) translateY(10px) rotate(5deg);
+		}
+		100% {
+			opacity: 1;
+			transform: translate(0) rotate(0deg);
+		}
+	}
+
+	.animate-menu-content {
+		will-change: transform, opacity;
+		transform-origin: left bottom;
+		animation: menu-content-animate 0.5s;
+	}
+
+	@keyframes menu-content-animate {
+		0% {
+			opacity: 0.25;
+			transform: translateX(-100px) translateY(-100px) rotate(-15deg);
+		}
+		100% {
+			opacity: 1;
+			transform: translate(0) rotate(0deg);
+		}
+	}
+}
