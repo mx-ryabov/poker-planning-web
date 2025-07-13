@@ -8,7 +8,7 @@ export function HowItWorksSection() {
 			id="how-it-works"
 		>
 			<div className="mb-16 text-center">
-				<AnimatedText>
+				<AnimatedText animateOnScroll>
 					<h2 className="mb-4 text-4xl font-bold text-neutral-900">
 						How Planning Poker Works
 					</h2>

@@ -102,7 +102,7 @@ export const buttonStyles = cva(
 					"text-xs",
 				],
 				medium: ["text-sm", "h-10", "rounded-lg"],
-				large: ["text-base", "h-14", "rounded-lg"],
+				large: ["text-sm md:text-base", "h-13 md:h-14", "rounded-lg"],
 			},
 			variant: {
 				default: [

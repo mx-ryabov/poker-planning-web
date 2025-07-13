@@ -132,9 +132,13 @@ export function Header({ containerRef }: HeaderProps) {
 		},
 	);
 
-	const renderMenuItems = () => {
+	const renderMenuItems = ({
+		animationDelay,
+	}: {
+		animationDelay: number;
+	}) => {
 		return (
-			<AnimatedText delay={0.75}>
+			<AnimatedText delay={animationDelay}>
 				<NextLink
 					className="link relative my-2 flex h-10 items-center justify-center overflow-hidden border border-transparent bg-transparent text-lg font-light no-underline! hover:text-neutral-900! xl:text-base"
 					href="/#features"
@@ -185,7 +189,8 @@ export function Header({ containerRef }: HeaderProps) {
 		setMenuOpen(true);
 	};
 
-	const closeMenu = () => {
+	const { contextSafe } = useGSAP({ scope: headerRef });
+	const closeMenu = contextSafe(() => {
 		const container = containerRef.current;
 		const modal = modalRef.current;
 		const headerEl = headerRef.current;
@@ -230,17 +235,19 @@ export function Header({ containerRef }: HeaderProps) {
 				setMenuOpen(false);
 			},
 		});
-	};
+	});
 
 	return (
 		<header
 			ref={headerRef}
-			className="sticky top-0 right-0 left-0 z-10 max-h-[72px] w-full"
+			className="sticky top-0 right-0 left-0 z-50 max-h-[72px] w-full"
 		>
 			<div className="mx-auto flex h-full w-full flex-row justify-between px-6 py-4 md:max-w-2xl lg:max-w-4xl xl:max-w-5xl xl:gap-6">
-				<NextLink href="/#hero" className="z-20 flex items-center">
-					<Logo />
-				</NextLink>
+				<AnimatedFadeIn>
+					<NextLink href="/#hero" className="z-20 flex items-center">
+						<Logo />
+					</NextLink>
+				</AnimatedFadeIn>
 
 				<ButtonSquare
 					icon={isMenuOpen ? CloseIcon : MenuIcon}
@@ -260,7 +267,7 @@ export function Header({ containerRef }: HeaderProps) {
 							ref={menuContainerRef}
 						>
 							<div className="flex h-full items-center justify-center *:flex *:w-full *:flex-col *:items-center *:justify-center">
-								{renderMenuItems()}
+								{renderMenuItems({ animationDelay: 0.75 })}
 							</div>
 							<AnimatedFadeIn delay={1}>
 								<div className="fixed right-0 bottom-0 left-0 flex h-[100px] w-full flex-row items-start justify-center gap-2">
@@ -272,11 +279,13 @@ export function Header({ containerRef }: HeaderProps) {
 				</ModalOverlay>
 
 				<div className="hidden h-full w-full items-center justify-center *:flex *:w-full *:flex-row *:items-center *:justify-center *:gap-6 xl:flex">
-					{renderMenuItems()}
+					{renderMenuItems({ animationDelay: 0 })}
 				</div>
-				<div className="hidden flex-row gap-2 xl:flex">
-					{renderCTAs()}
-				</div>
+				<AnimatedFadeIn>
+					<div className="hidden flex-row gap-2 xl:flex">
+						{renderCTAs()}
+					</div>
+				</AnimatedFadeIn>
 			</div>
 		</header>
 	);

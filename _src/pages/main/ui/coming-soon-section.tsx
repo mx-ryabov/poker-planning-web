@@ -24,7 +24,7 @@ export function ComingSoonSection() {
 			id="coming-soon"
 		>
 			<div className="mb-16 text-center">
-				<AnimatedText>
+				<AnimatedText animateOnScroll>
 					<h2 className="mb-4 text-4xl font-bold text-neutral-900">
 						Coming Soon
 					</h2>

@@ -28,7 +28,7 @@ type AnimatedTextProps = {
 
 export function AnimatedText({
 	children,
-	animateOnScroll = true,
+	animateOnScroll = false,
 	delay = 0,
 }: AnimatedTextProps) {
 	const containerRef = useRef<HTMLElement | null>(null);

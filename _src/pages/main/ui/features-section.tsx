@@ -12,7 +12,7 @@ export function FeaturesSection() {
 			id="features"
 		>
 			<div className="mb-16 text-center">
-				<AnimatedText>
+				<AnimatedText animateOnScroll>
 					<h2 className="mb-4 text-4xl font-bold text-neutral-900">
 						Everything you need for agile estimation
 					</h2>

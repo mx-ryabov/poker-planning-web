@@ -39,7 +39,7 @@ export function SubscribeSection() {
 		>
 			<div className="mt-12 text-center">
 				<div className="mx-auto max-w-2xl p-6">
-					<AnimatedText>
+					<AnimatedText animateOnScroll>
 						<h2 className="mb-4 text-4xl font-bold text-neutral-900">
 							Want to be the first to know?
 						</h2>
