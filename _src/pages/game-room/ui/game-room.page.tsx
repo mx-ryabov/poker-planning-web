@@ -10,7 +10,8 @@ import { NextPage } from "next/types";
 import { redirect } from "next/navigation";
 import { GameRoomPageProvider } from "./game-room-page.provider";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
-import { Logo } from "@/_src/shared/ui/components/logo";
+import Image from "next/image";
+import LogoSvg from "@public/logo.svg";
 import { GameManagementBar } from "./game-management-bar";
 import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
@@ -58,7 +59,12 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 				<div className="flex w-full flex-col">
 					<header className="relative flex w-full flex-row justify-between p-6">
 						<NextLink href="/">
-							<Logo />
+							<Image
+								src={LogoSvg}
+								alt="Logo"
+								height={24}
+								priority
+							/>
 						</NextLink>
 						<GameManagementBar className="absolute left-1/2 -translate-x-1/2" />
 						<UserBar onLogout={logout} />
