@@ -119,7 +119,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				<span
 					{...errorMessageProps}
 					role="alert"
-					className="text-error-600 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium"
+					className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium"
 				>
 					<WarningIcon size={12} thikness="bold" />
 					{errorMessages[0]}
