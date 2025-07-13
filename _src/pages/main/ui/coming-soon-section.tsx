@@ -19,16 +19,11 @@ export function ComingSoonSection() {
 	const tabContent = TAB_CONTENTS[activeTabInd];
 
 	return (
-		<section
-			className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8"
-			id="coming-soon"
-		>
-			<div className="mb-16 text-center">
+		<section className="page-section max-w-4xl" id="coming-soon">
+			<div className="mb-12 text-center lg:mb-16">
 				<AnimatedText animateOnScroll>
-					<h2 className="mb-4 text-4xl font-bold text-neutral-900">
-						Coming Soon
-					</h2>
-					<p className="mx-auto max-w-2xl text-xl font-light text-neutral-800">
+					<h2 className="mb-4">Coming Soon</h2>
+					<p className="sub-title mx-auto max-w-2xl">
 						Exciting new features in development to make your
 						estimation process even better
 					</p>
@@ -38,41 +33,47 @@ export function ComingSoonSection() {
 			<div className="flex flex-col gap-8">
 				<SlidingSelector
 					activeIndex={activeTabInd}
-					containerClassName="flex flex-row gap-4 rounded-full bg-neutral-100 border border-neutral-300 p-2 items-center justify-between *:z-15"
-					selectorClassName="bg-white rounded-full z-10! drop-shadow-sm border-neutral-200 duration-400"
+					containerClassName="flex flex-row sm:gap-4 rounded-2xl md:rounded-full bg-neutral-100 border border-neutral-300 p-2 items-center justify-between *:z-15"
+					selectorClassName="bg-white rounded-xl md:rounded-full z-10! drop-shadow-sm border-neutral-200 duration-400"
 				>
 					<Button
 						contentLeft={<LinkIcon size={16} thikness="bold" />}
 						title="Jira Integration"
 						variant="ghost"
-						className="rounded-full bg-transparent"
+						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onClick={() => setActiveTabInd(0)}
 					/>
 					<Button
 						contentLeft={<ClockIcon size={16} thikness="bold" />}
 						title="Asynchronous Estimation"
 						variant="ghost"
-						className="rounded-full bg-transparent"
+						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onClick={() => setActiveTabInd(1)}
 					/>
 					<Button
 						contentLeft={<MagicPenIcon size={16} thikness="bold" />}
-						title="AI Estimation Assistant"
+						title="AI Assistant"
 						variant="ghost"
-						className="rounded-full bg-transparent"
+						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onClick={() => setActiveTabInd(2)}
 					/>
 				</SlidingSelector>
 				{tabContent && (
-					<div className="grid grid-cols-2 gap-4">
-						<div className="flex flex-col justify-center">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+						<div className="flex flex-col items-center justify-center md:items-start">
 							<span className="mb-2 flex flex-row gap-1 text-xs font-semibold">
 								{tabContent.subtitle}
 							</span>
 							<h3 className="mb-4 text-lg font-semibold text-neutral-900">
 								{tabContent.title}
 							</h3>
-							<p className="mb-6 text-neutral-800">
+							<Image
+								src={tabContent.imgSrc}
+								alt={tabContent.imgAlt}
+								width="500"
+								className="mb-4 rounded-xl md:hidden"
+							/>
+							<p className="mb-6 text-center text-neutral-800 md:text-start">
 								{tabContent.description}
 							</p>
 							<NextLinkButton
@@ -87,7 +88,7 @@ export function ComingSoonSection() {
 							src={tabContent.imgSrc}
 							alt={tabContent.imgAlt}
 							width="500"
-							className="rounded-xl"
+							className="hidden rounded-xl md:block"
 						/>
 					</div>
 				)}

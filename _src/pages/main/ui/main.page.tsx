@@ -1,4 +1,5 @@
 "use client";
+import "./page.css";
 import { ComingSoonSection } from "./coming-soon-section";
 import { HeroSection } from "./hero-section";
 import { FeaturesSection } from "./features-section";

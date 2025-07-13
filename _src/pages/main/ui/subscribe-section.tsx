@@ -33,17 +33,12 @@ export function SubscribeSection() {
 			: undefined;
 
 	return (
-		<section
-			className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8"
-			id="subscribe"
-		>
-			<div className="mt-12 text-center">
-				<div className="mx-auto max-w-2xl p-6">
+		<section className="page-section" id="subscribe">
+			<div className="text-center lg:mt-12">
+				<div className="mx-auto max-w-2xl">
 					<AnimatedText animateOnScroll>
-						<h2 className="mb-4 text-4xl font-bold text-neutral-900">
-							Want to be the first to know?
-						</h2>
-						<p className="mx-auto mb-8 max-w-2xl text-xl font-light text-neutral-800">
+						<h2 className="mb-4">Want to be the first to know?</h2>
+						<p className="sub-title mx-auto mb-8 max-w-2xl">
 							Subscribe to get notified when these features launch
 							and get early access to beta versions.
 						</p>

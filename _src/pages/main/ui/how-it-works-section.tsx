@@ -3,16 +3,11 @@ import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
 
 export function HowItWorksSection() {
 	return (
-		<section
-			className="mx-auto max-w-7xl rounded-3xl bg-white px-4 py-20 sm:px-6 lg:px-8"
-			id="how-it-works"
-		>
-			<div className="mb-16 text-center">
+		<section className="page-section" id="how-it-works">
+			<div className="mb-12 text-center lg:mb-16">
 				<AnimatedText animateOnScroll>
-					<h2 className="mb-4 text-4xl font-bold text-neutral-900">
-						How Planning Poker Works
-					</h2>
-					<p className="mx-auto max-w-2xl text-xl font-light text-neutral-800">
+					<h2 className="mb-4">How Planning Poker Works</h2>
+					<p className="sub-title mx-auto max-w-2xl">
 						Get your team estimating in minutes with our simple
 						process
 					</p>
@@ -34,10 +29,8 @@ export function HowItWorksSection() {
 							</div>
 						</div>
 					</div>
-					<h3 className="mb-2 text-xl font-semibold text-neutral-900">
-						Setup Your Game
-					</h3>
-					<p className="text-neutral-800">
+					<h4 className="mb-2">Setup Your Game</h4>
+					<p className="font-light lg:font-normal">
 						Enter game name, choose estimation system
 						(Fibonacci/T-Shirts), add your name and share the link
 					</p>
@@ -54,10 +47,8 @@ export function HowItWorksSection() {
 							</div>
 						</div>
 					</div>
-					<h3 className="mb-2 text-xl font-semibold text-neutral-900">
-						Estimate Stories
-					</h3>
-					<p className="text-neutral-800">
+					<h4 className="mb-2">Estimate Stories</h4>
+					<p className="font-light lg:font-normal">
 						Create issues with descriptions, start voting sessions,
 						and let team members choose their estimation cards
 					</p>
@@ -74,10 +65,8 @@ export function HowItWorksSection() {
 							</div>
 						</div>
 					</div>
-					<h3 className="mb-2 text-xl font-semibold text-neutral-900">
-						See Results
-					</h3>
-					<p className="text-neutral-800">
+					<h4 className="mb-2">See Results</h4>
+					<p className="font-light lg:font-normal">
 						Reveal cards manually or automatically, view voting
 						charts, and apply final estimations to your issues
 					</p>

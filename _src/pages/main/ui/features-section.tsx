@@ -7,16 +7,13 @@ import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 
 export function FeaturesSection() {
 	return (
-		<section
-			className="mx-auto max-w-7xl px-4 py-20 pt-20 sm:px-6 lg:px-8"
-			id="features"
-		>
-			<div className="mb-16 text-center">
+		<section className="page-section" id="features">
+			<div className="mb-12 text-center lg:mb-16">
 				<AnimatedText animateOnScroll>
-					<h2 className="mb-4 text-4xl font-bold text-neutral-900">
+					<h2 className="mb-4">
 						Everything you need for agile estimation
 					</h2>
-					<p className="mx-auto max-w-2xl text-xl font-light text-neutral-800">
+					<p className="sub-title mx-auto max-w-2xl">
 						Powerful features designed to make story point
 						estimation accurate and collaborative
 					</p>
@@ -25,16 +22,14 @@ export function FeaturesSection() {
 
 			<AnimatedFadeIn
 				animateOnScroll
-				className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2"
+				className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2"
 			>
 				<div className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8">
-					<h3 className="text-3xl font-medium text-neutral-900">
-						Real-time Voting Updates
-					</h3>
+					<h3>Real-time Voting Updates</h3>
 					<span className="max-w-fit rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-800 drop-shadow-sm">
 						🚀 Collaborate faster
 					</span>
-					<span className="text-base text-neutral-800">
+					<span className="font-light text-neutral-800 lg:font-normal">
 						Communicate and collaborate effortlessly with Poker
 						Planning&apos;s real-time.
 					</span>
@@ -48,13 +43,11 @@ export function FeaturesSection() {
 					</div>
 				</div>
 				<div className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8">
-					<h3 className="text-3xl font-medium text-neutral-900">
-						Easy Issue Management
-					</h3>
+					<h3>Easy Issue Management</h3>
 					<span className="max-w-fit rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-800 drop-shadow-sm">
 						✨ Communicate easy
 					</span>
-					<span className="text-base text-neutral-800">
+					<span className="font-light text-neutral-800 lg:font-normal">
 						Create and manage stories, tasks, and bugs with titles,
 						descriptions, and types for organized estimation.
 					</span>
@@ -71,16 +64,14 @@ export function FeaturesSection() {
 
 			<AnimatedFadeIn
 				animateOnScroll
-				className="grid grid-cols-2 gap-8 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8"
+				className="grid grid-cols-1 gap-8 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8 lg:grid-cols-2"
 			>
 				<div className="flex flex-col gap-4">
-					<h3 className="text-neutral text-3xl font-medium text-neutral-900">
-						Performance Overview
-					</h3>
+					<h3>Performance Overview</h3>
 					<span className="max-w-fit rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-800 drop-shadow-sm">
 						🧠 Improve wisely
 					</span>
-					<span className="text-base text-neutral-800">
+					<span className="font-light text-neutral-800 lg:font-normal">
 						Quickly visualize how your team is estimating with
 						intuitive charts. See vote distributions, identify
 						outliers, and spot alignment trends — all in real time,

@@ -4,14 +4,14 @@ import Image from "next/image";
 
 export function Footer() {
 	return (
-		<footer className="mx-auto mb-16 flex w-full max-w-5xl flex-col items-center rounded-3xl bg-neutral-900 py-10 text-white">
+		<footer className="mx-auto flex w-auto max-w-5xl flex-col items-center justify-center bg-neutral-900 px-4 py-10 text-white md:mx-6 md:mb-16 md:rounded-3xl xl:mx-auto xl:w-full">
 			<div className="mb-10 flex flex-col items-center gap-4">
 				<Image src={Logo} alt="Logo" />
-				<p className="text-lg font-light text-neutral-300">
+				<p className="text-center text-lg font-light text-neutral-300 md:text-start">
 					🚀 Agile estimation made simple and collaborative 🚀
 				</p>
 			</div>
-			<div className="mb-8 flex flex-row gap-8 text-white">
+			<div className="mb-8 flex flex-row items-center justify-center gap-8 text-white">
 				<NextLink href="/#features">Features</NextLink>
 				<NextLink href="/#how-it-works">How it works</NextLink>
 				<NextLink href="/#coming-soon">Coming soon</NextLink>
