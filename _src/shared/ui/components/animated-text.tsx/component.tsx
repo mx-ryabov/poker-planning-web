@@ -102,6 +102,7 @@ export function AnimatedText({
 		{
 			scope: containerRef,
 			dependencies: [animateOnScroll, delay],
+			revertOnUpdate: true,
 		},
 	);
 

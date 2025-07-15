@@ -10,10 +10,7 @@ import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-if (typeof window !== "undefined") {
-	gsap.registerPlugin(DrawSVGPlugin);
-	gsap.registerPlugin(useGSAP);
-}
+gsap.registerPlugin(DrawSVGPlugin);
 
 function getScaleFactorByScreenWidth(width: number) {
 	/**768, 1024, 1280 */
@@ -100,14 +97,13 @@ export function HeroSection() {
 			id="hero"
 			ref={heroContainerRef}
 		>
-			<div className="position absolute inset-0 bg-[linear-gradient(180deg,_#F4F0FA_0%,_#FAF7FD_50%,_#FFFFFF_100%)]">
-				<div className="absolute inset-0 size-full bg-[url(/noise.png)] opacity-70" />
-				<div className="bg-secondary-300 absolute top-[15px] -left-[20px] h-[400px] w-[400px] rounded-full opacity-50 blur-3xl"></div>
-				<div className="bg-warning-300 absolute top-[300px] left-[40%] h-[500px] w-[500px] rounded-full opacity-50 blur-3xl"></div>
-				<div className="bg-primary-300 absolute top-[100px] right-0 h-[600px] w-[600px] rounded-full opacity-50 blur-3xl"></div>
+			<div className="position absolute inset-0 bg-[linear-gradient(180deg,_#F4F0FA_0%,_#FAF7FD_50%,_#FFFFFF_100%)] will-change-transform">
+				<div className="absolute inset-0 size-full bg-[url(/noise.png)] opacity-70 will-change-transform" />
+				<div className="bg-secondary-300 absolute top-[15px] -left-[20px] h-[400px] w-[400px] rounded-full opacity-50 blur-3xl will-change-transform"></div>
+				<div className="bg-warning-300 absolute top-[300px] left-[40%] h-[500px] w-[500px] rounded-full opacity-50 blur-3xl will-change-transform"></div>
+				<div className="bg-primary-300 absolute top-[100px] right-0 h-[600px] w-[600px] rounded-full opacity-50 blur-3xl will-change-transform"></div>
 			</div>
 			<div className="mx-auto w-full max-w-sm px-4 pt-30 text-center sm:max-w-xl lg:max-w-3xl lg:pt-40">
-				{/* Main Headline */}
 				<div
 					ref={cardsContainerRef}
 					className="relative z-10 perspective-distant"
@@ -157,7 +153,6 @@ export function HeroSection() {
 					</div>
 				</div>
 
-				{/* Subtitle */}
 				<AnimatedText>
 					<p className="relative mx-auto mb-8 max-w-2xl text-base font-light text-neutral-800 md:text-xl">
 						Create planning poker games in seconds. No registration
@@ -166,7 +161,6 @@ export function HeroSection() {
 					</p>
 				</AnimatedText>
 
-				{/* CTA Buttons */}
 				<AnimatedFadeIn
 					delay={0.5}
 					className="relative mb-16 flex flex-row justify-center gap-4 sm:flex-row"
@@ -194,9 +188,7 @@ export function HeroSection() {
 				</AnimatedFadeIn>
 			</div>
 
-			{/* Dashboard Preview */}
 			<div className="relative mx-auto max-w-5xl px-4">
-				{/* Annotation Arrows */}
 				<div className="absolute top-20 -left-32 hidden xl:block">
 					<AnimatedText delay={1}>
 						<div className="mb-4 -rotate-12 transform text-left text-sm text-neutral-900">
@@ -251,7 +243,6 @@ export function HeroSection() {
 					</div>
 				</div>
 
-				{/* Dashboard Card */}
 				<AnimatedFadeIn delay={1}>
 					<Image
 						className="rounded-2xl"

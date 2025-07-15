@@ -77,6 +77,7 @@ export function AnimatedFadeIn({
 		{
 			scope: containerRef,
 			dependencies: [animateOnScroll, delay],
+			revertOnUpdate: true,
 		},
 	);
 
