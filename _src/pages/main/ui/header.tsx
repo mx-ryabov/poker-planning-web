@@ -239,7 +239,7 @@ export function Header({ containerRef }: HeaderProps) {
 	return (
 		<header
 			ref={headerRef}
-			className="sticky top-0 right-0 left-0 z-50 max-h-[72px] w-full"
+			className="fixed top-0 right-0 left-0 z-50 max-h-[72px] w-full"
 		>
 			<div className="mx-auto flex h-full w-full flex-row justify-between px-6 py-4 md:max-w-2xl lg:max-w-4xl xl:max-w-5xl xl:gap-6">
 				<AnimatedFadeIn>
