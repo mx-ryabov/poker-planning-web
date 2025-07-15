@@ -10,10 +10,7 @@ import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-if (typeof window !== "undefined") {
-	gsap.registerPlugin(DrawSVGPlugin);
-	gsap.registerPlugin(useGSAP);
-}
+gsap.registerPlugin(DrawSVGPlugin);
 
 function getScaleFactorByScreenWidth(width: number) {
 	/**768, 1024, 1280 */

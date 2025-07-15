@@ -62,7 +62,7 @@ export function Header({ containerRef }: HeaderProps) {
 				},
 			);
 		},
-		{ dependencies: [headerRef], scope: headerRef },
+		{ dependencies: [headerRef], scope: headerRef, revertOnUpdate: true },
 	);
 
 	useGSAP(
@@ -108,20 +108,17 @@ export function Header({ containerRef }: HeaderProps) {
 				ease: "power4.inOut",
 			});
 
-			gsap.to(".link", {
-				y: "0%",
-				opacity: 1,
-				duration: 1,
-				delay: 0.75,
-				stagger: 0.1,
-				ease: "power3.out",
-			});
-
-			gsap.to(modal, {
-				clipPath: "polygon(0% 0%, 100% 0%, 100% 175%, 0% 100%)",
-				duration: 1.25,
-				ease: "power4.inOut",
-			});
+			gsap.fromTo(
+				modal,
+				{
+					clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
+				},
+				{
+					clipPath: "polygon(0 0, 100% 0, 100% 175%, 0 100%)",
+					duration: 1.25,
+					ease: "power4.inOut",
+				},
+			);
 		},
 		{
 			dependencies: [
@@ -130,6 +127,7 @@ export function Header({ containerRef }: HeaderProps) {
 				menuContainerRef,
 				modalRef,
 			],
+			revertOnUpdate: true,
 		},
 	);
 
@@ -266,7 +264,7 @@ export function Header({ containerRef }: HeaderProps) {
 				<ModalOverlay
 					ref={modalRef}
 					isOpen={isMenuOpen}
-					className={overlayStyles}
+					className="fixed inset-0 h-dvh w-screen bg-white will-change-transform"
 				>
 					<Modal className="h-full w-full">
 						<nav
@@ -297,19 +295,3 @@ export function Header({ containerRef }: HeaderProps) {
 		</header>
 	);
 }
-
-const overlayStyles = cva(
-	"fixed inset-0 h-screen w-screen bg-white [clip-path:polygon(0_0,100%_0,100%_0,0_0)]",
-	{
-		variants: {
-			isEntering: {
-				true: "animate-fade-in duration-300 ease-out",
-				false: "",
-			},
-			isExiting: {
-				true: "animate-fade-out duration-300 ease-in",
-				false: "",
-			},
-		},
-	},
-);
