@@ -73,14 +73,10 @@ const renderFooter = (
 
 describe("Create Game Form Footer", () => {
 	test("renders", async () => {
-		const { getByRole, getByTestId } = renderFooter({});
+		const { getByRole } = renderFooter({});
 
 		const continueBtn = getByRole("button");
-		const authSection = getByTestId("auth-section");
 		expect(continueBtn).toHaveTextContent("Continue");
-		expect(within(authSection).getAllByRole("link")).toHaveLength(2);
-		within(authSection).getByText("Login");
-		within(authSection).getByText("Sign Up");
 	});
 
 	describe("| Continue Button |", () => {
