@@ -83,7 +83,7 @@ export const buttonStyles = cva(
 		"w-fit",
 		// We need all these colors (css variables) to be initialized for COLOR_SCHEMES
 		// They won't be applied anyway because of variants
-		"text-primary-500 text-primary-100 text-primary-600 text-primary-700 text-primary-900",
+		"text-primary-500 text-primary-100 text-primary-600 text-primary-700 text-primary-800 text-primary-900",
 		"text-secondary-500 text-secondary-100 text-secondary-600 text-secondary-700 text-secondary-800 text-secondary-900",
 		"text-error-500 text-error-100 text-error-600 text-error-700 text-error-900",
 		"text-warning-500 text-warning-100 text-warning-600 text-warning-700 text-warning-900",

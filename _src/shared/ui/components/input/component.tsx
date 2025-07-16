@@ -128,15 +128,23 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							/>
 						)}
 						{isPending && (
-							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-500" />
+							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-y-neutral-200 border-l-neutral-200" />
 						)}
 					</Group>
 				</Label>
 
-				{!withErrorIcon && typeof error === "string" && (
-					<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
-						<WarningIcon size={12} thikness="bold" />
-						{error}
+				{!withErrorIcon && (
+					<FieldError className="text-error-700 flex w-full flex-row items-center gap-2 p-1 text-start text-xs font-medium">
+						{(renderProps) => {
+							if (!error && !renderProps.isInvalid) return null;
+
+							return (
+								<>
+									<WarningIcon size={14} thikness="bold" />
+									{error || renderProps.validationErrors[0]}
+								</>
+							);
+						}}
 					</FieldError>
 				)}
 			</TextField>

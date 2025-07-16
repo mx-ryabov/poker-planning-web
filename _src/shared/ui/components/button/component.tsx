@@ -86,7 +86,7 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			>
 				<div className={spinnerStyles({ isActive: isPending })}>
 					<div>
-						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-6 rounded-full border-4 border-neutral-200" />
+						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-y-neutral-200 border-l-neutral-200" />
 					</div>
 				</div>
 				{contentLeft}
