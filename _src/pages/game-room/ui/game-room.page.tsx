@@ -16,6 +16,7 @@ import { GameManagementBar } from "./game-management-bar";
 import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
 import { PokerField } from "./poker-field";
+import { MobileBlockerScreen } from "@/_src/shared/ui/components/mobile-blocker-screen";
 
 if (typeof window !== "undefined") {
 	scan({
@@ -49,34 +50,36 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 	};
 
 	return (
-		<GameRoomPageProvider
-			accessTokenFactory={accessTokenFactory}
-			gameId={gameId}
-			currentParticipant={currentParticipant}
-			game={game}
-		>
-			<div className="flex h-screen w-full flex-row overflow-hidden">
-				<div className="flex w-full flex-col">
-					<header className="relative flex w-full flex-row justify-between p-6">
-						<NextLink href="/">
-							<Image
-								src={LogoSvg}
-								alt="Logo"
-								height={24}
-								width={175}
-								priority
-							/>
-						</NextLink>
-						<GameManagementBar className="absolute left-1/2 -translate-x-1/2" />
-						<UserBar onLogout={logout} />
-					</header>
-					<main className="h-full w-full">
-						<PokerField />
-					</main>
-				</div>
+		<MobileBlockerScreen>
+			<GameRoomPageProvider
+				accessTokenFactory={accessTokenFactory}
+				gameId={gameId}
+				currentParticipant={currentParticipant}
+				game={game}
+			>
+				<div className="flex h-screen w-full flex-row overflow-hidden">
+					<div className="flex w-full flex-col">
+						<header className="relative flex w-full flex-row justify-between p-6">
+							<NextLink href="/">
+								<Image
+									src={LogoSvg}
+									alt="Logo"
+									height={24}
+									width={175}
+									priority
+								/>
+							</NextLink>
+							<GameManagementBar className="absolute left-1/2 -translate-x-1/2" />
+							<UserBar onLogout={logout} />
+						</header>
+						<main className="h-full w-full">
+							<PokerField />
+						</main>
+					</div>
 
-				<GameManagementDrawer />
-			</div>
-		</GameRoomPageProvider>
+					<GameManagementDrawer />
+				</div>
+			</GameRoomPageProvider>
+		</MobileBlockerScreen>
 	);
 };

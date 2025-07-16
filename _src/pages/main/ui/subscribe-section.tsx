@@ -46,7 +46,7 @@ export function SubscribeSection() {
 					{!successMsg && (
 						<form
 							action={submitAction}
-							className="mx-auto flex max-w-md items-center space-x-3"
+							className="mx-auto flex max-w-md items-start space-x-3"
 						>
 							<Input
 								label=""
