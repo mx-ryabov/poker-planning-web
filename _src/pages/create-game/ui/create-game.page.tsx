@@ -4,6 +4,7 @@ import { VotingSystemsProvider } from "@/_src/entities/voting-system";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import { VotingSystem } from "@/_src/shared/api/voting-system-api";
 import { CreateGameForm } from "./create-game-form";
+import { MobileBlockerScreen } from "@/_src/shared/ui/components/mobile-blocker-screen";
 
 interface Props {
 	votingSystems: VotingSystem[];
@@ -12,10 +13,12 @@ interface Props {
 
 export const CreateGamePage = ({ votingSystems, createGameAsGuest }: Props) => {
 	return (
-		<div className="h-screen flex-1">
-			<VotingSystemsProvider value={votingSystems}>
-				<CreateGameForm createGameAsGuest={createGameAsGuest} />
-			</VotingSystemsProvider>
-		</div>
+		<MobileBlockerScreen>
+			<div className="h-screen flex-1">
+				<VotingSystemsProvider value={votingSystems}>
+					<CreateGameForm createGameAsGuest={createGameAsGuest} />
+				</VotingSystemsProvider>
+			</div>
+		</MobileBlockerScreen>
 	);
 };
