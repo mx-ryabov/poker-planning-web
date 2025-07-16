@@ -12,8 +12,6 @@ import {
 	SettingsIcon,
 } from "@/_src/shared/ui/components/icon";
 import { twMerge } from "tailwind-merge";
-import { Color } from "@/_src/shared/ui/colors";
-import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 
 interface Props {
 	className?: string;
@@ -43,7 +41,7 @@ export function CreateGameFooter(props: Props) {
 			<section data-testid="auth-section">
 				<p className="item-center flex flex-row text-sm text-neutral-600">
 					<ProfileIcon className="mr-2" />
-					<NextLink
+					{/* <NextLink
 						href="/sign-in"
 						className="mr-1 leading-relaxed text-neutral-900"
 					>
@@ -55,8 +53,11 @@ export function CreateGameFooter(props: Props) {
 						className="mx-1 leading-relaxed text-neutral-900"
 					>
 						Sign Up
-					</NextLink>
-					<span>to see more app features</span>
+					</NextLink> */}
+					<span>
+						In near future I&apos;ll be able to sign up to see more
+						app features
+					</span>
 				</p>
 			</section>
 			<section className="flex flex-row gap-4">
