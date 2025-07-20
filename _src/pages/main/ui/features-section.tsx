@@ -2,6 +2,7 @@ import Image from "next/image";
 import GameVotingResults from "@public/game-voting-results-2.webp";
 import IssueManagementImg from "@public/issue-management.svg";
 import PokerTableSvg from "@public/poker-table.png";
+import FeatureCardsBg from "@public/features-cards-bg.webp";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 
@@ -24,7 +25,10 @@ export function FeaturesSection() {
 				animateOnScroll
 				className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2"
 			>
-				<div className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8">
+				<div
+					className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-contain p-8"
+					style={{ backgroundImage: `url(${FeatureCardsBg.src})` }}
+				>
 					<h3>Real-time Voting Updates</h3>
 					<span className="max-w-fit rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-800 drop-shadow-sm">
 						🚀 Collaborate faster
@@ -42,7 +46,10 @@ export function FeaturesSection() {
 						/>
 					</div>
 				</div>
-				<div className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8">
+				<div
+					className="flex flex-col gap-4 rounded-3xl bg-neutral-100 bg-contain p-8"
+					style={{ backgroundImage: `url(${FeatureCardsBg.src})` }}
+				>
 					<h3>Easy Issue Management</h3>
 					<span className="max-w-fit rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-800 drop-shadow-sm">
 						✨ Communicate easy
@@ -64,7 +71,8 @@ export function FeaturesSection() {
 
 			<AnimatedFadeIn
 				animateOnScroll
-				className="grid grid-cols-1 gap-8 rounded-3xl bg-neutral-100 bg-[url(/features-cards-bg.webp)] bg-contain p-8 lg:grid-cols-2"
+				className="grid grid-cols-1 gap-8 rounded-3xl bg-neutral-100 bg-contain p-8 lg:grid-cols-2"
+				style={{ backgroundImage: `url(${FeatureCardsBg.src})` }}
 			>
 				<div className="flex flex-col gap-4">
 					<h3>Performance Overview</h3>

@@ -98,7 +98,7 @@ export function HeroSection() {
 			ref={heroContainerRef}
 		>
 			<div className="position absolute inset-0 bg-[linear-gradient(180deg,_#F4F0FA_0%,_#FAF7FD_50%,_#FFFFFF_100%)] will-change-transform">
-				<div className="absolute inset-0 size-full bg-[url(/noise.png)] opacity-70 will-change-transform" />
+				<div className="absolute inset-0 size-full opacity-70 will-change-transform" />
 				<div className="bg-secondary-300 absolute top-[15px] -left-[20px] h-[400px] w-[400px] rounded-full opacity-50 blur-3xl will-change-transform"></div>
 				<div className="bg-warning-300 absolute top-[300px] left-[40%] h-[500px] w-[500px] rounded-full opacity-50 blur-3xl will-change-transform"></div>
 				<div className="bg-primary-300 absolute top-[100px] right-0 h-[600px] w-[600px] rounded-full opacity-50 blur-3xl will-change-transform"></div>

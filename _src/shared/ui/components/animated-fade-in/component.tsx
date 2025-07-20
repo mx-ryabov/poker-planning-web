@@ -2,7 +2,14 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Children, cloneElement, ReactElement, RefObject, useRef } from "react";
+import {
+	Children,
+	cloneElement,
+	HTMLProps,
+	ReactElement,
+	RefObject,
+	useRef,
+} from "react";
 import { twMerge } from "tailwind-merge";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,14 +23,13 @@ type AnimatedFadeInProps = {
 	children: ReactElement<ChildProps> | ReactElement<ChildProps>[];
 	animateOnScroll?: boolean;
 	delay?: number;
-	className?: string;
-};
+} & HTMLProps<HTMLDivElement>;
 
 export function AnimatedFadeIn({
 	children,
 	animateOnScroll = false,
 	delay = 0,
-	className,
+	...divProps
 }: AnimatedFadeInProps) {
 	const containerRef = useRef<HTMLElement | null>(null);
 
@@ -95,7 +101,8 @@ export function AnimatedFadeIn({
 		<div
 			ref={containerRef as RefObject<HTMLDivElement>}
 			data-animated-text-wrapper="true"
-			className={twMerge("initially-hidden", className)}
+			{...divProps}
+			className={twMerge("initially-hidden", divProps.className)}
 		>
 			{children}
 		</div>
