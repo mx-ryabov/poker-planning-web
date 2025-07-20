@@ -10,7 +10,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { MenuIcon } from "@/_src/shared/ui/components/icon/svg/menu.icon";
-import { cva } from "class-variance-authority";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { Modal, ModalOverlay } from "react-aria-components";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";

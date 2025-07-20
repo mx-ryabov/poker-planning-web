@@ -15,6 +15,7 @@ export function Footer() {
 				<NextLink href="/#features">Features</NextLink>
 				<NextLink href="/#how-it-works">How it works</NextLink>
 				<NextLink href="/#coming-soon">Coming soon</NextLink>
+				<NextLink href="/privacy-policy">Privacy Policy</NextLink>
 			</div>
 			<div className="flex w-full flex-col items-center justify-center border-t border-neutral-600 pt-8 md:flex-row">
 				<p className="text-sm text-gray-400">
