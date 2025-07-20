@@ -2,6 +2,15 @@ import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 import Image from "next/image";
 import LogoSvg from "@public/logo.svg";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Poker Planning - Privacy Policy",
+	description:
+		"Learn how Poker Planning collects, uses, and protects your personal data. Understand your rights under GDPR and our cookie policy.",
+	keywords:
+		"poker planning, privacy policy, GDPR, data protection, cookies, agile estimation, personal data, user rights",
+};
 
 export default async function PrivacyPolicyPage() {
 	return (
