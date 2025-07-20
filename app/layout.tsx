@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/_src/shared/providers";
@@ -15,10 +14,6 @@ const inter = Inter({
 	display: "swap",
 	variable: "--font-inter",
 });
-
-export const metadata: Metadata = {
-	title: "Poker Planning",
-};
 
 export default function RootLayout({
 	children,
