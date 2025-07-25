@@ -42,12 +42,7 @@ export const DrawerInlineWithPortal = () => {
 				/>
 				<p>Some content</p>
 			</div>
-			<Drawer.Modal
-				type="inline"
-				position="end"
-				portal="in-same-place"
-				isOpen={isOpen}
-			>
+			<Drawer.Modal position="end" portal="in-same-place" isOpen={isOpen}>
 				<Drawer.Heading>Drawer Heading</Drawer.Heading>
 			</Drawer.Modal>
 		</div>
@@ -58,7 +53,7 @@ export const DrawerInlineResizible = () => {
 	const [isOpen, setOpen] = useState(false);
 
 	return (
-		<div className="flex flex-row w-full min-w-[500px] min-h-[300px] bg-neutral-100">
+		<div className="flex flex-row w-full min-w-[500px] h-[300px] bg-neutral-100">
 			<div className="w-full">
 				<p>Some content</p>
 				<Button
@@ -67,16 +62,14 @@ export const DrawerInlineResizible = () => {
 				/>
 				<p>Some content</p>
 			</div>
-			<Drawer.Modal
-				type="inline"
-				withSeparator
+			<Drawer.ModalWithSeparator
 				position="end"
-				portal="in-same-place"
 				onOpenChange={setOpen}
+				stateKey="drawer-inline-resizable"
 				isOpen={isOpen}
 			>
 				<Drawer.Heading>Drawer Heading</Drawer.Heading>
-			</Drawer.Modal>
+			</Drawer.ModalWithSeparator>
 		</div>
 	);
 };

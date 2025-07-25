@@ -29,14 +29,14 @@ const collapseBtnStyles = cva(
 type SeparatorProps = {
 	position: "start" | "end";
 	contentRef: RefObject<HTMLDivElement | null>;
-	stateKey?: string;
+	onResizeEnd: (width: number) => void;
 	onCollapse: () => void;
 };
 
 export function Separator({
 	position,
 	contentRef,
-	stateKey,
+	onResizeEnd,
 	onCollapse,
 }: SeparatorProps) {
 	const direction = position === "start" ? "right/bottom" : "left/top";
@@ -45,7 +45,7 @@ export function Separator({
 			<ResizeSeparator
 				orientation="vertical"
 				direction={direction}
-				stateKey={stateKey}
+				onChangeEnd={onResizeEnd}
 				resizableElementRef={contentRef}
 			/>
 			<Button
