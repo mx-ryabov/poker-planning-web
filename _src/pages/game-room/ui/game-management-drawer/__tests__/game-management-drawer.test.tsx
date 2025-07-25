@@ -1,5 +1,5 @@
 import { test, describe, expect } from "vitest";
-import { act, render, within } from "@/test/utilities";
+import { act, render, waitFor, within } from "@/test/utilities";
 import { createGameStateStore, GameManagementTab } from "../../../model";
 import { GameManagementDrawer } from "../game-management-drawer";
 import {
@@ -167,9 +167,11 @@ describe("Game Management Drawer", () => {
 		const arrowBtn = within(separartor).getByRole("button");
 		await user.click(arrowBtn);
 
-		expect(
-			queryByTestId("game-management-drawer-body"),
-		).not.toBeInTheDocument();
+		await waitFor(() => {
+			expect(
+				queryByTestId("game-management-drawer-body"),
+			).not.toBeInTheDocument();
+		});
 		expect(gameStateStore.getState().activeTab).toBe(null);
 	});
 
@@ -186,9 +188,11 @@ describe("Game Management Drawer", () => {
 		).toBeInTheDocument();
 
 		act(() => gameStateStore.getState().setActiveTab(null));
-		expect(
-			queryByTestId("game-management-drawer-body"),
-		).not.toBeInTheDocument();
+		await waitFor(() => {
+			expect(
+				queryByTestId("game-management-drawer-body"),
+			).not.toBeInTheDocument();
+		});
 	});
 });
 
