@@ -73,7 +73,10 @@ export function TicketItemFullView(props: Props) {
 							<Tooltip.Content>Collapse</Tooltip.Content>
 						</Tooltip>
 						<Tooltip delay={1000}>
-							<TicketItemMenu deleteTicket={deleteTicket} />
+							<TicketItemMenu
+								deleteTicket={deleteTicket}
+								ticketId={data.id}
+							/>
 							<Tooltip.Content>Options</Tooltip.Content>
 						</Tooltip>
 					</div>
@@ -111,7 +114,7 @@ export function TicketItemFullView(props: Props) {
 				<VoteButton ticket={data} />
 			</div>
 
-			<div className="flex flex-col gap-1">
+			<div className="flex flex-col">
 				<Label className="text-sm font-medium text-neutral-900">
 					Description
 				</Label>
@@ -141,7 +144,7 @@ export function TicketItemFullView(props: Props) {
 					<div className="flex w-12 justify-end">
 						<InlineEditableTextField
 							value={state.estimation || ""}
-							placeholder="None"
+							placeholder="-"
 							id="ticket-estimation"
 							containerClassName="w-max max-w-full"
 							isDisabled={!isEditable}

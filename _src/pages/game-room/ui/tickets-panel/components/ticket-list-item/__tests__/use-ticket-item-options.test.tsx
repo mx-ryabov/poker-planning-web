@@ -1,8 +1,9 @@
 import { test, describe, expect, vi, beforeEach } from "vitest";
 import { act, renderHook } from "@/test/utilities";
-import { ParticipantRole } from "@/_src/shared/api";
+import { GameVotingStatus, ParticipantRole } from "@/_src/shared/api";
 import { useTicketItemOptions } from "../state/use-ticket-item-options";
 import { buildTicketItemWrapper, TicketItemWrapperProps } from "./utility";
+import { generateTicket } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 
 describe("Use Ticket Item Options hook", () => {
 	beforeEach(() => {
@@ -43,6 +44,25 @@ describe("Use Ticket Item Options hook", () => {
 					onConfirm: deleteTicket,
 				}),
 			);
+		});
+
+		test("has DeleteTicket option disabled is the voting is active and deleting ticket === voting ticket", async () => {
+			const { result } = renderHookWithWrapper({
+				currentRole: ParticipantRole.Master,
+				votingProcess: {
+					status: GameVotingStatus.InProgress,
+					ticket: generateTicket({
+						id: "test-ticket-id",
+					}),
+					startTime: new Date().toISOString(),
+				},
+			});
+
+			act(() => {
+				result.current[0].action();
+			});
+			expect(openModalFn).toHaveBeenCalledTimes(0);
+			expect(result.current[0].disabled).toBe(true);
 		});
 	});
 
@@ -100,7 +120,11 @@ const openModalFn = vi.fn();
 const deleteTicket = vi.fn();
 
 const renderHookWithWrapper = (props: TicketItemWrapperProps) => {
-	return renderHook(() => useTicketItemOptions({ deleteTicket }), {
-		wrapper: buildTicketItemWrapper({ ...props, openModalFn }),
-	});
+	return renderHook(
+		() =>
+			useTicketItemOptions({ deleteTicket, ticketId: "test-ticket-id" }),
+		{
+			wrapper: buildTicketItemWrapper({ ...props, openModalFn }),
+		},
+	);
 };

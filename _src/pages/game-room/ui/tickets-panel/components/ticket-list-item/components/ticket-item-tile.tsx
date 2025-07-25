@@ -26,7 +26,7 @@ export function TicketItemTile(props: Props) {
 
 	return (
 		<div
-			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-200 p-2 transition-colors hover:border-neutral-300 hover:shadow-xs"
+			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-200 p-2 transition-colors hover:border-primary-500 hover:shadow-xs"
 			data-testid={`ticket-list-item-${data.id}`}
 			onClick={onContainerClick}
 		>
@@ -44,6 +44,7 @@ export function TicketItemTile(props: Props) {
 				<div className="flex flex-row gap-2">
 					<TicketItemMenu
 						className="opacity-0 transition-opacity group-hover:opacity-100 data-[pressed=true]:opacity-100"
+						ticketId={data.id}
 						deleteTicket={deleteTicket}
 					/>
 				</div>

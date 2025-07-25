@@ -31,8 +31,6 @@ export const appFetchPost = async <TRequest extends object>(
 		headers: await getHeaders(),
 		body: JSON.stringify(body),
 	});
-	console.log("res", res);
-
 	return res;
 };
 

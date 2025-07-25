@@ -1,3 +1,3 @@
 "use client";
-export { Button, ButtonSquare } from "./component";
+export { Button, ButtonSquare, NewButton } from "./component";
 export type { LabeledButtonProps } from "./component";

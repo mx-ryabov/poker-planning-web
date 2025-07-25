@@ -12,8 +12,8 @@ export type ReadViewStyleProps = {
 export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
 	variants: {
 		variant: {
-			ghost: "border-2 border-white",
-			filled: "border-2 border-white",
+			ghost: "",
+			filled: "",
 			bordered: "border-2 border-neutral-300",
 		},
 		hasValue: {
@@ -66,6 +66,11 @@ export const readViewStyles = cva(["flex", "rounded-lg", "overflow-hidden"], {
 			isDisabled: false,
 			variant: "filled",
 			className: "bg-neutral-200 hover:bg-neutral-300 text-neutral-900",
+		},
+		{
+			isDisabled: false,
+			variant: "ghost",
+			className: "hover:bg-neutral-100",
 		},
 		{
 			isDisabled: false,

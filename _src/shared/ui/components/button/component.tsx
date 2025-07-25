@@ -181,3 +181,78 @@ const ButtonIconSize = {
 	medium: 18,
 	large: 24,
 };
+
+type NewButtonProps = {
+	isPending?: boolean;
+	children: ReactNode;
+	shape?: "default" | "square";
+} & ButtonStylesProps &
+	ButtonProps &
+	HTMLAttributes<HTMLButtonElement>;
+
+export const NewButton = forwardRef<HTMLButtonElement, NewButtonProps>(
+	(props, ref) => {
+		[props, ref] = useContextProps(props, ref, ButtonContext);
+		const {
+			size = "medium",
+			variant = "default",
+			appearance = "primary",
+			isPending = false,
+			shape = "default",
+			children,
+			role,
+			className,
+		} = props;
+
+		let { buttonProps, isPressed } = useButton(
+			{
+				...props,
+				isDisabled: props.isDisabled || isPending,
+			},
+			ref,
+		);
+		let { hoverProps, isHovered } = useHover({
+			...props,
+			isDisabled: props.isDisabled || isPending,
+		});
+		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
+
+		return (
+			<button
+				style={COLOR_SCHEMES[appearance] as any}
+				className={twMerge(
+					buttonStyles({
+						size,
+						variant,
+						form: shape,
+						excludeFromFocus: props.excludeFromTabOrder,
+						// we need to get the ButtonContextValue from the context, but for some reason it's not exposed for public usage
+						isPressed:
+							isPressed ||
+							(
+								props as LabeledButtonProps & {
+									isPressed?: boolean;
+								}
+							).isPressed,
+						isFocused: isFocusVisible,
+						isHovered,
+						isDisabled: props.isDisabled || isPending,
+					}),
+					className,
+				)}
+				ref={ref}
+				role={role || "button"}
+				data-focused={isFocused || undefined}
+				aria-label={buttonProps["aria-label"] || "icon button"}
+				{...mergeProps(buttonProps, focusProps, hoverProps)}
+			>
+				<div className={spinnerStyles({ isActive: isPending })}>
+					<div>
+						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-y-neutral-200 border-l-neutral-200" />
+					</div>
+				</div>
+				{children}
+			</button>
+		);
+	},
+);

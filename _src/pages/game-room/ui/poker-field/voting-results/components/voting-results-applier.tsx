@@ -79,19 +79,29 @@ function VotingResultsApplierInner(props: InnerProps) {
 					finishVoting(),
 				])
 					.then(() => {
-						toast?.add({
-							title: "Congratulations!",
-							description: `The ticket ${ticket.identifier} has been estimated - ${selectedVote.value}`,
-							variant: "success",
-						});
+						toast?.add(
+							{
+								title: "Congratulations!",
+								description: `The ticket ${ticket.identifier} has been estimated - ${selectedVote.value}`,
+								variant: "success",
+							},
+							{
+								timeout: 3000,
+							},
+						);
 					})
 					.catch((e) => {
-						toast?.add({
-							title: "Something went wrong...",
-							description:
-								"An error occurred during the estimation and completion of the voting. Please try again.",
-							variant: "error",
-						});
+						toast?.add(
+							{
+								title: "Something went wrong...",
+								description:
+									"An error occurred during the estimation and completion of the voting. Please try again.",
+								variant: "error",
+							},
+							{
+								timeout: 5000,
+							},
+						);
 					});
 			},
 		});

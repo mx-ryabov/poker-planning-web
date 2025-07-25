@@ -9,6 +9,7 @@ type Props = {
 };
 export function EstimationCard(props: Props) {
 	const { rank, suit, isSelected, isHovered, isFocusVisible } = props;
+
 	return (
 		<div className={styles({ isSelected, isHovered, isFocusVisible })}>
 			<div className="absolute top-1 left-1 w-14">{rank}</div>
@@ -23,7 +24,7 @@ export function EstimationCard(props: Props) {
 const styles = cva(
 	[
 		"h-19 w-15 relative",
-		"rounded-lg border-2 border-neutral-200",
+		"rounded-lg border-2",
 		"text-base text-neutral-900",
 		"cursor-pointer transition-all",
 	],
@@ -42,5 +43,37 @@ const styles = cva(
 				false: "",
 			},
 		},
+		compoundVariants: [
+			{
+				isSelected: false,
+				isHovered: false,
+				isFocusVisible: false,
+				class: "border-neutral-200",
+			},
+			{
+				isSelected: true,
+				isHovered: true,
+				isFocusVisible: true,
+				class: "-translate-y-2 border-primary-600",
+			},
+			{
+				isSelected: true,
+				isHovered: false,
+				isFocusVisible: true,
+				class: "-translate-y-2 border-primary-600",
+			},
+			{
+				isSelected: false,
+				isHovered: true,
+				isFocusVisible: true,
+				class: "border-primary-400 -translate-y-1",
+			},
+			{
+				isSelected: false,
+				isHovered: false,
+				isFocusVisible: true,
+				class: "border-primary-400 -translate-y-1",
+			},
+		],
 	},
 );

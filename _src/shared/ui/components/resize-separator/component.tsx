@@ -41,6 +41,7 @@ type Props = {
 	direction: "left/top" | "right/bottom";
 	resizableElementRef: RefObject<HTMLDivElement | null>;
 	stateKey?: string;
+	onChangeEnd?: (width: number) => void;
 };
 
 export function ResizeSeparator({
@@ -48,6 +49,7 @@ export function ResizeSeparator({
 	direction,
 	resizableElementRef,
 	stateKey,
+	onChangeEnd,
 }: Props) {
 	const localStorage = useLocalStorage();
 	const separatorRef = useRef<HTMLDivElement>(null);
@@ -96,6 +98,9 @@ export function ResizeSeparator({
 				`resizable-element-state-${stateKey}`,
 				`${startWidth}px`,
 			);
+			if (onChangeEnd) {
+				onChangeEnd(startWidth);
+			}
 
 			startHeight = resizableEl.getBoundingClientRect().height;
 		}
@@ -130,6 +135,7 @@ export function ResizeSeparator({
 		direction,
 		localStorage,
 		stateKey,
+		onChangeEnd,
 	]);
 
 	return (

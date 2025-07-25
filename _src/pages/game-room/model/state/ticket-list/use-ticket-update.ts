@@ -46,11 +46,16 @@ export function useTicketUpdate(defaultData: GameTicket) {
 			updateTicket(defaultData.id, data);
 		},
 		onError: (e) => {
-			toastState?.add({
-				title: `Server Error`,
-				description: e.message,
-				variant: "error",
-			});
+			toastState?.add(
+				{
+					title: `Server Error`,
+					description: e.message,
+					variant: "error",
+				},
+				{
+					timeout: 5000,
+				},
+			);
 		},
 		onMutate: mutateOptimistic,
 	});

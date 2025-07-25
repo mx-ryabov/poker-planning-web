@@ -16,11 +16,16 @@ export function useRevealCards() {
 		onError: (e) => {
 			console.log(e);
 
-			toast?.add({
-				title: `Revealing Cards failed.`,
-				variant: "error",
-				description: "Please try again.",
-			});
+			toast?.add(
+				{
+					title: `Revealing Cards failed.`,
+					variant: "error",
+					description: "Please try again.",
+				},
+				{
+					timeout: 5000,
+				},
+			);
 		},
 	});
 

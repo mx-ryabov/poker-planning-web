@@ -2,6 +2,7 @@ import {
 	Button,
 	ButtonSquare,
 	LabeledButtonProps,
+	NewButton,
 } from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon/svg/close.icon";
 import { Modal } from "@/_src/shared/ui/components/modal";
@@ -47,13 +48,14 @@ export function ConfirmationModal({
 				{({ close }) => (
 					<>
 						<Modal.Title>{state?.title}</Modal.Title>
-						<ButtonSquare
-							icon={CloseIcon}
+						<NewButton
 							variant="ghost"
-							size="small"
+							shape="square"
 							data-testid="dismiss-button"
 							onPress={close}
-						/>
+						>
+							<CloseIcon className="w-8 h-8" />
+						</NewButton>
 					</>
 				)}
 			</Modal.Header>

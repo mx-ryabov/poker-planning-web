@@ -41,26 +41,26 @@ export function ComingSoonSection() {
 						title="Jira Integration"
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
-						onClick={() => setActiveTabInd(0)}
+						onPress={() => setActiveTabInd(0)}
 					/>
 					<Button
 						contentLeft={<ClockIcon size={16} thikness="bold" />}
 						title="Asynchronous Estimation"
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
-						onClick={() => setActiveTabInd(1)}
+						onPress={() => setActiveTabInd(1)}
 					/>
 					<Button
 						contentLeft={<MagicPenIcon size={16} thikness="bold" />}
 						title="AI Assistant"
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
-						onClick={() => setActiveTabInd(2)}
+						onPress={() => setActiveTabInd(2)}
 					/>
 				</SlidingSelector>
 				{tabContent && (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-						<div className="flex flex-col items-center justify-center md:items-start">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 h-[310px]">
+						<div className="flex flex-col md:mt-10">
 							<span className="mb-2 flex flex-row gap-1 text-xs font-semibold">
 								{tabContent.subtitle}
 							</span>
@@ -87,8 +87,8 @@ export function ComingSoonSection() {
 						<Image
 							src={tabContent.imgSrc}
 							alt={tabContent.imgAlt}
-							width="500"
-							className="hidden rounded-xl md:block"
+							width={500}
+							className="hidden rounded-xl md:block object-contain"
 						/>
 					</div>
 				)}

@@ -36,11 +36,16 @@ export function useHoleCardsState(): HoleCardsState {
 		},
 		onSuccess: (vote) => changeVote(vote),
 		onError: () =>
-			toast?.add({
-				title: "Your attempt to vote failed.",
-				description: "Please try again.",
-				variant: "error",
-			}),
+			toast?.add(
+				{
+					title: "Your attempt to vote failed.",
+					description: "Please try again.",
+					variant: "error",
+				},
+				{
+					timeout: 5000,
+				},
+			),
 	});
 
 	const onSelectionChange = useCallback(

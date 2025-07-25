@@ -1,21 +1,36 @@
-import { useCallback, useMemo } from "react";
+import { JSX, useCallback, useMemo } from "react";
 import { useConfirmationModal } from "@/_src/shared/providers";
 import {
 	checkPermissions,
 	selectCurrentRole,
+	selectVotingProcess,
 	useGameState,
 } from "@/_src/pages/game-room/model";
 import { TrashIcon } from "@/_src/shared/ui/components/icon/svg/trash.icon";
+import { GameVotingStatus } from "@/_src/shared/api";
+
+type TicketItemOptionType = {
+	title: string;
+	icon: JSX.Element;
+	action: () => void;
+	disabled?: boolean;
+};
 
 type Props = {
+	ticketId: string;
 	deleteTicket: () => void;
 };
 
-export function useTicketItemOptions({ deleteTicket }: Props) {
+export function useTicketItemOptions({ ticketId, deleteTicket }: Props) {
 	const { open } = useConfirmationModal();
 	const currentRole = useGameState(selectCurrentRole);
+	const { ticket } = useGameState(selectVotingProcess);
+
+	const isDeletingDisabled = ticket?.id === ticketId;
 
 	const openDeleteConfirmationModal = useCallback(() => {
+		if (isDeletingDisabled) return;
+
 		open({
 			title: "Are you sure?",
 			contentMessage:
@@ -24,19 +39,20 @@ export function useTicketItemOptions({ deleteTicket }: Props) {
 			confirmBtnAppearence: "danger",
 			onConfirm: deleteTicket,
 		});
-	}, [open, deleteTicket]);
+	}, [open, deleteTicket, isDeletingDisabled]);
 
-	const options = useMemo(() => {
+	const options: TicketItemOptionType[] = useMemo(() => {
 		const result = [];
 		if (checkPermissions("DeleteTicket", currentRole)) {
 			result.push({
 				title: "Delete",
 				icon: <TrashIcon size={20} className="shrink-0" />,
 				action: openDeleteConfirmationModal,
+				disabled: isDeletingDisabled,
 			});
 		}
 		return result;
-	}, [currentRole, openDeleteConfirmationModal]);
+	}, [currentRole, openDeleteConfirmationModal, isDeletingDisabled]);
 
 	return options;
 }

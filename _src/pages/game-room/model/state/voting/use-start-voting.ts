@@ -15,11 +15,16 @@ export function useStartVoting() {
 			api.game.startVoting(gameId, ticketId),
 		onSuccess: (response, ticket) => startVotingInStore(ticket, response),
 		onError: (error) =>
-			toast?.add({
-				title: `Starting Voting failed. ${error.message}`,
-				variant: "error",
-				description: "Please try again",
-			}),
+			toast?.add(
+				{
+					title: `Starting Voting failed. ${error.message}`,
+					variant: "error",
+					description: "Please try again",
+				},
+				{
+					timeout: 5000,
+				},
+			),
 	});
 
 	return { startVoting, isPending };

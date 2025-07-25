@@ -27,8 +27,6 @@ export function ResultsChart() {
 		dataVoteIds: chartData.dataVoteIds,
 	});
 
-	console.log(chartData);
-
 	return (
 		<div className="relative flex flex-row items-center gap-8">
 			<div className="relative h-[200px] w-[200px]">

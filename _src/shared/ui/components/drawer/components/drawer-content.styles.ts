@@ -3,9 +3,7 @@ import { cva } from "class-variance-authority";
 export const overlayStyles = cva("", {
 	variants: {
 		type: {
-			overlay: [
-				"fixed top-0 left-0 w-screen h-screen bg-neutral-900 bg-opacity-50",
-			],
+			overlay: ["fixed top-0 left-0 w-screen h-screen bg-neutral-900/50"],
 			inline: ["bg-opacity-0"],
 		},
 		position: {

@@ -12,15 +12,14 @@ export function GameManagementDrawer() {
 	const setActiveTab = useGameManagementState((state) => state.setActiveTab);
 
 	return (
-		<Drawer.Modal
-			type="inline"
+		<Drawer.ModalWithSeparator
 			position="end"
-			portal="in-same-place"
 			isOpen={activeTab !== null}
 			onOpenChange={() => setActiveTab(null)}
-			withSeparator
 			stateKey="game-manager-drawer"
-			className="min-w-[300px] max-w-[500px]"
+			minWidth={300}
+			maxWidth={500}
+			className=""
 		>
 			<section
 				className="flex flex-col gap-5 w-full h-full"
@@ -29,7 +28,7 @@ export function GameManagementDrawer() {
 				<DrawerHeader />
 				<DrawerBody panels={PANELS} />
 			</section>
-		</Drawer.Modal>
+		</Drawer.ModalWithSeparator>
 	);
 }
 
