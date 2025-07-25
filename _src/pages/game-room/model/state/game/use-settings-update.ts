@@ -43,7 +43,7 @@ export function useSettingsUpdate({
 		(error: Error) => {
 			if (!toast) return;
 
-			toast.add(
+			toast?.add(
 				{
 					title: "Game settings update has failed.",
 					description: error.message,

@@ -6,13 +6,14 @@ import { useTicketItemOptions } from "../state/use-ticket-item-options";
 
 type Props = {
 	className?: string;
+	ticketId: string;
 	deleteTicket: () => void;
 };
 
 export function TicketItemMenu(props: Props) {
-	const { className, deleteTicket } = props;
+	const { className, ticketId, deleteTicket } = props;
 
-	const options = useTicketItemOptions({ deleteTicket });
+	const options = useTicketItemOptions({ deleteTicket, ticketId });
 
 	if (options.length === 0) return null;
 
@@ -27,7 +28,11 @@ export function TicketItemMenu(props: Props) {
 			/>
 			<Menu.Content placement="bottom end">
 				{options.map((option) => (
-					<Menu.Item onAction={option.action} key={option.title}>
+					<Menu.Item
+						onAction={option.action}
+						key={option.title}
+						isDisabled={option.disabled}
+					>
 						{option.icon}
 						{option.title}
 					</Menu.Item>

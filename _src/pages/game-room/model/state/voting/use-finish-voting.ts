@@ -18,11 +18,16 @@ export function useFinishVoting() {
 		onError: (e) => {
 			console.log(e);
 
-			toast?.add({
-				title: `Finishing Voting failed.`,
-				variant: "error",
-				description: "Please try again.",
-			});
+			toast?.add(
+				{
+					title: `Finishing Voting failed.`,
+					variant: "error",
+					description: "Please try again.",
+				},
+				{
+					timeout: 5000,
+				},
+			);
 		},
 	});
 

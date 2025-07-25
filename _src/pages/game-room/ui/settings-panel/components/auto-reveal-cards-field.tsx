@@ -67,7 +67,7 @@ export function AutoRevealCardsField({
 			>
 				<Switch
 					isSelected={value.isAutoRevealCards}
-					isDisabled={isReadonly}
+					isDisabled={isReadonly || isVotingStatusInProgress}
 					data-testid="auto-reveal-cards-switch"
 					aria-label="Auto-reveal cards"
 					onChange={onIsAutoRevealChange}
@@ -103,8 +103,10 @@ export function AutoRevealCardsField({
 			<div className="flex flex-row items-center gap-2 text-xs text-neutral-700">
 				<QuestionIcon thikness="light" />
 				<span>
-					Let the system automatically reveal the cards after everyone
-					has voted.
+					{isVotingStatusInProgress &&
+						"You can change the auto-revealing setting only when voting is not in progress."}
+					{!isVotingStatusInProgress &&
+						"Let the system automatically reveal the cards after everyone has voted."}
 				</span>
 			</div>
 		</div>

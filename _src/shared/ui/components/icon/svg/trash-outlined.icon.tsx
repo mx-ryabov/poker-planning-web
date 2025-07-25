@@ -1,7 +1,7 @@
 import { iconBuilder } from "../icon-builder";
 import { SvgProps } from "../types";
 
-export const TrashIcon = iconBuilder((props: SvgProps) => {
+export const TrashOutlinedIcon = iconBuilder((props: SvgProps) => {
 	return (
 		<svg
 			width="100%"
@@ -11,35 +11,28 @@ export const TrashIcon = iconBuilder((props: SvgProps) => {
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
+				d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
 			<path
-				d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97"
+				d="M17.9 9.05C15.72 8.83 13.52 8.72 11.33 8.72C10.03 8.72 8.72997 8.79 7.43997 8.92L6.09998 9.05"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
 			<path
-				d="M18.85 9.14001L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79002C6.00002 22 5.91002 20.78 5.80002 19.21L5.15002 9.14001"
+				d="M9.70996 8.39L9.84996 7.53C9.94996 6.91 10.03 6.44 11.14 6.44H12.86C13.97 6.44 14.0499 6.93 14.1499 7.53L14.2899 8.38"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
 			<path
-				d="M10.33 16.5H13.66"
-				stroke={props.color || "currentColor"}
-				strokeWidth={props.strokeWidth}
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M9.5 12.5H14.5"
+				d="M16.49 9.13L16.06 15.73C15.99 16.76 15.93 17.56 14.1 17.56H9.89C8.06 17.56 7.99999 16.76 7.92999 15.73L7.5 9.13"
 				stroke={props.color || "currentColor"}
 				strokeWidth={props.strokeWidth}
 				strokeLinecap="round"
@@ -47,4 +40,4 @@ export const TrashIcon = iconBuilder((props: SvgProps) => {
 			/>
 		</svg>
 	);
-}, "TrashIcon");
+}, "TrashOutlinedIcon");
