@@ -139,7 +139,7 @@ describe("TicketItemFullView component", () => {
 				},
 			});
 			const estimation = getByTestId("ticket-estimation-read-view");
-			expect(estimation).toHaveTextContent("None");
+			expect(estimation).toHaveTextContent("-");
 		});
 	});
 });
