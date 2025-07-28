@@ -176,6 +176,18 @@ export async function revealCards(gameId: string): Promise<void> {
 	}
 }
 
+export async function cancelVoting(gameId: string): Promise<void> {
+	const res = await appFetchPut(`/games/${gameId}/cancel-voting`, {});
+
+	if (res.ok) {
+		return;
+	} else {
+		throw new Error(
+			`Cancel Voting by GameId is falied. Status: ${res.status}. Message: ${res.statusText}`,
+		);
+	}
+}
+
 export async function finishVoting(gameId: string): Promise<GameVotingResult> {
 	const res = await appFetchPut(`/games/${gameId}/finish-voting`, {});
 

@@ -78,6 +78,12 @@ export class CardsRevealedEvent extends BaseEvent<void> {
 	}
 }
 
+export class VotingCancelledEvent extends BaseEvent<void> {
+	constructor() {
+		super(GameEventType.VotingCancelled);
+	}
+}
+
 export class VotingFinishedEvent extends BaseEvent<GameVotingResult> {
 	constructor(votingResult: GameVotingResult) {
 		super(GameEventType.VotingFinished, votingResult);

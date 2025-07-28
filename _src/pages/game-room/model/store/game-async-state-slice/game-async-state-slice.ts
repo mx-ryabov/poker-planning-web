@@ -111,6 +111,14 @@ export function createGameAsyncStateSliceCreator(
 				state.state.game.votingResults.push(result);
 			});
 		},
+		cancelVoting: () => {
+			set((state) => {
+				state.state.game.votingProcess.status =
+					GameVotingStatus.Inactive;
+				state.state.game.votingProcess.ticket = null;
+				state.state.game.votingProcess.startTime = null;
+			});
+		},
 		revealCards: () => {
 			set((state) => {
 				state.state.game.votingProcess.startTime = null;

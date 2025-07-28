@@ -3,12 +3,15 @@ import { createContext, ReactNode, useContext } from "react";
 import { useStartVoting } from "./use-start-voting";
 import { useRevealCards } from "./use-reveal-cards";
 import { useFinishVoting } from "./use-finish-voting";
+import { useCancelVoting } from "./use-cancel-voting";
 export interface VotingState {
 	startVoting: (ticketId: string | null) => Promise<void>;
 	revealCards: () => Promise<void>;
+	cancelVoting: () => Promise<void>;
 	finishVoting: () => Promise<void>;
 	isStartVotingPending: boolean;
 	isRevealCardsPending: boolean;
+	isCancelVotingPending: boolean;
 	isFinishVotingPending: boolean;
 }
 
@@ -20,6 +23,8 @@ type VotingProviderProps = {
 
 export function VotingAsyncStateProvider({ children }: VotingProviderProps) {
 	const { startVoting, isPending: isStartVotingPending } = useStartVoting();
+	const { cancelVoting, isPending: isCancelVotingPending } =
+		useCancelVoting();
 	const { revealCards, isPending: isRevealCardsPending } = useRevealCards();
 	const { finishVoting, isPending: isFinishVotingPending } =
 		useFinishVoting();
@@ -29,8 +34,10 @@ export function VotingAsyncStateProvider({ children }: VotingProviderProps) {
 			value={{
 				startVoting,
 				revealCards,
+				cancelVoting,
 				finishVoting,
 				isStartVotingPending,
+				isCancelVotingPending,
 				isRevealCardsPending,
 				isFinishVotingPending,
 			}}

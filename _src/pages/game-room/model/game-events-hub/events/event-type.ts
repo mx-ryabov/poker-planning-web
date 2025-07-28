@@ -9,6 +9,7 @@ export enum GameEventType {
 	Disconnected = "Disconnected",
 	VotingStarted = "VotingStarted",
 	CardsRevealed = "CardsRevealed",
+	VotingCancelled = "VotingCancelled",
 	VotingFinished = "VotingFinished",
 	ParticipantVoted = "ParticipantVoted",
 	SettingsUpdated = "SettingsUpdated",

@@ -15,6 +15,7 @@ import {
 	VotingFinishedEvent,
 	VotingStartedEvent,
 	NewEstimationAppliedEvent,
+	VotingCancelledEvent,
 } from "./game-events";
 
 export type GameEventTypeMap = {
@@ -28,6 +29,7 @@ export type GameEventTypeMap = {
 	[GameEventType.Reconnected]: ReconnectedEvent;
 	[GameEventType.Disconnected]: DisconnectedEvent;
 	[GameEventType.VotingStarted]: VotingStartedEvent;
+	[GameEventType.VotingCancelled]: VotingCancelledEvent;
 	[GameEventType.CardsRevealed]: CardsRevealedEvent;
 	[GameEventType.VotingFinished]: VotingFinishedEvent;
 	[GameEventType.ParticipantVoted]: ParticipantVotedEvent;

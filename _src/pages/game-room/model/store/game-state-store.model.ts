@@ -37,6 +37,7 @@ export type GameAsyncSlice = {
 	startVoting: (ticketId: string | null, data: StartVotingResult) => void;
 	finishVoting: (votingResult: GameVotingResult) => void;
 	revealCards: () => void;
+	cancelVoting: () => void;
 	changeVote: (vote: GameVote | null) => void;
 	changeVoteForParticipant: (
 		participantId: string,

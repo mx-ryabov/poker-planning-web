@@ -19,6 +19,7 @@ import {
 	TicketAddedEvent,
 	TicketDeletedEvent,
 	TicketUpdatedEvent,
+	VotingCancelledEvent,
 	VotingFinishedEvent,
 	VotingStartedEvent,
 } from "../events/game-events";
@@ -124,6 +125,9 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		});
 		connection.on(GameEventType.CardsRevealed, () => {
 			gameEventTarget.dispatchEvent(new CardsRevealedEvent());
+		});
+		connection.on(GameEventType.VotingCancelled, () => {
+			gameEventTarget.dispatchEvent(new VotingCancelledEvent());
 		});
 		connection.on(GameEventType.VotingFinished, (votingResult) => {
 			gameEventTarget.dispatchEvent(

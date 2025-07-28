@@ -9,6 +9,7 @@ import {
 import { GameStateStore } from "../../store/game-state-store.model";
 import { useEffect } from "react";
 import { useApi } from "@/_src/shared/providers";
+import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 
 type Props = {
 	eventSubscriber: EventSubscriber;
@@ -17,11 +18,16 @@ type Props = {
 
 export function useGameEvDis({ eventSubscriber, gameStateStore }: Props) {
 	const api = useApi();
+	const toast = useGlobalToast();
 	const startVoting = useStore(gameStateStore, (state) => state.startVoting);
 	const revealCards = useStore(gameStateStore, (state) => state.revealCards);
 	const finishVoting = useStore(
 		gameStateStore,
 		(state) => state.finishVoting,
+	);
+	const cancelVoting = useStore(
+		gameStateStore,
+		(state) => state.cancelVoting,
 	);
 	const updateSettings = useStore(
 		gameStateStore,
@@ -43,6 +49,21 @@ export function useGameEvDis({ eventSubscriber, gameStateStore }: Props) {
 
 		return eventSubscriber(GameEventType.CardsRevealed, handler);
 	}, [eventSubscriber, revealCards]);
+
+	useEffect(() => {
+		const handler = () => {
+			cancelVoting();
+			toast?.add(
+				{
+					title: "Voting has been cancelled.",
+					variant: "info",
+				},
+				{ timeout: 10000 },
+			);
+		};
+
+		return eventSubscriber(GameEventType.VotingCancelled, handler);
+	}, [eventSubscriber, cancelVoting, toast?.add]);
 
 	useEffect(() => {
 		const handler = ({ payload }: VotingFinishedEvent) => {
