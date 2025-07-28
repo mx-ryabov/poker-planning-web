@@ -2,11 +2,16 @@ import { StringHelper } from "@/_src/shared/lib/utils";
 import { cva } from "class-variance-authority";
 import { useMemo } from "react";
 import { CardFaceDownSvg } from "../assets/card-face-down-svg";
-import { GameParticipant, GameVotingStatus } from "@/_src/shared/api";
+import {
+	GameParticipant,
+	GameVotingStatus,
+	ParticipantRole,
+} from "@/_src/shared/api";
 import {
 	selectVotingProcess,
 	useGameState,
 } from "@/_src/pages/game-room/model";
+import { CrownIcon } from "@/_src/shared/ui/components/icon";
 
 export type TablePlayerProps = {
 	isCurrentPlayer: boolean;
@@ -28,6 +33,14 @@ export function TablePlayer(props: TablePlayerProps) {
 
 	return (
 		<div className="relative h-10 w-10">
+			{participant.role === ParticipantRole.Master && (
+				<>
+					<CrownIcon
+						size={20}
+						className="absolute -top-6 left-1/2 -translate-x-1/2 text-neutral-900"
+					/>
+				</>
+			)}
 			<div className="absolute inset-0 flex h-10 w-10 items-center justify-center rounded-lg border-2 border-white bg-neutral-300 text-base text-neutral-900 drop-shadow-sm">
 				{isCurrentPlayer ? "You" : initials}
 			</div>

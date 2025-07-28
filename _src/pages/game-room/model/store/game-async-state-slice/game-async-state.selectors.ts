@@ -1,4 +1,4 @@
-import { GameVotingStatus } from "@/_src/shared/api";
+import { GameVotingStatus, ParticipantRole } from "@/_src/shared/api";
 import { RoleLevels } from "../../constants";
 import { GameStateStore } from "../game-state-store.model";
 
@@ -34,6 +34,11 @@ export const selectTicketsCount = (state: GameStateStore) =>
 
 export const selectCurrentParticipant = (state: GameStateStore) =>
 	state.state.currentParticipant;
+
+export const selectGameMaster = (state: GameStateStore) =>
+	state.state.game.participants.find(
+		(p) => p.role === ParticipantRole.Master,
+	);
 
 export const selectCurrentParticipantId = (state: GameStateStore) =>
 	state.state.currentParticipant.id;
