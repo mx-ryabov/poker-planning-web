@@ -24,14 +24,11 @@ export function VotingInfo() {
 					<h3 className="text-center font-semibold text-neutral-900">
 						Time to relax!
 					</h3>
-					<p className="flex flex-col items-center text-center text-sm text-neutral-700 leading-5">
+					<div className="flex flex-col items-center text-center text-sm text-neutral-700 leading-5">
 						Waiting for{" "}
 						{gameMaster?.displayName || "the game master"} to start
 						the voting process
-						<div
-							className="flex flex-row gap-1 p-1 mt-2"
-							data-testid="thinking-status"
-						>
+						<div className="flex flex-row gap-1 p-1 mt-2">
 							<div className="bg-primary-600 h-1 w-1 animate-[simple-ping_linear_1s_infinite] rounded-full"></div>
 							<div className="bg-primary-600 h-1 w-1 animate-[simple-ping_linear_2s_infinite] rounded-full"></div>
 							<div className="bg-primary-600 h-1 w-1 animate-[simple-ping_linear_3s_infinite] rounded-full"></div>
@@ -41,7 +38,7 @@ export function VotingInfo() {
 								Learn more
 							</LinkButton>
 						</LearnMoreDialog>
-					</p>
+					</div>
 				</div>
 			)}
 			{votingProcess.status !== GameVotingStatus.Inactive && (

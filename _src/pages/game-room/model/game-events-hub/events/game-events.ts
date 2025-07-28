@@ -7,6 +7,7 @@ import {
 } from "@/_src/shared/api/game-api";
 import { BaseEvent } from "./base-event";
 import { GameEventType } from "./event-type";
+import { NewEstimationAppliedResponse } from "@/_src/shared/api/game-api/dto/new-estimation-applied-response";
 
 export class ParticipantJoinedEvent extends BaseEvent<GameParticipant> {
 	constructor(payload: GameParticipant) {
@@ -29,6 +30,12 @@ export class TicketAddedEvent extends BaseEvent<GameTicket> {
 export class TicketUpdatedEvent extends BaseEvent<GameTicket> {
 	constructor(payload: GameTicket) {
 		super(GameEventType.TicketUpdated, payload);
+	}
+}
+
+export class NewEstimationAppliedEvent extends BaseEvent<NewEstimationAppliedResponse> {
+	constructor(payload: NewEstimationAppliedResponse) {
+		super(GameEventType.NewEstimationApplied, payload);
 	}
 }
 

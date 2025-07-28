@@ -9,6 +9,7 @@ import {
 	CardsRevealedEvent,
 	CurrentParticipantUpdatedEvent,
 	DisconnectedEvent,
+	NewEstimationAppliedEvent,
 	ParticipantJoinedEvent,
 	ParticipantLeftEvent,
 	ParticipantVotedEvent,
@@ -110,6 +111,9 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		});
 		connection.on(GameEventType.TicketUpdated, (data) => {
 			gameEventTarget.dispatchEvent(new TicketUpdatedEvent(data));
+		});
+		connection.on(GameEventType.NewEstimationApplied, (data) => {
+			gameEventTarget.dispatchEvent(new NewEstimationAppliedEvent(data));
 		});
 		connection.on(GameEventType.TicketDeleted, (data) => {
 			gameEventTarget.dispatchEvent(new TicketDeletedEvent(data));
