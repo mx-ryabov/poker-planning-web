@@ -3,14 +3,23 @@
 import { ReactNode, useEffect, useState } from "react";
 import { NextLinkButton } from "../../next-components/next-link";
 import { HomeIcon } from "../icon/svg/home.icon";
+import throttle from "lodash.throttle";
 
 export function MobileBlockerScreen({ children }: { children: ReactNode }) {
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
-		if (window && window.screen.width < 1280) {
+		if (window && window.innerWidth < 1280) {
 			setIsMobile(true);
 		}
+		const handleResize = throttle((e: UIEvent) => {
+			setIsMobile((e.currentTarget as Window).innerWidth < 1280);
+		}, 300);
+
+		window.addEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
 	}, []);
 
 	if (!isMobile) {
