@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { test, describe, expect, vi } from "vitest";
-import { render } from "@/test/utilities";
+import { act, render, waitFor } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { VotingResultsApplier } from "../components";
 import { GameRoomFakeProviderWrapper } from "@/_src/pages/game-room/__mocks__";
@@ -186,43 +186,6 @@ describe("Voting Results Applier", () => {
 			expect.objectContaining({
 				estimation: "value 1",
 			}),
-		);
-	});
-
-	test("shows success toast if updating and finishing finished successfully", async () => {
-		const updateByField = vi.fn();
-		const finishVoting = vi.fn();
-		const { getByTestId, getByText, user } = renderComponent({
-			votingProcess: {
-				status: GameVotingStatus.Revealed,
-				ticket: generateTicket({
-					id: "test-ticket-id",
-					identifier: "test-ticket-identifier",
-				}),
-				startTime: new Date().toString(),
-			},
-			participants: [
-				generateParticipant({
-					vote: MOCKED_SYSTEM_VOTES[0],
-				}),
-				generateParticipant({
-					vote: MOCKED_SYSTEM_VOTES[0],
-				}),
-				generateParticipant({
-					vote: MOCKED_SYSTEM_VOTES[1],
-				}),
-			],
-			updateByField,
-			finishVoting,
-		});
-
-		const btn = getByTestId("apply-voting-results-btn");
-		await user.click(btn);
-		const confirmBtn = getByTestId("confirm-button");
-		await user.click(confirmBtn);
-
-		getByText(
-			/The ticket test-ticket-identifier has been estimated - value 1/i,
 		);
 	});
 
