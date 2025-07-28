@@ -3,11 +3,13 @@ import { GameStateStore } from "../../store/game-state-store.model";
 import {
 	EventSubscriber,
 	GameEventType,
+	NewEstimationAppliedEvent,
 	TicketAddedEvent,
 	TicketDeletedEvent,
 	TicketUpdatedEvent,
 } from "../../game-events-hub";
 import { useEffect } from "react";
+import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 
 type Props = {
 	eventSubscriber: EventSubscriber;
@@ -15,6 +17,8 @@ type Props = {
 };
 
 export function useTicketsEvDis({ eventSubscriber, gameStateStore }: Props) {
+	const toast = useGlobalToast();
+
 	const addTicketIfAbsent = useStore(
 		gameStateStore,
 		(state) => state.addTicketIfAbsent,
@@ -43,6 +47,21 @@ export function useTicketsEvDis({ eventSubscriber, gameStateStore }: Props) {
 
 		return eventSubscriber(GameEventType.TicketUpdated, handler);
 	}, [eventSubscriber, updateTicket]);
+
+	useEffect(() => {
+		const handler = ({ payload }: NewEstimationAppliedEvent) => {
+			toast?.add(
+				{
+					title: "New estimation applied!",
+					description: `Ticket ${payload.ticketIdentifier} has been updated with new estimation: ${payload.estimation}`,
+					variant: "success",
+				},
+				{ timeout: 10000 },
+			);
+		};
+
+		return eventSubscriber(GameEventType.NewEstimationApplied, handler);
+	}, [eventSubscriber, updateTicket, toast?.add]);
 
 	useEffect(() => {
 		const handler = ({ payload: ticketId }: TicketDeletedEvent) => {

@@ -16,7 +16,7 @@ export function Link(props: LinkProps) {
 
 	const linkStyles: LinkProps["className"] = (renderProps) =>
 		twMerge(
-			"underline underline-offset-2 decoration-from-font hover:text-primary-500 transition-colors cursor-pointer outline-hidden",
+			"underline underline-offset-2 decoration-from-font hover:text-primary-700 transition-colors cursor-pointer outline-hidden",
 			typeof className === "function"
 				? className(renderProps)
 				: className,

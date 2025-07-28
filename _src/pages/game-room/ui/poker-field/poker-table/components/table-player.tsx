@@ -28,6 +28,14 @@ export function TablePlayer(props: TablePlayerProps) {
 
 	return (
 		<div className="relative h-10 w-10">
+			{/* {participant.role === ParticipantRole.Master && (
+				<>
+					<CrownIcon
+						size={20}
+						className="absolute -top-6 left-1/2 -translate-x-1/2 text-neutral-900"
+					/>
+				</>
+			)} */}
 			<div className="absolute inset-0 flex h-10 w-10 items-center justify-center rounded-lg border-2 border-white bg-neutral-300 text-base text-neutral-900 drop-shadow-sm">
 				{isCurrentPlayer ? "You" : initials}
 			</div>
@@ -101,7 +109,7 @@ const statusStyles = cva(["absolute"], {
 	},
 });
 
-const thinkingStatusStyles = cva(["flex gap-1 p-1"], {
+const thinkingStatusStyles = cva(["flex gap-1 p-2"], {
 	variants: {
 		tablePosition: {
 			top: "flex-row",

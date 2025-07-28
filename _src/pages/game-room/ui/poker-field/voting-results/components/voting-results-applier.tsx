@@ -78,18 +78,7 @@ function VotingResultsApplierInner(props: InnerProps) {
 					updateByField("estimation", selectedVote.value),
 					finishVoting(),
 				])
-					.then(() => {
-						toast?.add(
-							{
-								title: "Congratulations!",
-								description: `The ticket ${ticket.identifier} has been estimated - ${selectedVote.value}`,
-								variant: "success",
-							},
-							{
-								timeout: 3000,
-							},
-						);
-					})
+					.then(() => {})
 					.catch((e) => {
 						toast?.add(
 							{

@@ -3,14 +3,17 @@ import { Button } from "@/_src/shared/ui/components/button";
 import { LogoutIcon, ProfileIcon } from "@/_src/shared/ui/components/icon";
 import { Menu } from "@/_src/shared/ui/components/menu";
 import { selectCurrentParticipant, useGameState } from "../../model";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { StringHelper } from "@/_src/shared/lib/utils/string-helper";
+import { useConfirmationModal } from "@/_src/shared/providers";
+import { ParticipantRole } from "@/_src/shared/api";
 
 type Props = {
 	onLogout: () => void;
 };
 
 export function UserBar({ onLogout }: Props) {
+	const { open } = useConfirmationModal();
 	const currentParticipant = useGameState(selectCurrentParticipant);
 
 	const initials = useMemo(() => {
@@ -19,6 +22,22 @@ export function UserBar({ onLogout }: Props) {
 			2,
 		).toUpperCase();
 	}, [currentParticipant.displayName]);
+
+	const onExit = useCallback(() => {
+		let confirmDescription =
+			"Please confirm that you want to exit the game room. After exiting, you won't be able to rejoin the game as the same user.";
+		if (currentParticipant.role === ParticipantRole.Master) {
+			confirmDescription =
+				"As the master, you will need to assign a new master in the settings panel before exiting. Otherwise, the game room won't be manageable.";
+		}
+		open({
+			title: "Are you sure you want to exit?",
+			contentMessage: confirmDescription,
+			confirmBtnText: "Exit",
+			confirmBtnAppearence: "warning",
+			onConfirm: onLogout,
+		});
+	}, [currentParticipant]);
 
 	return (
 		<Menu>
@@ -37,8 +56,8 @@ export function UserBar({ onLogout }: Props) {
 							</span>
 						</div>
 					</Menu.Item>
-					<Menu.Item onAction={onLogout}>
-						<LogoutIcon size={20} /> Logout
+					<Menu.Item onAction={onExit}>
+						<LogoutIcon size={20} /> Exit
 					</Menu.Item>
 				</Menu.Section>
 			</Menu.Content>

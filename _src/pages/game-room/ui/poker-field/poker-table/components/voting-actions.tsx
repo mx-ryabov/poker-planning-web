@@ -4,7 +4,7 @@ import {
 	useVotingAsyncState,
 } from "@/_src/pages/game-room/model";
 import { GameVotingStatus } from "@/_src/shared/api";
-import { Button } from "@/_src/shared/ui/components/button";
+import { Button, NewButton } from "@/_src/shared/ui/components/button";
 import {
 	CardsIcon,
 	PlayIcon,
@@ -22,6 +22,8 @@ export function VotingActions() {
 		revealCards,
 		isFinishVotingPending,
 		finishVoting,
+		isCancelVotingPending,
+		cancelVoting,
 	} = useVotingAsyncState();
 
 	const onStartVoting = useCallback(() => startVoting(null), [startVoting]);
@@ -47,12 +49,22 @@ export function VotingActions() {
 			)}
 			{votingProcess.status === GameVotingStatus.InProgress && (
 				<div className="flex flex-col items-center gap-2">
-					<Button
-						title="Reveal Cards"
-						contentLeft={<CardsIcon size={24} />}
-						onPress={revealCards}
-						isPending={isRevealCardsPending}
-					/>
+					<div className="flex flex-row gap-2">
+						<NewButton
+							onPress={revealCards}
+							isPending={isRevealCardsPending}
+						>
+							<CardsIcon size={24} />
+							Reveal Cards
+						</NewButton>
+						<NewButton
+							onPress={cancelVoting}
+							variant="outline"
+							isPending={isCancelVotingPending}
+						>
+							Cancel Voting
+						</NewButton>
+					</div>
 					{votingProcess.ticket === null ? (
 						<p className="text-sm text-neutral-900">
 							Regular Voting in progress

@@ -14,6 +14,8 @@ import {
 	TicketUpdatedEvent,
 	VotingFinishedEvent,
 	VotingStartedEvent,
+	NewEstimationAppliedEvent,
+	VotingCancelledEvent,
 } from "./game-events";
 
 export type GameEventTypeMap = {
@@ -21,11 +23,13 @@ export type GameEventTypeMap = {
 	[GameEventType.ParticipantLeft]: ParticipantLeftEvent;
 	[GameEventType.TicketAdded]: TicketAddedEvent;
 	[GameEventType.TicketUpdated]: TicketUpdatedEvent;
+	[GameEventType.NewEstimationApplied]: NewEstimationAppliedEvent;
 	[GameEventType.TicketDeleted]: TicketDeletedEvent;
 	[GameEventType.Reconnecting]: ReconnectingEvent;
 	[GameEventType.Reconnected]: ReconnectedEvent;
 	[GameEventType.Disconnected]: DisconnectedEvent;
 	[GameEventType.VotingStarted]: VotingStartedEvent;
+	[GameEventType.VotingCancelled]: VotingCancelledEvent;
 	[GameEventType.CardsRevealed]: CardsRevealedEvent;
 	[GameEventType.VotingFinished]: VotingFinishedEvent;
 	[GameEventType.ParticipantVoted]: ParticipantVotedEvent;
