@@ -33,9 +33,11 @@ const participantName = (minSymbMsg: string, maxSymbMsg: string) =>
 		);
 
 /* Ticket */
-const ticketTitle = (minSymbMsg: string) => z.string().min(1, minSymbMsg);
+const ticketTitle = (minSymbMsg: string, maxSymbMsg: string) =>
+	z.string().min(1, minSymbMsg).max(255, maxSymbMsg);
 const ticketDescription = () => z.string().optional();
-const ticketEstimation = () => z.string().nullable();
+const ticketEstimation = (maxSymbMsg: string) =>
+	z.string().max(10, maxSymbMsg).nullable();
 const ticketType = (requiredMsg: string) =>
 	z.nativeEnum(TicketType, {
 		required_error: requiredMsg,
