@@ -194,30 +194,29 @@ describe("Voting Results Applier", () => {
 			throw new Error("test error");
 		});
 		const finishVoting = vi.fn();
-		const { getByTestId, getByText, user, debug, getByRole } =
-			renderComponent({
-				votingProcess: {
-					status: GameVotingStatus.Revealed,
-					ticket: generateTicket({
-						id: "test-ticket-id",
-						identifier: "test-ticket-identifier",
-					}),
-					startTime: new Date().toString(),
-				},
-				participants: [
-					generateParticipant({
-						vote: MOCKED_SYSTEM_VOTES[0],
-					}),
-					generateParticipant({
-						vote: MOCKED_SYSTEM_VOTES[0],
-					}),
-					generateParticipant({
-						vote: MOCKED_SYSTEM_VOTES[1],
-					}),
-				],
-				updateByField,
-				finishVoting,
-			});
+    const { getByTestId, getByText, user } = renderComponent({
+			votingProcess: {
+				status: GameVotingStatus.Revealed,
+				ticket: generateTicket({
+					id: "test-ticket-id",
+					identifier: "test-ticket-identifier",
+				}),
+				startTime: new Date().toString(),
+			},
+			participants: [
+				generateParticipant({
+					vote: MOCKED_SYSTEM_VOTES[0],
+				}),
+				generateParticipant({
+					vote: MOCKED_SYSTEM_VOTES[0],
+				}),
+				generateParticipant({
+					vote: MOCKED_SYSTEM_VOTES[1],
+				}),
+			],
+			updateByField,
+			finishVoting,
+		});
 
 		const btn = getByTestId("apply-voting-results-btn");
 		await user.click(btn);

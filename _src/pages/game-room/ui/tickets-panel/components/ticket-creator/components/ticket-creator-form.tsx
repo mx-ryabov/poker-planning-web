@@ -96,7 +96,10 @@ export function TicketCreatorForm({ className, onSubmitSucceed }: Props) {
  */
 
 const TicketCreatorFormSchema = z.object({
-	title: GameSchemaBuildersMap.ticket.title("Don't be silent"),
+	title: GameSchemaBuildersMap.ticket.title(
+		"Don't be silent",
+		"Title can't exceed 255 characters.",
+	),
 	type: GameSchemaBuildersMap.ticket.type(
 		"Don't you forgot anything? (Ticket Type)",
 	),

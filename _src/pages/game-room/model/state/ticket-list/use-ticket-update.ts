@@ -11,9 +11,14 @@ import { useCallback, useOptimistic } from "react";
 import { z } from "zod";
 
 export const TicketItemStateSchema = z.object({
-	title: GameSchemaBuildersMap.ticket.title("Title can't be empty"),
+	title: GameSchemaBuildersMap.ticket.title(
+		"Title can't be empty",
+		"Title can't exceed 255 characters.",
+	),
 	description: GameSchemaBuildersMap.ticket.description(),
-	estimation: GameSchemaBuildersMap.ticket.estimation(),
+	estimation: GameSchemaBuildersMap.ticket.estimation(
+		"Estimation can't exceed 10 characters.",
+	),
 	type: GameSchemaBuildersMap.ticket.type(
 		"Don't you forgot anything? (Ticket Type)",
 	),
