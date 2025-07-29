@@ -59,7 +59,7 @@ export function ComingSoonSection() {
 					/>
 				</SlidingSelector>
 				{tabContent && (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 h-[310px]">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[310px]">
 						<div className="flex flex-col md:mt-10">
 							<span className="mb-2 flex flex-row gap-1 text-xs font-semibold">
 								{tabContent.subtitle}
@@ -70,7 +70,7 @@ export function ComingSoonSection() {
 							<Image
 								src={tabContent.imgSrc}
 								alt={tabContent.imgAlt}
-								width="500"
+								width={500}
 								className="mb-4 rounded-xl md:hidden"
 							/>
 							<p className="mb-6 text-center text-neutral-800 md:text-start">
