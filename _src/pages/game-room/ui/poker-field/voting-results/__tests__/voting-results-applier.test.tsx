@@ -194,7 +194,7 @@ describe("Voting Results Applier", () => {
 			throw new Error("test error");
 		});
 		const finishVoting = vi.fn();
-		const { getByTestId, getByText, user } = renderComponent({
+    const { getByTestId, getByText, user } = renderComponent({
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: generateTicket({
