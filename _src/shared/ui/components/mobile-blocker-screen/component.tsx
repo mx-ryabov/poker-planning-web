@@ -23,7 +23,7 @@ export function MobileBlockerScreen({ children }: { children: ReactNode }) {
 	}, []);
 
 	if (!isMobile) {
-		return <div className="hidden xl:block">{children}</div>;
+		return children;
 	}
 
 	return (
