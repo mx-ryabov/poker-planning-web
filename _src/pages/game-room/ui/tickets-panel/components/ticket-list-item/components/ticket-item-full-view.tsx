@@ -141,27 +141,37 @@ export function TicketItemFullView(props: Props) {
 				<p className="text-sm font-medium text-neutral-900">Details</p>
 				<div className="flex flex-row items-center justify-between">
 					<p className="text-sm">Story Points</p>
-					<div className="flex w-12 justify-end">
-						<InlineEditableTextField
-							value={state.estimation || ""}
-							placeholder="-"
-							id="ticket-estimation"
-							containerClassName="w-max max-w-full"
-							isDisabled={!isEditable}
-							styles={{
-								readView: {
-									textSize: "medium",
-									size: "medium",
-									variant: "filled",
-								},
-								editorView: {
-									textSize: "medium",
-									size: "medium",
-								},
-							}}
-							onConfirm={(value) =>
-								updateByField("estimation", value)
-							}
+					<div className="flex w-16 justify-end">
+						<Controller
+							control={control}
+							name="estimation"
+							render={({ field, fieldState }) => (
+								<InlineEditableTextField
+									value={state.estimation || ""}
+									placeholder="-"
+									id="ticket-estimation"
+									containerClassName="w-max max-w-full"
+									isDisabled={!isEditable}
+									error={fieldState.error?.message}
+									onEditorChange={field.onChange}
+									withErrorIcon={false}
+									withTooltipError
+									styles={{
+										readView: {
+											textSize: "medium",
+											size: "medium",
+											variant: "filled",
+										},
+										editorView: {
+											textSize: "medium",
+											size: "medium",
+										},
+									}}
+									onConfirm={(value) =>
+										updateByField("estimation", value)
+									}
+								/>
+							)}
 						/>
 					</div>
 				</div>

@@ -20,18 +20,6 @@ describe("Voting Actions", () => {
 		expect(() => unmount()).not.toThrow();
 	});
 
-	test("shows the button 'Start Voting' when voting process is inactive", async () => {
-		const { getByText } = renderComponent({
-			votingProcess: {
-				status: GameVotingStatus.Inactive,
-				ticket: null,
-				startTime: new Date().toString(),
-			},
-		});
-
-		getByText("Start Voting");
-	});
-
 	test("shows the button 'Reveal Cards' when voting process is in progress", async () => {
 		const { getByText } = renderComponent({
 			votingProcess: {
@@ -42,6 +30,35 @@ describe("Voting Actions", () => {
 
 		getByText("Regular Voting in progress");
 		getByText("Reveal Cards");
+	});
+
+	test("shows the button 'Cancel Voting' when voting process is in progress", async () => {
+		const { getByText } = renderComponent({
+			votingProcess: {
+				status: GameVotingStatus.InProgress,
+				ticket: null,
+			},
+		});
+
+		getByText("Cancel Voting");
+	});
+
+	test("invokes cancelVoting when the button 'Cancel Voting' is clicked and votingProcess is InProgress", async () => {
+		const cancelVoting = vi.fn();
+		const { getByText, user } = renderComponent({
+			votingAsyncContextProps: {
+				cancelVoting,
+			},
+			votingProcess: {
+				status: GameVotingStatus.InProgress,
+				ticket: null,
+			},
+		});
+
+		const btn = getByText("Cancel Voting");
+		await user.click(btn);
+
+		expect(cancelVoting).toHaveBeenCalledOnce();
 	});
 
 	test("shows the button 'Reveal Cards' when voting process is in progress and ticket is not null", async () => {
@@ -56,24 +73,6 @@ describe("Voting Actions", () => {
 
 		getByText("The ticket under vote");
 		getByText("test-ticket-identifier");
-	});
-
-	test("invokes startVoting with null when the button 'Start Voting' is clicked", async () => {
-		const startVoting = vi.fn();
-		const { getByText, user } = renderComponent({
-			votingAsyncContextProps: {
-				startVoting,
-			},
-			votingProcess: {
-				status: GameVotingStatus.Inactive,
-				ticket: null,
-			},
-		});
-
-		const btn = getByText("Start Voting");
-		await user.click(btn);
-
-		expect(startVoting).toHaveBeenNthCalledWith(1, null);
 	});
 
 	test("invokes revealCards when the button 'Reveal Cards' in clicked and votingProcess is InProgress", async () => {

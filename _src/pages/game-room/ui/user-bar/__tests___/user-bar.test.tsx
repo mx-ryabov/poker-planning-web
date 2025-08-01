@@ -40,7 +40,7 @@ describe("User Bar", () => {
 		await user.click(userBarBtn);
 
 		const menu = getByRole("menu");
-		expect(within(menu).getAllByRole("menuitem")).toHaveLength(2);
+		expect(within(menu).getAllByRole("menuitem")).toHaveLength(1);
 	});
 
 	test("displays the current participant's display name when opened", async () => {
@@ -53,17 +53,17 @@ describe("User Bar", () => {
 		within(menu).getByText("Maxim Test");
 	});
 
-	test("has the first option My Account disabled", async () => {
-		const { getAllByRole, getByRole, user } = renderUserBar({});
+	// test("has the first option My Account disabled", async () => {
+	// 	const { getAllByRole, getByRole, user } = renderUserBar({});
 
-		const userBarBtn = getByRole("button");
-		await user.click(userBarBtn);
+	// 	const userBarBtn = getByRole("button");
+	// 	await user.click(userBarBtn);
 
-		const options = getAllByRole("menuitem");
-		expect(options[0]).toHaveTextContent(/my account/i);
-		expect(options[0]).toHaveTextContent(/sign up to see more/i);
-		expect(options[0]).toHaveAttribute("data-disabled", "true");
-	});
+	// 	const options = getAllByRole("menuitem");
+	// 	expect(options[0]).toHaveTextContent(/my account/i);
+	// 	expect(options[0]).toHaveTextContent(/sign up to see more/i);
+	// 	expect(options[0]).toHaveAttribute("data-disabled", "true");
+	// });
 
 	test("has the second option Exit", async () => {
 		const { getAllByRole, getByRole, user } = renderUserBar({});
@@ -72,7 +72,7 @@ describe("User Bar", () => {
 		await user.click(userBarBtn);
 
 		const options = getAllByRole("menuitem");
-		expect(options[1]).toHaveTextContent(/exit/i);
+		expect(options[0]).toHaveTextContent(/exit/i);
 	});
 
 	test("triggers onLogout callback when clicked", async () => {
@@ -86,7 +86,7 @@ describe("User Bar", () => {
 		await user.click(userBarBtn);
 
 		const options = getAllByRole("menuitem");
-		await user.click(options[1]);
+		await user.click(options[0]);
 
 		getByText(/are you sure you want to exit/i);
 		const confirmBtn = getByTestId("confirm-button");

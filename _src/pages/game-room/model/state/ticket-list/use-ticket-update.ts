@@ -17,7 +17,7 @@ export const TicketItemStateSchema = z.object({
 	),
 	description: GameSchemaBuildersMap.ticket.description(),
 	estimation: GameSchemaBuildersMap.ticket.estimation(
-		"Estimation can't exceed 10 characters.",
+		(limit) => `Estimation can't exceed ${limit} characters.`,
 	),
 	type: GameSchemaBuildersMap.ticket.type(
 		"Don't you forgot anything? (Ticket Type)",

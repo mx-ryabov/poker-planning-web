@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { z } from "zod";
 
 type UseMutateProps<TVariables = void, TData = unknown> = {

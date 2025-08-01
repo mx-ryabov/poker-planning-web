@@ -5,8 +5,12 @@ import { TicketTaskIcon } from "@/_src/shared/ui/components/icon/svg/ticket-task
 import { ReactNode, useCallback } from "react";
 import { TicketItemMenu } from "./ticket-item-menu";
 import { InlineEditableTextField } from "@/_src/shared/ui/components/inline-editable-fields";
-import { useTicketUpdate } from "@/_src/pages/game-room/model";
+import {
+	TicketItemStateSchema,
+	useTicketUpdate,
+} from "@/_src/pages/game-room/model";
 import { VoteButton } from "./vote-button";
+import { pickSchemaValidator } from "@/_src/shared/lib/utils/pick-schema-validator";
 
 type Props = {
 	data: GameTicket;
@@ -70,6 +74,12 @@ export function TicketItemTile(props: Props) {
 								size: "medium",
 							},
 						}}
+						withErrorIcon={false}
+						withTooltipError
+						validate={pickSchemaValidator(
+							TicketItemStateSchema,
+							"estimation",
+						)}
 						onConfirm={(value) =>
 							updateByField("estimation", value)
 						}

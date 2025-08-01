@@ -37,7 +37,7 @@ export function UserBar({ onLogout }: Props) {
 			confirmBtnAppearence: "warning",
 			onConfirm: onLogout,
 		});
-	}, [currentParticipant]);
+	}, [currentParticipant, onLogout, open]);
 
 	return (
 		<Menu>
@@ -47,7 +47,7 @@ export function UserBar({ onLogout }: Props) {
 			/>
 			<Menu.Content placement="bottom end">
 				<Menu.Section title={currentParticipant.displayName}>
-					<Menu.Item isDisabled>
+					{/* <Menu.Item isDisabled>
 						<ProfileIcon size={20} className="shrink-0" />
 						<div className="flex flex-col">
 							<p>My Account</p>
@@ -55,7 +55,7 @@ export function UserBar({ onLogout }: Props) {
 								Sign up to see more...
 							</span>
 						</div>
-					</Menu.Item>
+					</Menu.Item> */}
 					<Menu.Item onAction={onExit}>
 						<LogoutIcon size={20} /> Exit
 					</Menu.Item>

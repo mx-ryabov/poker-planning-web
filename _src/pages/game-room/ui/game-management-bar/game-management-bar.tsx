@@ -110,7 +110,7 @@ const TAB_BUTTON_OPTIONS: Record<
 > = {
 	[GameManagementTab.TaskList]: {
 		icon: ListIcon,
-		tooltipText: "Issues",
+		tooltipText: "Tickets",
 		index: 0,
 	},
 	[GameManagementTab.ParticipantList]: {

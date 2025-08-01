@@ -1,5 +1,7 @@
 import {
+	GameManagementTab,
 	selectVotingProcess,
+	useGameManagementState,
 	useGameState,
 	useVotingAsyncState,
 } from "@/_src/pages/game-room/model";
@@ -12,6 +14,7 @@ import {
 } from "@/_src/shared/ui/components/icon";
 import { TicketLink } from "../../ticket-link";
 import { useCallback } from "react";
+import { Link } from "@/_src/shared/ui/components/link";
 
 export function VotingActions() {
 	const votingProcess = useGameState(selectVotingProcess);
@@ -26,7 +29,15 @@ export function VotingActions() {
 		cancelVoting,
 	} = useVotingAsyncState();
 
-	const onStartVoting = useCallback(() => startVoting(null), [startVoting]);
+	const activeTab = useGameManagementState((state) => state.activeTab);
+	const setActiveTab = useGameManagementState((state) => state.setActiveTab);
+
+	const onTicketListLinkPress = useCallback(() => {
+		if (activeTab !== GameManagementTab.TaskList) {
+			setActiveTab(GameManagementTab.TaskList);
+		}
+	}, [setActiveTab, activeTab]);
+
 	const onRevote = useCallback(
 		() => startVoting(votingProcess.ticket?.id || null),
 		[startVoting, votingProcess],
@@ -36,14 +47,15 @@ export function VotingActions() {
 		<>
 			{votingProcess.status === GameVotingStatus.Inactive && (
 				<div className="flex flex-col items-center gap-2">
-					<Button
-						title="Start Voting"
-						contentRight={<PlayIcon size={24} thikness="regular" />}
-						onPress={onStartVoting}
-						isPending={isStartVotingPending}
-					/>
-					<p className="w-40 text-center text-xs text-neutral-800">
-						Or choose a ticket for voting in the Issues List
+					<p className="w-40 text-center text-sm text-neutral-800">
+						To start voting press on &quot;VOTE&quot; button on the
+						ticket in the{" "}
+						<Link
+							onPress={onTicketListLinkPress}
+							className="text-primary-500"
+						>
+							ticket list
+						</Link>
 					</p>
 				</div>
 			)}
@@ -53,6 +65,7 @@ export function VotingActions() {
 						<NewButton
 							onPress={revealCards}
 							isPending={isRevealCardsPending}
+							className="min-w-max"
 						>
 							<CardsIcon size={24} />
 							Reveal Cards
@@ -61,6 +74,7 @@ export function VotingActions() {
 							onPress={cancelVoting}
 							variant="outline"
 							isPending={isCancelVotingPending}
+							className="min-w-max"
 						>
 							Cancel Voting
 						</NewButton>

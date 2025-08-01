@@ -50,7 +50,7 @@ function TicketListEmptyState() {
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-2">
 				<h3 className="text-center text-lg font-bold text-neutral-900">
-					No issues in your game yet
+					No tickets in your game yet
 				</h3>
 				<p className="text-center text-sm text-neutral-700">
 					Start creating them right now below 👇
@@ -61,7 +61,7 @@ function TicketListEmptyState() {
 	return (
 		<div className="flex h-full flex-col items-center justify-center gap-2">
 			<h3 className="text-center text-lg font-bold text-neutral-900">
-				No issues in your game yet
+				No tickets in your game yet
 			</h3>
 			<p className="text-center text-sm text-neutral-700">
 				Your game master works hard to start gambling 🗿

@@ -115,7 +115,7 @@ describe("Voting Results Applier", () => {
 			],
 		});
 
-		getByText(/suit 1 value 1/i);
+		getByText(/suit 1 XXL/i);
 	});
 
 	test("opens confimation modal if an estimation is selected and Apply button is clicked", async () => {
@@ -143,7 +143,7 @@ describe("Voting Results Applier", () => {
 		const btn = getByTestId("apply-voting-results-btn");
 		await user.click(btn);
 		getByText(
-			/The estimation value 1 will be applied for test-ticket-identifier and the voting process will be finished./i,
+			/The estimation XXL will be applied for test-ticket-identifier and the voting process will be finished./i,
 		);
 	});
 
@@ -184,7 +184,7 @@ describe("Voting Results Applier", () => {
 			"test-game-id",
 			"test-ticket-id",
 			expect.objectContaining({
-				estimation: "value 1",
+				estimation: "XXL",
 			}),
 		);
 	});
@@ -194,7 +194,7 @@ describe("Voting Results Applier", () => {
 			throw new Error("test error");
 		});
 		const finishVoting = vi.fn();
-    const { getByTestId, getByText, user } = renderComponent({
+		const { getByTestId, getByText, user } = renderComponent({
 			votingProcess: {
 				status: GameVotingStatus.Revealed,
 				ticket: generateTicket({
@@ -221,7 +221,7 @@ describe("Voting Results Applier", () => {
 		const btn = getByTestId("apply-voting-results-btn");
 		await user.click(btn);
 		const confirmBtn = getByTestId("confirm-button");
-		await user.click(confirmBtn);
+		await act(() => user.click(confirmBtn));
 
 		getByText(/test error/i);
 	});
@@ -329,14 +329,14 @@ const MOCKED_SYSTEM_VOTES = [
 		id: "test-id",
 		order: 0,
 		suit: "suit 1",
-		value: "value 1",
+		value: "XXL",
 		votingSystemId: "test-voting-system-id",
 	},
 	{
 		id: "test-id-1",
 		order: 1,
 		suit: "suit 2",
-		value: "value 2",
+		value: "M",
 		votingSystemId: "test-voting-system-id",
 	},
 ];
