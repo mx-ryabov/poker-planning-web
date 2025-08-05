@@ -62,7 +62,7 @@ export function GameManagementBar({ className }: Props) {
 			>
 				{Object.entries(TAB_BUTTON_OPTIONS).map(
 					([tabType, tabOptions], ind) => (
-						<Tooltip key={ind} delay={750}>
+						<Tooltip key={ind} delay={0}>
 							<ButtonSquare
 								icon={tabOptions.icon}
 								variant="ghost"

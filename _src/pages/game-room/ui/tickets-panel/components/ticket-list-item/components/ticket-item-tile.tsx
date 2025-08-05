@@ -11,6 +11,7 @@ import {
 } from "@/_src/pages/game-room/model";
 import { VoteButton } from "./vote-button";
 import { pickSchemaValidator } from "@/_src/shared/lib/utils/pick-schema-validator";
+import { Tooltip } from "@/_src/shared/ui/components/tooltip";
 
 type Props = {
 	data: GameTicket;
@@ -30,7 +31,7 @@ export function TicketItemTile(props: Props) {
 
 	return (
 		<div
-			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-200 p-2 transition-colors hover:border-primary-500 hover:shadow-xs"
+			className="group flex w-full cursor-pointer flex-col gap-2 rounded-xl border border-neutral-200 p-2 transition-colors hover:bg-neutral-100 hover:shadow-xs"
 			data-testid={`ticket-list-item-${data.id}`}
 			onClick={onContainerClick}
 		>
@@ -46,11 +47,14 @@ export function TicketItemTile(props: Props) {
 					</span>
 				</div>
 				<div className="flex flex-row gap-2">
-					<TicketItemMenu
-						className="opacity-0 transition-opacity group-hover:opacity-100 data-[pressed=true]:opacity-100"
-						ticketId={data.id}
-						deleteTicket={deleteTicket}
-					/>
+					<Tooltip delay={0}>
+						<TicketItemMenu
+							className="opacity-0 transition-opacity group-hover:opacity-100 data-[pressed=true]:opacity-100"
+							ticketId={data.id}
+							deleteTicket={deleteTicket}
+						/>
+						<Tooltip.Content>Options</Tooltip.Content>
+					</Tooltip>
 				</div>
 			</div>
 			<div className="flex flex-row items-center justify-between gap-2">

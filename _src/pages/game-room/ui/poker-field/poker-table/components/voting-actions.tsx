@@ -7,14 +7,10 @@ import {
 } from "@/_src/pages/game-room/model";
 import { GameVotingStatus } from "@/_src/shared/api";
 import { Button, NewButton } from "@/_src/shared/ui/components/button";
-import {
-	CardsIcon,
-	PlayIcon,
-	RefreshIcon,
-} from "@/_src/shared/ui/components/icon";
+import { CardsIcon, RefreshIcon } from "@/_src/shared/ui/components/icon";
 import { TicketLink } from "../../ticket-link";
 import { useCallback } from "react";
-import { Link } from "@/_src/shared/ui/components/link";
+import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 
 export function VotingActions() {
 	const votingProcess = useGameState(selectVotingProcess);
@@ -46,17 +42,16 @@ export function VotingActions() {
 	return (
 		<>
 			{votingProcess.status === GameVotingStatus.Inactive && (
-				<div className="flex flex-col items-center gap-2">
-					<p className="w-40 text-center text-sm text-neutral-800">
-						To start voting press on &quot;VOTE&quot; button on the
-						ticket in the{" "}
-						<Link
-							onPress={onTicketListLinkPress}
-							className="text-primary-500"
-						>
-							ticket list
-						</Link>
+				<div className="flex flex-col items-center gap-3">
+					<p className="w-40 text-center text-normal font-medium text-neutral-800">
+						Start from 👇
 					</p>
+					<Highlighter id="start-creating-tickets">
+						<NewButton onPress={onTicketListLinkPress}>
+							<CardsIcon size={18} />
+							Create Tickets
+						</NewButton>
+					</Highlighter>
 				</div>
 			)}
 			{votingProcess.status === GameVotingStatus.InProgress && (

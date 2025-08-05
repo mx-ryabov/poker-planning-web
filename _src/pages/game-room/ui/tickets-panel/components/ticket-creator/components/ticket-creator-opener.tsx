@@ -1,4 +1,5 @@
 import { NewButton } from "@/_src/shared/ui/components/button";
+import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 import { PlusIcon } from "@/_src/shared/ui/components/icon";
 import { cva } from "class-variance-authority";
 
@@ -9,16 +10,18 @@ type Props = {
 
 export function TicketCreatorOpener({ isOpened, onPress }: Props) {
 	return (
-		<NewButton
-			data-state="button"
-			data-testid="ticket-creator-toggler"
-			variant={isOpened ? "outline" : "default"}
-			className={openerStyles({ isOpened })}
-			onPress={onPress}
-		>
-			<PlusIcon size={25} />
-			{!isOpened && "New Ticket"}
-		</NewButton>
+		<Highlighter id="new-ticket-btn">
+			<NewButton
+				data-state="button"
+				data-testid="ticket-creator-toggler"
+				variant={isOpened ? "outline" : "default"}
+				className={openerStyles({ isOpened })}
+				onPress={onPress}
+			>
+				<PlusIcon size={25} />
+				{!isOpened && "New Ticket"}
+			</NewButton>
+		</Highlighter>
 	);
 }
 

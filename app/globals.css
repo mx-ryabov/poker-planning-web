@@ -96,6 +96,8 @@
 	--animate-fade-in-with-resize: fade-in-with-resize 0.3s;
 	--animate-scale-up: scale-up 0.3s;
 	--animate-simple-ping: simple-ping;
+	--animate-simple-ping-small: simple-ping-small 2s cubic-bezier(0, 0, 0.2, 1)
+		infinite;
 	--animate-float3D: float3D 10s ease-in-out infinite alternate;
 
 	@keyframes popup {
@@ -228,6 +230,20 @@
 		}
 		100% {
 			transform: scale(1);
+		}
+	}
+	@keyframes simple-ping-small {
+		0%,
+		33% {
+			box-shadow:
+				0 0 0 2px #845ec2,
+				0 0 0 #845ec2;
+		}
+		66%,
+		100% {
+			box-shadow:
+				0 0 0 2px #845ec2,
+				0 0 0 10px #845ec203;
 		}
 	}
 	@keyframes float3D {

@@ -48,13 +48,18 @@ export function TicketItemFullView(props: Props) {
 					<div className="flex flex-row items-center gap-1">
 						<div className="-ml-2">
 							{data.type !== undefined && (
-								<TicketTypeSelector
-									value={data.type}
-									onSelected={(value) =>
-										updateByField("type", value)
-									}
-									isEditable={isEditable}
-								/>
+								<Tooltip delay={0}>
+									<TicketTypeSelector
+										value={data.type}
+										onSelected={(value) =>
+											updateByField("type", value)
+										}
+										isEditable={isEditable}
+									/>
+									<Tooltip.Content>
+										Ticket type
+									</Tooltip.Content>
+								</Tooltip>
 							)}
 						</div>
 						<span className="text-xs text-neutral-700">
@@ -62,7 +67,7 @@ export function TicketItemFullView(props: Props) {
 						</span>
 					</div>
 					<div className="flex flex-row">
-						<Tooltip delay={1000}>
+						<Tooltip delay={0}>
 							<ButtonSquare
 								icon={MinusIcon}
 								variant="ghost"
@@ -72,7 +77,7 @@ export function TicketItemFullView(props: Props) {
 							/>
 							<Tooltip.Content>Collapse</Tooltip.Content>
 						</Tooltip>
-						<Tooltip delay={1000}>
+						<Tooltip delay={0}>
 							<TicketItemMenu
 								deleteTicket={deleteTicket}
 								ticketId={data.id}
