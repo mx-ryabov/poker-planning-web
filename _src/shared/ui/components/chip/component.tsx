@@ -11,6 +11,7 @@ import {
 } from "react-aria-components";
 import { buildProvider } from "@/_src/shared/lib";
 import { useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 type ChipProps = TagProps & Required<Pick<TagProps, "textValue">>;
 
@@ -103,7 +104,10 @@ export function ChipGroup<TItem extends object>({
 					items={items}
 					ref={tagListRef}
 					renderEmptyState={renderEmptyState}
-					className={"flex flex-row flex-wrap gap-2 " + className}
+					className={twMerge(
+						"flex flex-row flex-wrap gap-2",
+						className,
+					)}
 				>
 					{children}
 				</TagList>

@@ -52,8 +52,6 @@ const PopoverContent = forwardRef<HTMLElement, PopoverContentProps>(
 			return "auto";
 		}, [widthType, triggerRef]);
 
-		usePopoverForcePositionUpdate(popoverRef, triggerRef);
-
 		return (
 			<Popover
 				{...restProps}

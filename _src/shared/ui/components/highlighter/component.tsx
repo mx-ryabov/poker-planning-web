@@ -34,9 +34,7 @@ export function Highlighter({ children, id }: Props) {
 		const childEl = container.children[0];
 		const pingEl = container.children[1] as HTMLDivElement;
 		if (!childEl || !pingEl) return;
-		const childBorderRadius = childEl
-			.computedStyleMap()
-			.get("border-radius");
+		const childBorderRadius = getComputedStyle(childEl).borderRadius;
 		if (!childBorderRadius) return;
 
 		container.style.borderRadius = childBorderRadius.toString();

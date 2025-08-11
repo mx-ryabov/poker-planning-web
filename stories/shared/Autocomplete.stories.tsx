@@ -100,7 +100,7 @@ export const AutocompleteSingleStateless: Story = {
 			<Autocomplete
 				label="Select Single"
 				selectionMode="single"
-				placeholder="Select something"
+				placeholder="Search and select options..."
 				items={dataMultiple}
 			>
 				{(item) => (
@@ -120,7 +120,7 @@ export const AutocompleteSingleControllable = (_args: any) => {
 		<div className="w-[200px]">
 			<Autocomplete
 				label="Select Controlable"
-				placeholder="Select something"
+				placeholder="Search and select options..."
 				onSelectionChange={(items) => {
 					setCurrentItems(items as ItemT[]);
 				}}
@@ -162,7 +162,7 @@ export const AutocompleteSingleWithSections = () => {
 			<Autocomplete<ItemT>
 				label="Select Multiple"
 				selectionMode="single"
-				placeholder="Select something"
+				placeholder="Search and select options..."
 				onSelectionChange={(items) => {
 					setCurrentItems(items);
 				}}
@@ -264,7 +264,7 @@ export const AutocompleteMultipleStateless: Story = {
 			<Autocomplete
 				label="Select Multiple"
 				selectionMode="multiple"
-				placeholder="Select something"
+				placeholder="Search and select options..."
 				items={dataMultiple}
 			>
 				{(item) => (
