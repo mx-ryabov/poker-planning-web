@@ -7,6 +7,9 @@ import { useCallback, useMemo } from "react";
 import { StringHelper } from "@/_src/shared/lib/utils/string-helper";
 import { useConfirmationModal } from "@/_src/shared/providers";
 import { ParticipantRole } from "@/_src/shared/api";
+import { FlashWithLinesIcon } from "@/_src/shared/ui/components/icon/svg/flash-with-lines.icon";
+import { Popover } from "@/_src/shared/ui/components/popover";
+import { useOnboardingOptions } from "../onboardings";
 
 type Props = {
 	onLogout: () => void;
@@ -14,6 +17,7 @@ type Props = {
 
 export function UserBar({ onLogout }: Props) {
 	const { open } = useConfirmationModal();
+	const onboardingOptions = useOnboardingOptions();
 	const currentParticipant = useGameState(selectCurrentParticipant);
 
 	const initials = useMemo(() => {
@@ -56,7 +60,50 @@ export function UserBar({ onLogout }: Props) {
 							</span>
 						</div>
 					</Menu.Item> */}
-					<Menu.Item onAction={onExit}>
+					{onboardingOptions.length > 0 && (
+						<Menu.SubmenuTrigger>
+							<Menu.Item aria-label="Onboardings">
+								<FlashWithLinesIcon size={20} /> Onboardings
+							</Menu.Item>
+							<Popover.Content
+								placement="left top"
+								aria-label="Onboarding list"
+							>
+								<Menu.Content
+									offset={16}
+									data-testid="onboarding-list"
+								>
+									<Menu.Section
+										items={onboardingOptions}
+										title="Onboardings"
+									>
+										{(option) => (
+											<Menu.Item
+												key={option.type}
+												id={option.type}
+												onAction={option.start}
+											>
+												<div className="flex flex-row gap-1 items-center pr-1">
+													<span className="text-lg">
+														{option.emoji}
+													</span>
+													<div className="flex flex-col">
+														<span className="font-medium">
+															{option.title}
+														</span>
+														<span className="text-xs">
+															{option.subTitle}
+														</span>
+													</div>
+												</div>
+											</Menu.Item>
+										)}
+									</Menu.Section>
+								</Menu.Content>
+							</Popover.Content>
+						</Menu.SubmenuTrigger>
+					)}
+					<Menu.Item onAction={onExit} aria-label="Exit">
 						<LogoutIcon size={20} /> Exit
 					</Menu.Item>
 				</Menu.Section>

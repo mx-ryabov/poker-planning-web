@@ -7,11 +7,18 @@ import {
 	useState,
 } from "react";
 
+export enum ConsentStatus {
+	Unknown = "unknown",
+	UnInitialized = "uninitialized",
+	Given = "given",
+	Rejected = "rejected",
+}
 type CookieConsentStateContextProps = {
-	isConsentGiven: boolean | undefined;
-	setConsentGiven: (value: boolean) => void;
+	consentStatus: ConsentStatus;
+	giveConsent: () => void;
+	rejectConsent: () => void;
 };
-const CookieConsentStateContext = createContext<
+export const CookieConsentStateContext = createContext<
 	CookieConsentStateContextProps | undefined
 >(undefined);
 
@@ -20,30 +27,41 @@ export function CookieConsentStateProvider({
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const [isConsentGiven, setConsentGiven] = useState<boolean | undefined>(
-		undefined,
+	const [consentStatus, setConsentStatus] = useState<ConsentStatus>(
+		ConsentStatus.UnInitialized,
 	);
 
 	useEffect(() => {
 		if (typeof localStorage !== "undefined") {
 			const consent = localStorage.getItem("cookieConsent");
-			if (consent) {
-				setConsentGiven(JSON.parse(consent));
+			if (
+				consent === ConsentStatus.Given ||
+				consent === ConsentStatus.Rejected
+			) {
+				setConsentStatus(consent);
 			} else {
-				setConsentGiven(false);
+				setConsentStatus(ConsentStatus.Unknown);
 			}
 		}
 	}, []);
 
-	const setConsentGivenHandler = (value: boolean) => {
+	const giveConsent = () => {
 		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("cookieConsent", JSON.stringify(value));
+			localStorage.setItem("cookieConsent", ConsentStatus.Given);
 		}
-		setConsentGiven(value);
+		setConsentStatus(ConsentStatus.Given);
 	};
+
+	const rejectConsent = () => {
+		if (typeof localStorage !== "undefined") {
+			localStorage.setItem("cookieConsent", ConsentStatus.Rejected);
+		}
+		setConsentStatus(ConsentStatus.Rejected);
+	};
+
 	return (
 		<CookieConsentStateContext.Provider
-			value={{ isConsentGiven, setConsentGiven: setConsentGivenHandler }}
+			value={{ consentStatus, giveConsent, rejectConsent }}
 		>
 			{children}
 		</CookieConsentStateContext.Provider>
@@ -55,9 +73,10 @@ export function RenderIfConsentGiven({
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const { isConsentGiven } = useCookieConsentState();
-	if (isConsentGiven) {
-		return <>{children}</>;
+	const { consentStatus } = useCookieConsentState();
+
+	if (consentStatus === ConsentStatus.Given) {
+		return children;
 	}
 	return null;
 }

@@ -25,7 +25,7 @@ export function TicketCreatorOpener({ isOpened, onPress }: Props) {
 	);
 }
 
-const openerStyles = cva("shrink-0 transition-all duration-150 ease-linear", {
+const openerStyles = cva("shrink-0 transition-none", {
 	variants: {
 		isOpened: {
 			true: [

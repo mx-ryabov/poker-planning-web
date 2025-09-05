@@ -17,7 +17,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { TicketTypeSelector } from "../../ticket-type-selector";
 import { Input } from "@/_src/shared/ui/components/input";
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { ButtonSquare, NewButton } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon } from "@/_src/shared/ui/components/icon";
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
 
@@ -77,14 +77,17 @@ export function TicketCreatorForm({ className, onSubmitSucceed }: Props) {
 				/>
 
 				{isValid && (
-					<ButtonSquare
-						icon={ArrowRightIcon}
+					<NewButton
+						shape="square"
 						variant="ghost"
 						data-testid="ticket-creator-submit"
 						isPending={isPending}
 						type="submit"
 						size="small"
-					/>
+						className="*:pointer-events-none"
+					>
+						<ArrowRightIcon size={18} />
+					</NewButton>
 				)}
 			</form>
 		</div>

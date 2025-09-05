@@ -1,7 +1,7 @@
 import { VotingSystem } from "@/_src/shared/api/voting-system-api";
-import { buildProvider } from "@/_src/shared/lib";
+import { buildProvider, Streamable } from "@/_src/shared/lib";
 
 const [useVotingSystems, VotingSystemsProvider] =
-	buildProvider<VotingSystem[]>();
+	buildProvider<Streamable<VotingSystem[]>>();
 
 export { useVotingSystems, VotingSystemsProvider };

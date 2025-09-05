@@ -1,5 +1,7 @@
 import {
 	GameManagementTab,
+	selectFirstUnestimatedTicket,
+	selectTicketsCount,
 	selectVotingProcess,
 	useGameManagementState,
 	useGameState,
@@ -13,6 +15,8 @@ import { useCallback } from "react";
 import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 
 export function VotingActions() {
+	const ticketsCount = useGameState(selectTicketsCount);
+	const firstUnestimatedTicket = useGameState(selectFirstUnestimatedTicket);
 	const votingProcess = useGameState(selectVotingProcess);
 	const {
 		isStartVotingPending,
@@ -34,24 +38,72 @@ export function VotingActions() {
 		}
 	}, [setActiveTab, activeTab]);
 
+	const voteForFirstTicket = useCallback(() => {
+		const ticketId = firstUnestimatedTicket?.id;
+		if (!ticketId) return;
+
+		startVoting(ticketId);
+	}, [firstUnestimatedTicket?.id, startVoting]);
+
 	const onRevote = useCallback(
 		() => startVoting(votingProcess.ticket?.id || null),
 		[startVoting, votingProcess],
 	);
 
+	const shouldSuggestCreatingTickets =
+		votingProcess.status === GameVotingStatus.Inactive &&
+		ticketsCount === 0;
+
+	const shouldSuggestVotingForFirstUnestimated =
+		votingProcess.status === GameVotingStatus.Inactive &&
+		ticketsCount > 0 &&
+		!!firstUnestimatedTicket;
+
+	const shouldShowAllEstimatedMessage =
+		votingProcess.status === GameVotingStatus.Inactive &&
+		ticketsCount > 0 &&
+		!firstUnestimatedTicket;
+
 	return (
 		<>
-			{votingProcess.status === GameVotingStatus.Inactive && (
+			{shouldSuggestCreatingTickets && (
 				<div className="flex flex-col items-center gap-3">
-					<p className="w-40 text-center text-normal font-medium text-neutral-800">
-						Start from 👇
+					<p className="w-[250px] text-center text-normal font-medium text-neutral-800">
+						Start from creating tickets 👇
 					</p>
 					<Highlighter id="start-creating-tickets">
 						<NewButton onPress={onTicketListLinkPress}>
 							<CardsIcon size={18} />
-							Create Tickets
+							Open Tickets Panel
 						</NewButton>
 					</Highlighter>
+				</div>
+			)}
+			{shouldSuggestVotingForFirstUnestimated && (
+				<div className="flex flex-col items-center gap-3">
+					<p className="text-center text-normal font-medium text-neutral-800">
+						Select a ticket for voting or
+						<br />
+						vote for{" "}
+						<span className="underline">
+							the first unestimated one
+						</span>
+					</p>
+					<Highlighter id="start-creating-tickets">
+						<NewButton onPress={voteForFirstTicket}>
+							<CardsIcon size={18} />
+							Vote for {firstUnestimatedTicket.identifier}
+						</NewButton>
+					</Highlighter>
+				</div>
+			)}
+
+			{shouldShowAllEstimatedMessage && (
+				<div className="flex flex-col items-center gap-1">
+					<h3 className="text-lg font-semibold">Congratulations!</h3>
+					<p className="text-center text-normal font-medium text-neutral-800">
+						You&apos;re done. All the tickets are estimated 🎉
+					</p>
 				</div>
 			)}
 			{votingProcess.status === GameVotingStatus.InProgress && (

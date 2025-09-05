@@ -39,4 +39,10 @@ export const GAME_PERMISSIONS: GamePermissions = {
 	[RestrictedGameActions.ChangeGameSettings]: createSimplePermission([
 		ParticipantRole.Master,
 	]),
+
+	// Onboarding
+	[RestrictedGameActions.FollowGameIntroOnboardingForMaster]:
+		createSimplePermission([ParticipantRole.Master]),
+	[RestrictedGameActions.FollowGameIntroOnboardingForParticipant]:
+		createSimplePermission([ParticipantRole.VotingMember]),
 };

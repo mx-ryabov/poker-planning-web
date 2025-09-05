@@ -11,6 +11,10 @@ import { GameManagementTab, useGameManagementState } from "../../model";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
 import { cva } from "class-variance-authority";
 import { useCallback, useEffect, useState } from "react";
+import {
+	GameIntroOnboardingForMaster,
+	GameIntroOnboardingForParticipant,
+} from "../onboardings";
 
 type Props = {
 	className?: string;
@@ -50,36 +54,42 @@ export function GameManagementBar({ className }: Props) {
 
 	return (
 		<div className={className} data-testid="game-management-bar">
-			<SlidingSelector
-				containerClassName={containerStyle({
-					state: barState,
-				})}
-				activeIndex={
-					activeTab ? TAB_BUTTON_OPTIONS[activeTab].index : null
-				}
-				selectorClassName="rounded-lg bg-primary-100 -z-10"
-				onSelectionReset={() => setActiveTab(null)}
-			>
-				{Object.entries(TAB_BUTTON_OPTIONS).map(
-					([tabType, tabOptions], ind) => (
-						<Tooltip key={ind} delay={0}>
-							<ButtonSquare
-								icon={tabOptions.icon}
-								variant="ghost"
-								size="small"
-								aria-label={tabType}
-								className="group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400 bg-white/0 text-neutral-900 hover:text-neutral-600"
-								onPress={onPanelSelected(
-									tabType as GameManagementTab,
-								)}
-							/>
-							<Tooltip.Content>
-								{tabOptions.tooltipText}
-							</Tooltip.Content>
-						</Tooltip>
-					),
-				)}
-			</SlidingSelector>
+			<GameIntroOnboardingForParticipant.Steps.ControlPanelStep>
+				<GameIntroOnboardingForMaster.Steps.ControlPanelStep>
+					<SlidingSelector
+						containerClassName={containerStyle({
+							state: barState,
+						})}
+						activeIndex={
+							activeTab
+								? TAB_BUTTON_OPTIONS[activeTab].index
+								: null
+						}
+						selectorClassName="rounded-lg bg-primary-100 -z-10"
+						onSelectionReset={() => setActiveTab(null)}
+					>
+						{Object.entries(TAB_BUTTON_OPTIONS).map(
+							([tabType, tabOptions], ind) => (
+								<Tooltip key={ind} delay={0}>
+									<ButtonSquare
+										icon={tabOptions.icon}
+										variant="ghost"
+										size="small"
+										aria-label={tabType}
+										className="group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400 bg-white/0 text-neutral-900 hover:text-neutral-600"
+										onPress={onPanelSelected(
+											tabType as GameManagementTab,
+										)}
+									/>
+									<Tooltip.Content>
+										{tabOptions.tooltipText}
+									</Tooltip.Content>
+								</Tooltip>
+							),
+						)}
+					</SlidingSelector>
+				</GameIntroOnboardingForMaster.Steps.ControlPanelStep>
+			</GameIntroOnboardingForParticipant.Steps.ControlPanelStep>
 			{barState === "error" && (
 				<span className="absolute -top-1 -right-1 flex h-4 w-4">
 					<span className="bg-error-500 absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>

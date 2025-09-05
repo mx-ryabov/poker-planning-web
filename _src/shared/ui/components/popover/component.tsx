@@ -1,11 +1,5 @@
-import { setRefs, usePopoverForcePositionUpdate } from "@/_src/shared/lib";
-import {
-	MutableRefObject,
-	ReactNode,
-	forwardRef,
-	useCallback,
-	useRef,
-} from "react";
+import { setRefs } from "@/_src/shared/lib";
+import { forwardRef, useCallback, useRef } from "react";
 import {
 	PopoverProps,
 	DialogTriggerProps,
@@ -24,9 +18,9 @@ const PopoverTrigger = (props: DialogTriggerProps) => {
 
 type PopoverContentProps = Omit<
 	PopoverProps & DialogProps,
-	"children" | "style"
+	"style" | "children"
 > & {
-	children: ReactNode;
+	children: DialogProps["children"];
 	widthType?: "auto" | "equalToTrigger";
 };
 
@@ -35,8 +29,7 @@ const PopoverContent = forwardRef<HTMLElement, PopoverContentProps>(
 		const { children, className, widthType, triggerRef, ...restProps } =
 			props;
 
-		const popoverRef: MutableRefObject<HTMLElement | null> =
-			useRef<HTMLElement>(null);
+		const popoverRef = useRef<HTMLElement | null>(null);
 
 		const getPopoverWidth = useCallback(() => {
 			const trggerElement = triggerRef?.current;
@@ -69,11 +62,17 @@ const PopoverContent = forwardRef<HTMLElement, PopoverContentProps>(
 						className
 					}
 				>
-					{({ close }) => (
+					{(renderProps) => (
 						<ButtonContext.Provider
-							value={{ slots: { close: { onPress: close } } }}
+							value={{
+								slots: {
+									close: { onPress: renderProps.close },
+								},
+							}}
 						>
-							{children}
+							{typeof children === "function"
+								? children(renderProps)
+								: children}
 						</ButtonContext.Provider>
 					)}
 				</Dialog>

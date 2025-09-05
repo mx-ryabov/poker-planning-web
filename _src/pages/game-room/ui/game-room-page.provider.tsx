@@ -13,6 +13,7 @@ import {
 } from "../model";
 import { ReactNode } from "react";
 import { ToastProvider } from "@/_src/shared/ui/components/toast";
+import { OnboardingProvider } from "@/_src/shared/ui/components/onboarding";
 
 interface Props {
 	accessTokenFactory: () => Promise<string>;
@@ -30,19 +31,23 @@ export function GameRoomPageProvider({
 	children,
 }: Props) {
 	return (
-		<ToastProvider>
-			<GameStateProvider initialAsyncState={{ game, currentParticipant }}>
-				<GameEventsProvider
-					accessTokenFactory={accessTokenFactory}
-					gameId={gameId}
+		<OnboardingProvider>
+			<ToastProvider>
+				<GameStateProvider
+					initialAsyncState={{ game, currentParticipant }}
 				>
-					<VotingAsyncStateProvider>
-						<GameEventDispatcher />
-						{children}
-					</VotingAsyncStateProvider>
-				</GameEventsProvider>
-			</GameStateProvider>
-		</ToastProvider>
+					<GameEventsProvider
+						accessTokenFactory={accessTokenFactory}
+						gameId={gameId}
+					>
+						<VotingAsyncStateProvider>
+							<GameEventDispatcher />
+							{children}
+						</VotingAsyncStateProvider>
+					</GameEventsProvider>
+				</GameStateProvider>
+			</ToastProvider>
+		</OnboardingProvider>
 	);
 }
 

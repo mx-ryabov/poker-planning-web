@@ -1,6 +1,8 @@
 import {
 	GameManagementTab,
 	selectGameMaster,
+	selectTicketsCount,
+	selectUnestimatedTicketsCount,
 	selectVotingProcess,
 	useGameManagementState,
 	useGameState,
@@ -16,10 +18,22 @@ import { ReactNode } from "react";
 export function VotingInfo() {
 	const gameMaster = useGameState(selectGameMaster);
 	const votingProcess = useGameState(selectVotingProcess);
+	const unestimatedTicketsCount = useGameState(selectUnestimatedTicketsCount);
+	const ticketsCount = useGameState(selectTicketsCount);
+
+	const isBetweenVotes =
+		votingProcess.status === GameVotingStatus.Inactive &&
+		(ticketsCount === 0 || ticketsCount !== unestimatedTicketsCount);
+	const isAllEstimated =
+		votingProcess.status === GameVotingStatus.Inactive &&
+		unestimatedTicketsCount === 0 &&
+		ticketsCount > 0;
+	const isVotingInProgress =
+		votingProcess.status === GameVotingStatus.InProgress;
 
 	return (
 		<div>
-			{votingProcess.status === GameVotingStatus.Inactive && (
+			{isBetweenVotes && (
 				<div className="flex flex-col items-center gap-2">
 					<h3 className="text-center font-semibold text-neutral-900">
 						Time to relax!
@@ -41,7 +55,7 @@ export function VotingInfo() {
 					</div>
 				</div>
 			)}
-			{votingProcess.status !== GameVotingStatus.Inactive && (
+			{isVotingInProgress && (
 				<div>
 					{votingProcess.ticket === null ? (
 						<p className="text-neutral-900">
@@ -58,6 +72,14 @@ export function VotingInfo() {
 							under vote
 						</div>
 					)}
+				</div>
+			)}
+			{isAllEstimated && (
+				<div className="flex flex-col items-center gap-1">
+					<h3 className="text-lg font-semibold">Congratulations!</h3>
+					<p className="text-center text-normal font-medium text-neutral-800">
+						You&apos;re done. All the tickets are estimated 🎉
+					</p>
 				</div>
 			)}
 		</div>

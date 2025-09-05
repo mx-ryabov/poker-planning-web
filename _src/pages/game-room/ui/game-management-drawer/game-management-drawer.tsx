@@ -6,6 +6,7 @@ import { DrawerBody } from "./game-management-drawer-body";
 import { TicketsPanel } from "../tickets-panel";
 import { ParticipantsPanel } from "../participants-panel";
 import { SettingsPanel } from "../settings-panel";
+import { GameIntroOnboardingForParticipant } from "../onboardings";
 
 export function GameManagementDrawer() {
 	const activeTab = useGameManagementState((state) => state.activeTab);
@@ -21,13 +22,19 @@ export function GameManagementDrawer() {
 			maxWidth={500}
 			className=""
 		>
-			<section
-				className="flex flex-col gap-5 w-full h-full"
-				data-testid="game-management-drawer-content"
-			>
-				<DrawerHeader />
-				<DrawerBody panels={PANELS} />
-			</section>
+			<GameIntroOnboardingForParticipant.Steps.ParticipantsPanelStep>
+				<GameIntroOnboardingForParticipant.Steps.TicketsPanelStep>
+					<GameIntroOnboardingForParticipant.Steps.SettingsPanelStep>
+						<section
+							className="flex flex-col gap-5 w-full h-full bg-white"
+							data-testid="game-management-drawer-content"
+						>
+							<DrawerHeader />
+							<DrawerBody panels={PANELS} />
+						</section>
+					</GameIntroOnboardingForParticipant.Steps.SettingsPanelStep>
+				</GameIntroOnboardingForParticipant.Steps.TicketsPanelStep>
+			</GameIntroOnboardingForParticipant.Steps.ParticipantsPanelStep>
 		</Drawer.ModalWithSeparator>
 	);
 }

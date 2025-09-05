@@ -5,6 +5,11 @@ export const RestrictedGameActions = {
 	DeleteTicket: "DeleteTicket",
 	CreateTicket: "CreateTicket",
 	ChangeGameSettings: "ChangeGameSettings",
+
+	// Onboarding
+	FollowGameIntroOnboardingForMaster: "FollowGameIntroOnboardingForMaster",
+	FollowGameIntroOnboardingForParticipant:
+		"FollowGameIntroOnboardingForParticipant",
 } as const;
 
 export type RestrictedGameActionsType =

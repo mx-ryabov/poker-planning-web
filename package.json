@@ -45,6 +45,7 @@
 		"react-aria-components": "^1.11.0",
 		"react-chartjs-2": "^5.3.0",
 		"react-dom": "19.0.0",
+		"react-error-boundary": "^6.0.0",
 		"react-hook-form": "^7.51.2",
 		"react-scan": "^0.1.1",
 		"react-stately": "^3.40.0",

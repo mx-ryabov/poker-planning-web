@@ -49,7 +49,6 @@ describe("Avatar", () => {
 		const { getByTestId } = render(<Avatar altText={"Abra"} />);
 
 		const avatarFrame = getByTestId("avatar");
-		screen.debug(avatarFrame);
 		expect(avatarFrame).toHaveStyle({
 			"background-color": Color.Error100,
 			color: Color.Error500,
@@ -60,7 +59,6 @@ describe("Avatar", () => {
 		const { getByTestId } = render(<Avatar altText={"Babra"} />);
 
 		const avatarFrame = getByTestId("avatar");
-		screen.debug(avatarFrame);
 		expect(avatarFrame).toHaveStyle({
 			"background-color": Color.Warning100,
 			color: Color.Warning500,
@@ -71,7 +69,6 @@ describe("Avatar", () => {
 		const { getByTestId } = render(<Avatar altText={"Dabra"} />);
 
 		const avatarFrame = getByTestId("avatar");
-		screen.debug(avatarFrame);
 		expect(avatarFrame).toHaveStyle({
 			"background-color": Color.Info100,
 			color: Color.Info500,

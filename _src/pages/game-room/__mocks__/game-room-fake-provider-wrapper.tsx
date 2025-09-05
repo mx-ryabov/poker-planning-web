@@ -4,12 +4,7 @@ import {
 } from "@/__mocks__/app-fake-provider";
 import { ToastProvider } from "@/_src/shared/ui/components/toast";
 import { ReactNode } from "react";
-import {
-	createGameStateStore,
-	GameStateProvider,
-	VotingContext,
-	VotingState,
-} from "../model";
+import { createGameStateStore, VotingContext, VotingState } from "../model";
 import {
 	generateGame,
 	generateParticipant,
@@ -19,6 +14,7 @@ import { vi } from "vitest";
 import { GameStateCotnext } from "../model/store/game-state-context";
 import { GameStateStore } from "../model/store/game-state-store.model";
 import { StoreApi } from "zustand";
+import { OnboardingProvider } from "@/_src/shared/ui/components/onboarding";
 
 export type GameRoomFakeProviderWrapperProps = Omit<
 	GameRoomFakeProviderProps,
@@ -55,18 +51,20 @@ function GameRoomFakeProvider({
 		});
 	return (
 		<AppFakeProvider {...appFakeProviderProps}>
-			<ToastProvider>
-				<GameStateCotnext.Provider value={gameStateStoreOverrided}>
-					<VotingContext.Provider
-						value={{
-							...DEFAULT_VOTING_CTX_PROPS,
-							...votingAsyncContextProps,
-						}}
-					>
-						{children}
-					</VotingContext.Provider>
-				</GameStateCotnext.Provider>
-			</ToastProvider>
+			<OnboardingProvider>
+				<ToastProvider>
+					<GameStateCotnext.Provider value={gameStateStoreOverrided}>
+						<VotingContext.Provider
+							value={{
+								...DEFAULT_VOTING_CTX_PROPS,
+								...votingAsyncContextProps,
+							}}
+						>
+							{children}
+						</VotingContext.Provider>
+					</GameStateCotnext.Provider>
+				</ToastProvider>
+			</OnboardingProvider>
 		</AppFakeProvider>
 	);
 }
@@ -75,6 +73,8 @@ const DEFAULT_VOTING_CTX_PROPS: VotingState = {
 	startVoting: vi.fn(),
 	revealCards: vi.fn(),
 	finishVoting: vi.fn(),
+	cancelVoting: vi.fn(),
+	isCancelVotingPending: false,
 	isStartVotingPending: false,
 	isRevealCardsPending: false,
 	isFinishVotingPending: false,
