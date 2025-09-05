@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";

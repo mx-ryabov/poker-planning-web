@@ -12,69 +12,81 @@ import { VotingInfo } from "./components/voting-info";
 import { cva } from "class-variance-authority";
 import { TablePlayersSeating } from "./components/table-players-seating";
 import { VotingTimer } from "./components/voting-timer";
+import {
+	GameIntroOnboardingForMaster,
+	GameIntroOnboardingForParticipant,
+} from "../../onboardings";
 
 export function PokerTable() {
-	const isActionsVisible = usePermissions("ChangeVoting");
+	const canAffectVoting = usePermissions("ChangeVoting");
 	const currentParticipant = useGameState(selectCurrentParticipant);
 
 	const { highlightedVoteId } = usePokerFieldState();
 
 	return (
 		<div className="flex h-full w-full items-center justify-center">
-			<div className="relative flex max-h-[calc(100%-100px)] w-[60%] max-w-[900px] items-center justify-center">
-				<TableSvg />
+			<GameIntroOnboardingForParticipant.Steps.GameTableStep className="rounded-full">
+				<GameIntroOnboardingForMaster.Steps.GameTableStep className="rounded-full">
+					<div className="relative flex max-h-[calc(100%-100px)] w-[60%] max-w-[900px] items-center justify-center">
+						<TableSvg className="rounded-full" />
 
-				<div
-					className="absolute top-1/2 left-1/2 flex -translate-1/2 flex-col gap-2"
-					style={{
-						opacity:
-							highlightedVoteId === undefined ? "100%" : "40%",
-					}}
-				>
-					{isActionsVisible && (
-						<div data-testid="voting-actions">
-							<VotingActions />
-						</div>
-					)}
-					{!isActionsVisible && (
-						<div data-testid="voting-info">
-							<VotingInfo />
-						</div>
-					)}
-					<VotingTimer />
-				</div>
-				<TablePlayersSeating>
-					{({ seatedParticipants, seatRowPosition }) => (
 						<div
-							key={seatRowPosition}
-							className={seatsRowStyles({
-								position: seatRowPosition,
-							})}
+							className="absolute top-1/2 left-1/2 flex -translate-1/2 flex-col gap-2"
+							style={{
+								opacity:
+									highlightedVoteId === undefined
+										? "100%"
+										: "40%",
+							}}
 						>
-							{seatedParticipants.map((p) => (
+							{canAffectVoting && (
+								<div data-testid="voting-actions">
+									<VotingActions />
+								</div>
+							)}
+							{!canAffectVoting && (
+								<div data-testid="voting-info">
+									<VotingInfo />
+								</div>
+							)}
+							<VotingTimer />
+						</div>
+						<TablePlayersSeating>
+							{({ seatedParticipants, seatRowPosition }) => (
 								<div
-									key={p.id}
-									className={playerWrapperStyles({
-										isMutedBackground: isBackgroundMuted(
-											highlightedVoteId,
-											p.vote?.id || null,
-										),
+									key={seatRowPosition}
+									className={seatsRowStyles({
+										position: seatRowPosition,
 									})}
 								>
-									<TablePlayer
-										key={p.id}
-										participant={p}
-										tablePosition={seatRowPosition}
-										isCurrentPlayer={
-											p.id === currentParticipant.id
-										}
-									/>
+									{seatedParticipants.map((p) => (
+										<div
+											key={p.id}
+											className={playerWrapperStyles({
+												isMutedBackground:
+													isBackgroundMuted(
+														highlightedVoteId,
+														p.vote?.id || null,
+													),
+											})}
+										>
+											<TablePlayer
+												key={p.id}
+												participant={p}
+												tablePosition={seatRowPosition}
+												isCurrentPlayer={
+													p.id ===
+													currentParticipant.id
+												}
+											/>
+										</div>
+									))}
 								</div>
-							))}
-						</div>
-					)}
-				</TablePlayersSeating>
-			</div>
+							)}
+						</TablePlayersSeating>
+					</div>
+				</GameIntroOnboardingForMaster.Steps.GameTableStep>
+			</GameIntroOnboardingForParticipant.Steps.GameTableStep>
 		</div>
 	);
 }

@@ -2,7 +2,11 @@ import { StringHelper } from "@/_src/shared/lib/utils";
 import { cva } from "class-variance-authority";
 import { useMemo } from "react";
 import { CardFaceDownSvg } from "../assets/card-face-down-svg";
-import { GameParticipant, GameVotingStatus } from "@/_src/shared/api";
+import {
+	GameParticipant,
+	GameVotingStatus,
+	ParticipantRole,
+} from "@/_src/shared/api";
 import {
 	selectVotingProcess,
 	useGameState,
@@ -41,6 +45,8 @@ export function TablePlayer(props: TablePlayerProps) {
 			</div>
 			<div className={nameStyles({ tablePosition })}>
 				{participant.displayName}
+				<br />
+				{participant.role === ParticipantRole.Master && "(Master)"}
 			</div>
 			<div className={statusStyles({ tablePosition })}>
 				{votingStatus === "ready" && (

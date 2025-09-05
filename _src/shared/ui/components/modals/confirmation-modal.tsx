@@ -1,6 +1,5 @@
 import {
 	Button,
-	ButtonSquare,
 	LabeledButtonProps,
 	NewButton,
 } from "@/_src/shared/ui/components/button";
@@ -39,7 +38,7 @@ export function ConfirmationModal({
 
 	return (
 		<Modal.Dialog
-			isDismissable
+			isDismissable={true}
 			isOpen={isOpen}
 			onOpenChange={onOpenChange}
 			data-testid="confirmation-modal"

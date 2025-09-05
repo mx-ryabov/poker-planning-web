@@ -87,8 +87,6 @@ export function useAutocomplete<TItemData extends object>(
 		isNonModal: true,
 	};
 
-	usePopoverForcePositionUpdate(popoverRef, triggerRef);
-
 	return {
 		state: listState,
 		listProps,

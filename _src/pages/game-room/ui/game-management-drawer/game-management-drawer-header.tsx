@@ -45,7 +45,7 @@ export function DrawerHeader() {
 				tab: GameManagementTab.ParticipantList,
 			},
 			{
-				title: "Issues",
+				title: "Tickets",
 				subTitle: `${ticketsCount} in the list`,
 				icon: ListIcon,
 				tab: GameManagementTab.TaskList,

@@ -91,7 +91,7 @@ describe("Autocomplete", () => {
 			);
 
 			getByText("Select Single");
-			const inputContainer = getByRole("group");
+			const inputContainer = getByRole("presentation");
 			within(inputContainer).getByRole("textbox");
 			within(inputContainer).getByRole("button");
 

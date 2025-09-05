@@ -70,12 +70,14 @@ describe("ToastRegion Component", () => {
 	});
 
 	test("expands stack when hovered", async () => {
-		const { getByTestId, user, getAllByTestId } = renderToastRegion();
+		const { getByTestId, user, getAllByTestId, debug } =
+			renderToastRegion();
 		const region = getByTestId("toasts-region");
 
 		await act(() => user.hover(region));
 
 		const toasts = getAllByTestId(/toast-\d+/);
+		debug(toasts);
 		expect(toasts[0]).toHaveStyle("transform: scaleX(100%)");
 
 		expect(toasts[1]).toHaveStyle("transform: scaleX(100%)");

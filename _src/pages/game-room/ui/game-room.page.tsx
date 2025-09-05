@@ -1,4 +1,3 @@
-"use server";
 import { scan } from "react-scan";
 import {
 	getCurrentParticipant,
@@ -17,6 +16,7 @@ import { UserBar } from "./user-bar";
 import { GameManagementDrawer } from "./game-management-drawer";
 import { PokerField } from "./poker-field";
 import { MobileBlockerScreen } from "@/_src/shared/ui/components/mobile-blocker-screen";
+import { OnboardingHelper } from "./onboardings";
 
 if (typeof window !== "undefined") {
 	scan({
@@ -39,6 +39,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 		redirect(`/game/${gameId}/join-room`);
 	}
 
+	// TODO: consider Streaming for better performance, but need to come up with a managing it with zustand
 	const [game, currentParticipant] = await Promise.all([
 		getGameById(gameId),
 		getCurrentParticipant(gameId),
@@ -58,7 +59,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 				game={game}
 			>
 				<div className="flex h-screen w-full flex-row overflow-hidden">
-					<div className="flex w-full flex-col">
+					<div className="flex w-full flex-col relative">
 						<header className="relative flex w-full flex-row justify-between p-6">
 							<NextLink href="/">
 								<Image
@@ -75,6 +76,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 						<main className="h-full w-full">
 							<PokerField />
 						</main>
+						<OnboardingHelper className="absolute right-6 bottom-6" />
 					</div>
 
 					<GameManagementDrawer />

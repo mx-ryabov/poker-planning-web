@@ -1,20 +1,36 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { useCallback, useEffect, useRef, KeyboardEvent } from "react";
+import {
+	useCallback,
+	useEffect,
+	useRef,
+	KeyboardEvent,
+	use,
+	Suspense,
+} from "react";
 import { useVotingSystems } from "@/_src/entities/voting-system";
-import { RadioGroup } from "@/_src/shared/ui/components/radio-group";
+import {
+	RadioGroup,
+	RadioGroupSkeleton,
+} from "@/_src/shared/ui/components/radio-group";
 import { InfoIcon } from "@/_src/shared/ui/components/icon";
 import { CreateGameFormFormState } from "../../../../model";
 import { StepProps } from "./types";
+import { Stream } from "@/_src/shared/ui/next-components/stream";
+import { Radio } from "react-aria-components";
 
 //gsap.registerPlugin(useGSAP);
 
-export function VotingSystemStep({
-	isActive,
-	onValidate,
-	onNextStep,
-}: StepProps) {
+export function VotingSystemStep(props: StepProps) {
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<VotingSystemStepImpl {...props} />
+		</Suspense>
+	);
+}
+
+function VotingSystemStepImpl({ isActive, onValidate, onNextStep }: StepProps) {
 	const firstRadioRef = useRef<HTMLInputElement>(null);
-	const votingSystems = useVotingSystems();
+	const votingSystemsStream = useVotingSystems();
 
 	const { control, formState } = useFormContext<CreateGameFormFormState>();
 	const container = useRef(null);
@@ -79,22 +95,38 @@ export function VotingSystemStep({
 						>
 							Now choose your voting system
 						</RadioGroup.Label>
-						{votingSystems.map((vs, ind) => (
-							<RadioGroup.Radio
-								key={vs.id}
-								value={vs.id}
-								className="label"
-								data-testid="voting-system-option-container"
-								onKeyDown={onVotingSystemRadioKeyDown}
-								inputRef={ind === 0 ? firstRadioRef : undefined}
-							>
-								{vs.name} (
-								{vs.votes
-									.map((vote) => `${vote.value}`)
-									.join(", ")}
-								)
-							</RadioGroup.Radio>
-						))}
+						<Stream
+							value={votingSystemsStream}
+							fallback={
+								<RadioGroupSkeleton
+									count={2}
+									size="large"
+									variant="content-inside"
+								/>
+							}
+						>
+							{(votingSystems) =>
+								votingSystems.map((vs, ind) => (
+									<RadioGroup.Radio
+										key={vs.id}
+										value={vs.id}
+										data-testid="voting-system-option-container"
+										onKeyDown={onVotingSystemRadioKeyDown}
+										inputRef={
+											ind === 0
+												? firstRadioRef
+												: undefined
+										}
+									>
+										{vs.name} (
+										{vs.votes
+											.map((vote) => `${vote.value}`)
+											.join(", ")}
+										)
+									</RadioGroup.Radio>
+								))
+							}
+						</Stream>
 						<RadioGroup.Description data-testid="voting-systems-field-description">
 							<InfoIcon /> You can change all settings during the
 							game

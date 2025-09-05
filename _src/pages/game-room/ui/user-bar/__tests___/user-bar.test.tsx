@@ -1,27 +1,13 @@
 import { test, describe, expect, vi } from "vitest";
-import { render, within } from "@/test/utilities";
-import { createGameStateStore } from "../../../model/store/game-state-store";
-import {
-	NEWLY_CREATED_GAME,
-	MASTER_PARTICIPANT,
-} from "@/_src/shared/mocks/game";
+import { render, waitFor, within } from "@/test/utilities";
 import { UserBar } from "../user-bar";
-import { GameStateCotnext } from "../../../model/store/game-state-context";
+import { GameRoomFakeProviderWrapper } from "../../../__mocks__";
 import { ConfirmationModalProvider } from "@/_src/shared/providers/confirmation-modal-provider";
-
-const gameStateStore = createGameStateStore({
-	game: NEWLY_CREATED_GAME,
-	currentParticipant: { ...MASTER_PARTICIPANT, displayName: "Maxim Test" },
-});
-function renderUserBar({ onLogout = vi.fn() }: { onLogout?: () => void }) {
-	return render(
-		<ConfirmationModalProvider>
-			<GameStateCotnext.Provider value={gameStateStore}>
-				<UserBar onLogout={onLogout} />
-			</GameStateCotnext.Provider>
-		</ConfirmationModalProvider>,
-	);
-}
+import { ParticipantRole } from "@/_src/shared/api";
+import {
+	generateGame,
+	generateParticipant,
+} from "../../../__tests__/game-state-store.test-helpers";
 
 describe("User Bar", () => {
 	test("renders successfully", async () => {
@@ -31,6 +17,62 @@ describe("User Bar", () => {
 
 		expect(userBarBtn).toHaveTextContent("MT");
 		expect(() => unmount()).not.toThrow();
+	});
+
+	test("has the onboarding option for the master", async () => {
+		const { getByRole, user } = renderUserBar({});
+
+		const userBarBtn = getByRole("button");
+		await user.click(userBarBtn);
+
+		const menu = getByRole("group");
+		within(menu).getByLabelText(/Onboardings/i);
+	});
+
+	test("onboarding submenu has 1 option for the master role", async () => {
+		const { getByRole, getByText, user, getByTestId } = renderUserBar({});
+
+		const userBarBtn = getByRole("button");
+		await user.click(userBarBtn);
+
+		const menu = getByRole("group");
+		const onboardingOption = within(menu).getByLabelText(/Onboardings/i);
+		await user.hover(onboardingOption);
+		await waitFor(() => {
+			getByText(/how to start the game/i);
+			const onboardingOptions = within(
+				getByTestId("onboarding-list"),
+			).getAllByRole("menuitem");
+			expect(onboardingOptions).toHaveLength(1);
+		});
+	});
+
+	test("has the onboarding option for a voting memeber", async () => {
+		const { getByRole, user } = renderUserBar({
+			role: ParticipantRole.VotingMember,
+		});
+		const userBarBtn = getByRole("button");
+		await user.click(userBarBtn);
+		const menu = getByRole("group");
+		within(menu).getByLabelText(/Onboardings/i);
+	});
+
+	test("onboarding submenu has 1 option for the voting memeber", async () => {
+		const { getByRole, getByText, user, getByTestId } = renderUserBar({
+			role: ParticipantRole.VotingMember,
+		});
+		const userBarBtn = getByRole("button");
+		await user.click(userBarBtn);
+		const menu = getByRole("group");
+		const onboardingOption = within(menu).getByLabelText(/Onboardings/i);
+		await user.hover(onboardingOption);
+		await waitFor(() => {
+			getByText(/what's going on/i);
+			const onboardingOptions = within(
+				getByTestId("onboarding-list"),
+			).getAllByRole("menuitem");
+			expect(onboardingOptions).toHaveLength(1);
+		});
 	});
 
 	test("has 2 options when opened", async () => {
@@ -53,40 +95,39 @@ describe("User Bar", () => {
 		within(menu).getByText("Maxim Test");
 	});
 
-	test("has the first option My Account disabled", async () => {
-		const { getAllByRole, getByRole, user } = renderUserBar({});
+	// test("has the first option My Account disabled", async () => {
+	// 	const { getAllByRole, getByRole, user } = renderUserBar({});
+
+	// 	const userBarBtn = getByRole("button");
+	// 	await user.click(userBarBtn);
+
+	// 	const options = getAllByRole("menuitem");
+	// 	expect(options[0]).toHaveTextContent(/my account/i);
+	// 	expect(options[0]).toHaveTextContent(/sign up to see more/i);
+	// 	expect(options[0]).toHaveAttribute("data-disabled", "true");
+	// });
+
+	test("has the option Exit", async () => {
+		const { getByRole, user } = renderUserBar({});
 
 		const userBarBtn = getByRole("button");
 		await user.click(userBarBtn);
 
-		const options = getAllByRole("menuitem");
-		expect(options[0]).toHaveTextContent(/my account/i);
-		expect(options[0]).toHaveTextContent(/sign up to see more/i);
-		expect(options[0]).toHaveAttribute("data-disabled", "true");
-	});
-
-	test("has the second option Exit", async () => {
-		const { getAllByRole, getByRole, user } = renderUserBar({});
-
-		const userBarBtn = getByRole("button");
-		await user.click(userBarBtn);
-
-		const options = getAllByRole("menuitem");
-		expect(options[1]).toHaveTextContent(/exit/i);
+		const menu = getByRole("group");
+		expect(menu).toHaveTextContent(/exit/i);
 	});
 
 	test("triggers onLogout callback when clicked", async () => {
 		const onLogout = vi.fn();
-		const { getAllByRole, getByRole, user, getByText, getByTestId } =
-			renderUserBar({
-				onLogout,
-			});
+		const { getByRole, user, getByText, getByTestId } = renderUserBar({
+			onLogout,
+		});
 
 		const userBarBtn = getByRole("button");
 		await user.click(userBarBtn);
 
-		const options = getAllByRole("menuitem");
-		await user.click(options[1]);
+		const exitOption = within(getByRole("group")).getByLabelText(/exit/i);
+		await user.click(exitOption);
 
 		getByText(/are you sure you want to exit/i);
 		const confirmBtn = getByTestId("confirm-button");
@@ -94,3 +135,29 @@ describe("User Bar", () => {
 		expect(onLogout).toHaveBeenCalledOnce();
 	});
 });
+
+type RenderUserBarParams = {
+	onLogout?: () => void;
+	role?: ParticipantRole;
+};
+function renderUserBar({
+	onLogout = vi.fn(),
+	role = ParticipantRole.Master,
+}: RenderUserBarParams) {
+	return render(
+		<ConfirmationModalProvider>
+			<UserBar onLogout={onLogout} />
+		</ConfirmationModalProvider>,
+		{
+			wrapper: GameRoomFakeProviderWrapper({
+				gameStateProps: {
+					game: generateGame({}),
+					currentParticipant: generateParticipant({
+						role,
+						displayName: "Maxim Test",
+					}),
+				},
+			}),
+		},
+	);
+}

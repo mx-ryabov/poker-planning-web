@@ -77,7 +77,7 @@ describe("Game Management Drawer", () => {
 			);
 
 			const header = getByRole("banner");
-			expect(header).toHaveTextContent(/issues/i);
+			expect(header).toHaveTextContent(/tickets/i);
 			expect(header).toHaveTextContent(/2 in the list/i);
 			expect(
 				within(header).queryByTestId(/listicon/i),
@@ -103,7 +103,7 @@ describe("Game Management Drawer", () => {
 					.getState()
 					.setActiveTab(GameManagementTab.TaskList),
 			);
-			expect(header).toHaveTextContent(/issues/i);
+			expect(header).toHaveTextContent(/tickets/i);
 			expect(
 				within(header).queryByTestId(/listicon/i),
 			).toBeInTheDocument();

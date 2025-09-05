@@ -11,6 +11,7 @@ import {
 } from "react-aria-components";
 import { buildProvider } from "@/_src/shared/lib";
 import { useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 type ChipProps = TagProps & Required<Pick<TagProps, "textValue">>;
 
@@ -19,7 +20,7 @@ const chip = cva(
 		"h-[21px] min-w-fit pl-2 pr-1",
 		"flex flex-row items-center",
 		"bg-neutral-200",
-		"rounded-sm text-xs transition-all select-none outline-primary-500",
+		"rounded-sm text-xs transition-colors select-none outline-primary-500",
 	],
 	{
 		variants: {
@@ -30,6 +31,9 @@ const chip = cva(
 			disabled: {
 				true: ["text-neutral-600 hover:cursor-not-allowed"],
 				false: ["cursor-pointer text-neutral-900"],
+			},
+			isFocused: {
+				true: ["outline-2"],
 			},
 		},
 		compoundVariants: [
@@ -54,8 +58,12 @@ export function Chip(props: ChipProps) {
 	return (
 		<Tag
 			{...restProps}
-			className={({ isDisabled }) =>
-				chip({ outlined, disabled: restProps.isDisabled || isDisabled })
+			className={({ isDisabled, isFocusVisible, isFocused }) =>
+				chip({
+					outlined,
+					disabled: restProps.isDisabled || isDisabled,
+					isFocused: isFocusVisible || isFocused,
+				})
 			}
 			aria-label={`${props.textValue} chip`}
 		>
@@ -103,7 +111,10 @@ export function ChipGroup<TItem extends object>({
 					items={items}
 					ref={tagListRef}
 					renderEmptyState={renderEmptyState}
-					className={"flex flex-row flex-wrap gap-2 " + className}
+					className={twMerge(
+						"flex flex-row flex-wrap gap-2",
+						className,
+					)}
 				>
 					{children}
 				</TagList>

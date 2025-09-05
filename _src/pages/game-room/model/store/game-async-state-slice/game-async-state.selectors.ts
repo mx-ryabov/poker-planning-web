@@ -32,6 +32,14 @@ export const selectTickets = (state: GameStateStore) =>
 export const selectTicketsCount = (state: GameStateStore) =>
 	state.state.game.tickets.length;
 
+export const selectUnestimatedTicketsCount = (state: GameStateStore) =>
+	state.state.game.tickets.filter(
+		(t) => t.estimation === null || t.estimation === "",
+	).length;
+
+export const selectFirstUnestimatedTicket = (state: GameStateStore) =>
+	state.state.game.tickets.find((t) => !t.estimation);
+
 export const selectCurrentParticipant = (state: GameStateStore) =>
 	state.state.currentParticipant;
 

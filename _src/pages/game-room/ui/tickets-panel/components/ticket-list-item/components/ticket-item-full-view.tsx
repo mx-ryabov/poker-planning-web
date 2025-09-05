@@ -48,13 +48,18 @@ export function TicketItemFullView(props: Props) {
 					<div className="flex flex-row items-center gap-1">
 						<div className="-ml-2">
 							{data.type !== undefined && (
-								<TicketTypeSelector
-									value={data.type}
-									onSelected={(value) =>
-										updateByField("type", value)
-									}
-									isEditable={isEditable}
-								/>
+								<Tooltip delay={0}>
+									<TicketTypeSelector
+										value={data.type}
+										onSelected={(value) =>
+											updateByField("type", value)
+										}
+										isEditable={isEditable}
+									/>
+									<Tooltip.Content>
+										Ticket type
+									</Tooltip.Content>
+								</Tooltip>
 							)}
 						</div>
 						<span className="text-xs text-neutral-700">
@@ -62,7 +67,7 @@ export function TicketItemFullView(props: Props) {
 						</span>
 					</div>
 					<div className="flex flex-row">
-						<Tooltip delay={1000}>
+						<Tooltip delay={0}>
 							<ButtonSquare
 								icon={MinusIcon}
 								variant="ghost"
@@ -72,7 +77,7 @@ export function TicketItemFullView(props: Props) {
 							/>
 							<Tooltip.Content>Collapse</Tooltip.Content>
 						</Tooltip>
-						<Tooltip delay={1000}>
+						<Tooltip delay={0}>
 							<TicketItemMenu
 								deleteTicket={deleteTicket}
 								ticketId={data.id}
@@ -141,27 +146,37 @@ export function TicketItemFullView(props: Props) {
 				<p className="text-sm font-medium text-neutral-900">Details</p>
 				<div className="flex flex-row items-center justify-between">
 					<p className="text-sm">Story Points</p>
-					<div className="flex w-12 justify-end">
-						<InlineEditableTextField
-							value={state.estimation || ""}
-							placeholder="-"
-							id="ticket-estimation"
-							containerClassName="w-max max-w-full"
-							isDisabled={!isEditable}
-							styles={{
-								readView: {
-									textSize: "medium",
-									size: "medium",
-									variant: "filled",
-								},
-								editorView: {
-									textSize: "medium",
-									size: "medium",
-								},
-							}}
-							onConfirm={(value) =>
-								updateByField("estimation", value)
-							}
+					<div className="flex w-16 justify-end">
+						<Controller
+							control={control}
+							name="estimation"
+							render={({ field, fieldState }) => (
+								<InlineEditableTextField
+									value={state.estimation || ""}
+									placeholder="-"
+									id="ticket-estimation"
+									containerClassName="w-max max-w-full"
+									isDisabled={!isEditable}
+									error={fieldState.error?.message}
+									onEditorChange={field.onChange}
+									withErrorIcon={false}
+									withTooltipError
+									styles={{
+										readView: {
+											textSize: "medium",
+											size: "medium",
+											variant: "filled",
+										},
+										editorView: {
+											textSize: "medium",
+											size: "medium",
+										},
+									}}
+									onConfirm={(value) =>
+										updateByField("estimation", value)
+									}
+								/>
+							)}
 						/>
 					</div>
 				</div>

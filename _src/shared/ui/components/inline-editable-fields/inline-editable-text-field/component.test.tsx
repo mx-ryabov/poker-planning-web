@@ -85,4 +85,52 @@ describe("InlineEditableTextField", () => {
 		await user.hover(errorIcon);
 		getByText("Test Error");
 	});
+
+	test("shows tooltip error when withTooltipError is true", async () => {
+		const { getByTestId, getByText, user } = render(
+			<InlineEditableTextField
+				label="Test Label"
+				value=""
+				id="test-id"
+				styles={{ editorView: {}, readView: {} }}
+				onConfirm={vi.fn()}
+				onEditorChange={vi.fn()}
+				error="Tooltip Error"
+				withTooltipError
+			/>,
+		);
+
+		const readView = getByTestId("test-id-read-view");
+		await user.click(readView);
+
+		expect(getByText("Tooltip Error")).toBeInTheDocument();
+	});
+
+	test("calls validate and shows error when validation fails", async () => {
+		const validate = vi.fn((value: string) =>
+			value.length < 5 ? "Too short" : null,
+		);
+		const { getByRole, getByText, user, getByTestId } = render(
+			<InlineEditableTextField
+				label="Test Label"
+				value=""
+				id="test-id"
+				placeholder="Test Placeholder"
+				styles={{ editorView: {}, readView: {} }}
+				onConfirm={vi.fn()}
+				onEditorChange={vi.fn()}
+				validate={validate}
+				withTooltipError
+			/>,
+		);
+
+		const readView = getByTestId("test-id-read-view");
+		await user.click(readView);
+
+		const textField = getByRole("textbox");
+		await user.type(textField, "abc");
+
+		expect(validate).toHaveBeenCalled();
+		expect(getByText("Too short")).toBeInTheDocument();
+	});
 });

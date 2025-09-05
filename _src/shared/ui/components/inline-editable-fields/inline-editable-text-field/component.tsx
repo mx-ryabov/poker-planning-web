@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
 	editorViewStyles,
 	InlineEditableFieldProps,
@@ -6,8 +6,10 @@ import {
 } from "../shared";
 import { EditRenderProps, InlineEdit } from "../../inline-edit";
 import { Input, InputProps } from "../../input";
+import { Tooltip } from "../../tooltip";
 
 export type InlineEditableTextFieldProps = InlineEditableFieldProps & {
+	withTooltipError?: boolean;
 	validate?: InputProps["validate"];
 	type?: InputProps["type"];
 };
@@ -18,24 +20,33 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 		value,
 		placeholder,
 		styles,
-		error,
+		error: errorControlled,
 		isDisabled,
 		id,
 		containerClassName,
 		type,
+		withTooltipError,
+		withErrorIcon = true,
 		validate,
 		onConfirm,
 		onEditorChange,
 	} = props;
 
-	const [isInvalidInner, setIsInvalidInner] = useState(false);
+	const [errorInner, setErrorInner] = useState<string | null>(null);
+	const error = useMemo(
+		() => errorControlled || errorInner,
+		[errorControlled, errorInner],
+	);
 
 	const validateInner = useCallback(
 		(value: string) => {
 			if (!validate) return null;
 
 			const err = validate(value);
-			setIsInvalidInner(!!err);
+			if (typeof err === "string") {
+				setErrorInner(err);
+			}
+			if (!err) setErrorInner(null);
 			return err;
 		},
 		[validate],
@@ -44,28 +55,39 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 	const editView = useCallback(
 		(renderProps: EditRenderProps) => {
 			const EditorRender = (
-				<Input
-					label=""
-					{...renderProps}
-					defaultValue={value}
-					onChange={(value) => {
-						renderProps.onChange(value);
-						onEditorChange && onEditorChange(value);
-					}}
-					placeholder={placeholder}
-					className={editorViewStyles(styles.editorView)}
-					autoFocus
-					type={type}
-					onKeyDown={(e) => {
-						if (e.key === "Enter") {
-							renderProps.confirm();
+				<Tooltip isOpen={withTooltipError && !!error}>
+					<Input
+						label=""
+						{...renderProps}
+						defaultValue={value}
+						onChange={(value) => {
+							renderProps.onChange(value);
+							onEditorChange && onEditorChange(value);
+						}}
+						placeholder={placeholder}
+						className={editorViewStyles(styles.editorView)}
+						autoFocus
+						type={type}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								renderProps.confirm();
+							}
+						}}
+						validate={validateInner}
+						errors={
+							errorControlled && !withTooltipError
+								? [errorControlled]
+								: undefined
 						}
-					}}
-					validate={validateInner}
-					errors={error ? [error] : undefined}
-					withErrorIcon
-					data-testid={`${id}-editor`}
-				/>
+						withErrorIcon={withErrorIcon}
+						data-testid={`${id}-editor`}
+					/>
+					{!!error && (
+						<Tooltip.Content placement="top">
+							{error}
+						</Tooltip.Content>
+					)}
+				</Tooltip>
 			);
 
 			if (styles.editorView.compensatedOffset) {
@@ -90,7 +112,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			value={value}
 			label={label}
 			editView={editView}
-			isInvalid={!!error || isInvalidInner}
+			isInvalid={!!error || !!errorInner}
 			id={id}
 			containerClassName={containerClassName}
 			readView={() => (

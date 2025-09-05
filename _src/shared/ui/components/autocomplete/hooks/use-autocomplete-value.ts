@@ -8,7 +8,12 @@ import {
 } from "react";
 import { KeyboardEvent } from "@react-types/shared";
 import { useSelectableCollection } from "@react-aria/selection";
-import { ListKeyboardDelegate, PressEvent, useFocusWithin } from "react-aria";
+import {
+	Key,
+	ListKeyboardDelegate,
+	PressEvent,
+	useFocusWithin,
+} from "react-aria";
 import { InputProps } from "../../input";
 import { AutocompleteValueContext } from "../contexts/autocomplete-value-context";
 import { OverlayTriggerStateContext } from "react-aria-components";
@@ -59,6 +64,74 @@ export function useAutocompleteValue() {
 
 		inputEl.focus();
 	}, [overlayTriggerState?.isOpen, inputRef]);
+
+	const focusListItem = useCallback(
+		(key: "ArrowDown" | "ArrowUp") => {
+			const isAllKeysDisabled =
+				listState.disabledKeys.size === listState.collection.size;
+			if (isAllKeysDisabled || listState.collection.size === 0) return;
+
+			let focusedKey = listState.selectionManager.focusedKey;
+			if (focusedKey === null) {
+				listState.selectionManager.setFocusedKey(
+					listState.collection.getFirstKey(),
+				);
+				return;
+			}
+
+			let nextFocusedKey: Key | null = null;
+
+			if (key === "ArrowDown") {
+				nextFocusedKey = listState.collection.getKeyAfter(focusedKey);
+				nextFocusedKey =
+					nextFocusedKey ?? listState.collection.getFirstKey();
+			}
+			if (key === "ArrowUp") {
+				nextFocusedKey = listState.collection.getKeyBefore(focusedKey);
+				nextFocusedKey =
+					nextFocusedKey ?? listState.collection.getLastKey();
+			}
+
+			let isKeyDisabled = listState.disabledKeys.has(nextFocusedKey!);
+			while (isKeyDisabled) {
+				if (key === "ArrowDown") {
+					nextFocusedKey = listState.collection.getKeyAfter(
+						nextFocusedKey!,
+					);
+				}
+				if (key === "ArrowUp") {
+					nextFocusedKey = listState.collection.getKeyBefore(
+						nextFocusedKey!,
+					);
+				}
+				isKeyDisabled = listState.disabledKeys.has(nextFocusedKey!);
+			}
+
+			listState.selectionManager.setFocusedKey(nextFocusedKey);
+		},
+		[listState],
+	);
+
+	const onContainerKeyDown = useCallback(
+		(e: KeyboardEvent) => {
+			const { isFocused } = listState.selectionManager;
+			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+				e.preventDefault();
+				e.stopPropagation();
+				if (!overlayTriggerState?.isOpen) {
+					open("full");
+					return;
+				} else {
+					if (!isFocused) {
+						listState.selectionManager.setFocused(true);
+					} else {
+						focusListItem(e.key);
+					}
+				}
+			}
+		},
+		[listState.selectionManager],
+	);
 
 	const onKeyDown = useCallback(
 		(e: KeyboardEvent) => {
@@ -166,6 +239,11 @@ export function useAutocompleteValue() {
 		[toggle, inputRef, overlayTriggerState?.isOpen, isDisabled],
 	);
 
+	const containerProps = useMemo(
+		() => ({ onKeyDown: onContainerKeyDown }),
+		[onContainerKeyDown],
+	);
+
 	return {
 		isDisabled,
 		listState,
@@ -175,5 +253,6 @@ export function useAutocompleteValue() {
 		overlayTriggerState,
 		toggleBtnProps,
 		selectedNodes,
+		containerProps,
 	};
 }

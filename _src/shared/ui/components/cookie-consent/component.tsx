@@ -1,18 +1,13 @@
 "use client";
-import { useCookieConsentState } from "@/_src/shared/providers";
+import { ConsentStatus, useCookieConsentState } from "@/_src/shared/providers";
 import { NextLink } from "../../next-components/next-link";
-import { Button } from "../button";
+import { NewButton } from "../button";
 
 export function CookieConsent() {
-	const { isConsentGiven, setConsentGiven } = useCookieConsentState();
-	const handleAccept = () => {
-		setConsentGiven(true);
-	};
-	const handleReject = () => {
-		setConsentGiven(false);
-	};
+	const { consentStatus, giveConsent, rejectConsent } =
+		useCookieConsentState();
 
-	if (isConsentGiven || isConsentGiven === undefined) {
+	if (consentStatus !== ConsentStatus.Unknown) {
 		return null;
 	}
 	return (
@@ -29,8 +24,10 @@ export function CookieConsent() {
 			</div>
 
 			<div className="flex flex-row justify-end gap-4">
-				<Button title="Accept All Cookeis" onPress={handleAccept} />
-				<Button title="Reject" variant="ghost" onPress={handleReject} />
+				<NewButton onPress={giveConsent}>Accept All Cookeis</NewButton>
+				<NewButton variant="ghost" onPress={rejectConsent}>
+					Reject
+				</NewButton>
 			</div>
 		</div>
 	);

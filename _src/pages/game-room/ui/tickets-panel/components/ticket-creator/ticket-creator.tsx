@@ -1,7 +1,8 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
 import { TicketCreatorForm, TicketCreatorOpener } from "./components";
 import { useTicketCreatorOpenerState } from "./state";
+import { GameIntroOnboardingForMaster } from "../../../onboardings";
 
 export type TicketCreatorRenderFn = (renderProps: {
 	state: "button" | "form";
@@ -32,13 +33,15 @@ export function TicketCreator({
 
 	return (
 		<div className={cn}>
+			<GameIntroOnboardingForMaster.Steps.CreateFirstTicketStep>
+				<TicketCreatorOpener isOpened={isOpened} onPress={toggle} />
+			</GameIntroOnboardingForMaster.Steps.CreateFirstTicketStep>
 			{isOpened && (
 				<TicketCreatorForm
 					className="absolute w-full"
 					onSubmitSucceed={onSubmitSucceed}
 				/>
 			)}
-			<TicketCreatorOpener isOpened={isOpened} onPress={toggle} />
 		</div>
 	);
 }

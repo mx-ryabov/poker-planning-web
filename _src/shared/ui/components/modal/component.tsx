@@ -33,7 +33,7 @@ function Dialog(props: DialogProps) {
 			className={overlayStyles}
 			data-testid="dialog-overlay"
 		>
-			<AriaModal className={modalStyles}>
+			<AriaModal className={modalStyles} data-testid="modal-container">
 				<AriaDialog
 					className="flex flex-col gap-4 bg-white px-2 py-1"
 					data-testid={restProps?.["data-testid"]}

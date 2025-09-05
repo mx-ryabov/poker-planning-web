@@ -15,11 +15,11 @@ export const metadata: Metadata = {
 interface Props {}
 
 const Page: NextPage<Props> = async () => {
-	const votingSystems = await getVotingSystems();
+	const votingSystemsPromise = getVotingSystems();
 
 	return (
 		<CreateGamePage
-			votingSystems={votingSystems}
+			votingSystems={votingSystemsPromise}
 			createGameAsGuest={createGameAsGuest}
 		/>
 	);

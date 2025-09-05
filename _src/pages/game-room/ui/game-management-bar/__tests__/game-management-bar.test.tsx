@@ -6,18 +6,18 @@ import { GameManagementTab } from "../../../model";
 import { createGameStateStore } from "../../../model";
 import { GAME_MOCK } from "./game-management-bar.mock";
 import { MASTER_PARTICIPANT } from "@/_src/shared/mocks";
-import { GameStateCotnext } from "../../../model/store/game-state-context";
+import { GameRoomFakeProviderWrapper } from "../../../__mocks__";
 
 const gameStateStore = createGameStateStore({
 	game: GAME_MOCK,
 	currentParticipant: MASTER_PARTICIPANT,
 });
 function renderGameManagementBar() {
-	return render(
-		<GameStateCotnext.Provider value={gameStateStore}>
-			<GameManagementBar />
-		</GameStateCotnext.Provider>,
-	);
+	return render(<GameManagementBar />, {
+		wrapper: GameRoomFakeProviderWrapper({
+			gameStateStore,
+		}),
+	});
 }
 
 describe("Game Management Bar", () => {

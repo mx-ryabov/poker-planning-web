@@ -37,7 +37,7 @@ describe("Ticket List", () => {
 			});
 
 			expect(queryAllByTestId(/ticket-list-item/i)).toHaveLength(0);
-			getByText(/No issues in your game yet/i);
+			getByText(/No tickets in your game yet/i);
 		});
 
 		test("shows a correct content for Master/Manager participant", async () => {

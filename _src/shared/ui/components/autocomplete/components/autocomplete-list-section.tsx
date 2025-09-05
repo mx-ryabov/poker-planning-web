@@ -24,7 +24,7 @@ export const AutocompleteListSection = <TReutrnData extends object>(
 			{title && (
 				<Header
 					className={
-						"pl-3 p-2 text-xs text-neutral-500 font-medium border-b border-neutral-100"
+						"pl-3 p-2 text-xs text-neutral-900 font-medium border-b border-neutral-200"
 					}
 				>
 					{title}

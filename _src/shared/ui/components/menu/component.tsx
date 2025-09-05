@@ -18,7 +18,8 @@ import { ArrowRightSimpleIcon, CheckIcon } from "../icon";
 import { listItemStyles } from "../list/components/list-item";
 import { twMerge } from "tailwind-merge";
 
-type MenuContentProps<T> = AriaMenuProps<T> & Pick<PopoverProps, "placement">;
+type MenuContentProps<T> = AriaMenuProps<T> &
+	Pick<PopoverProps, "placement" | "offset"> & { className?: string };
 
 export function MenuContent<TDataItem extends object>(
 	props: MenuContentProps<TDataItem>,
@@ -26,11 +27,15 @@ export function MenuContent<TDataItem extends object>(
 	return (
 		<Popover
 			placement={props.placement}
+			offset={props.offset}
 			className="data-entering:animate-popup data-exiting:animate-popup-reverse min-w-[150px]"
 		>
 			<AriaMenu
 				{...props}
-				className="no-scrollbar max-w-[180px] overflow-auto rounded-lg border border-neutral-300 bg-white px-1 py-2 outline-0 drop-shadow-sm"
+				className={twMerge(
+					"no-scrollbar overflow-auto rounded-lg border border-neutral-300 bg-white px-1 py-2 outline-0 drop-shadow-sm",
+					props.className,
+				)}
 			/>
 		</Popover>
 	);

@@ -90,6 +90,7 @@ function AutocompleteMultipleValue() {
 		selectedNodes,
 		autocompleteValueContainerRef,
 		inputRef,
+		containerProps,
 	} = useAutocompleteValue();
 
 	const toggleListButton = useMemo(() => {
@@ -205,6 +206,7 @@ function AutocompleteMultipleValue() {
 					inputEl.focus();
 				}
 			}}
+			{...containerProps}
 		>
 			<Label
 				className={multipleValueLabelStyles({

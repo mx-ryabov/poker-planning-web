@@ -47,7 +47,7 @@ const _RadioGroup = forwardRef<HTMLDivElement, RadioGrouProps>((props, ref) => {
 	);
 });
 
-const radioStyles = cva(["text-neutral-900", "transition-colors"], {
+export const radioStyles = cva(["text-neutral-900", "transition-colors"], {
 	variants: {
 		variant: {
 			default: [],
@@ -57,6 +57,12 @@ const radioStyles = cva(["text-neutral-900", "transition-colors"], {
 				"h-14 px-8 max-w-fit",
 				"cursor-pointer text-xl",
 			],
+		},
+		isSkeleton: {
+			true: [
+				"animate-pulse bg-neutral-300 text-transparent border-transparent",
+			],
+			false: [],
 		},
 		isSelected: {
 			true: [],
@@ -99,30 +105,14 @@ const Radio = (props: RadioAriaProps) => {
 	const { children, className, ...restProps } = props;
 	const { variant, size } = useRadioGroupContext();
 
-	const classNameWithProps = useCallback(
-		(
-			renderProps: RadioRenderProps & {
-				defaultClassName: string | undefined;
-			},
-		) => {
-			return twMerge(
-				radioStyles({
-					variant,
-					size,
-					isSelected: renderProps.isSelected,
-					isFocused: renderProps.isFocusVisible,
-					isHovered: renderProps.isHovered,
-				}),
-				typeof className == "function"
-					? className(renderProps)
-					: className,
-			);
-		},
-		[className, variant, size],
-	);
-
 	return (
-		<RadioAria {...restProps} className={classNameWithProps}>
+		<RadioAria
+			{...restProps}
+			className={mergeClassNames(
+				(p) => radioStyles({ ...p, variant, size }),
+				className,
+			)}
+		>
 			{children}
 		</RadioAria>
 	);

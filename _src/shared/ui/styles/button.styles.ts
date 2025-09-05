@@ -117,7 +117,7 @@ export const buttonStyles = cva(
 					"border-neutral-900",
 					"font-medium",
 				],
-				ghost: ["bg-white", "text-neutral-900", "font-medium"],
+				ghost: ["bg-transparent", "text-neutral-900", "font-medium"],
 				"grayed-out": ["bg-neutral-200", "text-neutral-900"],
 			},
 			form: {
@@ -190,12 +190,12 @@ export const buttonStyles = cva(
 			{
 				isHovered: true,
 				variant: "ghost",
-				className: ["bg-neutral-200"],
+				className: ["bg-neutral-800/20"],
 			},
 			{
 				isPressed: true,
 				variant: "ghost",
-				className: ["bg-neutral-300"],
+				className: ["bg-neutral-900/20"],
 			},
 			{
 				isDisabled: true,
