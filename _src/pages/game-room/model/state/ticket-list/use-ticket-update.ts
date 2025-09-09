@@ -45,7 +45,7 @@ export function useTicketUpdate(defaultData: GameTicket) {
 		Omit<GameTicket, "id" | "identifier">
 	>({
 		validationSchema: TicketItemStateSchema,
-		mutateFn: (data) =>
+		mutateFn: async (data) =>
 			api.game.ticket.updateTicketById(gameId, defaultData.id, data),
 		onSuccess: (data) => {
 			updateTicket(defaultData.id, data);

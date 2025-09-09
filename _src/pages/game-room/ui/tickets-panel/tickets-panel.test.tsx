@@ -88,7 +88,7 @@ describe("Tickets Panel", () => {
 
 const createTicket = vi.fn(
 	async (gameId: string, data: CreateTicketForGameRequest) => {
-		return generateTicket({ ...data });
+		return { ok: true, data: generateTicket({ ...data }) };
 	},
 );
 

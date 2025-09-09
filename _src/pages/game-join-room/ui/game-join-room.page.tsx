@@ -1,4 +1,3 @@
-import { joinAsGuest } from "@/_src/shared/api";
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 import { NextPage } from "next";
 import { GameJoinForm } from "./game-join-form";
@@ -30,7 +29,7 @@ export const GameJoinPage: NextPage<Props> = async ({ params }: Props) => {
 						/>
 					</NextLink>
 				</header>
-				<GameJoinForm gameId={gameId} onSubmit={joinAsGuest} />
+				<GameJoinForm gameId={gameId} />
 			</div>
 		</MobileBlockerScreen>
 	);

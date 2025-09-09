@@ -8,14 +8,7 @@ import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import { VotingSystemsProvider } from "@/_src/entities/voting-system";
 import { ReactNode } from "react";
 import { VotingSystem } from "@/_src/shared/api/voting-system-api";
-
-const Providers = ({ children }: { children: ReactNode }) => {
-	return (
-		<VotingSystemsProvider value={VOTING_SYSTEMS_MOCK}>
-			{children}
-		</VotingSystemsProvider>
-	);
-};
+import { ApiFakeProvider } from "@/__mocks__/api-fake-provider";
 
 const helper = ({
 	getByRole,
@@ -121,12 +114,23 @@ const renderForm = ({
 }: {
 	submitMock: (_req: CreateGameRequest) => Promise<void>;
 }) => {
-	const renderResult = render(
-		<CreateGameForm createGameAsGuest={submitMock} />,
-		{
-			wrapper: Providers,
+	const renderResult = render(<CreateGameForm />, {
+		wrapper: ({ children }: { children: ReactNode }) => {
+			return (
+				<ApiFakeProvider
+					fakeApi={{
+						game: {
+							createGameAsGuest: submitMock,
+						},
+					}}
+				>
+					<VotingSystemsProvider value={VOTING_SYSTEMS_MOCK}>
+						{children}
+					</VotingSystemsProvider>
+				</ApiFakeProvider>
+			);
 		},
-	);
+	});
 	return {
 		...renderResult,
 		helper: helper({ ...renderResult }),

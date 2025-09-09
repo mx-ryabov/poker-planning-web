@@ -1,4 +1,6 @@
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
+import { ApiError } from "@/_src/shared/lib";
+import { useApi } from "@/_src/shared/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,11 +24,12 @@ const CreateGameFormSchema = z.object({
 export type CreateGameFormFormState = z.infer<typeof CreateGameFormSchema>;
 
 export type UseCreateGameFormStateProps = {
-	onSubmitAction: (_formState: CreateGameFormFormState) => Promise<void>;
+	onError: (error: ApiError) => void;
 };
-
-export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
-	const { onSubmitAction } = props;
+export function useCreateGameFormState({
+	onError,
+}: UseCreateGameFormStateProps) {
+	const api = useApi();
 
 	const methods = useForm<CreateGameFormFormState>({
 		mode: "onChange",
@@ -40,7 +43,7 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 	});
 
 	const formActionHandler = async (
-		error: string | undefined,
+		_: string | undefined,
 		formData: FormData,
 	) => {
 		const data = Object.fromEntries(formData);
@@ -50,7 +53,15 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 		});
 
 		if (parsed.success) {
-			await onSubmitAction(parsed.data);
+			try {
+				await api.game.createGameAsGuest(parsed.data);
+			} catch (error) {
+				if (error instanceof ApiError) {
+					onError(error);
+					return error.message;
+				}
+				return String(error);
+			}
 			return "";
 		}
 
@@ -62,5 +73,5 @@ export function useCreateGameFormState(props: UseCreateGameFormStateProps) {
 		undefined,
 	);
 
-	return { clientFormMethods: methods, action: formAction, isPending };
+	return { clientFormMethods: methods, action: formAction, isPending, error };
 }

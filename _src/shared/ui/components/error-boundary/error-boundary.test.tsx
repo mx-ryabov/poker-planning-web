@@ -29,16 +29,16 @@ describe("InternalErrorBoundary", () => {
 		);
 		expect(getByText("Oops!")).toBeInTheDocument();
 		expect(getByText("Something went wrong...")).toBeInTheDocument();
-		expect(getByText("Reset")).toBeInTheDocument();
+		expect(getByText(/try again/i)).toBeInTheDocument();
 	});
 
-	test("has Reset button is presseble", async () => {
+	test("has Try Again button is presseble", async () => {
 		const { getByText } = render(
 			<InternalErrorBoundary>
 				<ThrowError />
 			</InternalErrorBoundary>,
 		);
-		const resetButton = getByText("Reset");
+		const resetButton = getByText(/try again/i);
 		expect(resetButton).toBeEnabled();
 	});
 

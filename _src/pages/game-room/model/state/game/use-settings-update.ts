@@ -33,15 +33,14 @@ export function useSettingsUpdate({
 	);
 
 	const mutateFn = useCallback(
-		(data: UpdateGameSettingsRequest) => {
-			return api.game.updateSettings(gameId, data);
-		},
+		async (data: UpdateGameSettingsRequest) =>
+			api.game.updateSettings(gameId, data),
 		[gameId, api],
 	);
 
 	const onError = useCallback(
 		(error: Error) => {
-			if (!toast) return;
+			if (!toast?.add) return;
 
 			toast?.add(
 				{

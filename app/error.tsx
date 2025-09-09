@@ -5,6 +5,8 @@ import {
 	RefreshBorderlessIcon,
 } from "@/_src/shared/ui/components/icon";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { logger } from "@/_src/shared/lib";
 
 export default function Error({
 	error,
@@ -14,6 +16,10 @@ export default function Error({
 	reset: () => void;
 }) {
 	const router = useRouter();
+
+	useEffect(() => {
+		logger.error(error);
+	}, [error]);
 
 	const devInfo =
 		process.env.NODE_ENV === "development" ? error.message : null;

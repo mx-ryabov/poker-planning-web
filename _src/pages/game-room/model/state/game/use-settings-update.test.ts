@@ -1,5 +1,5 @@
 import { test, describe, expect, vi, beforeEach } from "vitest";
-import { act, renderHook, waitFor, within } from "@/test/utilities";
+import { act, renderHook } from "@/test/utilities";
 import {
 	useSettingsUpdate,
 	UseSettingsUpdateProps,
@@ -11,8 +11,7 @@ import {
 	generateParticipant,
 } from "../../../__tests__/game-state-store.test-helpers";
 import { GameParticipant, ParticipantRole } from "@/_src/shared/api";
-import { StoreApi } from "zustand";
-import { GameStateStore } from "../../store/game-state-store.model";
+import { generateUnknownErrorRes } from "@/_src/shared/mocks";
 
 describe("UseSettingsUpdate hook", () => {
 	beforeEach(() => {
@@ -193,7 +192,7 @@ describe("UseSettingsUpdate hook", () => {
 	});
 
 	test("doesn't update the current participant in the store if api.game.updateSettings has failed", async () => {
-		updateSettingsAction.mockRejectedValue(new Error("test error"));
+		updateSettingsAction.mockResolvedValue(generateUnknownErrorRes("test"));
 
 		const { result, gameStateStore } = renderSettingsUpdateHook({
 			curentParticipant: generateParticipant({

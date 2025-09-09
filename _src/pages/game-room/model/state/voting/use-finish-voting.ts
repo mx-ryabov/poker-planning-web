@@ -11,13 +11,11 @@ export function useFinishVoting() {
 	const finishVotingInStore = useGameState((state) => state.finishVoting);
 
 	const { mutate: finishVoting, isPending } = useMutation({
-		mutateFn: () => api.game.finishVoting(gameId),
+		mutateFn: async () => api.game.finishVoting(gameId),
 		onSuccess: (result) => {
 			finishVotingInStore(result);
 		},
-		onError: (e) => {
-			console.log(e);
-
+		onError: () => {
 			toast?.add(
 				{
 					title: `Finishing Voting failed.`,

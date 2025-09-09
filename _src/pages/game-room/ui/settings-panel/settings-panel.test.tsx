@@ -1,5 +1,5 @@
 import { test, describe, expect, vi, beforeEach } from "vitest";
-import { act, render, within } from "@/test/utilities";
+import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { SettingsPanel } from "./settings-panel";
 import { GameRoomFakeProviderWrapper } from "../../__mocks__";
@@ -37,7 +37,7 @@ describe("Settings Panel", () => {
 				}),
 			});
 
-			let gameNameField = getByTestId("game-name-field-read-view");
+			const gameNameField = getByTestId("game-name-field-read-view");
 			expect(gameNameField).toBeDisabled();
 		});
 
@@ -48,7 +48,7 @@ describe("Settings Panel", () => {
 				}),
 			});
 
-			let gameNameField = getByTestId("game-name-field-read-view");
+			const gameNameField = getByTestId("game-name-field-read-view");
 			expect(gameNameField).not.toBeDisabled();
 		});
 
@@ -80,7 +80,7 @@ describe("Settings Panel", () => {
 		test("doesn't allow to change if a new name is empty", async () => {
 			const { getByTestId, user } = renderComponent({});
 
-			let gameNameField = getByTestId("game-name-field-read-view");
+			const gameNameField = getByTestId("game-name-field-read-view");
 			await user.click(gameNameField);
 			const gameNameFieldEditor = getByTestId("game-name-field-editor");
 			await user.clear(gameNameFieldEditor);
@@ -94,7 +94,7 @@ describe("Settings Panel", () => {
 		test("doesn't allow to change if a new name has more than 50 characters", async () => {
 			const { getByTestId, user } = renderComponent({});
 
-			let gameNameField = getByTestId("game-name-field-read-view");
+			const gameNameField = getByTestId("game-name-field-read-view");
 			await user.click(gameNameField);
 			const gameNameFieldEditor = getByTestId("game-name-field-editor");
 			await user.type(
@@ -117,7 +117,7 @@ describe("Settings Panel", () => {
 				}),
 			});
 
-			let gameMasterSelector = within(
+			const gameMasterSelector = within(
 				getByTestId(/game-master-selector/i),
 			).getByRole("button");
 			expect(gameMasterSelector).toBeDisabled();
@@ -130,7 +130,7 @@ describe("Settings Panel", () => {
 				}),
 			});
 
-			let gameMasterSelector = within(
+			const gameMasterSelector = within(
 				getByTestId(/game-master-selector/i),
 			).getByRole("button");
 			expect(gameMasterSelector).toBeEnabled();
@@ -158,13 +158,12 @@ describe("Settings Panel", () => {
 				isAutoRevealCards: false,
 				autoRevealPeriod: 90,
 			});
-			const { getByTestId, user, getByText, getByRole, debug } =
-				renderComponent({
-					currentParticipant,
-					participants: [currentParticipant, participant],
-				});
+			const { getByTestId, user, getByText } = renderComponent({
+				currentParticipant,
+				participants: [currentParticipant, participant],
+			});
 
-			let gameMasterSelector = within(
+			const gameMasterSelector = within(
 				getByTestId(/game-master-selector/i),
 			).getByRole("button");
 
@@ -190,12 +189,12 @@ describe("Settings Panel", () => {
 				displayName: "Participant",
 				role: ParticipantRole.VotingMember,
 			});
-			const { getByTestId, user, debug, getByRole } = renderComponent({
+			const { getByTestId, user } = renderComponent({
 				currentParticipant,
 				participants: [currentParticipant, participant],
 			});
 
-			let gameMasterSelector = within(
+			const gameMasterSelector = within(
 				getByTestId(/game-master-selector/i),
 			).getByRole("button");
 
@@ -224,7 +223,7 @@ describe("Settings Panel", () => {
 				participants: [currentParticipant, participant],
 			});
 
-			let gameMasterSelector = within(
+			const gameMasterSelector = within(
 				getByTestId(/game-master-selector/i),
 			).getByRole("button");
 

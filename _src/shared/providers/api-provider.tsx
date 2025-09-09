@@ -16,25 +16,57 @@ import {
 	vote,
 	updateSettings,
 } from "../../shared/api/game-api/server-actions";
+import { ApiResponse } from "../lib/utils/app-fetch";
+import { ApiError } from "../lib";
+import { collectEmail } from "../api";
 
 export const API = {
 	game: {
-		getGameById,
-		joinAsGuest,
-		createGameAsGuest,
-		startVoting,
-		revealCards,
-		finishVoting,
-		cancelVoting,
+		getGameById: makeThrowable(getGameById),
+		joinAsGuest: makeThrowable(joinAsGuest),
+		createGameAsGuest: makeThrowable(createGameAsGuest),
+		startVoting: makeThrowable(startVoting),
+		revealCards: makeThrowable(revealCards),
+		finishVoting: makeThrowable(finishVoting),
+		cancelVoting: makeThrowable(cancelVoting),
 		revalidateGame,
-		vote,
-		updateSettings,
-		ticket: { createTicket, updateTicketById, deleteTicketById },
+		vote: makeThrowable(vote),
+		updateSettings: makeThrowable(updateSettings),
+		ticket: {
+			createTicket: makeThrowable(createTicket),
+			updateTicketById: makeThrowable(updateTicketById),
+			deleteTicketById: makeThrowable(deleteTicketById),
+		},
 		participant: {
-			getCurrentParticipant,
+			getCurrentParticipant: makeThrowable(getCurrentParticipant),
 		},
 	},
+	emailToNotify: {
+		collectEmail: makeThrowable(collectEmail),
+	},
 };
+
+type ActionFunction<TRes, TParams extends unknown[]> = (
+	...params: TParams
+) => ApiResponse<TRes>;
+type ThrowableFunction<TRes, TParams extends unknown[]> = (
+	...params: TParams
+) => Promise<TRes>;
+
+function makeThrowable<TRes, TParams extends unknown[]>(
+	action: ActionFunction<TRes, TParams>,
+): ThrowableFunction<TRes, TParams> {
+	return async function (
+		...params: Parameters<ActionFunction<TRes, TParams>>
+	) {
+		const res = await action(...params);
+
+		if (!res.ok) {
+			throw new ApiError(res.error);
+		}
+		return res.data;
+	};
+}
 
 export type ApiContextProps = typeof API;
 

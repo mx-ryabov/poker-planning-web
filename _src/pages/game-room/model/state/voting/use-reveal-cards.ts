@@ -11,21 +11,14 @@ export function useRevealCards() {
 	const revealCardsInStore = useGameState((state) => state.revealCards);
 
 	const { mutate: revealCards, isPending } = useMutation({
-		mutateFn: () => api.game.revealCards(gameId),
+		mutateFn: async () => api.game.revealCards(gameId),
 		onSuccess: revealCardsInStore,
-		onError: (e) => {
-			console.log(e);
-
-			toast?.add(
-				{
-					title: `Revealing Cards failed.`,
-					variant: "error",
-					description: "Please try again.",
-				},
-				{
-					timeout: 5000,
-				},
-			);
+		onError: () => {
+			toast?.add({
+				title: "Revealing Cards failed.",
+				variant: "error",
+				description: "Please try again.",
+			});
 		},
 	});
 

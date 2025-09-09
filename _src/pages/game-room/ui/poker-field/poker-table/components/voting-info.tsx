@@ -23,7 +23,7 @@ export function VotingInfo() {
 
 	const isBetweenVotes =
 		votingProcess.status === GameVotingStatus.Inactive &&
-		(ticketsCount === 0 || ticketsCount !== unestimatedTicketsCount);
+		(ticketsCount === 0 || unestimatedTicketsCount > 0);
 	const isAllEstimated =
 		votingProcess.status === GameVotingStatus.Inactive &&
 		unestimatedTicketsCount === 0 &&

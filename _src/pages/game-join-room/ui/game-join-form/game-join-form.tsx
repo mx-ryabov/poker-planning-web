@@ -1,11 +1,13 @@
 "use client";
 
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
+import { ApiError } from "@/_src/shared/lib";
+import { useApi } from "@/_src/shared/providers";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";
 import { ProfileIcon } from "@/_src/shared/ui/components/icon/svg/profile.icon";
-import { NextLink } from "@/_src/shared/ui/next-components/next-link";
+import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -13,10 +15,6 @@ import { z } from "zod";
 
 type Props = {
 	gameId: string;
-	onSubmit: (
-		gameId: string,
-		data: { displayName: string },
-	) => Promise<string | undefined>;
 };
 
 const GameJoinFormSchema = z.object({
@@ -26,7 +24,9 @@ const GameJoinFormSchema = z.object({
 	),
 });
 
-export function GameJoinForm({ gameId, onSubmit }: Props) {
+export function GameJoinForm({ gameId }: Props) {
+	const api = useApi();
+	const toast = useGlobalToast();
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const { control, formState } = useForm<{ displayName: string }>({
 		mode: "onChange",
@@ -46,16 +46,32 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 	const [serverError, submitAction, isPending] = useActionState<
 		string | undefined,
 		FormData
-	>(async (prevError, formData) => {
+	>(async (_, formData) => {
 		const displayName = formData.get("displayName");
 		if (!displayName || typeof displayName !== "string") {
 			return "The displayName field is invalid";
 		}
-		const error = await onSubmit(gameId, {
-			displayName,
-		});
 
-		return error;
+		try {
+			await api.game.joinAsGuest(gameId, {
+				displayName,
+			});
+		} catch (e) {
+			if (!(e instanceof ApiError)) {
+				toast?.add({
+					title: "Unhandled Error",
+					description: String(e),
+					variant: "error",
+				});
+				return;
+			}
+			if (e.cause === "validation") return e.message;
+			toast?.add({
+				title: e.title,
+				description: e.message,
+				variant: "error",
+			});
+		}
 	}, undefined);
 
 	const error = formState.errors.displayName?.message || serverError;
@@ -67,7 +83,7 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 					<Controller
 						control={control}
 						name="displayName"
-						render={({ field, fieldState }) => (
+						render={({ field }) => (
 							<FullSizeFormTextInput
 								label="Let's get acquainted👇"
 								placeholder="Type your name"
