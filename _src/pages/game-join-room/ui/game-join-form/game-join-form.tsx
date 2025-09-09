@@ -1,11 +1,13 @@
 "use client";
 
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
+import { buildErrorMsgFrom } from "@/_src/shared/lib/utils/build-error-msg-from";
+import { useApi } from "@/_src/shared/providers";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";
 import { ProfileIcon } from "@/_src/shared/ui/components/icon/svg/profile.icon";
-import { NextLink } from "@/_src/shared/ui/next-components/next-link";
+import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -13,10 +15,6 @@ import { z } from "zod";
 
 type Props = {
 	gameId: string;
-	onSubmit: (
-		gameId: string,
-		data: { displayName: string },
-	) => Promise<string | undefined>;
 };
 
 const GameJoinFormSchema = z.object({
@@ -26,7 +24,9 @@ const GameJoinFormSchema = z.object({
 	),
 });
 
-export function GameJoinForm({ gameId, onSubmit }: Props) {
+export function GameJoinForm({ gameId }: Props) {
+	const api = useApi();
+	const toast = useGlobalToast();
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const { control, formState } = useForm<{ displayName: string }>({
 		mode: "onChange",
@@ -51,11 +51,18 @@ export function GameJoinForm({ gameId, onSubmit }: Props) {
 		if (!displayName || typeof displayName !== "string") {
 			return "The displayName field is invalid";
 		}
-		const error = await onSubmit(gameId, {
+		const res = await api.game.joinAsGuest(gameId, {
 			displayName,
 		});
 
-		return error;
+		if (!res.ok) {
+			if (res.error.cause === "validation") return res.error.message;
+			toast?.add({
+				title: res.error.title,
+				description: res.error.message,
+				variant: "error",
+			});
+		}
 	}, undefined);
 
 	const error = formState.errors.displayName?.message || serverError;

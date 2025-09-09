@@ -12,6 +12,7 @@ import {
 } from "@/_src/shared/api/game-api";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { z } from "zod";
+import { buildErrorMsgFrom } from "@/_src/shared/lib/utils/build-error-msg-from";
 
 export type UseSettingsUpdateProps = {
 	onMutate?: (variables: UpdateGameSettingsRequest) => void;
@@ -33,8 +34,15 @@ export function useSettingsUpdate({
 	);
 
 	const mutateFn = useCallback(
-		(data: UpdateGameSettingsRequest) => {
-			return api.game.updateSettings(gameId, data);
+		async (data: UpdateGameSettingsRequest) => {
+			const res = await api.game.updateSettings(gameId, data);
+			if (res.ok) {
+				return res.data;
+			}
+
+			throw new Error(buildErrorMsgFrom(res), {
+				cause: res.validationErrors ? "validation" : "unknown",
+			});
 		},
 		[gameId, api],
 	);

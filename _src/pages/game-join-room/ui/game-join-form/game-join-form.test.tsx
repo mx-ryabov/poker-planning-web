@@ -1,7 +1,7 @@
 import { test, describe, expect, vi } from "vitest";
-import { act, render, screen, within } from "@/test/utilities";
-import { axe } from "jest-axe";
+import { act, render, within } from "@/test/utilities";
 import { GameJoinForm } from "./game-join-form";
+import { ApiFakeProvider } from "@/__mocks__/api-fake-provider";
 
 function renderForm(
 	onSubmit: (
@@ -11,7 +11,13 @@ function renderForm(
 		},
 	) => Promise<string | undefined> = vi.fn(),
 ) {
-	return render(<GameJoinForm gameId={"game-id-test"} onSubmit={onSubmit} />);
+	return render(<GameJoinForm gameId={"game-id-test"} />, {
+		wrapper: ({ children }) => (
+			<ApiFakeProvider fakeApi={{ game: { joinAsGuest: onSubmit } }}>
+				{children}
+			</ApiFakeProvider>
+		),
+	});
 }
 
 describe("Game Join Form", () => {

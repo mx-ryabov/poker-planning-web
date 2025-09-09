@@ -12,17 +12,18 @@ type Props = {
 	className?: string;
 	placement?: TooltipProps["placement"];
 	size?: number;
+	defaultOpen?: boolean;
 };
 
 export function FieldErrorIcon(props: Props) {
-	const { errorMsg, placement, ...restProps } = props;
+	const { errorMsg, placement, defaultOpen, ...restProps } = props;
 
 	if (!errorMsg) {
 		return null;
 	}
 
 	return (
-		<Tooltip delay={0}>
+		<Tooltip delay={0} defaultOpen={defaultOpen}>
 			<TriggerElement {...restProps} />
 			<Tooltip.Content placement={placement}>{errorMsg}</Tooltip.Content>
 		</Tooltip>

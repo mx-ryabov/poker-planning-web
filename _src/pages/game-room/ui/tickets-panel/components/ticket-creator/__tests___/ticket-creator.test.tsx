@@ -11,6 +11,10 @@ import {
 	GameRoomFakeProviderWrapperProps,
 } from "@/_src/pages/game-room/__mocks__";
 import { generateTicket } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
+import {
+	generateUnknownErrorRes,
+	generateValidationErrorRes,
+} from "@/_src/shared/mocks";
 
 function renderComponent({
 	onSubmitSucceed = vi.fn(),
@@ -265,7 +269,8 @@ describe("Ticket Creator", () => {
 
 		test("shows a vlidation error when it's returned from the server", async () => {
 			const createTicketFn = vi.fn(async () => {
-				throw new Error("Server Error");
+				throw generateValidationErrorRes("error", { title: ["error"] })
+					.error;
 			});
 			const { user, getByRole, getByTestId } = renderComponent({
 				onSubmitSucceed: vi.fn(),
@@ -286,6 +291,29 @@ describe("Ticket Creator", () => {
 				getByTestId("field-error-icon");
 			});
 		});
+	});
+
+	test("shows an error boundary fallback when a server returns unknown error", async () => {
+		const createTicketFn = vi.fn(async () => {
+			throw generateUnknownErrorRes("Test Error").error;
+		});
+
+		const { user, getByRole, getByTestId } = renderComponent({
+			onSubmitSucceed: vi.fn(),
+			apiProps: {
+				game: { ticket: { createTicket: createTicketFn } },
+			},
+		});
+
+		const formToggler = getByTestId("ticket-creator-toggler");
+		await user.click(formToggler);
+
+		const textField = getByRole("textbox");
+		await user.type(textField, "ticket name");
+
+		await act(() => user.keyboard("[Enter]"));
+
+		getByTestId("error-fallback");
 	});
 
 	test("doesn't violate any accessiblity rules", async () => {

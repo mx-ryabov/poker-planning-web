@@ -3,7 +3,6 @@ import { FormProvider } from "react-hook-form";
 import { CreateGameFooter as Footer } from "./components/footer/footer";
 import { CreateGameHeader as Header } from "./components/header";
 import { useCallback, useEffect, useRef } from "react";
-import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import {
 	useCreateGameFormNavigationDispatch as useFormNavDispatch,
 	useCreateGameFormNavigation as useFormNavState,
@@ -13,23 +12,27 @@ import {
 } from "../../model/create-game-form-navigation";
 import { FormSteps } from "./components/form-steps";
 import { useCreateGameFormState } from "../../model";
+import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 
-interface Props {
-	createGameAsGuest: (_req: CreateGameRequest) => Promise<void>;
-}
-
-export const CreateGameForm = ({ createGameAsGuest }: Props) => {
+export const CreateGameForm = () => {
 	return (
 		<CreateGameFormProvider>
-			<CreateGameFormBase createGameAsGuest={createGameAsGuest} />
+			<CreateGameFormInner />
 		</CreateGameFormProvider>
 	);
 };
 
-function CreateGameFormBase({ createGameAsGuest }: Props) {
+function CreateGameFormInner() {
+	const toast = useGlobalToast();
 	const formRef = useRef<HTMLFormElement>(null);
 	const { clientFormMethods, action, isPending } = useCreateGameFormState({
-		onSubmitAction: createGameAsGuest,
+		onError: (e) => {
+			toast?.add({
+				title: e.title,
+				description: e.message,
+				variant: "error",
+			});
+		},
 	});
 
 	const formDispatch = useFormNavDispatch();

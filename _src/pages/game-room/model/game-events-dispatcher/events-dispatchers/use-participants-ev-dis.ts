@@ -60,8 +60,6 @@ export function useParticipantsEvDis({
 
 	useEffect(() => {
 		const handler = ({ payload }: ParticipantVotedEvent) => {
-			console.log(payload.participantId, payload.voteId);
-
 			changeVoteForParticipant(payload.participantId, payload.voteId);
 		};
 

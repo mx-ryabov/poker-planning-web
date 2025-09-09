@@ -40,10 +40,17 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 	}
 
 	// TODO: consider Streaming for better performance, but need to come up with a managing it with zustand
-	const [game, currentParticipant] = await Promise.all([
+	const [gameRes, currentParticipantRes] = await Promise.all([
 		getGameById(gameId),
 		getCurrentParticipant(gameId),
 	]);
+
+	if (!gameRes.ok) {
+		throw gameRes.error;
+	}
+	if (!currentParticipantRes.ok) {
+		throw currentParticipantRes.error;
+	}
 
 	const accessTokenFactory = async function () {
 		"use server";
@@ -55,8 +62,8 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 			<GameRoomPageProvider
 				accessTokenFactory={accessTokenFactory}
 				gameId={gameId}
-				currentParticipant={currentParticipant}
-				game={game}
+				currentParticipant={currentParticipantRes.data}
+				game={gameRes.data}
 			>
 				<div className="flex h-screen w-full flex-row overflow-hidden">
 					<div className="flex w-full flex-col relative">

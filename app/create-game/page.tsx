@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import { getVotingSystems } from "@/_src/shared/api/voting-system-api";
-import { createGameAsGuest } from "@/_src/shared/api/game-api";
 import { CreateGamePage } from "@/_src/pages/create-game";
 import { Metadata } from "next";
 
@@ -15,14 +14,9 @@ export const metadata: Metadata = {
 interface Props {}
 
 const Page: NextPage<Props> = async () => {
-	const votingSystemsPromise = getVotingSystems();
+	const votingSystemsStream = getVotingSystems();
 
-	return (
-		<CreateGamePage
-			votingSystems={votingSystemsPromise}
-			createGameAsGuest={createGameAsGuest}
-		/>
-	);
+	return <CreateGamePage votingSystems={votingSystemsStream} />;
 };
 
 export default Page;

@@ -54,10 +54,13 @@ describe("Settings Panel", () => {
 
 		test("changes the name of the game", async () => {
 			updateSettings.mockResolvedValue({
-				name: "Test Name Updated",
-				updatedParticipants: [],
-				isAutoRevealCards: false,
-				autoRevealPeriod: 90,
+				ok: true,
+				data: {
+					name: "Test Name Updated",
+					updatedParticipants: [],
+					isAutoRevealCards: false,
+					autoRevealPeriod: 90,
+				},
 			});
 			const { getByTestId, user } = renderComponent({});
 
@@ -305,10 +308,13 @@ describe("Settings Panel", () => {
 
 		test("has Auto Reveal Period input enabled if the switcher is turned on", async () => {
 			updateSettings.mockResolvedValue({
-				name: "Test Name Updated",
-				updatedParticipants: [],
-				isAutoRevealCards: true,
-				autoRevealPeriod: 120,
+				ok: true,
+				data: {
+					name: "Test Name Updated",
+					updatedParticipants: [],
+					isAutoRevealCards: true,
+					autoRevealPeriod: 120,
+				},
 			});
 			const { getByTestId, user } = renderComponent({
 				currentParticipant: generateParticipant({

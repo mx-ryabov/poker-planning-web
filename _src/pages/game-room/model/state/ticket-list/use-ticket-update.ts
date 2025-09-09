@@ -9,6 +9,7 @@ import { useMutation } from "@/_src/shared/lib";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { useCallback, useOptimistic } from "react";
 import { z } from "zod";
+import { buildErrorMsgFrom } from "@/_src/shared/lib/utils/build-error-msg-from";
 
 export const TicketItemStateSchema = z.object({
 	title: GameSchemaBuildersMap.ticket.title(
@@ -45,8 +46,15 @@ export function useTicketUpdate(defaultData: GameTicket) {
 		Omit<GameTicket, "id" | "identifier">
 	>({
 		validationSchema: TicketItemStateSchema,
-		mutateFn: (data) =>
-			api.game.ticket.updateTicketById(gameId, defaultData.id, data),
+		mutateFn: async (data) => {
+			const res = await api.game.ticket.updateTicketById(
+				gameId,
+				defaultData.id,
+				data,
+			);
+			if (!res.ok) throw res.error;
+			return res.data;
+		},
 		onSuccess: (data) => {
 			updateTicket(defaultData.id, data);
 		},

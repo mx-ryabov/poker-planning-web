@@ -3,12 +3,11 @@ import { appFetchGet } from "../../lib/utils/app-fetch";
 import { VotingSystem } from "./dto/voting-system";
 
 export async function getVotingSystems(): Promise<VotingSystem[]> {
-	const res = await appFetchGet("/voting-systems");
+	const res = await appFetchGet<{}, VotingSystem[]>("/voting-systems");
 
 	if (!res.ok) {
-		const errorDeatils = await res.text();
-		throw new Error(errorDeatils);
+		throw res.error;
 	}
 
-	return res.json();
+	return res.data;
 }

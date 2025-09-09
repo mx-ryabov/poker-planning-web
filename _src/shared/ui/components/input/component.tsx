@@ -30,6 +30,7 @@ type _InputProps = {
 	startIcon?: IconType;
 	errors?: string[] | string;
 	withErrorIcon?: boolean;
+	errorDefaultOpen?: boolean;
 	endContent?: ReactNode;
 	isPending?: boolean;
 	"data-testid"?: string;
@@ -46,6 +47,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 			endContent,
 			className,
 			isPending,
+			errorDefaultOpen,
 			validate,
 			...restProps
 		} = props;
@@ -86,6 +88,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 				{...mergedProps}
 				isDisabled={restProps.isDisabled || isPending}
 				data-testid="text-field-container"
+				validationBehavior="aria"
 				isInvalid={!!errors || restProps.isInvalid}
 			>
 				<Label aria-label="Label">
@@ -125,6 +128,7 @@ export const Input = forwardRef<HTMLInputElement, _InputProps>(
 							<FieldErrorIcon
 								errorMsg={error}
 								placement="top end"
+								defaultOpen={errorDefaultOpen}
 							/>
 						)}
 						{isPending && (
