@@ -13,7 +13,7 @@ if (process.env.USE_FIDDLER === "true") {
 const HOST = process.env.NEXT_PUBLIC_HOST;
 
 export const appFetchGet = async <
-	TQuery extends Record<string, string>,
+	TQuery extends Record<string, string> | undefined,
 	TResponse,
 >(
 	path: string,
@@ -33,7 +33,7 @@ export const appFetchGet = async <
 };
 
 export const appFetchPost = async <
-	TRequest extends object,
+	TRequest extends object | undefined,
 	TResponse extends object | undefined,
 >(
 	path: string,
@@ -51,11 +51,11 @@ export const appFetchPost = async <
 };
 
 export const appFetchPut = async <
-	TRequest extends object,
+	TRequest extends object | undefined,
 	TResponse extends object | undefined,
 >(
 	path: string,
-	body: TRequest,
+	body?: TRequest,
 	query?: Record<string, string>,
 ): ApiResponse<TRequest, TResponse> => {
 	const params = new URLSearchParams(query);
@@ -63,7 +63,7 @@ export const appFetchPut = async <
 	const res = await fetch(`${HOST}/api${path}?${params.toString()}`, {
 		method: "PUT",
 		headers: await getHeaders(),
-		body: JSON.stringify(body),
+		body: body ? JSON.stringify(body) : undefined,
 	});
 	return await responseHandler(res);
 };
@@ -86,13 +86,14 @@ async function getHeaders() {
 }
 
 export type ApiSucceedResponse<TResponse> = { ok: true; data: TResponse };
-export type ApiFailedResponse<TRequest extends object> = {
+export type ApiFailedResponse<TRequest extends object | undefined> = {
 	ok: false;
 	error: ApiError<TRequest>;
 };
-export type ApiResponse<TRequest extends object, TResponse> = Promise<
-	ApiSucceedResponse<TResponse> | ApiFailedResponse<TRequest>
->;
+export type ApiResponse<
+	TRequest extends object | undefined,
+	TResponse,
+> = Promise<ApiSucceedResponse<TResponse> | ApiFailedResponse<TRequest>>;
 
 async function responseHandler<TRequest extends object, TResponse>(
 	res: Response,

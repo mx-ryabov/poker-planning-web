@@ -1,7 +1,6 @@
 import { NextLink } from "@/_src/shared/ui/next-components/next-link";
 import Image from "next/image";
 import LogoSvg from "@public/logo.svg";
-import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

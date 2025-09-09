@@ -11,13 +11,9 @@ export function useCancelVoting() {
 	const cancelVotingInStore = useGameState((state) => state.cancelVoting);
 
 	const { mutate: cancelVoting, isPending } = useMutation({
-		mutateFn: async () => {
-			const res = await api.game.cancelVoting(gameId);
-			if (!res.ok) throw res.error;
-			return res.data;
-		},
+		mutateFn: async () => api.game.cancelVoting(gameId),
 		onSuccess: cancelVotingInStore,
-		onError: (e) => {
+		onError: () => {
 			toast?.add(
 				{
 					title: `Voting Cancellation failed.`,

@@ -1,5 +1,5 @@
 import { test, describe, expect, vi, beforeEach } from "vitest";
-import { act, renderHook, waitFor, within } from "@/test/utilities";
+import { act, renderHook } from "@/test/utilities";
 import {
 	useSettingsUpdate,
 	UseSettingsUpdateProps,
@@ -11,8 +11,6 @@ import {
 	generateParticipant,
 } from "../../../__tests__/game-state-store.test-helpers";
 import { GameParticipant, ParticipantRole } from "@/_src/shared/api";
-import { StoreApi } from "zustand";
-import { GameStateStore } from "../../store/game-state-store.model";
 import { generateUnknownErrorRes } from "@/_src/shared/mocks";
 
 describe("UseSettingsUpdate hook", () => {
@@ -52,24 +50,21 @@ describe("UseSettingsUpdate hook", () => {
 
 	test("updates settigns, name and edited participants in the store if api.game.updateSettings was successful", async () => {
 		updateSettingsAction.mockResolvedValue({
-			ok: true,
-			data: {
-				name: "test",
-				autoRevealPeriod: 10,
-				isAutoRevealCards: true,
-				updatedParticipants: [
-					generateParticipant({
-						id: "test-participant-id-1",
-						role: ParticipantRole.VotingMember,
-						displayName: "updated voting memeber 1",
-					}),
-					generateParticipant({
-						id: "test-participant-id-2",
-						role: ParticipantRole.Master,
-						displayName: "updated voting memeber 2",
-					}),
-				],
-			},
+			name: "test",
+			autoRevealPeriod: 10,
+			isAutoRevealCards: true,
+			updatedParticipants: [
+				generateParticipant({
+					id: "test-participant-id-1",
+					role: ParticipantRole.VotingMember,
+					displayName: "updated voting memeber 1",
+				}),
+				generateParticipant({
+					id: "test-participant-id-2",
+					role: ParticipantRole.Master,
+					displayName: "updated voting memeber 2",
+				}),
+			],
 		});
 
 		const { result, gameStateStore } = renderSettingsUpdateHook({});
@@ -143,24 +138,21 @@ describe("UseSettingsUpdate hook", () => {
 
 	test("updates the current participant in the store if api.game.updateSettings was successful", async () => {
 		updateSettingsAction.mockResolvedValue({
-			ok: true,
-			data: {
-				name: "test",
-				autoRevealPeriod: 10,
-				isAutoRevealCards: true,
-				updatedParticipants: [
-					generateParticipant({
-						id: "test-participant-id-1",
-						role: ParticipantRole.VotingMember,
-						displayName: "updated voting memeber 1",
-					}),
-					generateParticipant({
-						id: "test-participant-id-2",
-						role: ParticipantRole.Master,
-						displayName: "updated voting memeber 2",
-					}),
-				],
-			},
+			name: "test",
+			autoRevealPeriod: 10,
+			isAutoRevealCards: true,
+			updatedParticipants: [
+				generateParticipant({
+					id: "test-participant-id-1",
+					role: ParticipantRole.VotingMember,
+					displayName: "updated voting memeber 1",
+				}),
+				generateParticipant({
+					id: "test-participant-id-2",
+					role: ParticipantRole.Master,
+					displayName: "updated voting memeber 2",
+				}),
+			],
 		});
 
 		const { result, gameStateStore } = renderSettingsUpdateHook({

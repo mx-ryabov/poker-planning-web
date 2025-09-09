@@ -1,5 +1,5 @@
 "use client";
-import { collectEmail } from "@/_src/shared/api";
+import { useApi } from "@/_src/shared/providers";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
 import { Button } from "@/_src/shared/ui/components/button";
 import { MailIcon } from "@/_src/shared/ui/components/icon/svg/mail.icon";
@@ -7,6 +7,8 @@ import { Input } from "@/_src/shared/ui/components/input";
 import { useActionState } from "react";
 
 export function SubscribeSection() {
+	const api = useApi();
+
 	const [result, submitAction, isPending] = useActionState<
 		{ ok: boolean; error?: string } | undefined,
 		FormData
@@ -16,7 +18,7 @@ export function SubscribeSection() {
 			if (!email || typeof email !== "string") {
 				return { ok: false, error: "The email field is invalid" };
 			}
-			const res = await collectEmail(email);
+			const res = await api.emailToNotify.collectEmail(email);
 			return res;
 		} catch (e) {
 			return {

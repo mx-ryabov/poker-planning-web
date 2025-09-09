@@ -1,7 +1,7 @@
 "use client";
 
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
-import { buildErrorMsgFrom } from "@/_src/shared/lib/utils/build-error-msg-from";
+import { ApiError } from "@/_src/shared/lib";
 import { useApi } from "@/_src/shared/providers";
 import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
@@ -46,20 +46,29 @@ export function GameJoinForm({ gameId }: Props) {
 	const [serverError, submitAction, isPending] = useActionState<
 		string | undefined,
 		FormData
-	>(async (prevError, formData) => {
+	>(async (_, formData) => {
 		const displayName = formData.get("displayName");
 		if (!displayName || typeof displayName !== "string") {
 			return "The displayName field is invalid";
 		}
-		const res = await api.game.joinAsGuest(gameId, {
-			displayName,
-		});
 
-		if (!res.ok) {
-			if (res.error.cause === "validation") return res.error.message;
+		try {
+			await api.game.joinAsGuest(gameId, {
+				displayName,
+			});
+		} catch (e) {
+			if (!(e instanceof ApiError)) {
+				toast?.add({
+					title: "Unhandled Error",
+					description: String(e),
+					variant: "error",
+				});
+				return;
+			}
+			if (e.cause === "validation") return e.message;
 			toast?.add({
-				title: res.error.title,
-				description: res.error.message,
+				title: e.title,
+				description: e.message,
 				variant: "error",
 			});
 		}
@@ -74,7 +83,7 @@ export function GameJoinForm({ gameId }: Props) {
 					<Controller
 						control={control}
 						name="displayName"
-						render={({ field, fieldState }) => (
+						render={({ field }) => (
 							<FullSizeFormTextInput
 								label="Let's get acquainted👇"
 								placeholder="Type your name"

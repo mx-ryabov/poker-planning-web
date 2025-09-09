@@ -17,8 +17,7 @@ export function useTicketDelete({ ticket }: Props) {
 	const removeTicket = useGameState((state) => state.removeTicket);
 
 	const mutateFn = useCallback(async () => {
-		const res = await api.game.ticket.deleteTicketById(gameId, ticket.id);
-		if (!res.ok) throw res.error;
+		await api.game.ticket.deleteTicketById(gameId, ticket.id);
 		return ticket;
 	}, [ticket, gameId, api]);
 

@@ -43,7 +43,7 @@ export async function createGameAsGuest(
 }
 
 export async function getGameById(gameId: string) {
-	return await appFetchGet<{}, GetGameByIdResponse>(
+	return await appFetchGet<undefined, GetGameByIdResponse>(
 		`/games/${gameId}`,
 		undefined,
 		{
@@ -53,7 +53,7 @@ export async function getGameById(gameId: string) {
 }
 
 export async function getCurrentParticipant(gameId: string) {
-	const res = await appFetchGet<{}, GameParticipant>(
+	const res = await appFetchGet<undefined, GameParticipant>(
 		`/games/${gameId}/current-participant`,
 	);
 	if (!res.ok && res.error.status === 404) {
@@ -121,17 +121,16 @@ export async function startVoting(gameId: string, ticketId: string | null) {
 }
 
 export async function revealCards(gameId: string) {
-	return await appFetchPut(`/games/${gameId}/reveal-cards`, {});
+	return await appFetchPut(`/games/${gameId}/reveal-cards`);
 }
 
 export async function cancelVoting(gameId: string) {
-	return await appFetchPut(`/games/${gameId}/cancel-voting`, {});
+	return await appFetchPut(`/games/${gameId}/cancel-voting`);
 }
 
 export async function finishVoting(gameId: string) {
-	return await appFetchPut<{}, GameVotingResult>(
+	return await appFetchPut<undefined, GameVotingResult>(
 		`/games/${gameId}/finish-voting`,
-		{},
 	);
 }
 
@@ -140,7 +139,10 @@ export async function revalidateGame() {
 }
 
 export async function vote(gameId: string, voteId: string | null) {
-	return await appFetchPut(`/games/${gameId}/vote`, { voteId });
+	return await appFetchPut<{ voteId: string | null }, undefined>(
+		`/games/${gameId}/vote`,
+		{ voteId },
+	);
 }
 
 export async function updateSettings(

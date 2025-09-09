@@ -11,11 +11,8 @@ export function useStartVoting() {
 	const startVotingInStore = useGameState((state) => state.startVoting);
 
 	const { mutate: startVoting, isPending } = useMutation({
-		mutateFn: async (ticketId: string | null) => {
-			const res = await api.game.startVoting(gameId, ticketId);
-			if (!res.ok) throw res.error;
-			return res.data;
-		},
+		mutateFn: async (ticketId: string | null) =>
+			api.game.startVoting(gameId, ticketId),
 		onSuccess: (response, ticket) => startVotingInStore(ticket, response),
 		onError: (error) =>
 			toast?.add(

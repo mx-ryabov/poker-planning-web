@@ -31,8 +31,7 @@ export function useHoleCardsState(): HoleCardsState {
 	const { mutate: mutateVote } = useMutation({
 		onMutate: selectOptimistic,
 		mutateFn: async (vote: GameVote | null) => {
-			const res = await api.game.vote(gameId, vote?.id || null);
-			if (!res.ok) throw res.error;
+			await api.game.vote(gameId, vote?.id || null);
 			return vote;
 		},
 		onSuccess: (vote) => changeVote(vote),

@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 		"poker planning, create game, collaborative estimation, agile planning",
 };
 
-interface Props {}
-
-const Page: NextPage<Props> = async () => {
+const Page: NextPage = async () => {
 	const votingSystemsStream = getVotingSystems();
 
 	return <CreateGamePage votingSystems={votingSystemsStream} />;

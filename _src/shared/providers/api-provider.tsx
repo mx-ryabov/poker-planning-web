@@ -18,27 +18,31 @@ import {
 } from "../../shared/api/game-api/server-actions";
 import { ApiResponse } from "../lib/utils/app-fetch";
 import { ApiError } from "../lib";
+import { collectEmail } from "../api";
 
 export const API = {
 	game: {
 		getGameById: makeThrowable(getGameById),
 		joinAsGuest: makeThrowable(joinAsGuest),
 		createGameAsGuest: makeThrowable(createGameAsGuest),
-		startVoting: startVoting,
-		revealCards: revealCards,
-		finishVoting: finishVoting,
-		cancelVoting: cancelVoting,
+		startVoting: makeThrowable(startVoting),
+		revealCards: makeThrowable(revealCards),
+		finishVoting: makeThrowable(finishVoting),
+		cancelVoting: makeThrowable(cancelVoting),
 		revalidateGame,
-		vote: vote,
-		updateSettings: updateSettings,
+		vote: makeThrowable(vote),
+		updateSettings: makeThrowable(updateSettings),
 		ticket: {
 			createTicket: makeThrowable(createTicket),
-			updateTicketById: updateTicketById,
-			deleteTicketById: deleteTicketById,
+			updateTicketById: makeThrowable(updateTicketById),
+			deleteTicketById: makeThrowable(deleteTicketById),
 		},
 		participant: {
 			getCurrentParticipant: makeThrowable(getCurrentParticipant),
 		},
+	},
+	emailToNotify: {
+		collectEmail: makeThrowable(collectEmail),
 	},
 };
 
