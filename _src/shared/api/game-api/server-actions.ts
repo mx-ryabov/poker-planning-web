@@ -26,7 +26,7 @@ import { UpdateGameSettingsResponse } from "./dto/update-game-settings-response"
 
 export async function createGameAsGuest(
 	request: CreateGameRequest,
-): ApiResponse<CreateGameRequest, CreateGameResponse> {
+): ApiResponse<CreateGameResponse> {
 	const res = await appFetchPost<CreateGameRequest, CreateGameResponse>(
 		"/games",
 		request,
@@ -43,7 +43,7 @@ export async function createGameAsGuest(
 }
 
 export async function getGameById(gameId: string) {
-	return await appFetchGet<undefined, GetGameByIdResponse>(
+	return await appFetchGet<{}, GetGameByIdResponse>(
 		`/games/${gameId}`,
 		undefined,
 		{
@@ -53,7 +53,7 @@ export async function getGameById(gameId: string) {
 }
 
 export async function getCurrentParticipant(gameId: string) {
-	const res = await appFetchGet<undefined, GameParticipant>(
+	const res = await appFetchGet<{}, GameParticipant>(
 		`/games/${gameId}/current-participant`,
 	);
 	if (!res.ok && res.error.status === 404) {
@@ -65,12 +65,7 @@ export async function getCurrentParticipant(gameId: string) {
 export async function joinAsGuest(
 	gameId: string,
 	data: { displayName: string },
-): ApiResponse<
-	{
-		displayName: string;
-	},
-	{ token: string }
-> {
+): ApiResponse<{ token: string }> {
 	const res = await appFetchPost<{ displayName: string }, { token: string }>(
 		`/games/${gameId}/join-as-guest`,
 		data,
@@ -89,7 +84,7 @@ export async function joinAsGuest(
 export async function createTicket(
 	gameId: string,
 	data: CreateTicketForGameRequest,
-): ApiResponse<CreateTicketForGameRequest, GameTicket> {
+): ApiResponse<GameTicket> {
 	return await appFetchPost<CreateTicketForGameRequest, GameTicket>(
 		`/games/${gameId}/ticket`,
 		data,

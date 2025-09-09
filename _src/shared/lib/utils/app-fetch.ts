@@ -13,13 +13,13 @@ if (process.env.USE_FIDDLER === "true") {
 const HOST = process.env.NEXT_PUBLIC_HOST;
 
 export const appFetchGet = async <
-	TQuery extends Record<string, string> | undefined,
+	TQuery extends Record<string, string>,
 	TResponse,
 >(
 	path: string,
 	query?: TQuery,
 	options?: { tags?: string[] },
-): ApiResponse<TQuery, TResponse> => {
+): ApiResponse<TResponse> => {
 	const params = new URLSearchParams(query);
 	const headers = await getHeaders();
 	const res = await fetch(`${HOST}/api${path}?${params.toString()}`, {
@@ -32,14 +32,11 @@ export const appFetchGet = async <
 	return await responseHandler(res);
 };
 
-export const appFetchPost = async <
-	TRequest extends object | undefined,
-	TResponse extends object | undefined,
->(
+export const appFetchPost = async <TRequest, TResponse>(
 	path: string,
 	body: TRequest,
 	query?: Record<string, string>,
-): ApiResponse<TRequest, TResponse> => {
+): ApiResponse<TResponse> => {
 	const params = new URLSearchParams(query);
 
 	const res = await fetch(`${HOST}/api${path}?${params.toString()}`, {
@@ -50,14 +47,11 @@ export const appFetchPost = async <
 	return await responseHandler(res);
 };
 
-export const appFetchPut = async <
-	TRequest extends object | undefined,
-	TResponse extends object | undefined,
->(
+export const appFetchPut = async <TRequest, TResponse>(
 	path: string,
 	body?: TRequest,
 	query?: Record<string, string>,
-): ApiResponse<TRequest, TResponse> => {
+): ApiResponse<TResponse> => {
 	const params = new URLSearchParams(query);
 
 	const res = await fetch(`${HOST}/api${path}?${params.toString()}`, {
@@ -86,27 +80,26 @@ async function getHeaders() {
 }
 
 export type ApiSucceedResponse<TResponse> = { ok: true; data: TResponse };
-export type ApiFailedResponse<TRequest extends object | undefined> = {
+export type ApiFailedResponse = {
 	ok: false;
-	error: ApiError<TRequest>;
+	error: ApiError;
 };
-export type ApiResponse<
-	TRequest extends object | undefined,
-	TResponse,
-> = Promise<ApiSucceedResponse<TResponse> | ApiFailedResponse<TRequest>>;
+export type ApiResponse<TResponse> = Promise<
+	ApiSucceedResponse<TResponse> | ApiFailedResponse
+>;
 
-async function responseHandler<TRequest extends object, TResponse>(
+async function responseHandler<TResponse>(
 	res: Response,
-): ApiResponse<TRequest, TResponse> {
+): ApiResponse<TResponse> {
 	const payload = await res.json().catch(() => undefined);
 
 	if (!res.ok) {
 		let error = ApiError.generateServerApiError();
 
 		if (payload) {
-			error = new ApiError(payload as ServerError<TRequest>);
+			error = new ApiError(payload as ServerError);
 
-			if ((error as ApiError<TRequest>).status !== 400) {
+			if ((error as ApiError).status !== 400) {
 				logger.error(error);
 			}
 		}

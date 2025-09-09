@@ -24,6 +24,7 @@
 	"rules": {
 		"no-unused-vars": "off",
 		"react/display-name": "off",
-		"no-mixed-spaces-and-tabs": "off"
+		"no-mixed-spaces-and-tabs": "off",
+		"@typescript-eslint/no-empty-object-type": "off"
 	}
 }

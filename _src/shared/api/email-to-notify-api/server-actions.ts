@@ -4,8 +4,8 @@ import { CollectEmailToNotifyRequest } from "./dto/collect-email-to-notify";
 
 export async function collectEmail(
 	email: string,
-): ApiResponse<CollectEmailToNotifyRequest, { ok: boolean }> {
-	const res = await appFetchPost<CollectEmailToNotifyRequest, undefined>(
+): ApiResponse<{ ok: boolean }> {
+	const res = await appFetchPost<CollectEmailToNotifyRequest, void>(
 		"/emails-to-notify",
 		{ email },
 	);

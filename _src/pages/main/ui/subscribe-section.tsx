@@ -12,7 +12,7 @@ export function SubscribeSection() {
 	const [result, submitAction, isPending] = useActionState<
 		{ ok: boolean; error?: string } | undefined,
 		FormData
-	>(async (res, formData) => {
+	>(async (_, formData) => {
 		try {
 			const email = formData.get("email");
 			if (!email || typeof email !== "string") {

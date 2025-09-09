@@ -24,7 +24,7 @@ const CreateGameFormSchema = z.object({
 export type CreateGameFormFormState = z.infer<typeof CreateGameFormSchema>;
 
 export type UseCreateGameFormStateProps = {
-	onError: (error: ApiError<CreateGameFormFormState>) => void;
+	onError: (error: ApiError) => void;
 };
 export function useCreateGameFormState({
 	onError,

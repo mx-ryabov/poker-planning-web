@@ -46,18 +46,18 @@ export const API = {
 	},
 };
 
-type ActionFunction<TReq extends object, TRes, TParams extends unknown[]> = (
+type ActionFunction<TRes, TParams extends unknown[]> = (
 	...params: TParams
-) => ApiResponse<TReq, TRes>;
+) => ApiResponse<TRes>;
 type ThrowableFunction<TRes, TParams extends unknown[]> = (
 	...params: TParams
 ) => Promise<TRes>;
 
-function makeThrowable<TReq extends object, TRes, TParams extends unknown[]>(
-	action: ActionFunction<TReq, TRes, TParams>,
+function makeThrowable<TRes, TParams extends unknown[]>(
+	action: ActionFunction<TRes, TParams>,
 ): ThrowableFunction<TRes, TParams> {
 	return async function (
-		...params: Parameters<ActionFunction<TReq, TRes, TParams>>
+		...params: Parameters<ActionFunction<TRes, TParams>>
 	) {
 		const res = await action(...params);
 

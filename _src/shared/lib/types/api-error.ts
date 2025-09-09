@@ -1,28 +1,21 @@
 import { buildErrorMsgFrom } from "../utils/build-error-msg-from";
 
-export type ServerError<T extends object | undefined> = {
+export type ServerError = {
 	type: string;
 	title: string;
 	status: number;
-	errors: T extends undefined
-		? undefined
-		: Partial<Record<keyof T, string[]>>;
+	errors?: Partial<Record<string, string[]>>;
 	traceId: string;
 };
-export class ApiError<TRequest extends object | undefined>
-	extends Error
-	implements ServerError<TRequest>
-{
+export class ApiError extends Error implements ServerError {
 	type: string;
 	title: string;
 	status: number;
-	errors: TRequest extends undefined
-		? undefined
-		: Partial<Record<keyof TRequest, string[]>>;
+	errors?: Partial<Record<string, string[]>>;
 	traceId: string;
 	cause?: "validation" | "server";
 
-	constructor(error: ServerError<TRequest>) {
+	constructor(error: ServerError) {
 		super(buildErrorMsgFrom(error.title, error.errors));
 		this.cause = error.status === 400 ? "validation" : "server";
 		this.type = error.type;
@@ -32,12 +25,11 @@ export class ApiError<TRequest extends object | undefined>
 		this.traceId = error.traceId;
 	}
 
-	static generateServerApiError(): ApiError<undefined> {
+	static generateServerApiError(): ApiError {
 		return new ApiError({
 			status: 500,
 			title: "Unhandled Server Error",
 			traceId: "None",
-			errors: undefined,
 			type: "unhandled",
 		});
 	}

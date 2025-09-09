@@ -1,10 +1,10 @@
 import { ApiError } from "../../lib";
 import { ApiFailedResponse } from "../../lib/utils/app-fetch";
 
-export function generateValidationErrorRes<TRequest extends object>(
+export function generateValidationErrorRes(
 	errorTitle: string,
-	validationErrors: Partial<Record<keyof TRequest, string[]>>,
-): ApiFailedResponse<TRequest> {
+	validationErrors: Record<string, string[]>,
+): ApiFailedResponse {
 	return {
 		ok: false,
 		error: new ApiError({
@@ -17,9 +17,7 @@ export function generateValidationErrorRes<TRequest extends object>(
 	};
 }
 
-export function generateUnknownErrorRes<TRequest extends object>(
-	errorTitle: string,
-): ApiFailedResponse<TRequest> {
+export function generateUnknownErrorRes(errorTitle: string): ApiFailedResponse {
 	return {
 		ok: false,
 		error: new ApiError({
