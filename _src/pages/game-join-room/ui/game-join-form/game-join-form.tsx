@@ -121,8 +121,8 @@ export function GameJoinForm({ gameId }: Props) {
 							Sign Up
 						</NextLink> */}
 						<span>
-							In near future I&apos;ll be able to sign up to see
-							more app features
+							You&apos;ll be able to sign up to see more app
+							features in the near future
 						</span>
 					</p>
 				</section>

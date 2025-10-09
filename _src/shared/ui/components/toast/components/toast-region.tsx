@@ -20,11 +20,9 @@ export function ToastRegion(props: ToastRegionProps) {
 
 	const { regionProps } = useToastRegion(restProps, state, ref);
 
-	useEffect(() => {
-		if (state.visibleToasts.length === 0) {
-			setHovered(false);
-		}
-	}, [state.visibleToasts.length]);
+	if (state.visibleToasts.length === 0 && prevStackLengthRef.current !== 0) {
+		setHovered(false);
+	}
 
 	const onPointerEnter = useCallback(() => setHovered(true), []);
 	const onPointerLeave = useCallback(() => setHovered(false), []);

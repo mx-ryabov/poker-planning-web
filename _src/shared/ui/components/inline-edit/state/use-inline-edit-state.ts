@@ -1,11 +1,5 @@
-import {
-	Dispatch,
-	SetStateAction,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { useValueChanged } from "@/_src/shared/lib";
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
 
 type Props = {
 	value: string;
@@ -26,10 +20,11 @@ export function useInlineEditState(props: Props): InlineEditState {
 	const valueBeforeChangeRef = useRef<string | undefined>(value);
 	const [editorValue, setEditorValue] = useState(value);
 
-	useEffect(() => {
+	const prevValue = useValueChanged(value);
+	if (prevValue.isChanged) {
 		setEditorValue(value);
 		valueBeforeChangeRef.current = value;
-	}, [value, valueBeforeChangeRef]);
+	}
 
 	const confirmChanges = useCallback(() => {
 		if (valueBeforeChangeRef.current !== editorValue) {
