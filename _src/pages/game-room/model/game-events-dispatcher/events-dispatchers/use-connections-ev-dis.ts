@@ -27,7 +27,7 @@ export function useConnectionsEvDis({
 	useEffect(() => {
 		const handler = ({ payload }: ReconnectingEvent) => {
 			setLiveStatus({
-				state: "reconnecting", // 123
+				state: "reconnecting",
 				reason: payload,
 			});
 		};

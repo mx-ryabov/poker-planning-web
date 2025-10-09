@@ -4,14 +4,7 @@ import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { twMerge } from "tailwind-merge";
-import {
-	Children,
-	cloneElement,
-	ReactElement,
-	RefObject,
-	useEffect,
-	useRef,
-} from "react";
+import { Children, cloneElement, ReactElement, RefObject, useRef } from "react";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
@@ -46,7 +39,7 @@ export function AnimatedText({
 
 			containerRef.current.classList.remove("initially-hidden");
 
-			let elements: Element[] = [];
+			const elements: Element[] = [];
 			if (
 				containerRef.current.hasAttribute("data-animated-text-wrapper")
 			) {
@@ -58,7 +51,7 @@ export function AnimatedText({
 			elements.forEach((el) => {
 				elementsRef.current.push(el);
 
-				let split = SplitText.create(el, {
+				const split = SplitText.create(el, {
 					type: "lines",
 					mask: "lines",
 					linesClass: "line++",
