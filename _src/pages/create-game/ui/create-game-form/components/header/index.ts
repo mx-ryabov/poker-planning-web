@@ -1,1 +1,1 @@
-export { CreateGameHeader } from "./header";
+export { FormHeader } from "./header";

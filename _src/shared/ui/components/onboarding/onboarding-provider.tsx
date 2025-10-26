@@ -6,6 +6,7 @@ import {
 	useState,
 } from "react";
 
+// TODO: 1. don't use symbols 2. use graphs instead of arrays for steps
 export type OnboardingModel = {
 	id: symbol;
 	steps: symbol[];

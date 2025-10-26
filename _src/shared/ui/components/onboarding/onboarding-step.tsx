@@ -1,10 +1,4 @@
-import {
-	cloneElement,
-	ReactElement,
-	useCallback,
-	useEffect,
-	useRef,
-} from "react";
+import { cloneElement, ReactElement, useEffect, useRef } from "react";
 import throttle from "lodash.throttle";
 import { Dialog, Heading, ModalOverlay, Popover } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -26,7 +20,7 @@ export type OnboardingStepData = {
 };
 
 export type OnboardingStepProps = {
-	children: ReactElement<any>;
+	children: ReactElement;
 	modelId: symbol;
 	stepId: symbol;
 	options?: OnboardingStepOptions;

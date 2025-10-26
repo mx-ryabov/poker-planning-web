@@ -3,7 +3,7 @@ import GameVotingResults from "@public/game-voting-results-2.webp";
 import IssueManagementImg from "@public/issue-management.svg";
 import PokerTableSvg from "@public/poker-table.png";
 import FeatureCardsBg from "@public/features-cards-bg.webp";
-import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 
 export function FeaturesSection() {

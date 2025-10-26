@@ -1,58 +1,91 @@
 "use client";
 import {
-	useCallback,
 	KeyboardEvent,
 	InputHTMLAttributes,
 	forwardRef,
 	ForwardedRef,
+	useState,
 	useMemo,
 } from "react";
+import {
+	FieldError,
+	Input,
+	Label,
+	TextField,
+	TextFieldProps,
+} from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label: string;
 	error?: string;
+	isValid?: boolean;
+	shouldShowErrorAfterTouch?: boolean;
 	onEnter?: () => void;
+	validate?: TextFieldProps["validate"];
 };
 
 export const FullSizeFormTextInput = forwardRef(
 	(props: Props, ref: ForwardedRef<HTMLInputElement>) => {
-		const { onEnter, maxLength, error, label, ...inputProps } = props;
+		const {
+			onEnter,
+			maxLength,
+			error,
+			label,
+			isValid,
+			validate,
+			shouldShowErrorAfterTouch,
+			...inputProps
+		} = props;
 
-		const onKeyDown = useCallback(
-			(e: KeyboardEvent<HTMLInputElement>) => {
-				if (e.key === "Enter" && onEnter) {
-					onEnter();
-					e.preventDefault();
-				}
-			},
-			[onEnter],
-		);
+		const [isTouched, setIsTouched] = useState(false);
+		const isValidFinal = useMemo(() => {
+			if (shouldShowErrorAfterTouch) {
+				return isTouched ? isValid : true;
+			}
+			return isValid;
+		}, [isTouched, isValid, shouldShowErrorAfterTouch]);
 
-		const charsCount = useMemo(
-			() => inputProps.value?.toString().length || 0,
-			[inputProps.value],
-		);
+		const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+			if (!isTouched) {
+				setIsTouched(true);
+			}
+			if (e.key === "Enter" && onEnter) {
+				onEnter();
+				e.preventDefault();
+			}
+		};
+
+		const onBlur = () => {
+			if (!isTouched) {
+				setIsTouched(true);
+			}
+		};
+
+		const charsCount = inputProps.value?.toString().length || 0;
 
 		return (
-			<label
+			<TextField
 				className="relative flex flex-col"
-				data-testid={`${inputProps.name || ""}-text-field-container`}
+				validate={validate}
+				isInvalid={!isValidFinal}
 			>
-				<span className="label mb-4 text-lg text-neutral-900">
+				<Label className="label mb-4 text-lg text-neutral-900">
 					{label}
-				</span>
+				</Label>
 				<div className="mb-2">
-					<input
+					<Input
 						type="text"
 						autoComplete="off"
 						onKeyDown={onKeyDown}
+						onBlur={onBlur}
 						ref={ref}
 						{...inputProps}
 						className={twMerge(
 							"h-20 min-w-[400px] text-6xl font-semibold text-neutral-900 outline-hidden placeholder:text-neutral-400",
 							inputProps.className,
 						)}
+						data-testid={`${inputProps.name || ""}-text-field`}
 					/>
 				</div>
 
@@ -65,25 +98,30 @@ export const FullSizeFormTextInput = forwardRef(
 							{charsCount}/{maxLength}
 						</span>
 					)}
-					<span
+					<FieldError
 						className="text-error-600 text-sm"
-						data-testid="error-msg"
+						data-testid={`${inputProps.name || ""}-error-msg`}
 					>
-						{error}
-					</span>
+						{(renderProps) => {
+							if (error) return error;
+							return renderProps.validationErrors[0];
+						}}
+					</FieldError>
 				</div>
 
 				{charsCount > 0 && (
 					<div
-						className="absolute -bottom-3 left-0 translate-y-full"
+						className="absolute -bottom-3 left-0 translate-y-full flex flex-row items-center gap-2 text-sm text-neutral-700"
 						data-testid="enter-shortcut"
 					>
+						Press
 						<div className="animate-downOut rounded-sm border border-neutral-600 px-2 py-1 text-sm text-neutral-700">
 							↵ Enter
 						</div>
+						to continue
 					</div>
 				)}
-			</label>
+			</TextField>
 		);
 	},
 );

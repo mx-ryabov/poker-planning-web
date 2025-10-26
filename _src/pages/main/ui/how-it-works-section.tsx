@@ -1,5 +1,5 @@
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
-import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 
 export function HowItWorksSection() {
 	return (

@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { test, describe, expect } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
@@ -7,7 +10,7 @@ import { useOnboardingActions } from "./use-onboarding-actions";
 
 describe("Onboarding Step", () => {
 	test("renders correctly when onboarding is inactive", async () => {
-		const { unmount, user, getByText, queryByText } = renderComponent();
+		const { unmount, getByText, queryByText } = renderComponent();
 
 		getByText("Start Onboarding");
 		getByText(/Testing Step Component/i);
