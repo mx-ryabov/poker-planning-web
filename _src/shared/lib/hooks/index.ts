@@ -7,3 +7,4 @@ export * from "./use-animation";
 export * from "./use-mutation";
 export * from "./use-streamable";
 export * from "./use-value-changed";
+export * from "./use-prevent-scrollbar-gutter-stable";
