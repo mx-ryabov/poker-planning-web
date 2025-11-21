@@ -18,6 +18,7 @@ import { PokerField } from "./poker-field";
 import { MobileBlockerScreen } from "@/_src/shared/ui/components/mobile-blocker-screen";
 import { OnboardingHelper } from "./onboardings";
 import { BadConnectionStatus } from "./bad-connection-status";
+import { ScrollbarGutterStablePreventer } from "@/_src/shared/ui/components/scrollbar-gutter-stable-preventer";
 
 if (typeof window !== "undefined") {
 	scan({
@@ -60,6 +61,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 
 	return (
 		<MobileBlockerScreen>
+			<ScrollbarGutterStablePreventer />
 			<GameRoomPageProvider
 				accessTokenFactory={accessTokenFactory}
 				gameId={gameId}
