@@ -1,10 +1,7 @@
 "use client";
 import "./header.css";
 import { RefObject, useRef, useState } from "react";
-import {
-	NextLink,
-	NextLinkButton,
-} from "@/_src/shared/ui/next-components/next-link";
+import { NextLinkButton } from "@/_src/shared/ui/next-components/next-link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -12,7 +9,7 @@ import { ButtonSquare, NewButton } from "@/_src/shared/ui/components/button";
 import { MenuIcon } from "@/_src/shared/ui/components/icon/svg/menu.icon";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { Modal, ModalOverlay } from "react-aria-components";
-import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 import Image from "next/image";
 import LogoSvg from "@public/logo.svg";

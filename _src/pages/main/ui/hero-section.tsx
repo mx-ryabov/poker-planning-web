@@ -5,7 +5,7 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import GamePreview from "@public/game-preview.webp";
 import { NextLinkButton } from "@/_src/shared/ui/next-components/next-link";
 import { cva } from "class-variance-authority";
-import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";

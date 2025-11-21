@@ -45,21 +45,21 @@ export class TicketDeletedEvent extends BaseEvent<string> {
 	}
 }
 
-export class ReconnectingEvent extends BaseEvent<Error | undefined> {
-	constructor(payload: Error | undefined) {
-		super(GameEventType.Reconnecting, payload);
-	}
-}
-
-export class ReconnectedEvent extends BaseEvent<void> {
-	constructor() {
-		super(GameEventType.Reconnected);
-	}
-}
-
-export class DisconnectedEvent extends BaseEvent<Error | undefined> {
-	constructor(payload: Error | undefined) {
-		super(GameEventType.Disconnected, payload);
+type ConnectionPayload =
+	| {
+			status: "connecting" | "connected";
+	  }
+	| {
+			status: "failed";
+			reason: Error;
+	  }
+	| {
+			status: "reconnecting" | "disconnected";
+			reason?: Error;
+	  };
+export class ConnectionEvent extends BaseEvent<ConnectionPayload> {
+	constructor(payload: ConnectionPayload) {
+		super(GameEventType.ConnectionEvent, payload);
 	}
 }
 

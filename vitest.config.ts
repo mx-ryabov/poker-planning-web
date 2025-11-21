@@ -1,6 +1,7 @@
 import { defineConfig, configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tsconfig from "./tsconfig.json";
+import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 const alias = Object.fromEntries(
@@ -11,18 +12,24 @@ const alias = Object.fromEntries(
 );
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [react(), tsconfigPaths()],
 	resolve: {
 		alias,
 	},
 	test: {
+		root: ".",
+		alias,
 		globals: true,
 		pool: "threads",
 		setupFiles: path.resolve(__dirname, "test/setup.ts"),
-		// if you don't enough the happy-dom you can change environment to the jsdom.
-		// on the first line of your file where you need this you need to define // @vitest-environment jsdom
-		environment: "happy-dom",
+		environment: "jsdom",
+		include: ["./_src/**/*test.{ts,tsx}", "./app/**/*test.{ts,tsx}"],
 		exclude: [...configDefaults.exclude, "**/*.spec.ts"],
+		// browser: {
+		// 	enabled: true,
+		// 	provider: playwright() as any,
+		// 	instances: [{ browser: "chromium" }],
+		// },
 		coverage: {
 			provider: "v8",
 			// thresholds: {
@@ -33,7 +40,7 @@ export default defineConfig({
 			// },
 			enabled: true,
 			reporter: ["html"],
-			include: ["_src/**", "app/**"],
+			include: ["./_src/**/*test.{ts,tsx}", "./app/**/*test.{ts,tsx}"],
 			exclude: [
 				"**/index.ts",
 				"**/dto/**",

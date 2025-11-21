@@ -1,0 +1,122 @@
+---
+globs: *.test.tsx,*test.ts
+alwaysApply: false
+---
+
+# TESTING RULES FOR GAME-ROOM PAGE COMPONENTS AND HOOKS
+
+## Rules the AI must follow
+
+-   Use `@/test/utilities` (render, act, within, waitFor, user-event) instead of raw React Testing Library APIs
+-   Use entity generators from `../__tests__/game-state-store.test-helpers`
+-   Wrap components/hooks with `GameRoomFakeProviderWrapper` from `../__mocks__`
+-   Always define a dedicated `renderComponent`/`renderHook` helper per test file to pass wrapper and mocks
+-   Always take `user` from the returned object of `render(...)` and use it for interactions
+-   Include an a11y test with `jest-axe`: expect results to `toHaveNoViolations()`
+-   When component relies on store instance, create it via `createGameStateStore(...)` from `../../../model` and pass through wrapper
+-   When API calls are used, inject them via `apiProps` into `GameRoomFakeProviderWrapper`
+-   If IntersectionObserver is required, import `"@/__mocks__/intersection-observer"` at the top
+-   Prefer `vi.useFakeTimers({ shouldAdvanceTime: true })` and restore timers/mocks in `beforeEach/afterEach` where timing is involved
+
+## Patterns
+
+### Good imports
+
+```typescript
+import { test, describe, expect, vi, beforeEach, afterEach } from "vitest";
+import { act, render, within, waitFor } from "@/test/utilities";
+import { axe } from "jest-axe";
+import { GameRoomFakeProviderWrapper } from "../__mocks__";
+import {
+	generateGame,
+	generateParticipant,
+	generateTicket,
+} from "../__tests__/game-state-store.test-helpers";
+```
+
+### Example: Component test with wrapper and a11y
+
+```typescript
+describe("TestComponent", () => {
+	test("renders successfully", async () => {
+		const { unmount } = renderComponent();
+		expect(() => unmount()).not.toThrow();
+	});
+
+	test("doesn't violate any accessibility rules", async () => {
+		const { container } = renderComponent();
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
+	});
+});
+```
+
+### Example: API mock injection via wrapper
+
+```typescript
+const createTicket = vi.fn(async (gameId: string, data: CreateTicketForGameRequest) => {
+	return { ok: true, data: generateTicket({ ...data }) };
+});
+
+function renderComponent() {
+	return render(<TicketsPanel />, {
+		wrapper: GameRoomFakeProviderWrapper({
+			apiProps: { game: { ticket: { createTicket } } },
+			gameStateProps: {
+				game: generateGame({
+					id: "test-game-id",
+					tickets: [
+						generateTicket({ id: "ticket-id-1", title: "Ticket Name" }),
+					],
+				}),
+				currentParticipant: generateParticipant({}),
+			},
+		}),
+	});
+}
+```
+
+### Example: Store-backed component test
+
+```typescript
+import { createGameStateStore, GameManagementTab } from "../../../model";
+
+const gameStateStore = createGameStateStore({
+	game: generateGame({}),
+	currentParticipant: generateParticipant({}),
+});
+
+function renderWithStore() {
+	return render(<GameManagementBar />, {
+		wrapper: GameRoomFakeProviderWrapper({ gameStateStore }),
+	});
+}
+
+test("changes active tab", async () => {
+	const { user, getAllByRole } = renderWithStore();
+	const buttons = getAllByRole("button");
+	await user.click(buttons[0]);
+	expect(gameStateStore.getState().activeTab).toBe(GameManagementTab.TaskList);
+});
+```
+
+### Example: Timers in tests
+
+```typescript
+beforeEach(() => {
+	vi.useFakeTimers({ shouldAdvanceTime: true });
+});
+
+afterEach(() => {
+	vi.runOnlyPendingTimers();
+	vi.useRealTimers();
+	vi.restoreAllMocks();
+});
+```
+
+### Notes specific to game-room tests
+
+-   Path aliases observed in existing tests must be preserved: `@/test/utilities`, `@/_src/shared/api`, and local `../__mocks__`, `../__tests__/...`
+-   Prefer `within(...)` for scoping queries and `data-testid` values consistent with UI components
+-   Name the a11y test: "doesn't violate any accessibility rules" (typo-free)
+-   Use `renderComponent`/`renderWithStore` helpers; keep them at the bottom of the test file for readability

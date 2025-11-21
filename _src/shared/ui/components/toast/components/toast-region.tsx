@@ -5,6 +5,7 @@ import { AriaToastRegionProps, useToastRegion } from "@react-aria/toast";
 
 import { Toast } from "./toast";
 import { ToastContent } from "../models/toast-content";
+import { useValueChanged } from "@/_src/shared/lib";
 
 type ToastRegionProps = {
 	state: ToastState<ToastContent>;
@@ -20,7 +21,8 @@ export function ToastRegion(props: ToastRegionProps) {
 
 	const { regionProps } = useToastRegion(restProps, state, ref);
 
-	if (state.visibleToasts.length === 0 && prevStackLengthRef.current !== 0) {
+	const toastsCountChanged = useValueChanged(state.visibleToasts.length, 0);
+	if (toastsCountChanged.isChanged && toastsCountChanged.value === 0) {
 		setHovered(false);
 	}
 

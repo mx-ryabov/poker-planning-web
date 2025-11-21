@@ -1,5 +1,5 @@
 import { test, describe, expect, vi } from "vitest";
-import { act, render, within } from "@/test/utilities";
+import { act, render } from "@/test/utilities";
 import { GameJoinForm } from "./game-join-form";
 import { ApiFakeProvider } from "@/__mocks__/api-fake-provider";
 
@@ -70,18 +70,17 @@ describe("Game Join Form", () => {
 
 	describe("| Validation |", () => {
 		test("the display name field doesn't show error when empty until the value changed", async () => {
-			const { getByRole, user, getByTestId } = renderForm();
+			const { getByRole, user, getByTestId, queryByTestId } =
+				renderForm();
 
 			const textField = getByRole("textbox", {
 				name: /let's get acquainted/i,
 			});
 			await user.type(textField, "Participant Name");
-			const errorMsg = within(
-				getByTestId("displayName-text-field-container"),
-			).queryByTestId("error-msg");
-			expect(errorMsg).toBeEmptyDOMElement();
+			const errorMsg = queryByTestId("displayName-error-msg");
+			expect(errorMsg).not.toBeInTheDocument();
 			await user.clear(textField);
-			expect(errorMsg).not.toBeEmptyDOMElement();
+			expect(getByTestId("displayName-error-msg")).toBeInTheDocument();
 		});
 
 		test("the display name field shows an error when empty", async () => {
@@ -92,9 +91,7 @@ describe("Game Join Form", () => {
 			});
 			await user.type(textField, "Participant Name");
 			await user.clear(textField);
-			const errorMsg = within(
-				getByTestId("displayName-text-field-container"),
-			).getByTestId("error-msg");
+			const errorMsg = getByTestId("displayName-error-msg");
 			expect(errorMsg).toHaveTextContent(/Don't be shy!/i);
 		});
 
@@ -108,9 +105,7 @@ describe("Game Join Form", () => {
 				textField,
 				"Game Name Game Name Game Name Game Name Game Name Game Name 1",
 			);
-			const errorMsg = within(
-				getByTestId("displayName-text-field-container"),
-			).getByTestId("error-msg");
+			const errorMsg = getByTestId("displayName-error-msg");
 			expect(errorMsg).toHaveTextContent(/Maybe you have a short name?/i);
 		});
 	});

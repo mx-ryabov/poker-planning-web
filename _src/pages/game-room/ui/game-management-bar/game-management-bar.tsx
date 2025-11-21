@@ -29,7 +29,7 @@ export function GameManagementBar({ className }: Props) {
 		"neutral",
 	);
 	useEffect(() => {
-		if (liveStatus.state === "connected") {
+		if (liveStatus.status === "connected") {
 			setBarState((prevState) =>
 				prevState === "error" ? "success" : "neutral",
 			);
@@ -38,8 +38,8 @@ export function GameManagementBar({ className }: Props) {
 			}, 1000);
 		}
 		if (
-			liveStatus.state === "disconnected" ||
-			liveStatus.state === "reconnecting"
+			liveStatus.status === "disconnected" ||
+			liveStatus.status === "reconnecting"
 		) {
 			setBarState("error");
 		}
@@ -104,10 +104,10 @@ export function GameManagementBar({ className }: Props) {
 						state: barState,
 					})}
 				>
-					{liveStatus.state === "reconnecting" && "Reconnecting..."}
-					{liveStatus.state === "disconnected" &&
+					{liveStatus.status === "reconnecting" && "Reconnecting..."}
+					{liveStatus.status === "disconnected" &&
 						"Disconnected. Please check you network."}
-					{liveStatus.state === "connected" && "You're live again!"}
+					{liveStatus.status === "connected" && "You're live again!"}
 				</span>
 			)}
 		</div>

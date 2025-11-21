@@ -51,7 +51,6 @@ export function useParticipantsEvDis({
 
 	useEffect(() => {
 		const handler = ({ payload }: ParticipantLeftEvent) => {
-			console.log("left", payload.userId);
 			disconnectParticipant(payload.userId);
 		};
 

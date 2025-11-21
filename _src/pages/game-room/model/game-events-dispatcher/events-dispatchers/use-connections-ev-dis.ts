@@ -1,8 +1,7 @@
 import {
-	DisconnectedEvent,
+	ConnectionEvent,
 	EventSubscriber,
 	GameEventType,
-	ReconnectingEvent,
 } from "../../game-events-hub";
 import { StoreApi, useStore } from "zustand";
 import { GameStateStore } from "../../store/game-state-store.model";
@@ -25,34 +24,21 @@ export function useConnectionsEvDis({
 	);
 
 	useEffect(() => {
-		const handler = ({ payload }: ReconnectingEvent) => {
-			setLiveStatus({
-				state: "reconnecting",
-				reason: payload,
-			});
+		const handler = ({ payload }: ConnectionEvent) => {
+			if (payload.status === "connected") {
+				router.refresh();
+			}
+			setLiveStatus(payload);
 		};
 
-		return eventSubscriber(GameEventType.Reconnecting, handler);
-	}, [eventSubscriber, setLiveStatus]);
-
-	useEffect(() => {
-		const handler = ({ payload }: DisconnectedEvent) => {
-			setLiveStatus({
-				state: "disconnected",
-				reason: payload,
-			});
-		};
-
-		return eventSubscriber(GameEventType.Disconnected, handler);
-	}, [eventSubscriber, setLiveStatus]);
+		return eventSubscriber(GameEventType.ConnectionEvent, handler);
+	}, [eventSubscriber, setLiveStatus, router]);
 
 	useEffect(() => {
 		const abortController = new AbortController();
 		window.addEventListener(
 			"online",
 			() => {
-				console.log("online again!");
-
 				router.refresh();
 			},
 			{ signal: abortController.signal },
@@ -62,12 +48,4 @@ export function useConnectionsEvDis({
 			abortController.abort();
 		};
 	}, [router]);
-
-	useEffect(() => {
-		const handler = () => {
-			setLiveStatus({ state: "connected" });
-		};
-
-		return eventSubscriber(GameEventType.Reconnected, handler);
-	}, [eventSubscriber, setLiveStatus]);
 }

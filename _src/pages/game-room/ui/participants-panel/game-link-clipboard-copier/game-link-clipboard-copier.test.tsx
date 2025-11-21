@@ -5,10 +5,10 @@ import { GameLinkClipboardCopier } from "./game-link-clipboard-copier";
 
 describe("Game Link Clipboard Copier", () => {
 	beforeEach(() => {
-		vi.spyOn(window.location, "href", "get").mockReturnValue(
-			"https://poker-planning.com/game/game-id",
-		);
 		vi.useFakeTimers({ shouldAdvanceTime: true });
+		vi.spyOn(window, "location", "get").mockReturnValue({
+			href: "https://poker-planning.com/game/game-id",
+		} as Location);
 	});
 
 	afterEach(() => {

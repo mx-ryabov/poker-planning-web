@@ -15,7 +15,7 @@ export const createGameManagementSlice: StateCreator<
 > = (set) => ({
 	activeTab: null,
 	liveStatus: {
-		state: "connected",
+		status: "notStarted",
 	},
 	openedTicketId: null,
 	setActiveTab: (tab: GameManagementTab | null) =>

@@ -44,27 +44,31 @@ describe("FullSizeFormTextInput", () => {
 	});
 
 	test("can show validation message", async () => {
-		const { getByTestId, rerender } = render(
+		const { getByTestId, rerender, queryByTestId } = render(
 			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				onEnter={vi.fn()}
+				name="test"
 				maxLength={50}
 			/>,
 		);
 
-		const errorContainer = getByTestId("error-msg");
-		expect(errorContainer).toHaveTextContent("");
+		const errorContainer = queryByTestId("test-error-msg");
+		expect(errorContainer).not.toBeInTheDocument();
 		rerender(
 			<FullSizeFormTextInput
 				label="Name"
 				placeholder="Team Planning"
 				onEnter={vi.fn()}
 				maxLength={50}
+				name="test"
 				error="Error Message"
 			/>,
 		);
-		expect(errorContainer).toHaveTextContent("Error Message");
+		expect(getByTestId("test-error-msg")).toHaveTextContent(
+			"Error Message",
+		);
 	});
 
 	test("shows Enter shortcut if the value.length > 0 and hides if === 0", async () => {

@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 import { test, describe, expect, vi } from "vitest";
-import { act, render, within } from "@/test/utilities";
+import { render, within } from "@/test/utilities";
 import { CreateGameForm } from "./form";
 import { CreateGameRequest } from "@/_src/shared/api/game-api";
 import { VotingSystemsProvider } from "@/_src/entities/voting-system";
-import { ReactNode } from "react";
+import { NuqsTestingAdapter, OnUrlUpdateFunction } from "nuqs/adapters/testing";
 import { VotingSystem } from "@/_src/shared/api/voting-system-api";
 import { ApiFakeProvider } from "@/__mocks__/api-fake-provider";
 
@@ -17,9 +17,7 @@ const helper = ({
 	user,
 }: ReturnType<typeof render>) => ({
 	getNameField: () => {
-		return getByRole("textbox", {
-			name: /What is the name of your game?/i,
-		});
+		return getByTestId("name-text-field");
 	},
 	getVSField: () => {
 		return getByRole("radiogroup", { name: /choose your voting system/i });
@@ -30,7 +28,7 @@ const helper = ({
 		});
 	},
 	getCreatorNameField: () => {
-		return getByRole("textbox", { name: /let's get acquainted/i });
+		return getByTestId("creatorName-text-field");
 	},
 	getIsAutoRevealField: () => {
 		return getByRole("checkbox", { name: /auto-reveal/i });
@@ -54,18 +52,15 @@ const helper = ({
 		return getByRole("button", { name: /start game/i });
 	},
 	goToTheVSStep: async () => {
-		const textField = getByRole("textbox", {
-			name: /What is the name of your game?/i,
-		});
-		const continueBtn = getByRole("button", { name: /continue/i });
+		const textField = getByTestId("name-text-field");
 
 		await user.type(textField, "Game Name");
+		const continueBtn = getByRole("button", { name: /continue/i });
+		expect(continueBtn).toBeEnabled();
 		await user.click(continueBtn);
 	},
 	goToCreatorNameStep: async () => {
-		const textField = getByRole("textbox", {
-			name: /What is the name of your game?/i,
-		});
+		const textField = getByTestId("name-text-field");
 		const continueBtn = getByRole("button", { name: /continue/i });
 
 		await user.type(textField, "Game Name");
@@ -81,12 +76,10 @@ const helper = ({
 		await user.click(continueBtn);
 	},
 	goToAdvancedSettingsStep: async () => {
-		const gmaeNameField = getByRole("textbox", {
-			name: /What is the name of your game?/i,
-		});
+		const gameNameField = getByTestId("name-text-field");
 		const continueBtn = getByRole("button", { name: /continue/i });
 
-		await user.type(gmaeNameField, "Game Name");
+		await user.type(gameNameField, "Game Name", {});
 		await user.click(continueBtn);
 
 		const votingSystemsRadioGroup = getByRole("radiogroup", {
@@ -98,9 +91,7 @@ const helper = ({
 		await user.click(optionContainers[0]);
 		await user.click(continueBtn);
 
-		const creatorNameField = getByRole("textbox", {
-			name: /let's get acquainted/i,
-		});
+		const creatorNameField = getByTestId("creatorName-text-field");
 		await user.type(creatorNameField, "Creator Name");
 		const advancedSettingsBtn = getByRole("button", {
 			name: /advanced settings/i,
@@ -108,29 +99,34 @@ const helper = ({
 		await user.click(advancedSettingsBtn);
 	},
 });
-
-const renderForm = ({
-	submitMock,
-}: {
+type RenderProps = {
 	submitMock: (_req: CreateGameRequest) => Promise<void>;
-}) => {
-	const renderResult = render(<CreateGameForm />, {
-		wrapper: ({ children }: { children: ReactNode }) => {
-			return (
-				<ApiFakeProvider
-					fakeApi={{
-						game: {
-							createGameAsGuest: submitMock,
-						},
-					}}
-				>
-					<VotingSystemsProvider value={VOTING_SYSTEMS_MOCK}>
-						{children}
-					</VotingSystemsProvider>
-				</ApiFakeProvider>
-			);
+	onURLUpdate?: OnUrlUpdateFunction;
+};
+const renderForm = ({ submitMock, onURLUpdate }: RenderProps) => {
+	const renderResult = render(
+		<CreateGameForm />,
+		{
+			wrapper: ({ children }) => {
+				return (
+					<NuqsTestingAdapter onUrlUpdate={onURLUpdate} hasMemory>
+						<ApiFakeProvider
+							fakeApi={{
+								game: {
+									createGameAsGuest: submitMock,
+								},
+							}}
+						>
+							<VotingSystemsProvider value={VOTING_SYSTEMS_MOCK}>
+								{children}
+							</VotingSystemsProvider>
+						</ApiFakeProvider>
+					</NuqsTestingAdapter>
+				);
+			},
 		},
-	});
+		{ delay: 20 },
+	);
 	return {
 		...renderResult,
 		helper: helper({ ...renderResult }),
@@ -196,25 +192,25 @@ describe("Create Game Form", () => {
 			const textField = helper.getNameField();
 
 			await user.type(textField, "Game Name");
-			await act(() => user.clear(textField));
+			await user.clear(textField);
 			const continueBtn = helper.getContinueBtn();
 			expect(continueBtn).toBeDisabled();
 		});
 
 		describe("| Validation |", () => {
 			test("the game name field doesn't show error when empty until the value changed", async () => {
-				const { helper, user, getByTestId } = renderForm({
-					submitMock: vi.fn(),
-				});
+				const { helper, user, getByTestId, queryByTestId } = renderForm(
+					{
+						submitMock: vi.fn(),
+					},
+				);
 				const textField = helper.getNameField();
 
 				await user.type(textField, "Game Name");
-				const errorMsg = within(
-					getByTestId("name-text-field-container"),
-				).queryByTestId("error-msg");
-				expect(errorMsg).toBeEmptyDOMElement();
+				const errorMsg = queryByTestId("name-error-msg");
+				expect(errorMsg).not.toBeInTheDocument();
 				await user.clear(textField);
-				expect(errorMsg).not.toBeEmptyDOMElement();
+				expect(getByTestId("name-error-msg")).toBeInTheDocument();
 			});
 
 			test("the game name field shows an error when empty", async () => {
@@ -225,9 +221,7 @@ describe("Create Game Form", () => {
 
 				await user.type(textField, "Game Name");
 				await user.clear(textField);
-				const errorMsg = within(
-					getByTestId("name-text-field-container"),
-				).getByTestId("error-msg");
+				const errorMsg = getByTestId("name-error-msg");
 				expect(errorMsg).toHaveTextContent(
 					/You have to come up with something. The name can't be empty/i,
 				);
@@ -243,9 +237,7 @@ describe("Create Game Form", () => {
 					textField,
 					"Game Name Game Name Game Name Game Name Game Name Game Name 1",
 				);
-				const errorMsg = within(
-					getByTestId("name-text-field-container"),
-				).getByTestId("error-msg");
+				const errorMsg = getByTestId("name-error-msg");
 				expect(errorMsg).toHaveTextContent(
 					/Statistically, 50 can be painful. For your brain, to perceive the information./i,
 				);
@@ -379,7 +371,6 @@ describe("Create Game Form", () => {
 				"true",
 			);
 			await user.keyboard("[ArrowDown]");
-			await user.keyboard("[Space]");
 			expect(optionContainers[1]).toHaveAttribute(
 				"data-selected",
 				"true",
@@ -404,16 +395,21 @@ describe("Create Game Form", () => {
 		});
 
 		test("makes the continue button enabled if any option is selected", async () => {
+			const onURLUpdate = vi.fn();
+
 			const { helper, user } = renderForm({
 				submitMock: vi.fn(),
+				onURLUpdate,
 			});
 			await helper.goToTheVSStep();
+
 			const votingSystemsRadioGroup = helper.getVSField();
 
 			const optionContainers = within(
 				votingSystemsRadioGroup,
 			).getAllByTestId("voting-system-option-container");
-			await act(async () => await user.click(optionContainers[0]));
+
+			await user.keyboard("[Space]");
 			expect(optionContainers[0]).toHaveAttribute(
 				"data-selected",
 				"true",
@@ -496,7 +492,7 @@ describe("Create Game Form", () => {
 			const advancedSettingsBtn = helper.getAdvancedSettingsBtn();
 			const textField = helper.getCreatorNameField();
 			await user.type(textField, "Creator Name");
-			await act(() => user.clear(textField));
+			await user.clear(textField);
 			const startGameBtn = helper.getStartGameBtn();
 			expect(startGameBtn).toBeDisabled();
 			expect(advancedSettingsBtn).toBeDisabled();
@@ -504,18 +500,20 @@ describe("Create Game Form", () => {
 
 		describe("| Validation |", () => {
 			test("the creator name field doesn't show error when empty until the value changed", async () => {
-				const { helper, user, getByTestId } = renderForm({
-					submitMock: vi.fn(),
-				});
+				const { helper, user, getByTestId, queryByTestId } = renderForm(
+					{
+						submitMock: vi.fn(),
+					},
+				);
 				await helper.goToCreatorNameStep();
 				const textField = helper.getCreatorNameField();
 				await user.type(textField, "Creator Name");
-				const errorMsg = within(
-					getByTestId("creatorName-text-field-container"),
-				).queryByTestId("error-msg");
-				expect(errorMsg).toBeEmptyDOMElement();
+				const errorMsg = queryByTestId("creatorName-error-msg");
+				expect(errorMsg).not.toBeInTheDocument();
 				await user.clear(textField);
-				expect(errorMsg).not.toBeEmptyDOMElement();
+				expect(
+					getByTestId("creatorName-error-msg"),
+				).toBeInTheDocument();
 			});
 
 			test("the creator name field shows an error when empty", async () => {
@@ -526,9 +524,7 @@ describe("Create Game Form", () => {
 				const textField = helper.getCreatorNameField();
 				await user.type(textField, "Creator Name");
 				await user.clear(textField);
-				const errorMsg = within(
-					getByTestId("creatorName-text-field-container"),
-				).getByTestId("error-msg");
+				const errorMsg = getByTestId("creatorName-error-msg");
 				expect(errorMsg).toHaveTextContent(/Don't be shy!/i);
 			});
 
@@ -542,9 +538,7 @@ describe("Create Game Form", () => {
 					textField,
 					"Game Name Game Name Game Name Game Name Game Name Game Name 1",
 				);
-				const errorMsg = within(
-					getByTestId("creatorName-text-field-container"),
-				).getByTestId("error-msg");
+				const errorMsg = getByTestId("creatorName-error-msg");
 				expect(errorMsg).toHaveTextContent(
 					/Maybe you have a short name?/i,
 				);
@@ -620,9 +614,11 @@ describe("Create Game Form", () => {
 	});
 
 	test("submits data when the start game button clicked", async () => {
+		const onURLUpdate = vi.fn();
 		const submitMock = vi.fn();
 		const { helper, user, getAllByTestId } = renderForm({
 			submitMock,
+			onURLUpdate,
 		});
 		await helper.goToAdvancedSettingsStep();
 		const autoRevealFieldContainer = getAllByTestId(
@@ -632,6 +628,7 @@ describe("Create Game Form", () => {
 		const startGameBtn = helper.getStartGameBtn();
 		expect(startGameBtn).toBeEnabled();
 		await user.click(startGameBtn);
+
 		expect(submitMock).toHaveBeenNthCalledWith(1, {
 			name: "Game Name",
 			votingSystemId: "6a113d25-34c9-4b49-985c-2df6dd67650c",

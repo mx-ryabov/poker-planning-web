@@ -1,6 +1,6 @@
 "use client";
 import { useApi } from "@/_src/shared/providers";
-import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 import { Button } from "@/_src/shared/ui/components/button";
 import { MailIcon } from "@/_src/shared/ui/components/icon/svg/mail.icon";
 import { Input } from "@/_src/shared/ui/components/input";

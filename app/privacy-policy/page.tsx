@@ -14,6 +14,24 @@ export const metadata: Metadata = {
 export default async function PrivacyPolicyPage() {
 	return (
 		<main className="mx-auto max-w-3xl px-4 pb-12">
+			<PrivacyPolicyHeader />
+			<PrivacyPolicyIntroduction />
+			<DataCollectionTable />
+			<CookiesSection />
+			<DataStorageSection />
+			<DataRetentionTable />
+			<GDPRRightsSection />
+			<ThirdPartyServicesSection />
+			<DataTransfersSection />
+			<DataBreachSection />
+			<ContactSection />
+		</main>
+	);
+}
+
+function PrivacyPolicyHeader() {
+	return (
+		<>
 			<NextLink href="/" className="mt-6 mb-12 flex items-center">
 				<Image
 					src={LogoSvg}
@@ -26,14 +44,25 @@ export default async function PrivacyPolicyPage() {
 			<h1 className="mb-6 text-3xl font-bold text-neutral-900">
 				Privacy Policy
 			</h1>
-			<p className="mb-4">
-				Poker Planning (&quot;we&quot;, &quot;us&quot;, or
-				&quot;our&quot;) is committed to protecting your personal data
-				and respecting your privacy. This Privacy Policy explains how we
-				collect, use, and protect your information when you use our web
-				application at poker-planning.io.
-			</p>
+		</>
+	);
+}
 
+function PrivacyPolicyIntroduction() {
+	return (
+		<p className="mb-4">
+			Poker Planning (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;)
+			is committed to protecting your personal data and respecting your
+			privacy. This Privacy Policy explains how we collect, use, and
+			protect your information when you use our web application at
+			poker-planning.io.
+		</p>
+	);
+}
+
+function DataCollectionTable() {
+	return (
+		<>
 			<h2 className="mt-8 mb-4 text-xl font-semibold">
 				What Data We Collect and Why
 			</h2>
@@ -95,7 +124,13 @@ export default async function PrivacyPolicyPage() {
 					</tr>
 				</tbody>
 			</table>
+		</>
+	);
+}
 
+function CookiesSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-4 text-xl font-semibold">
 				Use of Cookies and Analytics
 			</h2>
@@ -111,7 +146,13 @@ export default async function PrivacyPolicyPage() {
 				On your first visit, we will request your consent to use cookies
 				through a cookie banner. You may opt out at any time.
 			</p>
+		</>
+	);
+}
 
+function DataStorageSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-2 text-xl font-semibold">
 				How We Store and Protect Your Data
 			</h2>
@@ -129,7 +170,13 @@ export default async function PrivacyPolicyPage() {
 				context of a session. We do not link them to persistent user
 				accounts.
 			</p>
+		</>
+	);
+}
 
+function DataRetentionTable() {
+	return (
+		<>
 			<h2 className="mt-8 mb-2 text-xl font-semibold">
 				How Long We Keep Your Data
 			</h2>
@@ -173,7 +220,13 @@ export default async function PrivacyPolicyPage() {
 					</tr>
 				</tbody>
 			</table>
+		</>
+	);
+}
 
+function GDPRRightsSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-2 text-xl font-semibold">
 				Your Rights Under GDPR
 			</h2>
@@ -188,7 +241,13 @@ export default async function PrivacyPolicyPage() {
 				To exercise any of these rights, contact us at
 				mx.ryabov.s@gmail.com.
 			</p>
+		</>
+	);
+}
 
+function ThirdPartyServicesSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-2 text-xl font-semibold">
 				Third-Party Services
 			</h2>
@@ -203,7 +262,13 @@ export default async function PrivacyPolicyPage() {
 				Each provider complies with GDPR and offers a Data Processing
 				Agreement (DPA).
 			</p>
+		</>
+	);
+}
 
+function DataTransfersSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-4 text-xl font-semibold">Data Transfers</h2>
 			<p className="text-sm text-gray-500">
 				Some of our service providers may store or process your data
@@ -211,7 +276,13 @@ export default async function PrivacyPolicyPage() {
 				safeguards, such as Standard Contractual Clauses (SCCs), are in
 				place.
 			</p>
+		</>
+	);
+}
 
+function DataBreachSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-4 text-xl font-semibold">
 				Data Breach Notification
 			</h2>
@@ -220,13 +291,19 @@ export default async function PrivacyPolicyPage() {
 				freedoms, we will notify you and the relevant authorities within
 				72 hours.
 			</p>
+		</>
+	);
+}
 
+function ContactSection() {
+	return (
+		<>
 			<h2 className="mt-8 mb-4 text-xl font-semibold">Contact Us</h2>
 			<p className="text-sm text-gray-500">
 				If you have any questions about this Privacy Policy or want to
 				make a data request, please contact us at: 📧
 				ms.ryabov.s@gmail.com
 			</p>
-		</main>
+		</>
 	);
 }

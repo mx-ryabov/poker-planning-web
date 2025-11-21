@@ -11,7 +11,7 @@ import { MagicPenIcon } from "@/_src/shared/ui/components/icon/svg/magic-pen.ico
 import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
 import { NextLinkButton } from "@/_src/shared/ui/next-components/next-link";
 import React, { useState } from "react";
-import { AnimatedText } from "@/_src/shared/ui/components/animated-text.tsx";
+import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 
 export function ComingSoonSection() {
 	const [activeTabInd, setActiveTabInd] = useState(0);
