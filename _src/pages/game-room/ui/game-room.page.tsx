@@ -17,6 +17,7 @@ import { GameManagementDrawer } from "./game-management-drawer";
 import { PokerField } from "./poker-field";
 import { MobileBlockerScreen } from "@/_src/shared/ui/components/mobile-blocker-screen";
 import { OnboardingHelper } from "./onboardings";
+import { BadConnectionStatus } from "./bad-connection-status";
 
 if (typeof window !== "undefined") {
 	scan({
@@ -65,6 +66,7 @@ export const GameRoomPage: NextPage<PageProps> = async ({
 				currentParticipant={currentParticipantRes.data}
 				game={gameRes.data}
 			>
+				<BadConnectionStatus />
 				<div className="flex h-screen w-full flex-row overflow-hidden">
 					<div className="flex w-full flex-col relative">
 						<header className="relative flex w-full flex-row justify-between p-6">

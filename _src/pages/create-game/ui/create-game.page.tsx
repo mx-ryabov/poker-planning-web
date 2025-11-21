@@ -12,8 +12,6 @@ interface Props {
 }
 
 export const CreateGamePage = ({ votingSystems }: Props) => {
-	console.log("re-render");
-
 	return (
 		<NuqsAdapter>
 			<MobileBlockerScreen>

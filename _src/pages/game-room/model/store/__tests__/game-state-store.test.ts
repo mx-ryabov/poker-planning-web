@@ -28,7 +28,7 @@ describe("Game State Store", () => {
 		expect(state.activeTab).toBe(null);
 		expect(state.liveStatus).toEqual(
 			expect.objectContaining({
-				state: "connected",
+				status: "notStarted",
 			}),
 		);
 		expect(state.state).toStrictEqual({
@@ -84,16 +84,120 @@ describe("Game State Store", () => {
 			const store = result.current;
 
 			expect(store.getState().liveStatus).toEqual(
-				expect.objectContaining({ state: "connected" }),
+				expect.objectContaining({ status: "notStarted" }),
 			);
 
 			const reasonError = new Error("Error text");
 			store
 				.getState()
-				.setLiveStatus({ state: "reconnecting", reason: reasonError });
+				.setLiveStatus({ status: "reconnecting", reason: reasonError });
 			expect(store.getState().liveStatus).toEqual({
-				state: "reconnecting",
+				status: "reconnecting",
 				reason: reasonError,
+			});
+		});
+
+		test("changes liveStatus with function updater", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			expect(store.getState().liveStatus).toEqual(
+				expect.objectContaining({ status: "notStarted" }),
+			);
+
+			store.getState().setLiveStatus((prev) => ({
+				...prev,
+				status: "connected",
+			}));
+			expect(store.getState().liveStatus).toEqual({
+				status: "connected",
+			});
+		});
+
+		test("changes liveStatus with function updater preserving existing properties", async () => {
+			const reasonError = new Error("Error text");
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			// Set initial status with reason
+			store
+				.getState()
+				.setLiveStatus({ status: "reconnecting", reason: reasonError });
+			expect(store.getState().liveStatus).toEqual({
+				status: "reconnecting",
+				reason: reasonError,
+			});
+
+			// Update status using function updater, preserving reason
+			store.getState().setLiveStatus((prev) => ({
+				...prev,
+				status: "connected",
+			}));
+			expect(store.getState().liveStatus).toEqual({
+				status: "connected",
+				reason: reasonError,
+			});
+		});
+
+		test("changes liveStatus with function updater transforming to failed status", async () => {
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			store.getState().setLiveStatus({ status: "connecting" });
+			expect(store.getState().liveStatus).toEqual({
+				status: "connecting",
+			});
+
+			const failureError = new Error("Connection failed");
+			store.getState().setLiveStatus(() => ({
+				status: "failed",
+				reason: failureError,
+			}));
+			expect(store.getState().liveStatus).toEqual({
+				status: "failed",
+				reason: failureError,
+			});
+		});
+
+		test("changes liveStatus with function updater removing reason property", async () => {
+			const reasonError = new Error("Error text");
+			const { result } = renderHook(() =>
+				createGameStateStore({
+					game: GAME_MOCK,
+					currentParticipant: MASTER_PARTICIPANT,
+				}),
+			);
+			const store = result.current;
+
+			store
+				.getState()
+				.setLiveStatus({ status: "disconnected", reason: reasonError });
+			expect(store.getState().liveStatus).toEqual({
+				status: "disconnected",
+				reason: reasonError,
+			});
+
+			// Function updater that removes reason by returning a new status without it
+			store.getState().setLiveStatus(() => ({
+				status: "connected",
+			}));
+			expect(store.getState().liveStatus).toEqual({
+				status: "connected",
 			});
 		});
 

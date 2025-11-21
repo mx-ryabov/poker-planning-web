@@ -25,6 +25,9 @@
 		"no-unused-vars": "off",
 		"react/display-name": "off",
 		"no-mixed-spaces-and-tabs": "off",
-		"@typescript-eslint/no-empty-object-type": "off"
+		"@typescript-eslint/no-empty-object-type": "off",
+		"complexity": ["error", 10],
+		"max-depth": ["error", 5],
+		"max-params": ["error", 3]
 	}
 }

@@ -9,7 +9,7 @@ import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";
 import { ProfileIcon } from "@/_src/shared/ui/components/icon/svg/profile.icon";
 import { useGlobalToast } from "@/_src/shared/ui/components/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -27,7 +27,6 @@ const GameJoinFormSchema = z.object({
 export function GameJoinForm({ gameId }: Props) {
 	const api = useApi();
 	const toast = useGlobalToast();
-	const inputRef = useRef<HTMLInputElement | null>(null);
 	const { control, formState } = useForm<{ displayName: string }>({
 		mode: "onChange",
 		defaultValues: {
@@ -35,13 +34,6 @@ export function GameJoinForm({ gameId }: Props) {
 		},
 		resolver: zodResolver(GameJoinFormSchema),
 	});
-
-	useEffect(() => {
-		const inputEl = inputRef.current;
-		if (inputEl) {
-			inputEl.focus();
-		}
-	}, [inputRef]);
 
 	const [serverError, submitAction, isPending] = useActionState<
 		string | undefined,
@@ -90,17 +82,14 @@ export function GameJoinForm({ gameId }: Props) {
 								maxLength={50}
 								{...field}
 								error={error}
-								ref={(el) => {
-									field.ref(el);
-									inputRef.current = el;
-								}}
+								autoFocus
 							/>
 						)}
 					/>
 				</div>
 			</div>
 
-			<footer
+			<div
 				className="fixed bottom-0 flex w-full items-center justify-between px-10 pb-10"
 				role="footer"
 			>
@@ -139,7 +128,7 @@ export function GameJoinForm({ gameId }: Props) {
 						contentRight={PlayIcon({ size: 18 })}
 					/>
 				</section>
-			</footer>
+			</div>
 		</form>
 	);
 }

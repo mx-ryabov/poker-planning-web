@@ -19,7 +19,7 @@ import { twMerge } from "tailwind-merge";
 type Props = InputHTMLAttributes<HTMLInputElement> & {
 	label: string;
 	error?: string;
-	isValid?: boolean;
+	isInvalid?: boolean;
 	shouldShowErrorAfterTouch?: boolean;
 	onEnter?: () => void;
 	validate?: TextFieldProps["validate"];
@@ -32,19 +32,20 @@ export const FullSizeFormTextInput = forwardRef(
 			maxLength,
 			error,
 			label,
-			isValid,
+			isInvalid,
 			validate,
 			shouldShowErrorAfterTouch,
 			...inputProps
 		} = props;
 
 		const [isTouched, setIsTouched] = useState(false);
-		const isValidFinal = useMemo(() => {
+		const isInvalidFinal = useMemo(() => {
+			const isInvalidFull = isInvalid || !!error;
 			if (shouldShowErrorAfterTouch) {
-				return isTouched ? isValid : true;
+				return isTouched ? isInvalidFull : false;
 			}
-			return isValid;
-		}, [isTouched, isValid, shouldShowErrorAfterTouch]);
+			return isInvalidFull;
+		}, [isTouched, isInvalid, shouldShowErrorAfterTouch, error]);
 
 		const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 			if (!isTouched) {
@@ -68,7 +69,7 @@ export const FullSizeFormTextInput = forwardRef(
 			<TextField
 				className="relative flex flex-col"
 				validate={validate}
-				isInvalid={!isValidFinal}
+				isInvalid={isInvalidFinal}
 			>
 				<Label className="label mb-4 text-lg text-neutral-900">
 					{label}

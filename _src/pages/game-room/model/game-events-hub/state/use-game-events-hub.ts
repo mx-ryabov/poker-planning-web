@@ -1,33 +1,10 @@
-import {
-	HubConnection,
-	HubConnectionState,
-} from "@microsoft/signalr/dist/esm/HubConnection";
-import { HubConnectionBuilder } from "@microsoft/signalr/dist/esm/HubConnectionBuilder";
-import { HttpTransportType } from "@microsoft/signalr/dist/esm/ITransport";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-	CardsRevealedEvent,
-	CurrentParticipantUpdatedEvent,
-	DisconnectedEvent,
-	NewEstimationAppliedEvent,
-	ParticipantJoinedEvent,
-	ParticipantLeftEvent,
-	ParticipantVotedEvent,
-	ReconnectedEvent,
-	ReconnectingEvent,
-	SettingsUpdatedEvent,
-	TicketAddedEvent,
-	TicketDeletedEvent,
-	TicketUpdatedEvent,
-	VotingCancelledEvent,
-	VotingFinishedEvent,
-	VotingStartedEvent,
-} from "../events/game-events";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { GameEventType, GameEventTypeMap } from "../events";
 import {
 	GameEventListener,
 	GameEventListenerCallback,
 } from "./use-game-events-hub.types";
+import { GameHubManager } from "./game-connection-manager";
 
 type Props = {
 	gameId: string;
@@ -35,118 +12,22 @@ type Props = {
 };
 
 export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
-	const gameEventTarget = useMemo(() => new EventTarget(), []);
-
-	const [connection, setConnection] = useState<HubConnection | null>(null);
+	const hubManagerRef = useRef(
+		GameHubManager.getInstance({ gameId, accessTokenFactory }),
+	);
 
 	useEffect(() => {
-		if (typeof window === "undefined") {
-			return;
-		}
-
-		let isCanceled = false;
-
-		const hubConnectionSetup = new HubConnectionBuilder().withUrl(
-			`${process.env.NEXT_PUBLIC_HOST}/hubs/game?gameId=${gameId}`,
-			{
-				transport: HttpTransportType.WebSockets,
-				accessTokenFactory,
-			},
-		);
-
-		hubConnectionSetup.withAutomaticReconnect();
-
-		const conn = hubConnectionSetup.build();
-
-		conn.start()
-			.then(() => {
-				if (isCanceled) {
-					return conn.stop();
-				}
-				gameEventTarget.dispatchEvent(new ReconnectedEvent());
-
-				setConnection(conn);
-			})
-			.catch((e) => {
-				console.log(`connection error ${conn.connectionId}: `, e);
-			});
-
+		const hubManager = hubManagerRef.current;
+		hubManager.connect();
 		return () => {
-			isCanceled = true;
-
-			if (conn.state === HubConnectionState.Connected) {
-				conn.stop();
-			}
-			setConnection(null);
+			hubManager.disconnect();
 		};
-		// avoid putting accessTokenFactory to the dependency array since every time when we revalidate async state the reconnection happens
-	}, [setConnection, gameId, gameEventTarget]);
+	}, [hubManagerRef]);
 
-	useEffect(() => {
-		if (!connection || connection.state !== HubConnectionState.Connected)
-			return;
-
-		connection.onreconnecting((error) => {
-			gameEventTarget.dispatchEvent(new ReconnectingEvent(error));
-		});
-		connection.onreconnected(() => {
-			gameEventTarget.dispatchEvent(new ReconnectedEvent());
-		});
-		connection.onclose((error) => {
-			gameEventTarget.dispatchEvent(new DisconnectedEvent(error));
-		});
-	}, [gameEventTarget, connection]);
-
-	useEffect(() => {
-		if (!connection || connection.state !== HubConnectionState.Connected) {
-			return;
-		}
-		connection.on(GameEventType.ParticipantJoined, (data) => {
-			gameEventTarget.dispatchEvent(new ParticipantJoinedEvent(data));
-		});
-		connection.on(GameEventType.ParticipantLeft, (data) => {
-			gameEventTarget.dispatchEvent(new ParticipantLeftEvent(data));
-		});
-		connection.on(GameEventType.TicketAdded, (data) => {
-			gameEventTarget.dispatchEvent(new TicketAddedEvent(data));
-		});
-		connection.on(GameEventType.TicketUpdated, (data) => {
-			gameEventTarget.dispatchEvent(new TicketUpdatedEvent(data));
-		});
-		connection.on(GameEventType.NewEstimationApplied, (data) => {
-			gameEventTarget.dispatchEvent(new NewEstimationAppliedEvent(data));
-		});
-		connection.on(GameEventType.TicketDeleted, (data) => {
-			gameEventTarget.dispatchEvent(new TicketDeletedEvent(data));
-		});
-
-		connection.on(GameEventType.VotingStarted, (data) => {
-			gameEventTarget.dispatchEvent(new VotingStartedEvent(data));
-		});
-		connection.on(GameEventType.CardsRevealed, () => {
-			gameEventTarget.dispatchEvent(new CardsRevealedEvent());
-		});
-		connection.on(GameEventType.VotingCancelled, () => {
-			gameEventTarget.dispatchEvent(new VotingCancelledEvent());
-		});
-		connection.on(GameEventType.VotingFinished, (votingResult) => {
-			gameEventTarget.dispatchEvent(
-				new VotingFinishedEvent(votingResult),
-			);
-		});
-		connection.on(GameEventType.ParticipantVoted, (data) => {
-			gameEventTarget.dispatchEvent(new ParticipantVotedEvent(data));
-		});
-
-		connection.on(GameEventType.SettingsUpdated, (data) => {
-			gameEventTarget.dispatchEvent(new SettingsUpdatedEvent(data));
-		});
-		connection.on(GameEventType.CurrentParticipantUpdated, (data) => {
-			gameEventTarget.dispatchEvent(
-				new CurrentParticipantUpdatedEvent(data),
-			);
-		});
-	}, [connection, gameEventTarget]);
+	const gameEventTarget = useMemo(
+		() => hubManagerRef.current.eventEmitter,
+		[hubManagerRef],
+	);
 
 	const eventSubscriber = useCallback(
 		<TType extends GameEventType>(

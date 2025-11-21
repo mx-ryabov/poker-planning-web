@@ -1,3 +1,4 @@
+import { VotingSystem, VotingSystemVote } from "@/_src/shared/api";
 import {
 	GameParticipant,
 	GameTicket,
@@ -66,6 +67,46 @@ export function generateVotingResultVote(
 		vote: null,
 		participantId: "test-participant-id",
 		...overrideResultVote,
+	};
+}
+
+export function generateVotingSystem(
+	overrideVotingSystem: Partial<VotingSystem>,
+): VotingSystem {
+	return {
+		id: uuidv4(),
+		name: "Test System",
+		creator: null,
+		votes: [
+			{
+				id: uuidv4(),
+				value: "1",
+				order: 1,
+				suit: "⚡",
+				votingSystemId: overrideVotingSystem.id || uuidv4(),
+			},
+			{
+				id: uuidv4(),
+				value: "2",
+				order: 2,
+				suit: "🚀",
+				votingSystemId: overrideVotingSystem.id || uuidv4(),
+			},
+		],
+		...overrideVotingSystem,
+	};
+}
+
+export function generateVote(
+	overrideVote: Partial<VotingSystemVote>,
+): VotingSystemVote {
+	return {
+		id: uuidv4(),
+		value: "1",
+		order: 1,
+		suit: "⚡",
+		votingSystemId: uuidv4(),
+		...overrideVote,
 	};
 }
 
