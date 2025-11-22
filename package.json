@@ -16,7 +16,8 @@
 		"build-storybook": "storybook build",
 		"fsd-lint": "pnpm exec steiger ./_src/",
 		"prepare": "husky",
-		"test:browser": "vitest --config=vitest.browser.config.ts"
+		"test:browser": "vitest --config=vitest.browser.config.ts",
+		"analyze": "ANALYZE=true pnpm build"
 	},
 	"lint-staged": {
 		"*.{ts,tsx}": [
