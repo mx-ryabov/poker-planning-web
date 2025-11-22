@@ -26,6 +26,15 @@ jobs:
                     # Pull the latest code
                     cd ~/app/poker-planning-web
                     git pull origin master
+
+                    # Install Docker Buildx if not already installed
+                    if ! docker buildx version &>/dev/null; then
+                      echo "Installing Docker Buildx..."
+                      mkdir -p ~/.docker/cli-plugins
+                      curl -SL https://github.com/docker/buildx/releases/latest/download/buildx-v0.12.1.linux-amd64 -o ~/.docker/cli-plugins/docker-buildx
+                      chmod +x ~/.docker/cli-plugins/docker-buildx
+                      docker buildx install
+                    fi
                     
                     # Stop and remove the old container
                     docker stop poker-planning-web 2>/dev/null || true
