@@ -9,6 +9,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withPlugins([withBundleAnalyzer], {
+	// Note: standalone output has known issues with symlinks on Windows
+	// If you encounter build errors on Windows, temporarily disable this line
 	...(process.env.NODE_ENV === "production" && { output: "standalone" }),
 	webpack(config, { isServer, dev }) {
 		if (!isServer) {

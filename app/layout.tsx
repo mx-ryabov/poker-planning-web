@@ -33,11 +33,11 @@ export default function RootLayout({
 					)}
 			</head>
 			<CookieConsentStateProvider>
-				<LocalizedStringProvider locale="en-US" />
 				<RenderIfConsentGiven>
 					<GoogleTagManager gtmId="GTM-5287FSHK" />
 				</RenderIfConsentGiven>
 				<body className={`${inter.variable} p-0 font-sans`}>
+					<LocalizedStringProvider locale="en-US" />
 					<AppProvider>{children}</AppProvider>
 					<CookieConsent />
 				</body>
