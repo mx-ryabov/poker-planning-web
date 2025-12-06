@@ -1,33 +1,52 @@
+const withPlugins = require("next-compose-plugins");
 const localesPlugin = require("@react-aria/optimize-locales-plugin");
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const { withSentryConfig } = require("@sentry/nextjs");
+
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+	enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-	output: "standalone",
-	webpack(config, { isServer }) {
+const nextConfig = withPlugins([withBundleAnalyzer], {
+	...(process.env.NODE_ENV === "production" && { output: "standalone" }),
+	webpack(config, { isServer, dev }) {
 		if (!isServer) {
 			// Don't include any locale strings in the client JS bundle.
 			config.plugins.push(localesPlugin.webpack({ locales: [] }));
+			if (process.env.ANALYZE === "true") {
+				config.plugins.push(
+					new StatsWriterPlugin({
+						filename: "../stats.json",
+						stats: {
+							assets: true,
+							chunks: true,
+							modules: true,
+						},
+					}),
+				);
+			}
 		}
 		return config;
 	},
 	experimental: {
 		testProxy: true,
 		serverComponentsHmrCache: false,
-		optimizePackageImports: ["@/_src/shared/ui"],
+		optimizePackageImports: [
+			"@/_src/shared/ui",
+			"react-aria",
+			"react-aria-components",
+			"@react-aria/selection",
+			"chart.js",
+			"react-chartjs-2",
+			"gsap",
+			"@gsap/react",
+			"@sentry/nextjs",
+		],
 	},
-};
-
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-	enabled: process.env.ANALYZE === "true",
 });
 
-module.exports = withBundleAnalyzer(nextConfig);
-
-// Injected content via Sentry wizard below
-
-const { withSentryConfig } = require("@sentry/nextjs");
-
-module.exports = withSentryConfig(module.exports, {
+module.exports = withSentryConfig(nextConfig, {
 	// For all available options, see:
 	// https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
@@ -41,7 +60,7 @@ module.exports = withSentryConfig(module.exports, {
 	// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
 	// Upload a larger set of source maps for prettier stack traces (increases build time)
-	widenClientFileUpload: true,
+	widenClientFileUpload: false,
 
 	// Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
 	// This can increase your server load as well as your hosting bill.

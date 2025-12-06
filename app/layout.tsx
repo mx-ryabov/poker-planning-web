@@ -8,6 +8,7 @@ import {
 	CookieConsentStateProvider,
 	RenderIfConsentGiven,
 } from "@/_src/shared/providers/cookie-consent-state-provider";
+import { LocalizedStringProvider } from "react-aria-components/i18n";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
 					)}
 			</head>
 			<CookieConsentStateProvider>
+				<LocalizedStringProvider locale="en-US" />
 				<RenderIfConsentGiven>
 					<GoogleTagManager gtmId="GTM-5287FSHK" />
 				</RenderIfConsentGiven>

@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { ButtonSquare, NewButton } from "@/_src/shared/ui/components/button";
 import { MenuIcon } from "@/_src/shared/ui/components/icon/svg/menu.icon";
-import { CloseIcon } from "@/_src/shared/ui/components/icon";
+import { CloseIcon } from "@/_src/shared/ui/components/icon/svg/close.icon";
 import { Modal, ModalOverlay } from "react-aria-components";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
 import { AnimatedFadeIn } from "@/_src/shared/ui/components/animated-fade-in";
@@ -32,13 +32,13 @@ export function Header({ containerRef }: HeaderProps) {
 
 	useBgBlurAnimation(headerRef);
 
-	const { animateMenuClosing } = useMenuOpenCloseAnimation(
+	const { animateMenuClosing } = useMenuOpenCloseAnimation({
 		containerRef,
 		headerRef,
 		modalRef,
 		menuContainerRef,
 		isMenuOpen,
-	);
+	});
 
 	const onNavLinkPress = (hash: string) => {
 		if (isMenuOpen) {
@@ -173,13 +173,21 @@ export function Header({ containerRef }: HeaderProps) {
 	);
 }
 
-function useMenuOpenCloseAnimation(
-	containerRef: RefObject<HTMLDivElement | null>,
-	headerRef: RefObject<HTMLElement | null>,
-	modalRef: RefObject<HTMLDivElement | null>,
-	menuContainerRef: RefObject<HTMLDivElement | null>,
-	isMenuOpen: boolean,
-) {
+type MenuOpenCloseAnimationProps = {
+	containerRef: RefObject<HTMLDivElement | null>;
+	headerRef: RefObject<HTMLElement | null>;
+	modalRef: RefObject<HTMLDivElement | null>;
+	menuContainerRef: RefObject<HTMLDivElement | null>;
+	isMenuOpen: boolean;
+};
+
+function useMenuOpenCloseAnimation({
+	containerRef,
+	headerRef,
+	modalRef,
+	menuContainerRef,
+	isMenuOpen,
+}: MenuOpenCloseAnimationProps) {
 	// Opening animation for the menu
 	useGSAP(
 		() => {

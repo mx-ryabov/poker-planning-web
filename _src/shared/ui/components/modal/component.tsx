@@ -10,7 +10,6 @@ import {
 	ModalOverlayProps as AriaModalOverlayProps,
 	DialogProps as AriaDialogProps,
 	Heading,
-	ModalContext,
 	OverlayTriggerStateContext,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
