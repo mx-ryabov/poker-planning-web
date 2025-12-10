@@ -27,7 +27,6 @@ type SelectProps<TItemData extends object> = {
 function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 	const {
 		label,
-		description,
 		errorMessages,
 		placeholder = "Select something",
 		selectionMode = "single",

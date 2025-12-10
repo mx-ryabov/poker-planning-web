@@ -52,16 +52,15 @@ const chip = cva(
 );
 
 export function Chip(props: ChipProps) {
-	const { children, ...restProps } = props;
 	const { outlined } = useChipGroupContext();
 
 	return (
 		<Tag
-			{...restProps}
+			{...props}
 			className={({ isDisabled, isFocusVisible, isFocused }) =>
 				chip({
 					outlined,
-					disabled: restProps.isDisabled || isDisabled,
+					disabled: props.isDisabled || isDisabled,
 					isFocused: isFocusVisible || isFocused,
 				})
 			}
@@ -70,7 +69,7 @@ export function Chip(props: ChipProps) {
 			{({ allowsRemoving, isDisabled }) => (
 				<>
 					<span className="mr-1">{props.textValue}</span>
-					{allowsRemoving && !restProps.isDisabled && !isDisabled && (
+					{allowsRemoving && !props.isDisabled && !isDisabled && (
 						<AriaButton
 							slot="remove"
 							aria-label={`Remove ${props.textValue}`}

@@ -16,7 +16,7 @@ export function useResizeObserver<T extends Element>(
 	const { ref, onResize } = options;
 
 	useEffect(() => {
-		let element = ref?.current;
+		const element = ref?.current;
 		if (!element) {
 			return;
 		}

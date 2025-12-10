@@ -37,7 +37,7 @@ interface RenderPropsHookOptions<T>
 }
 
 export function useRenderProps<T>(props: RenderPropsHookOptions<T>) {
-	let {
+	const {
 		className,
 		style,
 		children,

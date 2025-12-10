@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { test, describe, expect, vi } from "vitest";
+import { test, describe, expect } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { InlineEdit } from "./component";
@@ -180,7 +180,7 @@ describe("InlineEdit", () => {
 		const { user, getByRole, queryByTestId, getByTestId } =
 			renderInlineEdit();
 
-		let readView = getByTestId("inline-edit-read-view");
+		const readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		const textField = getByRole("textbox");
@@ -199,10 +199,10 @@ describe("InlineEdit", () => {
 	test("reverts previous saved value if the cancel button is pressed after the text field value was changed", async () => {
 		const { user, getByRole, getByTestId } = renderInlineEdit();
 
-		let readView = getByTestId("inline-edit-read-view");
+		const readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
-		let textField = getByRole("textbox");
+		const textField = getByRole("textbox");
 		await user.type(textField, "new value");
 		await user.tab();
 		await user.keyboard("[Enter]");
@@ -221,7 +221,7 @@ describe("InlineEdit", () => {
 			isDisabled: true,
 		});
 
-		let readView = getByTestId("inline-edit-read-view");
+		const readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 		expect(readView).toBeDisabled();
 		await user.click(readView);
@@ -243,7 +243,7 @@ describe("InlineEdit", () => {
 		).getAllByRole("button");
 		expect(confirmBtn).toBeDisabled();
 
-		let textField = getByRole("textbox");
+		const textField = getByRole("textbox");
 		await user.type(textField, "lalala");
 		await user.tab();
 		await user.tab();
@@ -257,7 +257,7 @@ describe("InlineEdit", () => {
 		let results = await axe(container);
 		expect(results).toHaveNoViolations();
 
-		let readView = getByTestId("inline-edit-read-view");
+		const readView = getByTestId("inline-edit-read-view");
 		await user.click(readView);
 
 		results = await axe(container);

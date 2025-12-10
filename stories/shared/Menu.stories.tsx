@@ -18,10 +18,10 @@ const meta = {
 
 export default meta;
 
-export const MenuDefault = (args: any) => (
+export const MenuDefault = () => (
 	<Menu>
 		<ButtonSquare icon={SettingsIcon} />
-		<Menu.Content {...args}>
+		<Menu.Content>
 			<Menu.Section title="Dropdown Title">
 				<Menu.Item id={1}>
 					<PeopleIcon size={16} />

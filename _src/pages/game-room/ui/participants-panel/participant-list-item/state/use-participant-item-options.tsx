@@ -1,15 +1,12 @@
-import {
-	checkPermissions,
-	selectCurrentRole,
-	useGameState,
-} from "@/_src/pages/game-room/model";
-import { GameParticipant } from "@/_src/shared/api/game-api";
-import { UserRemoveIcon } from "@/_src/shared/ui/components/icon/svg/user-remove.icon";
-import { useCallback, useMemo } from "react";
+// import {
+// 	checkPermissions,
+// 	selectCurrentRole,
+// 	useGameState,
+// } from "@/_src/pages/game-room/model";
+//import { UserRemoveIcon } from "@/_src/shared/ui/components/icon/svg/user-remove.icon";
+import { useMemo } from "react";
 
-export function useParticipantItemOptions(
-	participantFromList: GameParticipant,
-) {
+export function useParticipantItemOptions() {
 	// const currentRole = useGameState(selectCurrentRole);
 
 	// const kickParticipant = useCallback(() => {

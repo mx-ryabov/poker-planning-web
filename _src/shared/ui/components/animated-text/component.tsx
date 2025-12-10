@@ -100,6 +100,8 @@ export function AnimatedText({
 	);
 
 	if (Children.count(children) === 1) {
+		// The reason of suppression - This is a workaround to pass the ref to the child component.
+		/* eslint-disable react-hooks/refs */
 		return cloneElement(children as ReactElement<ChildProps>, {
 			ref: containerRef,
 			className: twMerge(
@@ -107,6 +109,7 @@ export function AnimatedText({
 				"initially-hidden",
 			),
 		});
+		/* eslint-enable react-hooks/refs */
 	}
 
 	return (

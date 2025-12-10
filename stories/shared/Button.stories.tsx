@@ -66,7 +66,7 @@ export const DefaultMedium: Story = {
 	},
 };
 
-export const DefaultMediumPending = (args: any) => {
+export const DefaultMediumPending = () => {
 	const [isPending, setIsPending] = useState(false);
 	return (
 		<Button

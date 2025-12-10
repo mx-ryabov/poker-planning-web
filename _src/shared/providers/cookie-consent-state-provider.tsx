@@ -3,7 +3,6 @@ import {
 	createContext,
 	ReactNode,
 	useContext,
-	useEffect,
 	useState,
 } from "react";
 
@@ -27,23 +26,19 @@ export function CookieConsentStateProvider({
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const [consentStatus, setConsentStatus] = useState<ConsentStatus>(
-		ConsentStatus.UnInitialized,
-	);
-
-	useEffect(() => {
-		if (typeof localStorage !== "undefined") {
+	const [consentStatus, setConsentStatus] = useState<ConsentStatus>(() => {
+		if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
 			const consent = localStorage.getItem("cookieConsent");
 			if (
 				consent === ConsentStatus.Given ||
 				consent === ConsentStatus.Rejected
 			) {
-				setConsentStatus(consent);
-			} else {
-				setConsentStatus(ConsentStatus.Unknown);
+				return consent as ConsentStatus;
 			}
+			return ConsentStatus.Unknown;
 		}
-	}, []);
+		return ConsentStatus.UnInitialized;
+	});
 
 	const giveConsent = () => {
 		if (typeof localStorage !== "undefined") {

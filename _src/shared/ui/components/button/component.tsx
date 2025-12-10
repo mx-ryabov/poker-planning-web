@@ -42,22 +42,22 @@ export const Button = forwardRef<HTMLButtonElement, LabeledButtonProps>(
 			className,
 		} = props;
 
-		let { buttonProps, isPressed } = useButton(
+		const { buttonProps, isPressed } = useButton(
 			{
 				...props,
 				isDisabled: props.isDisabled || isPending,
 			},
 			ref,
 		);
-		let { hoverProps, isHovered } = useHover({
+		const { hoverProps, isHovered } = useHover({
 			...props,
 			isDisabled: props.isDisabled || isPending,
 		});
-		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
+		const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
 		return (
 			<button
-				style={COLOR_SCHEMES[appearance] as any}
+				style={COLOR_SCHEMES[appearance] as React.CSSProperties}
 				className={twMerge(
 					buttonStyles({
 						size,
@@ -127,11 +127,11 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 			},
 			ref,
 		);
-		let { hoverProps, isHovered } = useHover({
+		const { hoverProps, isHovered } = useHover({
 			...props,
 			isDisabled: props.isDisabled || isPending,
 		});
-		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
+		const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
 		const isPressed =
 			isPressedLocal ||
@@ -162,7 +162,10 @@ export const ButtonSquare = forwardRef<HTMLButtonElement, SquareButtonProps>(
 				data-focused={isFocused || undefined}
 				data-pressed={isPressed}
 				role={role || "button"}
-				style={{ ...(COLOR_SCHEMES[appearance] as any), ...style }}
+				style={{
+					...(COLOR_SCHEMES[appearance] as React.CSSProperties),
+					...style,
+				}}
 				{...mergeProps(buttonProps, focusProps, hoverProps)}
 			>
 				<div className={spinnerStyles({ isActive: isPending })}>
@@ -204,22 +207,22 @@ export const NewButton = forwardRef<HTMLButtonElement, NewButtonProps>(
 			className,
 		} = props;
 
-		let { buttonProps, isPressed } = useButton(
+		const { buttonProps, isPressed } = useButton(
 			{
 				...props,
 				isDisabled: props.isDisabled || isPending,
 			},
 			ref,
 		);
-		let { hoverProps, isHovered } = useHover({
+		const { hoverProps, isHovered } = useHover({
 			...props,
 			isDisabled: props.isDisabled || isPending,
 		});
-		let { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
+		const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
 		return (
 			<button
-				style={COLOR_SCHEMES[appearance] as any}
+				style={COLOR_SCHEMES[appearance] as React.CSSProperties}
 				className={twMerge(
 					buttonStyles({
 						size,

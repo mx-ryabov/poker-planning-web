@@ -6,5 +6,5 @@ export * from "./use-popover-force-position-update";
 export * from "./use-animation";
 export * from "./use-mutation";
 export * from "./use-streamable";
-export * from "./use-value-changed";
+export * from "./use-prev-value-state";
 export * from "./use-prevent-scrollbar-gutter-stable";

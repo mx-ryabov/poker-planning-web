@@ -25,11 +25,13 @@ export function DrawerModalWithSeparator(props: ModalPropsWithSeparator) {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const orientation = "vertical";
 
-	let [isOpenInternal, setIsOpenInternal] = useState(false);
-	let [isAnimating, setIsAnimating] = useState(false);
+	const [isOpenInternal, setIsOpenInternal] = useState(false);
+	const [isAnimating, setIsAnimating] = useState(false);
 
 	useEffect(() => {
 		if (isOpenControlled) {
+			// Reason of suppression: this code won't affect performance due to the fact that it's only executed when the drawer is opened.
+			// eslint-disable-next-line react-hooks/set-state-in-effect
 			setIsOpenInternal(true);
 		}
 	}, [isOpenControlled]);
@@ -39,6 +41,8 @@ export function DrawerModalWithSeparator(props: ModalPropsWithSeparator) {
 		if (!content) return;
 
 		if (isOpenInternal && isOpenControlled) {
+			// Reason of suppression: this code won't affect performance due to the fact that it's only executed when the drawer is opened.
+			// eslint-disable-next-line react-hooks/set-state-in-effect
 			setIsAnimating(true);
 			const timer = setTimeout(() => {
 				setIsAnimating(false);

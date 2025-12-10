@@ -10,8 +10,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Select>;
 
-const data = [];
-
 export const SelectSingle: Story = {
 	render: () => (
 		<div className="w-[200px]">

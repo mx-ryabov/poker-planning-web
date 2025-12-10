@@ -15,7 +15,7 @@ const meta = {
 
 export default meta;
 
-export const HighlighterWithButton = (args: any) => {
+export const HighlighterWithButton = () => {
 	return (
 		<div className="flex flex-row gap-8">
 			<Highlighter id="unique-button-1">

@@ -1,5 +1,5 @@
 import { cloneElement, ReactElement, useEffect, useRef, useState } from "react";
-import { mergeProps, PressEvents, usePress } from "react-aria";
+import { mergeProps, PressEvents } from "react-aria";
 import { twJoin } from "tailwind-merge";
 
 type ContainerProps = {
@@ -19,7 +19,6 @@ function SlidingSelectorContainer(props: ContainerProps) {
 		activeIndex,
 		onSelectionReset,
 	} = props;
-	usePress;
 	const [activeElement, setActiveElement] = useState<number | null>(null);
 	const activeElementFinal =
 		activeIndex !== undefined ? activeIndex : activeElement;
@@ -81,7 +80,7 @@ function SlidingSelectorContainer(props: ContainerProps) {
 				className={twJoin("absolute transition-all", selectorClassName)}
 				onClick={() => {
 					setActiveElement(null);
-					onSelectionReset && onSelectionReset();
+					onSelectionReset?.();
 				}}
 				data-testid="sliding-selector"
 				ref={activeFloatingElRef}

@@ -62,7 +62,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 						defaultValue={value}
 						onChange={(value) => {
 							renderProps.onChange(value);
-							onEditorChange && onEditorChange(value);
+							onEditorChange?.(value);
 						}}
 						placeholder={placeholder}
 						className={editorViewStyles(styles.editorView)}
@@ -104,6 +104,9 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			validateInner,
 			type,
 			value,
+			withTooltipError,
+			withErrorIcon,
+			errorControlled,
 		],
 	);
 
@@ -127,7 +130,7 @@ export function InlineEditableTextField(props: InlineEditableTextFieldProps) {
 			isDisabled={isDisabled}
 			onConfirm={onConfirm}
 			onCancel={() => {
-				onEditorChange && onEditorChange(value);
+				onEditorChange?.(value);
 			}}
 		/>
 	);

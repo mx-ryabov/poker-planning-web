@@ -40,7 +40,10 @@ export type AutocompleteListProps<TItemData extends object> = {
 	StyleProps;
 
 export const AutocompleteList = forwardRef(
-	(props: AutocompleteListProps<any>, ref: ForwardedRef<HTMLDivElement>) => {
+	(
+		props: AutocompleteListProps<object>,
+		ref: ForwardedRef<HTMLDivElement>,
+	) => {
 		const {
 			state,
 			renderEmptyState,

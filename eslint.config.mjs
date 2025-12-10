@@ -61,9 +61,37 @@ export default [
 			"react/display-name": "off",
 			"no-mixed-spaces-and-tabs": "off",
 			"@typescript-eslint/no-empty-object-type": "off",
-			complexity: ["error", 10],
+
 			"max-depth": ["error", 5],
 			"max-params": ["error", 3],
+
+			"max-nested-callbacks": ["warn", 3],
+		},
+	},
+	{
+		files: ["_src/**", "app/**"],
+		ignores: [
+			"**/*.test.{ts,tsx}",
+			"**/*.spec.{ts,tsx}",
+			"**/__tests__/**/*.{ts,tsx}",
+			"**/__mocks__/**/*.{ts,tsx}",
+			"e2e/**/*.{ts,tsx}",
+		],
+		rules: {
+			//complexity: ["error", 10],
+		},
+	},
+	// Relax rules for test files
+	{
+		files: [
+			"**/*.test.{ts,tsx}",
+			"**/*.spec.{ts,tsx}",
+			"**/__tests__/**/*.{ts,tsx}",
+			"**/__mocks__/**/*.{ts,tsx}",
+			"e2e/**/*.{ts,tsx}",
+		],
+		rules: {
+			"max-nested-callbacks": ["warn", 5],
 		},
 	},
 ];

@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useId, useMemo, useRef } from "react";
+import { useCallback, useId, useMemo, useRef } from "react";
 import { AriaListBoxProps, Key, useField, useOverlayTrigger } from "react-aria";
 import { SelectionMode } from "react-aria-components";
 import { ListState, useOverlayTriggerState } from "react-stately";
@@ -16,7 +16,7 @@ export function useSelect<TItemData extends object>(
 	props: UseSelectProps<TItemData>,
 	listState: ListState<TItemData>,
 ) {
-	const { selectionMode = "single", children, items, ...restProps } = props;
+	const { selectionMode = "single", items, ...restProps } = props;
 	const triggerRef = useRef(null);
 	const listRef = useRef(null);
 
@@ -36,11 +36,7 @@ export function useSelect<TItemData extends object>(
 				overlayTriggerState.close();
 			}
 		},
-		[
-			listState.selectionManager.setSelectedKeys,
-			selectionMode,
-			overlayTriggerState.close,
-		],
+		[listState.selectionManager, selectionMode, overlayTriggerState],
 	);
 
 	const renderEmptyState = useCallback(
@@ -104,7 +100,7 @@ export function useSelect<TItemData extends object>(
 		[listState.collection],
 	);
 
-	triggerProps.id = useId();
+	Object.assign(triggerProps, { id: useId() });
 	Object.assign(overlayProps, { "aria-labelledby": triggerProps.id });
 
 	return {

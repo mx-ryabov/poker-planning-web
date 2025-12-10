@@ -1,6 +1,5 @@
 import { Chip, ChipGroup } from "@/_src/shared/ui/components/chip";
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
 import { useListData } from "react-stately";
 
 const meta = {
@@ -23,22 +22,24 @@ const initialItems = [
 	{ id: 4, name: "Jerry" },
 ];
 
-export const ChipDefault: Story = {
-	render: () => {
-		let list = useListData({
-			initialItems,
-		});
+const ChipDefaultComponent = () => {
+	const list = useListData({
+		initialItems,
+	});
 
-		return (
-			<ChipGroup
-				items={list.items}
-				aria-label="The list who can change the game's settings"
-				onRemove={(keys) => list.remove(...keys)}
-			>
-				{(item) => <Chip textValue={item.name} key={item.id} />}
-			</ChipGroup>
-		);
-	},
+	return (
+		<ChipGroup
+			items={list.items}
+			aria-label="The list who can change the game's settings"
+			onRemove={(keys) => list.remove(...keys)}
+		>
+			{(item) => <Chip textValue={item.name} key={item.id} />}
+		</ChipGroup>
+	);
+};
+
+export const ChipDefault: Story = {
+	render: () => <ChipDefaultComponent />,
 };
 
 export const ChipStateless: Story = {
@@ -52,86 +53,94 @@ export const ChipStateless: Story = {
 	},
 };
 
-export const ChipOutlined: Story = {
-	render: () => {
-		let list = useListData({
-			initialItems,
-		});
+const ChipOutlinedComponent = () => {
+	const list = useListData({
+		initialItems,
+	});
 
-		return (
-			<ChipGroup
-				items={list.items}
-				outlined
-				aria-label="The list who can change the game's settings"
-				onRemove={(keys) => list.remove(...keys)}
-			>
-				{(item) => <Chip textValue={item.name} key={item.id} />}
-			</ChipGroup>
-		);
-	},
+	return (
+		<ChipGroup
+			items={list.items}
+			outlined
+			aria-label="The list who can change the game's settings"
+			onRemove={(keys) => list.remove(...keys)}
+		>
+			{(item) => <Chip textValue={item.name} key={item.id} />}
+		</ChipGroup>
+	);
+};
+
+export const ChipOutlined: Story = {
+	render: () => <ChipOutlinedComponent />,
+};
+
+const ChipDisabledComponent = () => {
+	const list = useListData({
+		initialItems,
+	});
+
+	return (
+		<ChipGroup
+			items={list.items}
+			aria-label="The list who can change the game's settings"
+			onRemove={(keys) => list.remove(...keys)}
+		>
+			{(item) => (
+				<Chip isDisabled textValue={item.name} key={item.id} />
+			)}
+		</ChipGroup>
+	);
 };
 
 export const ChipDisabled: Story = {
-	render: () => {
-		let list = useListData({
-			initialItems,
-		});
+	render: () => <ChipDisabledComponent />,
+};
 
-		return (
-			<ChipGroup
-				items={list.items}
-				aria-label="The list who can change the game's settings"
-				onRemove={(keys) => list.remove(...keys)}
-			>
-				{(item) => (
-					<Chip isDisabled textValue={item.name} key={item.id} />
-				)}
-			</ChipGroup>
-		);
-	},
+const ChipOutlinedDisabledComponent = () => {
+	const list = useListData({
+		initialItems,
+	});
+
+	return (
+		<ChipGroup
+			items={list.items}
+			outlined
+			aria-label="The list who can change the game's settings"
+			onRemove={(keys) => list.remove(...keys)}
+		>
+			{(item) => (
+				<Chip isDisabled textValue={item.name} key={item.id} />
+			)}
+		</ChipGroup>
+	);
 };
 
 export const ChipOutlinedDisabled: Story = {
-	render: () => {
-		let list = useListData({
-			initialItems,
-		});
+	render: () => <ChipOutlinedDisabledComponent />,
+};
 
-		return (
-			<ChipGroup
-				items={list.items}
-				outlined
-				aria-label="The list who can change the game's settings"
-				onRemove={(keys) => list.remove(...keys)}
-			>
-				{(item) => (
-					<Chip isDisabled textValue={item.name} key={item.id} />
-				)}
-			</ChipGroup>
-		);
-	},
+const ChipOutlinedDisabledPartiallyComponent = () => {
+	const list = useListData({
+		initialItems,
+	});
+
+	return (
+		<ChipGroup
+			items={list.items}
+			aria-label="The list who can change the game's settings"
+			onRemove={(keys) => list.remove(...keys)}
+		>
+			{(item) => (
+				<Chip
+					isDisabled={item.id === 4}
+					textValue={item.name}
+					key={item.id}
+				/>
+			)}
+		</ChipGroup>
+	);
 };
 
 export const ChipOutlinedDisabledPartially: Story = {
-	render: () => {
-		let list = useListData({
-			initialItems,
-		});
-
-		return (
-			<ChipGroup
-				items={list.items}
-				aria-label="The list who can change the game's settings"
-				onRemove={(keys) => list.remove(...keys)}
-			>
-				{(item) => (
-					<Chip
-						isDisabled={item.id === 4}
-						textValue={item.name}
-						key={item.id}
-					/>
-				)}
-			</ChipGroup>
-		);
-	},
+	render: () => <ChipOutlinedDisabledPartiallyComponent />,
 };

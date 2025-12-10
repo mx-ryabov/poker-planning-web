@@ -44,6 +44,13 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 			...restProps
 		} = props;
 
+		// Computed values to reduce complexity
+		const isFieldDisabled = !!restProps.isDisabled || !!isPending;
+		const hasError = !!error?.length;
+		const isInvalid = !!error || !!restProps.isInvalid;
+		const hasLabel = !!label;
+		const maxHeightStyle = maxHeight ? `${maxHeight}px` : "inherit";
+
 		const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
 		useEffect(() => {
@@ -65,15 +72,15 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 			<TextField
 				className="group flex w-full flex-col"
 				{...mergeProps(restProps, { onInput: onInternalInput })}
-				isDisabled={restProps.isDisabled || isPending}
+				isDisabled={isFieldDisabled}
 				data-testid="text-field-container"
-				isInvalid={!!error || restProps.isInvalid}
+				isInvalid={isInvalid}
 			>
 				<Label aria-label="Label">
 					<span
 						className={labelStyles({
-							isDisabled: !!restProps.isDisabled || !!isPending,
-							hasContent: !!label,
+							isDisabled: isFieldDisabled,
+							hasContent: hasLabel,
 						})}
 					>
 						{label}
@@ -82,9 +89,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 					<Group
 						className={twMerge(
 							textAreaStyles({
-								hasError: !!error?.length,
-								isDisabled:
-									!!restProps.isDisabled || !!isPending,
+								hasError,
+								isDisabled: isFieldDisabled,
 							}),
 							className as string,
 						)}
@@ -98,9 +104,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 							rows={rows}
 							ref={setRefs(textAreaRef, ref)}
 							style={{
-								maxHeight: maxHeight
-									? `${maxHeight}px`
-									: "inherit",
+								maxHeight: maxHeightStyle,
 							}}
 						/>
 						<div className="absolute top-2 right-2 flex flex-col items-center gap-1">

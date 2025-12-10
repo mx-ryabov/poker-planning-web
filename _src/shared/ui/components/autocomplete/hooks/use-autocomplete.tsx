@@ -10,7 +10,6 @@ import { PopoverProps, SelectionMode } from "react-aria-components";
 import { ListState } from "react-stately";
 import { SadManIcon } from "../../icon";
 import { AutocompleteListProps } from "../components/autocomplete-list";
-import { usePopoverForcePositionUpdate } from "@/_src/shared/lib";
 
 export type UseAutocompleteProps<TItemData extends object> = {
 	/** Usage:
@@ -35,7 +34,7 @@ export function useAutocomplete<TItemData extends object>(
 	props: UseAutocompleteProps<TItemData>,
 	listState: ListState<TItemData>,
 ) {
-	const { selectionMode = "single", children, items, ...restProps } = props;
+	const { selectionMode = "single", items, ...restProps } = props;
 	const popoverRef = useRef<HTMLDivElement | null>(null);
 	const listRef = useRef<HTMLDivElement | null>(null);
 	const triggerRef = useRef<HTMLDivElement | null>(null);

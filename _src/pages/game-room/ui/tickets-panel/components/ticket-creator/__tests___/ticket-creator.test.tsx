@@ -78,7 +78,7 @@ describe("Ticket Creator", () => {
 		});
 
 		test("focuses on the text field after ticket type selection", async () => {
-			const { user, getByRole, getByTestId, getAllByRole, debug } =
+			const { user, getByRole, getByTestId, getAllByRole } =
 				renderComponent({});
 
 			const formToggler = getByTestId("ticket-creator-toggler");

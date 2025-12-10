@@ -1,5 +1,4 @@
 import { NEWLY_CREATED_GAME } from "@/_src/shared/mocks/game";
-import { within } from "@testing-library/react";
 import {
 	test,
 	expect,
@@ -59,7 +58,7 @@ test.describe("Game Room", () => {
 		]);
 		await context.route(
 			`${HOST}/hubs/game/negotiate?gameId=${GAME_ID}&negotiateVersion=1`,
-			async (route, req) => {
+			async (route) => {
 				await route.fulfill({
 					body: JSON.stringify(NEGOTIATE_MOCK),
 				});

@@ -15,10 +15,10 @@ const meta = {
 
 export default meta;
 
-export const PopoverDefault = (args: any) => (
+export const PopoverDefault = () => (
 	<Popover>
 		<Button title="Click!" />
-		<Popover.Content {...args} placement={"bottom left"}>
+		<Popover.Content placement={"bottom left"}>
 			<div className="flex flex-row gap-2 items-center p-2 ">
 				Content!
 				<ButtonSquare size="small" icon={CloseIcon} slot="close" />
@@ -27,13 +27,13 @@ export const PopoverDefault = (args: any) => (
 	</Popover>
 );
 
-export const PopoverList = (args: any) => (
+export const PopoverList = () => (
 	<div className="grid grid-cols-3 gap-8 w-96">
 		{PopoverVariants.map((variant, ind) => (
 			<div key={ind}>
 				<Popover>
 					<Button title={variant.title} />
-					<Popover.Content {...args} placement={variant.placement}>
+					<Popover.Content placement={variant.placement}>
 						<div className="flex flex-row gap-2 items-center p-2 bg-white border border-neutral-100 rounded-lg drop-shadow-lg">
 							{variant.title} content!
 							<ButtonSquare

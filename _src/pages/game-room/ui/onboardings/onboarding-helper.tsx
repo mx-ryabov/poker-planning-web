@@ -2,13 +2,7 @@
 import { NewButton } from "@/_src/shared/ui/components/button";
 import { List } from "@/_src/shared/ui/components/list";
 import { Popover } from "@/_src/shared/ui/components/popover";
-import {
-	HTMLAttributes,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { HTMLAttributes, useCallback, useRef, useState } from "react";
 import { FlashWithLinesIcon } from "@/_src/shared/ui/components/icon/svg/flash-with-lines.icon";
 import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
@@ -95,20 +89,16 @@ export function OnboardingHelper(props: Props) {
 
 const QUICK_GUIDE_VISIBILITY_STATE = "QUICK_GUIDE_VISIBILITY_STATE";
 function useVisibilityState() {
-	const [isVisible, setIsVisible] = useState(false);
-	const { open } = useConfirmationModal();
-
-	useEffect(() => {
-		if (!localStorage) return;
+	const [isVisible, setIsVisible] = useState(() => {
+		if (typeof window === "undefined" || !localStorage) return false;
 
 		const visibilityState = localStorage.getItem(
 			QUICK_GUIDE_VISIBILITY_STATE,
 		);
 
-		if (visibilityState !== "dismissed") {
-			setIsVisible(true);
-		}
-	}, []);
+		return visibilityState !== "dismissed";
+	});
+	const { open } = useConfirmationModal();
 
 	const dismiss = useCallback(() => {
 		open({

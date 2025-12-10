@@ -16,12 +16,14 @@ type GameStateProviderProps = {
 	initialAsyncState: GameAsyncState;
 };
 
+/* eslint-disable react-hooks/refs */
+// The reason of suppression: we use/change the ref during render because this is how zustand recommends to initialize the store. See: https://zustand.docs.pmnd.rs/guides/nextjs#providing-the-store
 export function GameStateProvider({
 	initialAsyncState,
 	children,
 }: GameStateProviderProps) {
 	const storeRef = useRef<StoreApi<GameStateStore> | null>(null);
-	if (!storeRef.current) {
+	if (storeRef.current == null) {
 		storeRef.current = createGameStateStore(initialAsyncState);
 	}
 
@@ -32,8 +34,10 @@ export function GameStateProvider({
 		}
 	}, [storeRef, initialAsyncState]);
 
+	const store = storeRef.current;
+
 	return (
-		<GameStateCotnext.Provider value={storeRef.current}>
+		<GameStateCotnext.Provider value={store}>
 			{children}
 		</GameStateCotnext.Provider>
 	);

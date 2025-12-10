@@ -13,6 +13,6 @@ const meta = {
 
 export default meta;
 
-export const FieldErrorIconDefault = (args: any) => {
-	return <FieldErrorIcon errorMsg="Error!" {...args} />;
+export const FieldErrorIconDefault = () => {
+	return <FieldErrorIcon errorMsg="Error!" />;
 };

@@ -14,18 +14,18 @@ const meta = {
 
 export default meta;
 
-export const TooltipDefault = (args: any) => {
+export const TooltipDefault = () => {
 	return (
-		<Tooltip {...args} defaultOpen={true}>
+		<Tooltip defaultOpen={true}>
 			<Button title="Trigger" />
 			<Tooltip.Content>Content</Tooltip.Content>
 		</Tooltip>
 	);
 };
 
-export const TooltipWithCustomClassName = (args: any) => {
+export const TooltipWithCustomClassName = () => {
 	return (
-		<Tooltip {...args} defaultOpen={true}>
+		<Tooltip defaultOpen={true}>
 			<Button title="Trigger" />
 			<Tooltip.Content className="bg-info-500 text-white">
 				Content

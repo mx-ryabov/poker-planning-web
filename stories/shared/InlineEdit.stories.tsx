@@ -17,7 +17,7 @@ const meta = {
 
 export default meta;
 
-export const InlineEditWithInput = (args: any) => {
+export const InlineEditWithInput = () => {
 	const [value, setValue] = useState("");
 
 	return (
@@ -35,7 +35,7 @@ export const InlineEditWithInput = (args: any) => {
 	);
 };
 
-export const InlineEditWithTextArea = (args: any) => {
+export const InlineEditWithTextArea = () => {
 	const [value, setValue] = useState("");
 
 	return (

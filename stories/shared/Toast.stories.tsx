@@ -18,10 +18,10 @@ const meta = {
 
 export default meta;
 
-export const ToastDefault = (args: any) => {
+export const ToastDefault = () => {
 	return (
 		<div className="h-screen w-full">
-			<ToastProvider {...args}>
+			<ToastProvider>
 				<div className="h-full w-full">
 					<ToastTrigger />
 				</div>

@@ -44,7 +44,12 @@ export function iconBuilder(
 					height: `${svgProps.height}px`,
 				}}
 				data-testid={
-					(restHtmlProps as any)["data-testid"] || `icon-${iconName}`
+					(
+						restHtmlProps as React.DetailedHTMLProps<
+							React.HTMLAttributes<HTMLElement>,
+							HTMLElement
+						> & { "data-testid"?: string }
+					)["data-testid"] || `icon-${iconName}`
 				}
 				{...restHtmlProps}
 			>

@@ -55,7 +55,7 @@ describe("Hole Cards", () => {
 	});
 
 	test("unselect a card if voteApi returns an error", async () => {
-		let reject: Function | undefined;
+		let reject: (reason?: unknown) => void = () => {};
 		const promise = new Promise((res, rej) => {
 			reject = rej;
 		});
@@ -79,7 +79,7 @@ describe("Hole Cards", () => {
 	});
 
 	test("shows a toast with error text if voteApi returns an error", async () => {
-		let reject: Function | undefined;
+		let reject: (reason?: unknown) => void = () => {};
 		const promise = new Promise((res, rej) => {
 			reject = rej;
 		});

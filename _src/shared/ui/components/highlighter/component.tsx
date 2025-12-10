@@ -1,6 +1,6 @@
 "use client";
 import { cva } from "class-variance-authority";
-import React, {
+import {
 	ReactElement,
 	useCallback,
 	useEffect,
@@ -17,15 +17,11 @@ type Props = {
 
 export function Highlighter({ children, id }: Props) {
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const [isActive, setActive] = useState(false);
-
-	useEffect(() => {
-		if (!localStorage) return;
-
+	const [isActive, setActive] = useState(() => {
+		if (!localStorage) return false;
 		const wasClicked = localStorage.getItem(id);
-
-		setActive(!wasClicked);
-	}, [id]);
+		return !wasClicked;
+	});
 
 	useEffect(() => {
 		const container = containerRef.current;

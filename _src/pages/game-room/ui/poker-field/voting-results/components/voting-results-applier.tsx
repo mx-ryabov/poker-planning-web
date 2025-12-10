@@ -79,7 +79,7 @@ function VotingResultsApplierInner(props: InnerProps) {
 					finishVoting(),
 				])
 					.then(() => {})
-					.catch((e) => {
+					.catch(() => {
 						toast?.add(
 							{
 								title: "Something went wrong...",
@@ -138,7 +138,7 @@ function VotingResultsApplierInner(props: InnerProps) {
 
 function getHighestMostPopular(results: GameVote[]) {
 	const resultsCounts = new Map<string, { vote: GameVote; count: number }>();
-	for (let result of results) {
+	for (const result of results) {
 		if (result === null) continue;
 		const resCount = resultsCounts.get(result.id);
 		if (resCount === undefined) {
@@ -154,7 +154,7 @@ function getHighestMostPopular(results: GameVote[]) {
 	let highestMostPopularResult: GameVote | null | undefined = undefined;
 	let maxVoutesCount = 0;
 
-	for (let resCount of resultsCounts.values()) {
+	for (const resCount of resultsCounts.values()) {
 		if (resCount.count > maxVoutesCount) {
 			maxVoutesCount = resCount.count;
 			highestMostPopularResult = resCount.vote;

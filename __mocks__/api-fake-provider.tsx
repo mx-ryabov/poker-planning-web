@@ -15,7 +15,9 @@ type ApiFakeProviderProps = {
 
 export function ApiFakeProvider({ children, fakeApi }: ApiFakeProviderProps) {
 	return (
-		<ApiContext.Provider value={mergeDeep(FAKE_API, fakeApi || {})}>
+		<ApiContext.Provider
+			value={mergeDeep(FAKE_API, fakeApi || {}) as ApiContextProps}
+		>
 			{children}
 		</ApiContext.Provider>
 	);
@@ -23,11 +25,11 @@ export function ApiFakeProvider({ children, fakeApi }: ApiFakeProviderProps) {
 
 const FAKE_API: ApiContextProps = mockApi(API) as ApiContextProps;
 
-function mockApi(apiObj: PlainObject) {
-	const result: PlainObject = {};
+function mockApi(apiObj: PlainObject<unknown>) {
+	const result: PlainObject<unknown> = {};
 	Object.keys(apiObj).forEach((key) => {
 		if (apiObj[key]?.constructor === Object) {
-			result[key] = mockApi(apiObj[key]);
+			result[key] = mockApi(apiObj[key] as PlainObject<unknown>);
 		} else {
 			result[key] = vi.fn();
 		}
@@ -35,12 +37,12 @@ function mockApi(apiObj: PlainObject) {
 	return result;
 }
 
-type PlainObject<T = any> = {
+type PlainObject<T> = {
 	[key: string]: T | PlainObject<T> | undefined;
 };
 
-function mergeDeep<T>(obj1: PlainObject, obj2: PlainObject): T {
-	const result: PlainObject = copyDeep(obj1);
+function mergeDeep<T>(obj1: PlainObject<T>, obj2: PlainObject<T>): T {
+	const result: PlainObject<T> = copyDeep(obj1) as PlainObject<T>;
 
 	Object.keys(obj2).forEach((key) => {
 		if (
@@ -56,8 +58,8 @@ function mergeDeep<T>(obj1: PlainObject, obj2: PlainObject): T {
 	return result as T;
 }
 
-function copyDeep(obj: PlainObject) {
-	let result: PlainObject = {};
+function copyDeep(obj: PlainObject<unknown>) {
+	const result: PlainObject<unknown> = {};
 	Object.keys(obj).forEach((key) => {
 		if (obj[key]?.constructor === Object) {
 			result[key] = copyDeep({ ...obj[key] });

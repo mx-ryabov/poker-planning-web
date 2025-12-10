@@ -28,14 +28,17 @@ export function GameManagementBar({ className }: Props) {
 	const [barState, setBarState] = useState<"error" | "success" | "neutral">(
 		"neutral",
 	);
+	/* eslint-disable react-hooks/set-state-in-effect */
+	// Reason of suppression: since this specific case can't be a performance bottleneck, we can use setState in useEffect. Otherwise, we would need to go with a more verbose approach.
 	useEffect(() => {
 		if (liveStatus.status === "connected") {
 			setBarState((prevState) =>
 				prevState === "error" ? "success" : "neutral",
 			);
-			setTimeout(() => {
+			const timer = setTimeout(() => {
 				setBarState("neutral");
 			}, 1000);
+			return () => clearTimeout(timer);
 		}
 		if (
 			liveStatus.status === "disconnected" ||
@@ -44,6 +47,7 @@ export function GameManagementBar({ className }: Props) {
 			setBarState("error");
 		}
 	}, [liveStatus]);
+	/* eslint-enable react-hooks/set-state-in-effect */
 
 	const onPanelSelected = useCallback(
 		(tabType: GameManagementTab) => () => {

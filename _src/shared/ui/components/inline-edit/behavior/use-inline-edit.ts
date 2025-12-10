@@ -1,4 +1,4 @@
-import { useCallback, useRef, FocusEvent } from "react";
+import { useCallback, useRef } from "react";
 import { useFocusWithin } from "react-aria";
 import { OverlayTriggerState } from "react-stately";
 import { InlineEditState } from "../state/use-inline-edit-state";
@@ -40,7 +40,7 @@ export function useInlineEdit<THTMLElement extends EditorElement>(
 	}, [overlayTriggerState.open]);
 
 	const onBlurWithin = useCallback(
-		(e: FocusEvent) => {
+		() => {
 			if (keepEditViewOpenOnBlur || !overlayTriggerState.isOpen) return;
 
 			if (!isInvalid) {

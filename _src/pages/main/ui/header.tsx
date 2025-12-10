@@ -256,6 +256,8 @@ function useMenuOpenCloseAnimation({
 	);
 
 	const { contextSafe } = useGSAP({ scope: headerRef });
+	// Reason of suppression: this function isn't used during rendering. Therefore refs inside are also not used during rendering.
+	/* eslint-disable react-hooks/refs */
 	const animateMenuClosing = contextSafe(
 		(onAnimationComplete?: () => void) => {
 			const container = containerRef.current;
@@ -302,6 +304,7 @@ function useMenuOpenCloseAnimation({
 			});
 		},
 	);
+	/* eslint-enable react-hooks/refs */
 
 	return { animateMenuClosing };
 }

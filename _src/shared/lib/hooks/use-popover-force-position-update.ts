@@ -17,21 +17,30 @@ export function usePopoverForcePositionUpdate(
 				popoverEl.getBoundingClientRect();
 
 			requestAnimationFrame(() => {
-				bottom &&
+				if (bottom) {
 					popoverRef.current?.style.setProperty(
 						"bottom",
 						`${bottom}px`,
 					);
-				top && popoverRef.current?.style.setProperty("top", `${top}px`);
-				left &&
+				}
+				if (top) {
+					popoverRef.current?.style.setProperty("top", `${top}px`);
+				}
+				if (left) {
 					popoverRef.current?.style.setProperty("left", `${left}px`);
-				right &&
+				}
+				if (right) {
 					popoverRef.current?.style.setProperty(
 						"right",
 						`${right}px`,
 					);
-				height &&
-					popoverRef.current?.style.setProperty("max-height", ``);
+				}
+				if (height) {
+					popoverRef.current?.style.setProperty(
+						"max-height",
+						`${height}px`,
+					);
+				}
 			});
 		}
 	}, [popoverRef, triggerRef]);

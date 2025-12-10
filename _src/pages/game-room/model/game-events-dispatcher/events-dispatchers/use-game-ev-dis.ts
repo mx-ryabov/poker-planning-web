@@ -63,7 +63,7 @@ export function useGameEvDis({ eventSubscriber, gameStateStore }: Props) {
 		};
 
 		return eventSubscriber(GameEventType.VotingCancelled, handler);
-	}, [eventSubscriber, cancelVoting, toast?.add]);
+	}, [eventSubscriber, cancelVoting, toast]);
 
 	useEffect(() => {
 		const handler = ({ payload }: VotingFinishedEvent) => {

@@ -20,10 +20,9 @@ const meta = {
 
 export default meta;
 
-export const SlidingSelectorRow = (args: any) => {
+export const SlidingSelectorRow = () => {
 	return (
 		<SlidingSelector
-			{...args}
 			containerClassName="flex flex-row gap-2"
 			selectorClassName="bg-primary-100 rounded-lg mix-blend-multiply"
 		>
@@ -46,10 +45,9 @@ export const SlidingSelectorRow = (args: any) => {
 	);
 };
 
-export const SlidingSelectorCol = (args: any) => {
+export const SlidingSelectorCol = () => {
 	return (
 		<SlidingSelector
-			{...args}
 			containerClassName="flex flex-col gap-2"
 			selectorClassName="bg-primary-200/50 rounded-lg"
 		>
@@ -60,10 +58,9 @@ export const SlidingSelectorCol = (args: any) => {
 	);
 };
 
-export const SlidingSelectorWithDifferentSizes = (args: any) => {
+export const SlidingSelectorWithDifferentSizes = () => {
 	return (
 		<SlidingSelector
-			{...args}
 			containerClassName="flex flex-row gap-2"
 			selectorClassName="bg-primary-200 rounded-lg"
 		>
@@ -74,11 +71,10 @@ export const SlidingSelectorWithDifferentSizes = (args: any) => {
 	);
 };
 
-export const SlidingSelectorControllable = (args: any) => {
+export const SlidingSelectorControllable = () => {
 	const [activeElement, setActiveElement] = useState<number | null>(null);
 	return (
 		<SlidingSelector
-			{...args}
 			containerClassName="flex flex-row gap-2"
 			activeIndex={activeElement}
 			onSelectionReset={() => setActiveElement(null)}

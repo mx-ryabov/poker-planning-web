@@ -150,7 +150,7 @@ export function createGameAsyncStateSliceCreator(
 		},
 		updateSettings: (data: UpdateGameSettings) => {
 			set((state) => {
-				let { game } = state.state;
+				const { game } = state.state;
 				game.name = data.name;
 				game.settings.isAutoRevealCards = data.isAutoRevealCards;
 				game.settings.autoRevealPeriod = data.autoRevealPeriod;

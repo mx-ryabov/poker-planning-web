@@ -61,7 +61,7 @@ export function useTicketsEvDis({ eventSubscriber, gameStateStore }: Props) {
 		};
 
 		return eventSubscriber(GameEventType.NewEstimationApplied, handler);
-	}, [eventSubscriber, updateTicket, toast?.add]);
+	}, [eventSubscriber, updateTicket, toast]);
 
 	useEffect(() => {
 		const handler = ({ payload: ticketId }: TicketDeletedEvent) => {
