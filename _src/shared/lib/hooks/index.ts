@@ -1,4 +1,4 @@
-export * from "./local-storage";
+export * from "./use-local-storage-state";
 export * from "./provider-builder";
 export * from "./use-click-outside";
 export * from "./use-resize-observable";

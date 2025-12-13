@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ModalBaseProps } from "./drawer-content";
 import { Separator } from "./drawer-separator";
@@ -65,7 +66,7 @@ export function DrawerModalWithSeparator(props: ModalPropsWithSeparator) {
 
 	useEffect(() => {
 		const content = contentRef.current;
-		if (!content) return;
+		if (!content || typeof localStorage === "undefined") return;
 
 		if (isAnimating) {
 			content.style.minWidth = "0px";

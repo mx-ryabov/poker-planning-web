@@ -1,11 +1,11 @@
 "use client";
+import { useLocalStorageState } from "@/_src/shared/lib";
 import { cva } from "class-variance-authority";
 import {
 	ReactElement,
 	useCallback,
 	useEffect,
 	useRef,
-	useState,
 	KeyboardEvent,
 } from "react";
 import { PressEvents } from "react-aria";
@@ -17,10 +17,9 @@ type Props = {
 
 export function Highlighter({ children, id }: Props) {
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const [isActive, setActive] = useState(() => {
-		if (!localStorage) return false;
-		const wasClicked = localStorage.getItem(id);
-		return !wasClicked;
+	const [isActive, setActive] = useLocalStorageState<boolean>(id, {
+		defaultValue: true,
+		defaultServerValue: false,
 	});
 
 	useEffect(() => {
@@ -39,8 +38,7 @@ export function Highlighter({ children, id }: Props) {
 
 	const onPress = useCallback(() => {
 		setActive(false);
-		localStorage.setItem(id, "true");
-	}, [id]);
+	}, [setActive]);
 
 	const onKeyDownCapture = useCallback(
 		(e: KeyboardEvent) => {
