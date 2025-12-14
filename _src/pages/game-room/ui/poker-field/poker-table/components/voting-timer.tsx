@@ -4,7 +4,7 @@ import {
 	useGameState,
 } from "@/_src/pages/game-room/model";
 import { GameVotingStatus } from "@/_src/shared/api";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function VotingTimer() {
 	const settings = useGameState(selectGameSettings);
@@ -34,7 +34,10 @@ type VotingTimerInnerProps = {
 
 function VotingTimerInner(props: VotingTimerInnerProps) {
 	const { startTime, autoRevealPeriod, isAutoRevealCards } = props;
-	const initialTimeLeft = calcSecondsLeft(startTime, autoRevealPeriod);
+	const initialTimeLeft = useMemo(
+		() => calcSecondsLeft(startTime, autoRevealPeriod),
+		[startTime, autoRevealPeriod],
+	);
 	const [timeLeft, setTimeLeft] = useState<number>(initialTimeLeft);
 
 	useEffect(() => {
@@ -42,7 +45,7 @@ function VotingTimerInner(props: VotingTimerInnerProps) {
 
 		const interval = setInterval(() => {
 			const secondsLeft = calcSecondsLeft(startTime, autoRevealPeriod);
-			if (secondsLeft >= 0) {
+			if (secondsLeft > 0) {
 				setTimeLeft(secondsLeft);
 			} else {
 				setTimeLeft(initialTimeLeft);

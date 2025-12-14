@@ -46,5 +46,5 @@ const subscribeToIsMobile = (callback: () => void) => {
 };
 
 const getIsMobile = () => {
-	return window.innerWidth < 1280;
+	return window.innerWidth <= 1280;
 };
