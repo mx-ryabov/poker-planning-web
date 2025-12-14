@@ -1,26 +1,15 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useSyncExternalStore } from "react";
 import { NextLinkButton } from "../../next-components/next-link";
 import { HomeIcon } from "../icon/svg/home.icon";
-import throttle from "lodash.throttle";
 
 export function MobileBlockerScreen({ children }: { children: ReactNode }) {
-	const [isMobile, setIsMobile] = useState(false);
-
-	useEffect(() => {
-		if (window && window.innerWidth < 1280) {
-			setIsMobile(true);
-		}
-		const handleResize = throttle((e: UIEvent) => {
-			setIsMobile((e.currentTarget as Window).innerWidth < 1280);
-		}, 300);
-
-		window.addEventListener("resize", handleResize);
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, []);
+	const isMobile = useSyncExternalStore(
+		subscribeToIsMobile,
+		getIsMobile,
+		() => false,
+	);
 
 	if (!isMobile) {
 		return children;
@@ -47,3 +36,15 @@ export function MobileBlockerScreen({ children }: { children: ReactNode }) {
 		</div>
 	);
 }
+
+const subscribeToIsMobile = (callback: () => void) => {
+	const mediaQuery = window.matchMedia("(max-width: 1280px)");
+	mediaQuery.addEventListener("change", callback);
+	return () => {
+		mediaQuery.removeEventListener("change", callback);
+	};
+};
+
+const getIsMobile = () => {
+	return window.innerWidth <= 1280;
+};

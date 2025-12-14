@@ -50,3 +50,8 @@ node_modules/
 
 # Sentry Config File
 .env.sentry-build-plugin
+plans/
+
+*.code-workspace
+
+stats.json

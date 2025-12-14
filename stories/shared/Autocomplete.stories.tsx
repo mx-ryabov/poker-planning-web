@@ -1,5 +1,5 @@
 import { Autocomplete } from "@/_src/shared/ui/components/autocomplete";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { useState } from "react";
 
 const meta = {
@@ -113,7 +113,7 @@ export const AutocompleteSingleStateless: Story = {
 	),
 };
 
-export const AutocompleteSingleControllable = (_args: any) => {
+export const AutocompleteSingleControllable = () => {
 	const [currentItems, setCurrentItems] = useState([dataMultiple[3]]);
 
 	return (
@@ -124,8 +124,8 @@ export const AutocompleteSingleControllable = (_args: any) => {
 				onSelectionChange={(items) => {
 					setCurrentItems(items as ItemT[]);
 				}}
-				onQuery={(_searchValue) => {
-					return new Promise((resolve) => {
+				onQuery={() => {
+					return new Promise<ItemT[]>((resolve) => {
 						setTimeout(() => {
 							resolve(currentItems.slice(3, 5));
 						}, 2000);

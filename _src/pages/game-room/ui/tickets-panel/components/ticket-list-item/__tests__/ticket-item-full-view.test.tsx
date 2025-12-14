@@ -1,5 +1,5 @@
 import { test, describe, expect, vi, beforeEach } from "vitest";
-import { render, fireEvent, waitFor } from "@/test/utilities";
+import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { buildTicketItemWrapper, TicketItemWrapperProps } from "./utility";
 import { generateTicket } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";

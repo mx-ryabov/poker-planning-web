@@ -1,5 +1,5 @@
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { CSSProperties, ForwardedRef, forwardRef, ReactNode } from "react";
 import { forwardRefType } from "@react-types/shared/src/refs";
 import {
 	RenderProps,
@@ -53,17 +53,29 @@ function NextLinkButton(
 		appearance = "primary",
 	} = props;
 
-	let { linkProps, isPressed } = useLink({ ...props, elementType: "a" }, ref);
+	const isDisabled = props.isDisabled || false;
+	const slotValue = props.slot || undefined;
 
-	let { hoverProps, isHovered } = useHover(props);
-	let { focusProps, isFocused, isFocusVisible } = useFocusRing();
+	const { linkProps, isPressed } = useLink(
+		{ ...props, elementType: "a" },
+		ref,
+	);
 
-	let renderProps = useRenderProps({
+	const { hoverProps, isHovered } = useHover(props);
+	const { focusProps, isFocused, isFocusVisible } = useFocusRing();
+
+	const dataFocused = isFocused || undefined;
+	const dataHovered = isHovered || undefined;
+	const dataPressed = isPressed || undefined;
+	const dataFocusVisible = isFocusVisible || undefined;
+	const dataDisabled = isDisabled || undefined;
+
+	const renderProps = useRenderProps({
 		...props,
 		defaultClassName: "",
 		values: {
 			isCurrent: false,
-			isDisabled: props.isDisabled || false,
+			isDisabled,
 			isPressed,
 			isHovered,
 			isFocused,
@@ -88,15 +100,15 @@ function NextLinkButton(
 		<NextLink
 			ref={ref}
 			{...mergeProps(renderProps, linkProps, hoverProps, focusProps)}
-			style={COLOR_SCHEMES[appearance] as any}
+			style={COLOR_SCHEMES[appearance] as CSSProperties}
 			className={btnStyles()}
 			href={props.href}
-			slot={props.slot || undefined}
-			data-focused={isFocused || undefined}
-			data-hovered={isHovered || undefined}
-			data-pressed={isPressed || undefined}
-			data-focus-visible={isFocusVisible || undefined}
-			data-disabled={props.isDisabled || undefined}
+			slot={slotValue}
+			data-focused={dataFocused}
+			data-hovered={dataHovered}
+			data-pressed={dataPressed}
+			data-focus-visible={dataFocusVisible}
+			data-disabled={dataDisabled}
 		>
 			{renderProps.children}
 		</NextLink>
@@ -119,12 +131,15 @@ function NextCustomLink(
 ) {
 	[props, ref] = useContextProps(props, ref, LinkContext);
 
-	let { linkProps, isPressed } = useLink({ ...props, elementType: "a" }, ref);
+	const { linkProps, isPressed } = useLink(
+		{ ...props, elementType: "a" },
+		ref,
+	);
 
-	let { hoverProps, isHovered } = useHover(props);
-	let { focusProps, isFocused, isFocusVisible } = useFocusRing();
+	const { hoverProps, isHovered } = useHover(props);
+	const { focusProps, isFocused, isFocusVisible } = useFocusRing();
 
-	let renderProps = useRenderProps({
+	const renderProps = useRenderProps({
 		...props,
 		defaultClassName: "",
 		values: {

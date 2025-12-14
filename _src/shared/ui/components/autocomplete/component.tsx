@@ -3,7 +3,6 @@ import {
 	UseAutocompleteProps,
 } from "./hooks/use-autocomplete";
 import { Item, Section } from "react-stately";
-import { useClickOutside } from "@/_src/shared/lib";
 import {
 	OverlayTriggerStateContext,
 	Provider,
@@ -44,7 +43,6 @@ function Autocomplete<TItemData extends { id: string }>(
 ): ReactNode {
 	const {
 		label,
-		description,
 		errorMessages,
 		placeholder = "Select something",
 		selectionMode = "single",
@@ -67,7 +65,7 @@ function Autocomplete<TItemData extends { id: string }>(
 		selectionMode,
 	});
 
-	const { listProps, triggerRef, listRef, popoverProps, popoverRef } =
+	const { listProps, triggerRef, listRef, popoverProps } =
 		useAutocomplete(
 			{
 				selectionMode,
@@ -77,8 +75,6 @@ function Autocomplete<TItemData extends { id: string }>(
 			},
 			listState,
 		);
-
-	useClickOutside([triggerRef, popoverRef], overlayTriggerState.close);
 
 	const autocompleteValueProps: AutocompleteValueContextProps<TItemData> = {
 		listState,

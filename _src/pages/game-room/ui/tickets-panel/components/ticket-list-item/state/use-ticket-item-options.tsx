@@ -7,7 +7,6 @@ import {
 	useGameState,
 } from "@/_src/pages/game-room/model";
 import { TrashIcon } from "@/_src/shared/ui/components/icon/svg/trash.icon";
-import { GameVotingStatus } from "@/_src/shared/api";
 
 type TicketItemOptionType = {
 	title: string;

@@ -33,7 +33,7 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		<TType extends GameEventType>(
 			eventType: TType,
 			handler: GameEventListenerCallback<GameEventTypeMap[TType]>,
-			// eslint-disable-next-line no-undef
+			 
 			options?: AddEventListenerOptions | boolean,
 		) => {
 			(gameEventTarget.addEventListener as GameEventListener["add"])(

@@ -25,7 +25,7 @@ export function ParticipantListItem({
 		[participantFromList.id, currentParticipant.id],
 	);
 
-	const options = useParticipantItemOptions(participantFromList);
+	const options = useParticipantItemOptions();
 
 	return (
 		<div className="flex flex-row gap-3">

@@ -1,5 +1,5 @@
 import { test, describe, expect, vi } from "vitest";
-import { render, screen, waitFor, within } from "@/test/utilities";
+import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Select } from "./component";
 import { Key, Selection } from "@react-types/shared";
@@ -880,7 +880,7 @@ describe("Select", () => {
 			expect(onSelectionChangeFn.mock.calls[1][0].has("1")).toBeTruthy();
 			expect(onSelectionChangeFn.mock.calls[1][0].has("3")).toBeTruthy();
 
-			let chips = within(valueContainer).getAllByRole("row");
+			const chips = within(valueContainer).getAllByRole("row");
 
 			expect(chips).toHaveLength(2);
 			expect(within(list).getAllByTestId("icon-CheckIcon")).toHaveLength(

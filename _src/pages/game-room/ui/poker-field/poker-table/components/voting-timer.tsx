@@ -4,41 +4,60 @@ import {
 	useGameState,
 } from "@/_src/pages/game-room/model";
 import { GameVotingStatus } from "@/_src/shared/api";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function VotingTimer() {
 	const settings = useGameState(selectGameSettings);
 	const votingProcess = useGameState(selectVotingProcess);
-	const [timeLeft, setTimeLeft] = useState<number | undefined>();
+
+	if (
+		votingProcess.status !== GameVotingStatus.InProgress ||
+		!settings.isAutoRevealCards
+	) {
+		return null;
+	}
+
+	return (
+		<VotingTimerInner
+			startTime={votingProcess.startTime}
+			autoRevealPeriod={settings.autoRevealPeriod}
+			isAutoRevealCards={settings.isAutoRevealCards}
+		/>
+	);
+}
+
+type VotingTimerInnerProps = {
+	startTime: string | null;
+	autoRevealPeriod: number;
+	isAutoRevealCards: boolean;
+};
+
+function VotingTimerInner(props: VotingTimerInnerProps) {
+	const { startTime, autoRevealPeriod, isAutoRevealCards } = props;
+	const initialTimeLeft = useMemo(
+		() => calcSecondsLeft(startTime, autoRevealPeriod),
+		[startTime, autoRevealPeriod],
+	);
+	const [timeLeft, setTimeLeft] = useState<number>(initialTimeLeft);
 
 	useEffect(() => {
-		if (votingProcess.startTime === null || !settings.isAutoRevealCards)
-			return;
-
-		const startTime = new Date(votingProcess.startTime);
-		let secondsLeft = calcSecondsLeft(startTime, settings.autoRevealPeriod);
-		setTimeLeft(secondsLeft);
+		if (startTime === null || !isAutoRevealCards) return;
 
 		const interval = setInterval(() => {
-			secondsLeft = calcSecondsLeft(startTime, settings.autoRevealPeriod);
-			if (secondsLeft >= 0) {
+			const secondsLeft = calcSecondsLeft(startTime, autoRevealPeriod);
+			if (secondsLeft > 0) {
 				setTimeLeft(secondsLeft);
 			} else {
+				setTimeLeft(initialTimeLeft);
 				clearInterval(interval);
 			}
 		}, 1000);
 
 		return () => {
+			setTimeLeft(initialTimeLeft);
 			clearInterval(interval);
 		};
-	}, [votingProcess.startTime, settings]);
-
-	if (
-		votingProcess.status !== GameVotingStatus.InProgress ||
-		!settings.isAutoRevealCards ||
-		timeLeft === undefined
-	)
-		return null;
+	}, [startTime, isAutoRevealCards, autoRevealPeriod, initialTimeLeft]);
 
 	return (
 		<div className="flex w-full flex-row items-center justify-center gap-1 text-neutral-500">
@@ -48,9 +67,14 @@ export function VotingTimer() {
 	);
 }
 
-function calcSecondsLeft(startTime: Date, autoRevealPeriod: number): number {
+function calcSecondsLeft(
+	startTimeStr: string | null,
+	autoRevealPeriod: number,
+): number {
 	const nowMs = Date.now();
-	const startTimeMs = startTime.getTime();
+	const startTimeMs = startTimeStr
+		? new Date(startTimeStr).getTime()
+		: Date.now();
 
-	return autoRevealPeriod - Math.ceil((nowMs - startTimeMs) / 1000);
+	return autoRevealPeriod - Math.floor((nowMs - startTimeMs) / 1000);
 }

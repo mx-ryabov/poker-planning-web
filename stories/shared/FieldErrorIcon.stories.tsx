@@ -1,5 +1,5 @@
 import { FieldErrorIcon } from "@/_src/shared/ui/components/field-error-icon";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/FieldErrorIcon",
@@ -13,6 +13,6 @@ const meta = {
 
 export default meta;
 
-export const FieldErrorIconDefault = (args: any) => {
-	return <FieldErrorIcon errorMsg="Error!" {...args} />;
+export const FieldErrorIconDefault = () => {
+	return <FieldErrorIcon errorMsg="Error!" />;
 };

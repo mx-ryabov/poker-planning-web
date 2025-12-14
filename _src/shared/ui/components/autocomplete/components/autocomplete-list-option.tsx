@@ -12,13 +12,13 @@ export const AutocompleteListOption = <TItemData extends object>({
 	item,
 }: AutocompleteListOptionProps<TItemData>) => {
 	const { rendered, key } = item;
-	let ref = useRef<HTMLDivElement>(null);
+	const ref = useRef<HTMLDivElement>(null);
 
-	let { state, shouldFocusOnHover, shouldUseVirtualFocus } = useContext(
+	const { state, shouldFocusOnHover, shouldUseVirtualFocus } = useContext(
 		AutocompleteListContext,
 	);
 
-	let { optionProps, isSelected, isDisabled, isFocused } = useOption(
+	const { optionProps, isSelected, isDisabled, isFocused } = useOption(
 		{
 			"aria-label": item["aria-label"],
 			key,
@@ -30,7 +30,7 @@ export const AutocompleteListOption = <TItemData extends object>({
 		ref,
 	);
 
-	let { hoverProps, isHovered } = useHover({
+	const { hoverProps, isHovered } = useHover({
 		isDisabled,
 	});
 

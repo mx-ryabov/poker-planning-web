@@ -9,23 +9,23 @@ export class ListCollection<T> implements Collection<Node<T>> {
 	constructor(nodes: Iterable<Node<T>>) {
 		this.iterable = nodes;
 
-		let visit = (node: Node<T>) => {
+		const visit = (node: Node<T>) => {
 			this.keyMap.set(node.key, node);
 
 			if (node.childNodes && node.type === "section") {
-				for (let child of node.childNodes) {
+				for (const child of node.childNodes) {
 					visit(child);
 				}
 			}
 		};
 
-		for (let node of nodes) {
+		for (const node of nodes) {
 			visit(node);
 		}
 
 		let last!: Node<T>;
 		let index = 0;
-		for (let [key, node] of this.keyMap) {
+		for (const [key, node] of this.keyMap) {
 			if (last) {
 				last.nextKey = key;
 				node.prevKey = last.key;
@@ -61,12 +61,12 @@ export class ListCollection<T> implements Collection<Node<T>> {
 	}
 
 	getKeyBefore(key: Key) {
-		let node = this.keyMap.get(key);
+		const node = this.keyMap.get(key);
 		return node?.prevKey || null;
 	}
 
 	getKeyAfter(key: Key) {
-		let node = this.keyMap.get(key);
+		const node = this.keyMap.get(key);
 		return node?.nextKey || null;
 	}
 
@@ -88,7 +88,7 @@ export class ListCollection<T> implements Collection<Node<T>> {
 	}
 
 	getChildren(key: Key): Iterable<Node<T>> {
-		let node = this.keyMap.get(key);
+		const node = this.keyMap.get(key);
 		return node?.childNodes || [];
 	}
 }

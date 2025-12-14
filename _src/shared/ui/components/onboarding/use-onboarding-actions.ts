@@ -1,4 +1,4 @@
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import {
 	OnboardingActionsContext,
 	OnboardingModel,
@@ -15,9 +15,9 @@ export function useOnboardingActions() {
 
 	const { setState } = context;
 
-	const startOnboarding = useCallback((model: OnboardingModel) => {
+	const startOnboarding = (model: OnboardingModel) => {
 		setState({ model, step: 0 });
-	}, []);
+	};
 
 	const nextStep = () => {
 		setState((currentState) => {

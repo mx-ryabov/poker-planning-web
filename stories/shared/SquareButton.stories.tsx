@@ -1,7 +1,7 @@
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { SettingsIcon } from "@/_src/shared/ui/components/icon";
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/nextjs";
+import { fn } from "storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

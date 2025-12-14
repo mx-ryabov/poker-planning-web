@@ -21,7 +21,7 @@ import {
 } from "../../lib/utils/app-fetch";
 import { GetGameByIdResponse } from "./dto/get-game-by-id-response";
 import { UpdateTicketForGameRequest } from "./dto/update-ticket-for-game-request";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 import { UpdateGameSettingsResponse } from "./dto/update-game-settings-response";
 
 export async function createGameAsGuest(
@@ -130,7 +130,9 @@ export async function finishVoting(gameId: string) {
 }
 
 export async function revalidateGame() {
-	revalidateTag("game-by-id");
+	// Next.js 16: Using updateTag for immediate consistency in server actions
+	// (read-your-own-writes pattern, no profile parameter needed)
+	updateTag("game-by-id");
 }
 
 export async function vote(gameId: string, voteId: string | null) {

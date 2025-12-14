@@ -1,7 +1,7 @@
 import { NewButton } from "@/_src/shared/ui/components/button";
 import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 import { PeopleIcon } from "@/_src/shared/ui/components/icon";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Highlighter",
@@ -15,7 +15,7 @@ const meta = {
 
 export default meta;
 
-export const HighlighterWithButton = (args: any) => {
+export const HighlighterWithButton = () => {
 	return (
 		<div className="flex flex-row gap-8">
 			<Highlighter id="unique-button-1">

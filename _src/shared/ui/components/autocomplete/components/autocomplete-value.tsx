@@ -1,6 +1,5 @@
 import {
 	KeyboardEvent,
-	MutableRefObject,
 	RefObject,
 	useCallback,
 	useEffect,
@@ -294,9 +293,11 @@ const TextFieldChip = ({
 					break;
 			}
 		},
-		[focusManager, tagRef, inputRef, removeLatestSelection],
+		[focusManager, inputRef, removeLatestSelection],
 	);
 
+	// The reason of suppression - Here we just merge the props and pass them to the TextField component.
+	/* eslint-disable-next-line react-hooks/refs */
 	const mergedInputProps = mergeProps(inputProps, { onKeyDown });
 
 	return (

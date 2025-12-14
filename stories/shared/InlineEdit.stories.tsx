@@ -1,7 +1,7 @@
 import { InlineEdit } from "@/_src/shared/ui/components/inline-edit/component";
 import { Input } from "@/_src/shared/ui/components/input";
 import { TextArea } from "@/_src/shared/ui/components/textarea";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
 
 const meta = {
@@ -17,7 +17,7 @@ const meta = {
 
 export default meta;
 
-export const InlineEditWithInput = (args: any) => {
+export const InlineEditWithInput = () => {
 	const [value, setValue] = useState("");
 
 	return (
@@ -35,7 +35,7 @@ export const InlineEditWithInput = (args: any) => {
 	);
 };
 
-export const InlineEditWithTextArea = (args: any) => {
+export const InlineEditWithTextArea = () => {
 	const [value, setValue] = useState("");
 
 	return (

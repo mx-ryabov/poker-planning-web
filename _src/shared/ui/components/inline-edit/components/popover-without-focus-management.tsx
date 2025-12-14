@@ -22,8 +22,8 @@ export const PopoverWithoutFocusManagment = ({
 	id,
 	...props
 }: PopoverWithoutFocusManagmentProps) => {
-	let popoverRef = useRef<HTMLDivElement | null>(null);
-	let isExiting =
+	const popoverRef = useRef<HTMLDivElement | null>(null);
+	const isExiting =
 		useExitAnimation(popoverRef, state.isOpen) || props.isExiting || false;
 
 	if (!state.isOpen && !isExiting) {
@@ -55,13 +55,13 @@ const PopoverWithoutFocusManagmentInner = forwardRef<
 	HTMLDivElement,
 	PopoverInnerProps
 >(({ children, state, offset = 8, className, isExiting, ...props }, ref) => {
-	let popoverRef = useRef<HTMLDivElement | null>(null);
-	let isEntering =
+	const popoverRef = useRef<HTMLDivElement | null>(null);
+	const isEntering =
 		useEnterAnimation(popoverRef, !!props.placement) ||
 		props.isEntering ||
 		false;
 
-	let { popoverProps } = usePopover(
+	const { popoverProps } = usePopover(
 		{
 			...props,
 			offset,

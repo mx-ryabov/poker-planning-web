@@ -16,7 +16,7 @@ const meta = {
 
 export default meta;
 
-export const InlineEditableTextareaDefault = (args: any) => {
+export const InlineEditableTextareaDefault = () => {
 	const [value, setValue] = useState(`Description:
 1. It's important to do this
 2. And this
@@ -45,7 +45,7 @@ export const InlineEditableTextareaDefault = (args: any) => {
 	);
 };
 
-export const InlineEditableTextfieldMedium = (args: any) => {
+export const InlineEditableTextfieldMedium = () => {
 	const [value, setValue] = useState("");
 
 	return (
@@ -71,7 +71,7 @@ export const InlineEditableTextfieldMedium = (args: any) => {
 	);
 };
 
-export const InlineEditableTextfieldMediumWithLabel = (args: any) => {
+export const InlineEditableTextfieldMediumWithLabel = () => {
 	const [value, setValue] = useState("");
 
 	return (
@@ -98,7 +98,7 @@ export const InlineEditableTextfieldMediumWithLabel = (args: any) => {
 	);
 };
 
-export const InlineEditableTextfieldLarge = (args: any) => {
+export const InlineEditableTextfieldLarge = () => {
 	const [value, setValue] = useState("");
 
 	return (
@@ -124,7 +124,7 @@ export const InlineEditableTextfieldLarge = (args: any) => {
 	);
 };
 
-export const InlineEditableTextfieldLargeWithLabel = (args: any) => {
+export const InlineEditableTextfieldLargeWithLabel = () => {
 	const [value, setValue] = useState("");
 
 	return (

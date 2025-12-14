@@ -1,7 +1,7 @@
 import { Button, ButtonSquare } from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { Modal } from "@/_src/shared/ui/components/modal";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Modal",

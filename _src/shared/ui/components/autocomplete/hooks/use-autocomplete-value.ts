@@ -8,12 +8,7 @@ import {
 } from "react";
 import { KeyboardEvent } from "@react-types/shared";
 import { useSelectableCollection } from "@react-aria/selection";
-import {
-	Key,
-	ListKeyboardDelegate,
-	PressEvent,
-	useFocusWithin,
-} from "react-aria";
+import { Key, ListKeyboardDelegate } from "react-aria";
 import { InputProps } from "../../input";
 import { AutocompleteValueContext } from "../contexts/autocomplete-value-context";
 import { OverlayTriggerStateContext } from "react-aria-components";
@@ -26,7 +21,6 @@ export function useAutocompleteValue() {
 		placeholder,
 		isDisabled,
 		isInvalid,
-		selectionMode,
 		searchValue,
 		listRef,
 		selectedNodes,
@@ -71,7 +65,7 @@ export function useAutocompleteValue() {
 				listState.disabledKeys.size === listState.collection.size;
 			if (isAllKeysDisabled || listState.collection.size === 0) return;
 
-			let focusedKey = listState.selectionManager.focusedKey;
+			const focusedKey = listState.selectionManager.focusedKey;
 			if (focusedKey === null) {
 				listState.selectionManager.setFocusedKey(
 					listState.collection.getFirstKey(),
@@ -130,7 +124,7 @@ export function useAutocompleteValue() {
 				}
 			}
 		},
-		[listState.selectionManager],
+		[listState.selectionManager, overlayTriggerState, open, focusListItem],
 	);
 
 	const onKeyDown = useCallback(
@@ -157,16 +151,13 @@ export function useAutocompleteValue() {
 			if (e.key === "Escape") {
 				overlayTriggerState?.close();
 			}
-			collectionProps.onKeyDown && collectionProps.onKeyDown(e);
+			collectionProps.onKeyDown?.(e);
 		},
 		[
-			collectionProps.onKeyDown,
-			overlayTriggerState?.isOpen,
-			overlayTriggerState?.close,
+			collectionProps,
+			overlayTriggerState,
 			open,
 			listState.selectionManager,
-			selectionMode,
-			collectionProps.onKeyDown,
 		],
 	);
 
@@ -196,7 +187,7 @@ export function useAutocompleteValue() {
 				overlayTriggerState?.close();
 			}
 		},
-		[overlayTriggerState?.close, autocompleteValueContainerRef, listRef],
+		[overlayTriggerState, autocompleteValueContainerRef, listRef],
 	);
 
 	const inputProps: InputProps = useMemo(
@@ -232,11 +223,11 @@ export function useAutocompleteValue() {
 	const toggleBtnProps = useMemo(
 		() => ({
 			isDisabled,
-			onPress: (e: PressEvent) => {
+			onPress: () => {
 				toggle("full");
 			},
 		}),
-		[toggle, inputRef, overlayTriggerState?.isOpen, isDisabled],
+		[toggle, isDisabled],
 	);
 
 	const containerProps = useMemo(

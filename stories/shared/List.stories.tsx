@@ -1,5 +1,5 @@
 import { List } from "@/_src/shared/ui/components/list";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/List",
@@ -21,10 +21,9 @@ const data: ItemData[] = [
 	{ textValue: "List Item 5", id: 5 },
 ];
 
-export const ListDefault = (args: any) => (
+export const ListDefault = () => (
 	<List<ItemData>
 		items={data}
-		{...args}
 		aria-label="List Default"
 		className="border border-neutral-100 rounded-lg px-2 py-3"
 	>
@@ -36,26 +35,6 @@ export const ListDefault = (args: any) => (
 	</List>
 );
 
-type SectionData = { id: number; title: string; items: ItemData[] };
-const multiLevelData: SectionData[] = [
-	{
-		id: 1,
-		title: "Section 1",
-		items: [
-			{ textValue: "List Item 1", id: 1 },
-			{ textValue: "List Item 2", id: 2 },
-		],
-	},
-	{
-		id: 2,
-		title: "Section 2",
-		items: [
-			{ textValue: "List Item 3", id: 3 },
-			{ textValue: "List Item 4", id: 4 },
-		],
-	},
-];
-
 const dataWithDisabledItems: ItemData[] = [
 	{ textValue: "List Item 1", id: 1 },
 	{ textValue: "List Item 2", id: 2 },
@@ -64,10 +43,9 @@ const dataWithDisabledItems: ItemData[] = [
 	{ textValue: "List Item 5", id: 5 },
 ];
 
-export const ListWithDisabledItems = (args: any) => (
+export const ListWithDisabledItems = () => (
 	<List<ItemData>
 		items={dataWithDisabledItems}
-		{...args}
 		aria-label="List Default"
 		className="border border-neutral-100 rounded-lg px-2 py-3"
 	>
@@ -83,10 +61,9 @@ export const ListWithDisabledItems = (args: any) => (
 	</List>
 );
 
-export const ListEmptyState = (args: any) => (
+export const ListEmptyState = () => (
 	<List<ItemData>
 		items={[]}
-		{...args}
 		aria-label="List Default"
 		className="border border-neutral-100 rounded-lg px-2 py-3"
 	>

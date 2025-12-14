@@ -1,5 +1,5 @@
-import { useValueChanged } from "@/_src/shared/lib";
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
+import { usePrevValueState } from "@/_src/shared/lib";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 type Props = {
 	value: string;
@@ -17,28 +17,23 @@ export type InlineEditState = {
 export function useInlineEditState(props: Props): InlineEditState {
 	const { value, onConfirm, onCancel } = props;
 
-	const valueBeforeChangeRef = useRef<string | undefined>(value);
 	const [editorValue, setEditorValue] = useState(value);
 
-	const prevValue = useValueChanged(value);
-	if (prevValue.isChanged) {
+	const prevValueState = usePrevValueState(value);
+	if (prevValueState.isChanged) {
 		setEditorValue(value);
-		valueBeforeChangeRef.current = value;
 	}
 
 	const confirmChanges = useCallback(() => {
-		if (valueBeforeChangeRef.current !== editorValue) {
-			valueBeforeChangeRef.current = editorValue;
+		if (value !== editorValue) {
 			onConfirm(editorValue);
 		}
-	}, [onConfirm, editorValue]);
+	}, [onConfirm, editorValue, value]);
 
 	const cancelChanges = useCallback(() => {
-		setEditorValue(valueBeforeChangeRef.current || "");
-		if (onCancel) {
-			onCancel();
-		}
-	}, [onCancel, valueBeforeChangeRef]);
+		setEditorValue(value);
+		onCancel?.();
+	}, [onCancel, value]);
 
 	return {
 		editorValue,

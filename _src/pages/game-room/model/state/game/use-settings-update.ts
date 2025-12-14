@@ -51,7 +51,7 @@ export function useSettingsUpdate({
 				{ timeout: 5000 },
 			);
 		},
-		[toast?.add],
+		[toast],
 	);
 
 	const onSuccess = useCallback(

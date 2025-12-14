@@ -834,8 +834,8 @@ describe("Autocomplete", () => {
 				const trigger = getByTestId("trigger");
 				await user.click(trigger);
 				await user.keyboard("[ArrowDown]");
-				let list = getByRole("listbox");
-				let items = within(list).getAllByRole("option");
+				const list = getByRole("listbox");
+				const items = within(list).getAllByRole("option");
 				expect(items[1]).toHaveAttribute("data-focused", "true");
 				expect(items[0]).not.toHaveAttribute("data-focused", "true");
 				expect(items[2]).not.toHaveAttribute("data-focused", "true");
@@ -1031,7 +1031,7 @@ describe("Autocomplete", () => {
 
 				expect(initialItemsCount).not.toEqual(filteredItems.length);
 				expect(filteredItems[0]).toHaveTextContent("Apple");
-				for (let item of filteredItems) {
+				for (const item of filteredItems) {
 					expect(item).not.toHaveTextContent("Banana");
 				}
 			});
@@ -1135,7 +1135,7 @@ describe("Autocomplete", () => {
 				await user.type(textField, "A");
 				await user.keyboard("[ArrowLeft]");
 
-				let chips = within(getByTestId("value-box")).getAllByTestId(
+				const chips = within(getByTestId("value-box")).getAllByTestId(
 					"selected-item-chip",
 				);
 
@@ -1150,13 +1150,13 @@ describe("Autocomplete", () => {
 
 				const trigger = getByTestId("trigger");
 				await user.click(trigger);
-				let items = within(getByRole("listbox")).getAllByRole("option");
+				const items = within(getByRole("listbox")).getAllByRole("option");
 				await user.click(items[0]);
 				await user.click(items[1]);
 				await user.keyboard("[ArrowLeft]");
 				await user.keyboard("[Delete]");
 
-				let chips = within(getByTestId("value-box")).getAllByTestId(
+				const chips = within(getByTestId("value-box")).getAllByTestId(
 					"selected-item-chip",
 				);
 				expect(chips).toHaveLength(1);
@@ -1204,7 +1204,7 @@ describe("Autocomplete", () => {
 				await user.click(textField);
 				await user.keyboard("[ArrowLeft]");
 
-				let chips = within(getByTestId("value-box")).getAllByTestId(
+				const chips = within(getByTestId("value-box")).getAllByTestId(
 					"selected-item-chip",
 				);
 
@@ -1222,7 +1222,7 @@ describe("Autocomplete", () => {
 				await user.click(textField);
 				await user.keyboard("[Backspace]");
 
-				let chips = within(getByTestId("value-box")).getAllByTestId(
+				const chips = within(getByTestId("value-box")).getAllByTestId(
 					"selected-item-chip",
 				);
 

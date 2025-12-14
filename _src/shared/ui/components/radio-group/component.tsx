@@ -1,12 +1,11 @@
 import { buildProvider } from "@/_src/shared/lib";
 import { mergeClassNames } from "@/_src/shared/lib/utils/merge-class-names";
 import { cva } from "class-variance-authority";
-import { forwardRef, useCallback, useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import {
 	RadioGroup as RadioGroupAria,
 	RadioGroupProps as RadioGroupAriaProps,
 	Radio as RadioAria,
-	RadioRenderProps,
 	RadioProps as RadioAriaProps,
 	Label as LabelAria,
 	LabelProps,

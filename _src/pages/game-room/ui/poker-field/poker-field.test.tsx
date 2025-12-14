@@ -1,5 +1,5 @@
 import { test, describe, expect } from "vitest";
-import { render, within } from "@/test/utilities";
+import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import {
 	GameVotingProcess,

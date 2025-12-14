@@ -8,7 +8,7 @@ import {
 } from "@/_src/pages/game-room/__tests__/game-state-store.test-helpers";
 import { TablePlayer, TablePlayerProps } from "../components/table-player";
 import { GameRoomFakeProviderWrapper } from "@/_src/pages/game-room/__mocks__";
-import { GameParticipant, GameVotingStatus } from "@/_src/shared/api";
+import { GameVotingStatus } from "@/_src/shared/api";
 
 describe("Table Player", () => {
 	test("renders correctly", async () => {

@@ -4,7 +4,6 @@ import { QuestionIcon } from "@/_src/shared/ui/components/icon/svg/question.icon
 import { useCallback } from "react";
 import {
 	selectIfVotingStatusIsInProgress,
-	selectVotingProcess,
 	useGameState,
 } from "../../../model";
 

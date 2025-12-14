@@ -10,7 +10,9 @@ import { AriaLabelingProps, DOMProps } from "@react-types/shared";
 
 export type SelectValueContextProps = {
 	label?: string;
-	labelProps: DOMAttributes<any> | LabelHTMLAttributes<HTMLLabelElement>;
+	labelProps:
+		| DOMAttributes<HTMLLabelElement>
+		| LabelHTMLAttributes<HTMLLabelElement>;
 	fieldProps: AriaLabelingProps & DOMProps;
 	overlayTriggerState: OverlayTriggerState;
 	triggerRef: RefObject<HTMLDivElement | null>;

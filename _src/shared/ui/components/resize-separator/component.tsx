@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@/_src/shared/lib/hooks/local-storage";
+import { useLocalStorageState } from "@/_src/shared/lib/hooks/use-local-storage-state";
 import { cva } from "class-variance-authority";
 import { RefObject, useEffect, useRef } from "react";
 
@@ -51,20 +51,19 @@ export function ResizeSeparator({
 	stateKey,
 	onChangeEnd,
 }: Props) {
-	const localStorage = useLocalStorage();
+	const [width, setWidth] = useLocalStorageState<string>(
+		`resizable-element-state-${stateKey}`,
+	);
 	const separatorRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const resizableEl = resizableElementRef.current;
 		if (!resizableEl || !stateKey) return;
 
-		const initialWidthPx = localStorage.getItem(
-			`resizable-element-state-${stateKey}`,
-		);
-		if (initialWidthPx) {
-			resizableEl.style.width = initialWidthPx;
+		if (width) {
+			resizableEl.style.width = width;
 		}
-	}, [stateKey, resizableElementRef, localStorage]);
+	}, [stateKey, resizableElementRef, width]);
 
 	useEffect(() => {
 		const separatorEl = separatorRef.current;
@@ -94,10 +93,7 @@ export function ResizeSeparator({
 			startX = event.clientX;
 			startY = event.clientY;
 			startWidth = resizableEl.getBoundingClientRect().width;
-			localStorage.setItem(
-				`resizable-element-state-${stateKey}`,
-				`${startWidth}px`,
-			);
+			setWidth(`${startWidth}px`);
 			if (onChangeEnd) {
 				onChangeEnd(startWidth);
 			}
@@ -133,7 +129,7 @@ export function ResizeSeparator({
 		resizableElementRef,
 		orientation,
 		direction,
-		localStorage,
+		setWidth,
 		stateKey,
 		onChangeEnd,
 	]);

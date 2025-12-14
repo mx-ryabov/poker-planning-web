@@ -1,5 +1,5 @@
 import { test, describe, expect } from "vitest";
-import { render, screen } from "@/test/utilities";
+import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Avatar } from "./component";
 import { Color } from "../../colors";

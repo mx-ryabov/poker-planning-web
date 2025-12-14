@@ -1,11 +1,6 @@
 "use client";
-import {
-	createContext,
-	ReactNode,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { createContext, ReactNode, useContext, useCallback } from "react";
+import { useLocalStorageState } from "../lib";
 
 export enum ConsentStatus {
 	Unknown = "unknown",
@@ -27,37 +22,21 @@ export function CookieConsentStateProvider({
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const [consentStatus, setConsentStatus] = useState<ConsentStatus>(
-		ConsentStatus.UnInitialized,
+	const [consentStatus, setConsentStatus] = useLocalStorageState(
+		"cookieConsent",
+		{
+			defaultValue: ConsentStatus.Unknown,
+			defaultServerValue: ConsentStatus.UnInitialized,
+		},
 	);
 
-	useEffect(() => {
-		if (typeof localStorage !== "undefined") {
-			const consent = localStorage.getItem("cookieConsent");
-			if (
-				consent === ConsentStatus.Given ||
-				consent === ConsentStatus.Rejected
-			) {
-				setConsentStatus(consent);
-			} else {
-				setConsentStatus(ConsentStatus.Unknown);
-			}
-		}
-	}, []);
-
-	const giveConsent = () => {
-		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("cookieConsent", ConsentStatus.Given);
-		}
+	const giveConsent = useCallback(() => {
 		setConsentStatus(ConsentStatus.Given);
-	};
+	}, [setConsentStatus]);
 
-	const rejectConsent = () => {
-		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("cookieConsent", ConsentStatus.Rejected);
-		}
+	const rejectConsent = useCallback(() => {
 		setConsentStatus(ConsentStatus.Rejected);
-	};
+	}, [setConsentStatus]);
 
 	return (
 		<CookieConsentStateContext.Provider

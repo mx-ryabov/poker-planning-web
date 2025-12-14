@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import { Extras, ILogger } from "./types";
 
 export class SentryLogger implements ILogger {
-	info(...data: any[]): void {
+	info(): void {
 		throw new Error("Method not implemented.");
 	}
 	error(error: Error, extra: Extras = {}): void {

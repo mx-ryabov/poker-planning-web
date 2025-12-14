@@ -5,7 +5,7 @@ import {
 	SettingsIcon,
 } from "@/_src/shared/ui/components/icon";
 import { Menu } from "@/_src/shared/ui/components/menu";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Menu",
@@ -18,10 +18,10 @@ const meta = {
 
 export default meta;
 
-export const MenuDefault = (args: any) => (
+export const MenuDefault = () => (
 	<Menu>
 		<ButtonSquare icon={SettingsIcon} />
-		<Menu.Content {...args}>
+		<Menu.Content>
 			<Menu.Section title="Dropdown Title">
 				<Menu.Item id={1}>
 					<PeopleIcon size={16} />

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { test, describe, expect, vi } from "vitest";
-import { act, render, waitFor } from "@/test/utilities";
+import { act, render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { VotingResultsApplier } from "../components";
 import { GameRoomFakeProviderWrapper } from "@/_src/pages/game-room/__mocks__";
@@ -231,30 +231,29 @@ describe("Voting Results Applier", () => {
 		const finishVoting = vi.fn(async () => {
 			throw new Error("test error");
 		});
-		const { getByTestId, getByText, user, debug, getByRole } =
-			renderComponent({
-				votingProcess: {
-					status: GameVotingStatus.Revealed,
-					ticket: generateTicket({
-						id: "test-ticket-id",
-						identifier: "test-ticket-identifier",
-					}),
-					startTime: new Date().toString(),
-				},
-				participants: [
-					generateParticipant({
-						vote: MOCKED_SYSTEM_VOTES[0],
-					}),
-					generateParticipant({
-						vote: MOCKED_SYSTEM_VOTES[0],
-					}),
-					generateParticipant({
-						vote: MOCKED_SYSTEM_VOTES[1],
-					}),
-				],
-				updateByField,
-				finishVoting,
-			});
+		const { getByTestId, getByText, user } = renderComponent({
+			votingProcess: {
+				status: GameVotingStatus.Revealed,
+				ticket: generateTicket({
+					id: "test-ticket-id",
+					identifier: "test-ticket-identifier",
+				}),
+				startTime: new Date().toString(),
+			},
+			participants: [
+				generateParticipant({
+					vote: MOCKED_SYSTEM_VOTES[0],
+				}),
+				generateParticipant({
+					vote: MOCKED_SYSTEM_VOTES[0],
+				}),
+				generateParticipant({
+					vote: MOCKED_SYSTEM_VOTES[1],
+				}),
+			],
+			updateByField,
+			finishVoting,
+		});
 
 		const btn = getByTestId("apply-voting-results-btn");
 		await user.click(btn);
@@ -275,7 +274,7 @@ describe("Voting Results Applier", () => {
 type RenderProps = {
 	votingProcess?: GameVotingProcess;
 	participants?: GameParticipant[];
-	updateByField?: (field: string, value: any) => void;
+	updateByField?: (field: string, value: unknown) => void;
 	finishVoting?: () => Promise<void>;
 };
 

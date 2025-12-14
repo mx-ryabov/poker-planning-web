@@ -43,7 +43,7 @@ export function AnimatedFadeIn({
 				(delay || 0) * 1000,
 			);
 
-			let elements: Element[] = [];
+			const elements: Element[] = [];
 			if (
 				containerRef.current.hasAttribute("data-animated-text-wrapper")
 			) {
@@ -88,6 +88,8 @@ export function AnimatedFadeIn({
 	);
 
 	if (Children.count(children) === 1) {
+		// The reason of suppression - This is a workaround to pass the ref to the child component.
+		/* eslint-disable react-hooks/refs */
 		return cloneElement(children as ReactElement<ChildProps>, {
 			ref: containerRef,
 			className: twMerge(
@@ -95,6 +97,7 @@ export function AnimatedFadeIn({
 				"initially-hidden",
 			),
 		});
+		/* eslint-enable react-hooks/refs */
 	}
 
 	return (

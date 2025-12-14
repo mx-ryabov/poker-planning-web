@@ -1,7 +1,7 @@
 import { Button } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon, SettingsIcon } from "@/_src/shared/ui/components/icon";
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn, within, expect } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/nextjs";
+import { fn, within, expect } from "storybook/test";
 import { useState } from "react";
 
 const meta = {
@@ -66,7 +66,7 @@ export const DefaultMedium: Story = {
 	},
 };
 
-export const DefaultMediumPending = (args: any) => {
+export const DefaultMediumPending = () => {
 	const [isPending, setIsPending] = useState(false);
 	return (
 		<Button

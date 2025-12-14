@@ -27,7 +27,6 @@ export function DrawerModal(props: ModalProps) {
 		isOpen,
 		onOpenChange,
 		className,
-		portal,
 	} = props;
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const orientation = "vertical";

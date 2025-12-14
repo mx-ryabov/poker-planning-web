@@ -1,6 +1,6 @@
 import { Button } from "@/_src/shared/ui/components/button";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Tooltip",
@@ -14,18 +14,18 @@ const meta = {
 
 export default meta;
 
-export const TooltipDefault = (args: any) => {
+export const TooltipDefault = () => {
 	return (
-		<Tooltip {...args} defaultOpen={true}>
+		<Tooltip defaultOpen={true}>
 			<Button title="Trigger" />
 			<Tooltip.Content>Content</Tooltip.Content>
 		</Tooltip>
 	);
 };
 
-export const TooltipWithCustomClassName = (args: any) => {
+export const TooltipWithCustomClassName = () => {
 	return (
-		<Tooltip {...args} defaultOpen={true}>
+		<Tooltip defaultOpen={true}>
 			<Button title="Trigger" />
 			<Tooltip.Content className="bg-info-500 text-white">
 				Content

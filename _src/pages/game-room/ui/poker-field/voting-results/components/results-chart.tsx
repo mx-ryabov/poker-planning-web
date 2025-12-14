@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
 	Chart as ChartJS,
 	ArcElement,
@@ -20,32 +20,35 @@ import debounce from "lodash.debounce";
 ChartJS.register(ArcElement, Tooltip);
 
 export function ResultsChart() {
-	const chartTooltipRef = useRef<HTMLDivElement | null>(null);
 	const results = useGameState(selectPreliminaryVotingResults);
 	const chartData = useMemo(() => getChartData(results), [results]);
 	const { hoveredGroupIndex, onHover } = useChartPieceHover({
 		dataVoteIds: chartData.dataVoteIds,
 	});
 
+	const chartOptions = useMemo(
+		() => ({
+			cutout: "75%",
+			plugins: {
+				tooltip: {
+					enabled: false,
+					position: "nearest" as const,
+					external: createExternalTooltipManager({
+						labelCountMap: chartData.dataMap,
+						votesCount: results.length,
+					}),
+				},
+			},
+			onHover,
+		}),
+		[chartData.dataMap, results.length, onHover],
+	);
+
 	return (
 		<div className="relative flex flex-row items-center gap-8">
 			<div className="relative h-[200px] w-[200px]">
 				<Doughnut
-					options={{
-						cutout: "75%",
-						plugins: {
-							tooltip: {
-								enabled: false,
-								position: "nearest",
-								external: tooltipManager({
-									chartTooltipRef,
-									labelCountMap: chartData.dataMap,
-									votesCount: results.length,
-								}),
-							},
-						},
-						onHover,
-					}}
+					options={chartOptions}
 					data={{
 						labels: chartData.labels,
 
@@ -81,7 +84,7 @@ export function ResultsChart() {
 					}}
 					aria-label="Results chart"
 				/>
-				<ChartTooltip ref={chartTooltipRef} />
+				<ChartTooltip id="chart-tooltip" />
 
 				<div className="absolute inset-0 -z-10 flex flex-col items-center justify-center gap-2">
 					{chartData.mostPopularLabel !== null && (
@@ -132,34 +135,33 @@ export function ResultsChart() {
 }
 
 type TooltipManagerParams = {
-	chartTooltipRef: RefObject<HTMLDivElement | null>;
 	labelCountMap: Map<string, number>;
 	votesCount: number;
 };
 
-function tooltipManager(params: TooltipManagerParams) {
-	const { chartTooltipRef, labelCountMap, votesCount } = params;
+function createExternalTooltipManager(params: TooltipManagerParams) {
+	const { labelCountMap, votesCount } = params;
 
 	return (context: { chart: ChartJS; tooltip: TooltipModel<"doughnut"> }) => {
 		const { chart, tooltip } = context;
 
 		const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
 
-		const tooltipEl = chartTooltipRef.current;
-		if (!tooltipEl) return;
+		const chartTooltip = document.getElementById("chart-tooltip");
+		if (!chartTooltip) return;
 
-		const labelEl = tooltipEl.querySelector("#label");
-		const voutedForCountEl = tooltipEl.querySelector("#voutedForCount");
-		const voutedCountEl = tooltipEl.querySelector("#voutedCount");
+		const labelEl = chartTooltip.querySelector("#label");
+		const voutedForCountEl = chartTooltip.querySelector("#voutedForCount");
+		const voutedCountEl = chartTooltip.querySelector("#voutedCount");
 
 		if (tooltip.opacity === 0) {
 			if (labelEl) labelEl.innerHTML = "";
 			if (voutedForCountEl) voutedForCountEl.innerHTML = "";
 			if (voutedCountEl) voutedCountEl.innerHTML = "";
-			tooltipEl.style.display = "none";
+			chartTooltip.style.display = "none";
 			return;
 		}
-		tooltipEl.style.display = "block";
+		chartTooltip.style.display = "block";
 
 		const label = tooltip.title[0];
 		if (labelEl) labelEl.innerHTML = label;
@@ -167,8 +169,8 @@ function tooltipManager(params: TooltipManagerParams) {
 			voutedForCountEl.innerHTML = `${labelCountMap.get(label) || 0}`;
 		if (voutedCountEl) voutedCountEl.innerHTML = `${votesCount}`;
 
-		tooltipEl.style.left = positionX + tooltip.caretX + "px";
-		tooltipEl.style.top = positionY + tooltip.caretY + "px";
+		chartTooltip.style.left = positionX + tooltip.caretX + "px";
+		chartTooltip.style.top = positionY + tooltip.caretY + "px";
 	};
 }
 
@@ -230,7 +232,7 @@ function getChartData(results: (GameVote | null)[]) {
 			return b.order - a.order;
 		})
 		.forEach((r) => {
-			let label = getLabelForVote(r);
+			const label = getLabelForVote(r);
 
 			const count = (data.get(label) || 0) + 1;
 			if (count === 1) {

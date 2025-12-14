@@ -37,7 +37,7 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 					{...renderProps}
 					onChange={(value) => {
 						renderProps.onChange(value);
-						onEditorChange && onEditorChange(value);
+						onEditorChange?.(value);
 					}}
 					onKeyDown={
 						shouldConfirmOnEnter
@@ -93,7 +93,7 @@ export function InlineEditableTextarea(props: InlineEditableTextareaProps) {
 			)}
 			onConfirm={onConfirm}
 			onCancel={() => {
-				onEditorChange && onEditorChange(value);
+				onEditorChange?.(value);
 			}}
 		/>
 	);

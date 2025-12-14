@@ -86,5 +86,5 @@ export function useParticipantsEvDis({
 			GameEventType.CurrentParticipantUpdated,
 			handler,
 		);
-	}, [eventSubscriber, updateCurrentParticipant, toast?.add]);
+	}, [eventSubscriber, updateCurrentParticipant, toast]);
 }
