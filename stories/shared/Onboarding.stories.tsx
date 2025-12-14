@@ -5,7 +5,7 @@ import {
 	OnboardingStepData,
 	useOnboardingActions,
 } from "@/_src/shared/ui/components/onboarding";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Onboarding",

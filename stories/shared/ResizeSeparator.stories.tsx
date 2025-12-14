@@ -1,5 +1,5 @@
 import { ResizeSeparator } from "@/_src/shared/ui/components/resize-separator";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 import { useRef } from "react";
 
 const meta = {

@@ -1,6 +1,6 @@
 import { Button } from "@/_src/shared/ui/components/button";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Tooltip",

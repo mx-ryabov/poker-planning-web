@@ -5,7 +5,7 @@ import {
 } from "@/_src/shared/ui/components/icon";
 import { ButtonSquare } from "@/_src/shared/ui/components/button";
 import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
 
 const meta = {

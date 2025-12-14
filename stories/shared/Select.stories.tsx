@@ -1,5 +1,5 @@
 import { Select } from "@/_src/shared/ui/components/select";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/Select",

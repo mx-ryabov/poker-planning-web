@@ -1,5 +1,5 @@
 import { Chip, ChipGroup } from "@/_src/shared/ui/components/chip";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { useListData } from "react-stately";
 
 const meta = {

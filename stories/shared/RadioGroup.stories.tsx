@@ -1,6 +1,6 @@
 import { RadioGroup } from "@/_src/shared/ui/components/radio-group";
 import { InfoIcon } from "@/_src/shared/ui/components/icon";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/nextjs";
 
 const meta = {
 	title: "Shared/RadioGroup",

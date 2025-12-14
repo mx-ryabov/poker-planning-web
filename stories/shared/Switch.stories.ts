@@ -1,6 +1,6 @@
 import { Switch } from "@/_src/shared/ui/components/switch";
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/nextjs";
+import { fn } from "storybook/test";
 
 const meta = {
 	title: "Shared/Switch",
