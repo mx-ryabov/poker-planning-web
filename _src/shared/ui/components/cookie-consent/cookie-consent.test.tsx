@@ -9,10 +9,12 @@ import {
 	ConsentStatus,
 	CookieConsentStateProvider,
 } from "@/_src/shared/providers";
+import { __clearStorageCache__TestOnly } from "@/_src/shared/lib";
 
 describe("CookieConsent", () => {
 	beforeEach(() => {
 		localStorage.clear();
+		__clearStorageCache__TestOnly();
 	});
 	test("renders when consentStatus is Unknown", () => {
 		const { getByText } = renderComponent();

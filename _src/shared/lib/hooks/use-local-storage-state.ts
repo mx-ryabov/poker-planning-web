@@ -52,9 +52,12 @@ export function useLocalStorageState<TValue>(
  */
 export function useLocalStorageState<TValue>(
 	fieldName: string,
-	options: Options<TValue, TValue | undefined> = { syncWithStorage: true },
+	options: Options<TValue, TValue | undefined> = {},
 ): UseLocalStorageStateResult<TValue> {
-	const [stableOptions] = useState(options);
+	const [stableOptions] = useState(() => ({
+		syncWithStorage: true,
+		...options,
+	}));
 	const {
 		subscribe,
 		getSnapshot,
@@ -134,6 +137,9 @@ class LocalStorageState<TValue> {
 
 	private boundOnStorageChange?: (event: StorageEvent) => void;
 	subscribeOnStorageChange() {
+		if (isSsr()) {
+			return;
+		}
 		if (!this.boundOnStorageChange) {
 			this.boundOnStorageChange = this.onStorageChange.bind(this);
 		}
@@ -189,15 +195,34 @@ class LocalStorageState<TValue> {
 	}
 }
 
-const statesCache = new Map<string, LocalStorageState<unknown>>();
+class LocalStorageStateCacheManager {
+	private statesCache = new Map<string, LocalStorageState<unknown>>();
+
+	getState(fieldName: string) {
+		return this.statesCache.get(fieldName);
+	}
+
+	setState(fieldName: string, state: LocalStorageState<unknown>) {
+		this.statesCache.set(fieldName, state);
+	}
+
+	clearCache() {
+		this.statesCache.clear();
+	}
+}
+
+const cacheManager = new LocalStorageStateCacheManager();
+export const __clearStorageCache__TestOnly =
+	cacheManager.clearCache.bind(cacheManager);
 
 function buildState<TValue>(fieldName: string, options?: Options<TValue>) {
-	let state = statesCache.get(fieldName) as
+	let state = cacheManager.getState(fieldName) as
 		| LocalStorageState<TValue>
 		| undefined;
+
 	if (!state) {
 		state = new LocalStorageState<TValue>(fieldName, options);
-		statesCache.set(fieldName, state);
+		cacheManager.setState(fieldName, state);
 	} else {
 		if (JSON.stringify(state.storedOptions) !== JSON.stringify(options)) {
 			console.warn(
@@ -209,6 +234,7 @@ function buildState<TValue>(fieldName: string, options?: Options<TValue>) {
 			);
 		}
 	}
+
 	return {
 		subscribe: state.subscribe.bind(state),
 		getSnapshot: state.getSnapshot.bind(state),
