@@ -2,7 +2,6 @@ export * from "./use-local-storage-state";
 export * from "./provider-builder";
 export * from "./use-click-outside";
 export * from "./use-resize-observable";
-export * from "./use-popover-force-position-update";
 export * from "./use-animation";
 export * from "./use-mutation";
 export * from "./use-streamable";
