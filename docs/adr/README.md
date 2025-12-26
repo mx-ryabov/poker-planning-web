@@ -17,7 +17,7 @@ If you can explain the decision in a single Slack message and nobody will care i
 
 ### ADR-001: Title (what was done?)
 
-**Status:** (Proposed / Accepted / Rejected / Superseded)
+**Status:** (Proposed / Accepted / Rejected / Superseded / Maintenance)
 
 **Date:** 2025-12-04
 
