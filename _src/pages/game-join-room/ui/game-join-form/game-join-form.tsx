@@ -3,7 +3,7 @@
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
 import { ApiError } from "@/_src/shared/lib";
 import { useApi } from "@/_src/shared/providers";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";
 import { ProfileIcon } from "@/_src/shared/ui/components/icon/svg/profile.icon";
@@ -116,7 +116,7 @@ export function GameJoinForm({ gameId }: Props) {
 					</p>
 				</section>
 				<section className="flex flex-row gap-4">
-					<NewButton
+					<Button
 						type="submit"
 						aria-label="Enter the game button"
 						data-testid="enter-game-btn"
@@ -127,7 +127,7 @@ export function GameJoinForm({ gameId }: Props) {
 					>
 						Enter the Game
 						<PlayIcon size={18}  />
-					</NewButton>
+					</Button>
 				</section>
 			</div>
 		</form>

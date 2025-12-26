@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import {
 	ToastProvider,
 	useGlobalToast,
@@ -36,7 +36,7 @@ function ToastTrigger() {
 
 	return (
 		<div className="absolute top-1/2 left-1/2 grid -translate-x-1/2 -translate-y-1/2 grid-flow-row grid-cols-3 gap-2">
-			<NewButton
+			<Button
 				appearance="neutral"
 				onPress={() => {
 					toastState?.add({
@@ -49,8 +49,8 @@ function ToastTrigger() {
 				}}
 			>
 				Neutral!
-			</NewButton>
-			<NewButton
+			</Button>
+			<Button
 				appearance="info"
 				onPress={() => {
 					toastState?.add({
@@ -63,8 +63,8 @@ function ToastTrigger() {
 				}}
 			>
 				Info!
-			</NewButton>
-			<NewButton
+			</Button>
+			<Button
 				appearance="warning"
 				onPress={() => {
 					toastState?.add({
@@ -77,8 +77,8 @@ function ToastTrigger() {
 				}}
 			>
 				Warning!
-			</NewButton>
-			<NewButton
+			</Button>
+			<Button
 				appearance="danger"
 				onPress={() => {
 					toastState?.add({
@@ -91,8 +91,8 @@ function ToastTrigger() {
 				}}
 			>
 				Error!
-			</NewButton>
-			<NewButton
+			</Button>
+			<Button
 				appearance="success"
 				onPress={() => {
 					toastState?.add({
@@ -105,8 +105,8 @@ function ToastTrigger() {
 				}}
 			>
 				Success!
-			</NewButton>
-			<NewButton
+			</Button>
+			<Button
 				onPress={() => {
 					toastState?.add(
 						{
@@ -121,8 +121,8 @@ function ToastTrigger() {
 				}}
 			>
 				Dismissable!
-			</NewButton>
-			<NewButton
+			</Button>
+			<Button
 				variant="outline"
 				onPress={() => {
 					setTimeout(() => {
@@ -136,7 +136,7 @@ function ToastTrigger() {
 				}}
 			>
 				Toast with timeout
-			</NewButton>
+			</Button>
 		</div>
 	);
 }

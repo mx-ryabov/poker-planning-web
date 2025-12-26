@@ -1,9 +1,9 @@
 import { ReactNode, useId, useMemo } from "react";
 import { useOverlayTriggerState } from "react-stately";
-import { NewButton } from "../button";
+import { Button } from "../button";
 import { CheckIcon, CloseIcon } from "../icon";
 import { PopoverWithoutFocusManagment } from "./components/popover-without-focus-management";
-import { Button, Label } from "react-aria-components";
+import { Button as AriaButton, Label } from "react-aria-components";
 import { useInlineEditState } from "./state/use-inline-edit-state";
 import { useInlineEdit } from "./behavior/use-inline-edit";
 import { twMerge } from "tailwind-merge";
@@ -71,7 +71,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 	const actionButtons = useMemo(() => {
 		return (
 			<div className="flex flex-row gap-1">
-				<NewButton
+				<Button
 					shape="square"
 					variant={keepEditViewOpenOnBlur ? "outline" : "grayed-out"}
 					className={actionBtnStyles({
@@ -81,8 +81,8 @@ export const InlineEdit = (props: InlineEditProps) => {
 					{...confirmBtnProps}
 				>
 					<CheckIcon size={18} />
-				</NewButton>
-				<NewButton
+				</Button>
+				<Button
 					shape="square"
 					variant={keepEditViewOpenOnBlur ? "outline" : "grayed-out"}
 					className={actionBtnStyles({
@@ -92,7 +92,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 					{...cancelBtnProps}
 				>
 					<CloseIcon size={18} />
-				</NewButton>
+				</Button>
 			</div>
 		);
 	}, [confirmBtnProps, cancelBtnProps, id, keepEditViewOpenOnBlur]);
@@ -109,14 +109,14 @@ export const InlineEdit = (props: InlineEditProps) => {
 					</Label>
 				)}
 				{!overlayTriggerState.isOpen && (
-					<Button
+					<AriaButton
 						onPress={overlayTriggerState.open}
 						className="outline-primary-500 rounded-lg text-left"
 						isDisabled={isDisabled}
 						data-testid={`${id}-read-view`}
 					>
 						{readView({ value: state.editorValue })}
-					</Button>
+					</AriaButton>
 				)}
 				{overlayTriggerState.isOpen &&
 					!isDisabled &&

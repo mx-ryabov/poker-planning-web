@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { Popover } from "@/_src/shared/ui/components/popover";
 import type { Meta } from "@storybook/nextjs";
@@ -17,13 +17,13 @@ export default meta;
 
 export const PopoverDefault = () => (
 	<Popover>
-		<NewButton>Click!</NewButton>
+		<Button>Click!</Button>
 		<Popover.Content placement={"bottom left"}>
 			<div className="flex flex-row gap-2 items-center p-2 ">
 				Content!
-				<NewButton shape="square" size="small" slot="close">
+				<Button shape="square" size="small" slot="close">
 					<CloseIcon size={16} />
-				</NewButton>
+				</Button>
 			</div>
 		</Popover.Content>
 	</Popover>
@@ -34,17 +34,17 @@ export const PopoverList = () => (
 		{PopoverVariants.map((variant, ind) => (
 			<div key={ind}>
 				<Popover>
-					<NewButton>{variant.title}</NewButton>
+					<Button>{variant.title}</Button>
 					<Popover.Content placement={variant.placement}>
 						<div className="flex flex-row gap-2 items-center p-2 bg-white border border-neutral-100 rounded-lg drop-shadow-lg">
 							{variant.title} content!
-							<NewButton
+							<Button
 								shape="square"
 								size="small"
 								slot="close"
 							>
 								<CloseIcon size={16} />
-							</NewButton>
+							</Button>
 						</div>
 					</Popover.Content>
 				</Popover>

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { TicketTypeSelector } from "../../ticket-type-selector";
 import { Input } from "@/_src/shared/ui/components/input";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon } from "@/_src/shared/ui/components/icon";
 import { useTicketCreate } from "@/_src/pages/game-room/model";
 import { ErrorBoundary } from "@/_src/shared/ui/components/error-boundary";
@@ -84,7 +84,7 @@ function TicketCreatorFormInner({ onSubmitSucceed }: Props) {
 			/>
 
 			{isValid && (
-				<NewButton
+				<Button
 					shape="square"
 					variant="ghost"
 					data-testid="ticket-creator-submit"
@@ -93,7 +93,7 @@ function TicketCreatorFormInner({ onSubmitSucceed }: Props) {
 					size="small"
 				>
 					<ArrowRightIcon size={18} />
-				</NewButton>
+				</Button>
 			)}
 		</form>
 	);

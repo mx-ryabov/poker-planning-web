@@ -7,7 +7,7 @@ import {
 	useTicketUpdate,
 	useVotingAsyncState,
 } from "../../../../model";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { Select } from "@/_src/shared/ui/components/select";
 import type { Key, Selection } from "@react-types/shared";
 import { useCallback, useMemo, useState } from "react";
@@ -126,13 +126,13 @@ function VotingResultsApplierInner(props: InnerProps) {
 				)}
 			</Select>
 
-			<NewButton
+			<Button
 				data-testid="apply-voting-results-btn"
 				isDisabled={!selectedVoteId}
 				onPress={onApplyPress}
 			>
 				Apply
-			</NewButton>
+			</Button>
 		</div>
 	);
 }

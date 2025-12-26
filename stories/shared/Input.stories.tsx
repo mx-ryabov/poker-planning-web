@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { ArrowDownIcon, PeopleIcon } from "@/_src/shared/ui/components/icon";
 import { Input } from "@/_src/shared/ui/components/input";
 import type { Meta, StoryObj } from "@storybook/nextjs";
@@ -43,7 +43,7 @@ export const InputWithEndContent: Story = {
 		label: "Label",
 		placeholder: "Placeholder",
 		endContent: (
-			<NewButton
+			<Button
 				shape="square"
 				size="small"
 				variant="ghost"
@@ -51,7 +51,7 @@ export const InputWithEndContent: Story = {
 				excludeFromTabOrder={true}
 			>
 				<ArrowDownIcon size={16} />
-			</NewButton>
+			</Button>
 		),
 	},
 };

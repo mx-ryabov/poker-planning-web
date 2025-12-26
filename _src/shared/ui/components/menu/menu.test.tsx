@@ -2,15 +2,15 @@ import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Menu } from "./component";
-import { NewButton } from "../button";
+import { Button } from "../button";
 import { CardsIcon, PeopleIcon, SettingsIcon } from "../icon";
 
 function renderMenu() {
 	return render(
 		<Menu>
-			<NewButton shape="square">
+			<Button shape="square">
 				<SettingsIcon size={18} />
-			</NewButton>
+			</Button>
 			<Menu.Content>
 				<Menu.Section title="Dropdown Title">
 					<Menu.Item id={1}>

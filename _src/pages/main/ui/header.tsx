@@ -5,7 +5,7 @@ import { NextLinkButton } from "@/_src/shared/ui/next-components/next-link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { MenuIcon } from "@/_src/shared/ui/components/icon/svg/menu.icon";
 import { CloseIcon } from "@/_src/shared/ui/components/icon/svg/close.icon";
 import { Modal, ModalOverlay } from "react-aria-components";
@@ -83,13 +83,13 @@ export function Header({ containerRef }: HeaderProps) {
 	const renderCTAs = () => {
 		return (
 			<>
-				<NewButton
+				<Button
 					className="min-w-fit no-underline"
 					variant="outline"
 					onPress={() => onNavLinkPress("/#subscribe")}
 				>
 					Get Updates
-				</NewButton>
+				</Button>
 				<NextLinkButton
 					className="min-w-fit no-underline"
 					href="/create-game"
@@ -131,7 +131,7 @@ export function Header({ containerRef }: HeaderProps) {
 					</Link>
 				</AnimatedFadeIn>
 
-				<NewButton
+				<Button
 					shape="square"
 					variant="ghost"
 					size="large"
@@ -143,7 +143,7 @@ export function Header({ containerRef }: HeaderProps) {
 					) : (
 						<MenuIcon size={24} />
 					)}
-				</NewButton>
+				</Button>
 				<ModalOverlay
 					ref={modalRef}
 					isOpen={isMenuOpen}

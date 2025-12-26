@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { Modal } from "@/_src/shared/ui/components/modal";
 import type { Meta } from "@storybook/nextjs";
@@ -17,19 +17,19 @@ export default meta;
 export const DialogDefault = () => {
 	return (
 		<Modal>
-			<NewButton>Trigger</NewButton>
+			<Button>Trigger</Button>
 			<Modal.Dialog isDismissable>
 				<Modal.Header>
 					{({ close }) => (
 						<>
 							<Modal.Title>Modal Header</Modal.Title>
-							<NewButton
+							<Button
 								shape="square"
 								variant="ghost"
 								onPress={close}
 							>
 								<CloseIcon size={18} />
-							</NewButton>
+							</Button>
 						</>
 					)}
 				</Modal.Header>
@@ -37,18 +37,18 @@ export const DialogDefault = () => {
 				<Modal.Footer>
 					{({ close }) => (
 						<>
-							<NewButton
+							<Button
 								onPress={close}
 								variant="ghost"
 							>
 								Cancel
-							</NewButton>
-							<NewButton
+							</Button>
+							<Button
 								onPress={close}
 								appearance="danger"
 							>
 								Delete
-							</NewButton>
+							</Button>
 						</>
 					)}
 				</Modal.Footer>

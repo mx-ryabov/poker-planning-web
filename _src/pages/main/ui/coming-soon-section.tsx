@@ -1,6 +1,6 @@
 "use client";
 
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import JiraIntegration from "@public/jira-integration.png";
 import AsyncEstimation from "@public/async-estimation.png";
 import AIAssistant from "@public/ai-assistant.png";
@@ -36,30 +36,30 @@ export function ComingSoonSection() {
 					containerClassName="flex flex-row sm:gap-4 rounded-2xl md:rounded-full bg-neutral-100 border border-neutral-300 p-2 items-center justify-between *:z-15"
 					selectorClassName="bg-white rounded-xl md:rounded-full z-10! drop-shadow-sm border-neutral-200 duration-400"
 				>
-					<NewButton
+					<Button
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onPress={() => setActiveTabInd(0)}
 					>
 						<LinkIcon size={16} thikness="bold" />
 						Jira Integration
-					</NewButton>
-					<NewButton
+					</Button>
+					<Button
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onPress={() => setActiveTabInd(1)}
 					>
 						<ClockIcon size={16} thikness="bold" />
 						Asynchronous Estimation
-					</NewButton>
-					<NewButton
+					</Button>
+					<Button
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onPress={() => setActiveTabInd(2)}
 					>
 						<MagicPenIcon size={16} thikness="bold" />
 						AI Assistant
-					</NewButton>
+					</Button>
 				</SlidingSelector>
 				{tabContent && (
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[310px]">

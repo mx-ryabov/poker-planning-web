@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 import { PeopleIcon } from "@/_src/shared/ui/components/icon";
 import type { Meta } from "@storybook/nextjs";
@@ -19,22 +19,22 @@ export const HighlighterWithButton = () => {
 	return (
 		<div className="flex flex-row gap-8">
 			<Highlighter id="unique-button-1">
-				<NewButton>Click Me!</NewButton>
+				<Button>Click Me!</Button>
 			</Highlighter>
 			<Highlighter id="unique-button-2">
-				<NewButton variant="ghost" shape="square">
+				<Button variant="ghost" shape="square">
 					<PeopleIcon />
-				</NewButton>
+				</Button>
 			</Highlighter>
 			<Highlighter id="unique-button-3">
-				<NewButton variant="grayed-out" shape="square">
+				<Button variant="grayed-out" shape="square">
 					<PeopleIcon />
-				</NewButton>
+				</Button>
 			</Highlighter>
 			<Highlighter id="unique-button-4">
-				<NewButton variant="outline">
+				<Button variant="outline">
 					<PeopleIcon /> Click me!
-				</NewButton>
+				</Button>
 			</Highlighter>
 		</div>
 	);

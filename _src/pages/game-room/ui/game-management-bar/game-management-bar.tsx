@@ -5,7 +5,7 @@ import {
 	PeopleIcon,
 	SettingsIcon,
 } from "@/_src/shared/ui/components/icon";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
 import { GameManagementTab, useGameManagementState } from "../../model";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
@@ -77,7 +77,7 @@ export function GameManagementBar({ className }: Props) {
 								const Icon = tabOptions.icon;
 								return (
 									<Tooltip key={ind} delay={0}>
-										<NewButton
+										<Button
 											shape="square"
 											variant="ghost"
 											size="small"
@@ -88,7 +88,7 @@ export function GameManagementBar({ className }: Props) {
 											)}
 										>
 											<Icon size={16} />
-										</NewButton>
+										</Button>
 										<Tooltip.Content>
 											{tabOptions.tooltipText}
 										</Tooltip.Content>

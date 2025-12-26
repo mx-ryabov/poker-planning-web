@@ -20,7 +20,7 @@ import {
 	FieldError,
 } from "react-aria-components";
 import { useAutocompleteValue } from "../hooks/use-autocomplete-value";
-import { NewButton } from "../../button";
+import { Button } from "../../button";
 import { ArrowDownIcon, WarningIcon } from "../../icon";
 import { Chip, ChipGroup } from "../../chip";
 import { cva } from "class-variance-authority";
@@ -56,7 +56,7 @@ function AutocompleteSingleValue() {
 					[ButtonContext, { isPressed: overlayTriggerState?.isOpen }],
 				]}
 			>
-				<NewButton
+				<Button
 					shape="square"
 					size="small"
 					variant="ghost"
@@ -65,7 +65,7 @@ function AutocompleteSingleValue() {
 					{...toggleBtnProps}
 				>
 					<ArrowDownIcon size={16} />
-				</NewButton>
+				</Button>
 			</Provider>
 		);
 	}, [overlayTriggerState?.isOpen, toggleBtnProps]);
@@ -101,7 +101,7 @@ function AutocompleteMultipleValue() {
 					[ButtonContext, { isPressed: overlayTriggerState?.isOpen }],
 				]}
 			>
-				<NewButton
+				<Button
 					shape="square"
 					size="small"
 					data-testid="trigger"
@@ -111,7 +111,7 @@ function AutocompleteMultipleValue() {
 					{...toggleBtnProps}
 				>
 					<ArrowDownIcon size={16} />
-				</NewButton>
+				</Button>
 			</Provider>
 		);
 	}, [overlayTriggerState?.isOpen, toggleBtnProps]);

@@ -1,11 +1,8 @@
-import {
-	Button,
-	LabeledButtonProps,
-	NewButton,
-} from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon/svg/close.icon";
 import { Modal } from "@/_src/shared/ui/components/modal";
 import { useCallback, useTransition } from "react";
+import type { ButtonStylesProps } from "@/_src/shared/ui/styles/button.styles";
 
 type SyncConfirm = () => void;
 type AsyncConfirm = () => Promise<void>;
@@ -13,7 +10,7 @@ export type ConfirmationModalState = {
 	title: string;
 	contentMessage: string;
 	confirmBtnText: string;
-	confirmBtnAppearence?: LabeledButtonProps["appearance"];
+	confirmBtnAppearence?: ButtonStylesProps["appearance"];
 	onConfirm: AsyncConfirm | SyncConfirm;
 };
 export type ConfirmationModalProps = {
@@ -47,14 +44,14 @@ export function ConfirmationModal({
 				{({ close }) => (
 					<>
 						<Modal.Title>{state?.title}</Modal.Title>
-						<NewButton
+						<Button
 							variant="ghost"
 							shape="square"
 							data-testid="dismiss-button"
 							onPress={close}
 						>
 							<CloseIcon className="w-8 h-8" />
-						</NewButton>
+						</Button>
 					</>
 				)}
 			</Modal.Header>
@@ -63,18 +60,20 @@ export function ConfirmationModal({
 				{({ close }) => (
 					<>
 						<Button
-							title="Cancel"
 							onPress={close}
 							data-testid="cancel-button"
 							variant="ghost"
-						/>
+						>
+							Cancel
+						</Button>
 						<Button
-							title={state?.confirmBtnText || ""}
 							isPending={isPending}
 							onPress={confirm}
 							data-testid="confirm-button"
 							appearance={state?.confirmBtnAppearence}
-						/>
+						>
+							{state?.confirmBtnText || ""}
+						</Button>
 					</>
 				)}
 			</Modal.Footer>

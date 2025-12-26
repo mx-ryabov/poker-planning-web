@@ -1,5 +1,5 @@
 import { TicketType } from "@/_src/shared/api/game-api";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import {
 	TicketBugIcon,
 	TicketStoryIcon,
@@ -26,7 +26,7 @@ export function TicketTypeSelector({
 
 	return (
 		<Menu>
-			<NewButton
+			<Button
 				className="px-2"
 				variant="ghost"
 				size="small"
@@ -34,7 +34,7 @@ export function TicketTypeSelector({
 				isDisabled={!isEditable}
 			>
 				{selectedTypeObj?.icon}
-			</NewButton>
+			</Button>
 			<Menu.Content
 				items={TASK_TYPES}
 				selectionMode="single"

@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -53,7 +53,7 @@ export function FormFooter(props: Props) {
 			</section>
 			<section className="flex flex-row gap-4">
 				{hasGoBack && (
-					<NewButton
+					<Button
 						variant="ghost"
 						aria-label="Back button"
 						type="button"
@@ -62,10 +62,10 @@ export function FormFooter(props: Props) {
 					>
 						<ArrowLeftIcon size={18} />
 						Back
-					</NewButton>
+					</Button>
 				)}
 				{hasContinue && (
-					<NewButton
+					<Button
 						aria-label="Continue button"
 						isDisabled={!isStepValid}
 						onPress={goNextStep}
@@ -74,10 +74,10 @@ export function FormFooter(props: Props) {
 					>
 						Continue
 						<ArrowRightIcon size={18} />
-					</NewButton>
+					</Button>
 				)}
 				{hasOpenAdvancedSettings && (
-					<NewButton
+					<Button
 						variant="outline"
 						aria-label="Advanced Settings button"
 						onPress={goNextStep}
@@ -87,10 +87,10 @@ export function FormFooter(props: Props) {
 					>
 						Advanced Settings
 						<SettingsIcon size={18} />
-					</NewButton>
+					</Button>
 				)}
 				{hasStartGame && (
-					<NewButton
+					<Button
 						type="submit"
 						aria-label="Start Game button"
 						isDisabled={!isFormValid}
@@ -98,7 +98,7 @@ export function FormFooter(props: Props) {
 						data-testid="start-game-btn"
 					>
 						Start Game
-					</NewButton>
+					</Button>
 				)}
 			</section>
 		</div>

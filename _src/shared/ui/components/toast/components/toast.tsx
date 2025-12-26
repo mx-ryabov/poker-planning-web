@@ -3,7 +3,7 @@ import { ToastState } from "@react-stately/toast";
 import { AriaToastProps, useToast } from "@react-aria/toast";
 
 import { ToastContent } from "../models/toast-content";
-import { NewButton } from "../../button";
+import { Button } from "../../button";
 import { InfoIcon } from "../../icon/svg/info.icon";
 import { ErrorIcon } from "../../icon/svg/error.icon";
 import { CloseIcon } from "../../icon/svg/close.icon";
@@ -53,7 +53,7 @@ export function Toast(props: ToastProps) {
 						</p>
 					</div>
 				</div>
-				<NewButton
+				<Button
 					shape="square"
 					className="absolute top-2 right-2 text-neutral-900"
 					variant="ghost"
@@ -61,7 +61,7 @@ export function Toast(props: ToastProps) {
 					{...closeButtonProps}
 				>
 					<CloseIcon size={16} />
-				</NewButton>
+				</Button>
 			</div>
 		</div>
 	);

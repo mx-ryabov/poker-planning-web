@@ -1,5 +1,5 @@
 import { GameTicket } from "@/_src/shared/api/game-api";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { MinusIcon } from "@/_src/shared/ui/components/icon/svg/minus.icon";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
 import { Controller, useForm } from "react-hook-form";
@@ -68,7 +68,7 @@ export function TicketItemFullView(props: Props) {
 					</div>
 					<div className="flex flex-row">
 						<Tooltip delay={0}>
-							<NewButton
+							<Button
 								shape="square"
 								variant="ghost"
 								size="small"
@@ -76,7 +76,7 @@ export function TicketItemFullView(props: Props) {
 								onPress={onClose}
 							>
 								<MinusIcon size={16} />
-							</NewButton>
+							</Button>
 							<Tooltip.Content>Collapse</Tooltip.Content>
 						</Tooltip>
 						<Tooltip delay={0}>

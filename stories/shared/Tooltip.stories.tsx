@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
 import type { Meta } from "@storybook/nextjs";
 
@@ -17,7 +17,7 @@ export default meta;
 export const TooltipDefault = () => {
 	return (
 		<Tooltip defaultOpen={true}>
-			<NewButton>Trigger</NewButton>
+			<Button>Trigger</Button>
 			<Tooltip.Content>Content</Tooltip.Content>
 		</Tooltip>
 	);
@@ -26,7 +26,7 @@ export const TooltipDefault = () => {
 export const TooltipWithCustomClassName = () => {
 	return (
 		<Tooltip defaultOpen={true}>
-			<NewButton>Trigger</NewButton>
+			<Button>Trigger</Button>
 			<Tooltip.Content className="bg-info-500 text-white">
 				Content
 			</Tooltip.Content>

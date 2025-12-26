@@ -1,7 +1,7 @@
 "use client";
 import { useApi } from "@/_src/shared/providers";
 import { AnimatedText } from "@/_src/shared/ui/components/animated-text";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { MailIcon } from "@/_src/shared/ui/components/icon/svg/mail.icon";
 import { Input } from "@/_src/shared/ui/components/input";
 import { useActionState } from "react";
@@ -59,12 +59,12 @@ export function SubscribeSection() {
 								isPending={isPending}
 								errors={error}
 							/>
-							<NewButton
+							<Button
 								type="submit"
 								isPending={isPending}
 							>
 								Subscribe
-							</NewButton>
+							</Button>
 						</form>
 					)}
 					{successMsg && (
