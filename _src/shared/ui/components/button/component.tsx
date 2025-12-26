@@ -58,6 +58,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonComponentProps>(
 		});
 		const { focusProps, isFocused, isFocusVisible } = useFocusRing(props);
 
+		const isChildrenVisible = !(isPending && shape === "square");
+
 		return (
 			<button
 				style={COLOR_SCHEMES[appearance] as React.CSSProperties}
@@ -92,7 +94,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonComponentProps>(
 						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-y-neutral-200 border-l-neutral-200" />
 					</div>
 				</div>
-				{children}
+				{isChildrenVisible && children}
 			</button>
 		);
 	},
