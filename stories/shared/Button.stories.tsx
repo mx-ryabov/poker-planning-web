@@ -1,4 +1,4 @@
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { ArrowRightIcon, SettingsIcon } from "@/_src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { fn, within, expect } from "storybook/test";
@@ -6,23 +6,23 @@ import { useState } from "react";
 
 const meta = {
 	title: "Shared/Button",
-	component: Button,
+	component: NewButton,
 	parameters: {
 		layout: "centered",
 	},
 	tags: ["autodocs"],
 	argTypes: {},
 	args: { onPress: fn() },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof NewButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Default: Story = {
 	args: {
-		title: "Button",
-		form: "default",
+		children: "Button",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const DefaultLargeDisabled: Story = {
@@ -30,9 +30,14 @@ export const DefaultLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		isDisabled: true,
-		contentLeft: SettingsIcon({ size: 18 }),
-		contentRight: ArrowRightIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+			Button
+			<ArrowRightIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const DefaultLargePending: Story = {
@@ -40,9 +45,14 @@ export const DefaultLargePending: Story = {
 		...Default.args,
 		size: "large",
 		isPending: true,
-		contentLeft: SettingsIcon({ size: 18 }),
-		contentRight: ArrowRightIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+			Button
+			<ArrowRightIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const DefaultLarge: Story = {
@@ -50,6 +60,7 @@ export const DefaultLarge: Story = {
 		...Default.args,
 		size: "large",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 		const button = canvas.getByRole("button");
@@ -64,19 +75,20 @@ export const DefaultMedium: Story = {
 		...Default.args,
 		size: "medium",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const DefaultMediumPending = () => {
 	const [isPending, setIsPending] = useState(false);
 	return (
-		<Button
-			title="Button"
-			form="default"
+		<NewButton
 			size="medium"
 			appearance="danger"
 			isPending={isPending}
 			onPress={() => setIsPending(true)}
-		/>
+		>
+			Button
+		</NewButton>
 	);
 };
 
@@ -85,6 +97,7 @@ export const DefaultSmall: Story = {
 		...Default.args,
 		size: "small",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const OutlineLargeDisabled: Story = {
@@ -94,6 +107,7 @@ export const OutlineLargeDisabled: Story = {
 		variant: "outline",
 		isDisabled: true,
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const OutlineLarge: Story = {
@@ -101,8 +115,13 @@ export const OutlineLarge: Story = {
 		...Default.args,
 		size: "large",
 		variant: "outline",
-		contentLeft: SettingsIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+			Button
+		</NewButton>
+	),
 };
 
 export const OutlineMedium: Story = {
@@ -111,6 +130,7 @@ export const OutlineMedium: Story = {
 		size: "medium",
 		variant: "outline",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const OutlineMediumPending: Story = {
@@ -120,6 +140,7 @@ export const OutlineMediumPending: Story = {
 		variant: "outline",
 		isPending: true,
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const OutlineSmall: Story = {
@@ -128,6 +149,7 @@ export const OutlineSmall: Story = {
 		size: "small",
 		variant: "outline",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GhostLargeDisabled: Story = {
@@ -137,6 +159,7 @@ export const GhostLargeDisabled: Story = {
 		variant: "ghost",
 		isDisabled: true,
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GhostLarge: Story = {
@@ -145,6 +168,7 @@ export const GhostLarge: Story = {
 		size: "large",
 		variant: "ghost",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GhostMedium: Story = {
@@ -153,6 +177,7 @@ export const GhostMedium: Story = {
 		size: "medium",
 		variant: "ghost",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GhostMediumPending: Story = {
@@ -162,6 +187,7 @@ export const GhostMediumPending: Story = {
 		variant: "ghost",
 		isPending: true,
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GhostSmall: Story = {
@@ -170,6 +196,7 @@ export const GhostSmall: Story = {
 		size: "small",
 		variant: "ghost",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GrayedOutLargeDisabled: Story = {
@@ -179,6 +206,7 @@ export const GrayedOutLargeDisabled: Story = {
 		variant: "grayed-out",
 		isDisabled: true,
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GrayedOutLarge: Story = {
@@ -186,8 +214,13 @@ export const GrayedOutLarge: Story = {
 		...Default.args,
 		size: "large",
 		variant: "grayed-out",
-		contentRight: ArrowRightIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			Button
+			<ArrowRightIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const GrayedOutMedium: Story = {
@@ -196,6 +229,7 @@ export const GrayedOutMedium: Story = {
 		size: "medium",
 		variant: "grayed-out",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GrayedOutMediumPending: Story = {
@@ -205,6 +239,7 @@ export const GrayedOutMediumPending: Story = {
 		variant: "grayed-out",
 		isPending: true,
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };
 
 export const GrayedOutSmall: Story = {
@@ -213,4 +248,5 @@ export const GrayedOutSmall: Story = {
 		size: "small",
 		variant: "grayed-out",
 	},
+	render: (args) => <NewButton {...args}>Button</NewButton>,
 };

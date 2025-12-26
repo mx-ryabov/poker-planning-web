@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { LogoutIcon } from "@/_src/shared/ui/components/icon";
 import { Menu } from "@/_src/shared/ui/components/menu";
 import { selectCurrentParticipant, useGameState } from "../../model";
@@ -45,10 +45,11 @@ export function UserBar({ onLogout }: Props) {
 
 	return (
 		<Menu>
-			<Button
+			<NewButton
 				className="w-10 h-10 rounded-full shadow-lg shadow-primary-200 drop-shadow-xl"
-				title={initials}
-			/>
+			>
+				{initials}
+			</NewButton>
 			<Menu.Content placement="bottom end">
 				<Menu.Section title={currentParticipant.displayName}>
 					{/* <Menu.Item isDisabled>

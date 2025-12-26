@@ -5,14 +5,14 @@ import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { Popover } from "./component";
-import { Button, ButtonSquare } from "../button";
+import { NewButton } from "../button";
 import { CloseIcon } from "../icon";
 
 describe("Popover", () => {
 	test("renders correctly", async () => {
 		const { unmount } = render(
 			<Popover>
-				<Button title="Click" />
+				<NewButton>Click</NewButton>
 				<Popover.Content>Popover Content</Popover.Content>
 			</Popover>,
 		);
@@ -23,7 +23,7 @@ describe("Popover", () => {
 	test("opens and closes on overlay/trigger click", async () => {
 		const { user, getByRole, queryByText, getByText, container } = render(
 			<Popover>
-				<Button title="Click" role="trigger" />
+				<NewButton role="trigger">Click</NewButton>
 				<Popover.Content>Popover Content</Popover.Content>
 			</Popover>,
 		);
@@ -50,7 +50,7 @@ describe("Popover", () => {
 	test("doesn't close on content click", async () => {
 		const { user, getByRole, queryByText, getByText } = render(
 			<Popover>
-				<Button title="Click" role="trigger" />
+				<NewButton role="trigger">Click</NewButton>
 				<Popover.Content>Popover Content</Popover.Content>
 			</Popover>,
 		);
@@ -66,16 +66,18 @@ describe("Popover", () => {
 	test("closes on button with slot=close", async () => {
 		const { user, getByRole, queryByText } = render(
 			<Popover>
-				<Button title="Click" role="trigger" />
+				<NewButton role="trigger">Click</NewButton>
 				<Popover.Content>
 					<div>
 						<p>Popover Content</p>
-						<ButtonSquare
+						<NewButton
+							shape="square"
 							size="small"
-							icon={CloseIcon}
 							slot="close"
 							role="close-button"
-						/>
+						>
+							<CloseIcon size={16} />
+						</NewButton>
 					</div>
 					Popover Content
 				</Popover.Content>
@@ -92,7 +94,7 @@ describe("Popover", () => {
 	test("doesn't violate any accessiblity rules", async () => {
 		const { container } = render(
 			<Popover>
-				<Button title="Click" />
+				<NewButton>Click</NewButton>
 				<Popover.Content>Popover Content</Popover.Content>
 			</Popover>,
 		);

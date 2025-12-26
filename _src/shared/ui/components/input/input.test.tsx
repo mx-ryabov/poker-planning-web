@@ -3,7 +3,7 @@ import { Input } from "./component";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { PeopleIcon } from "../icon";
-import { ButtonSquare } from "../button";
+import { NewButton } from "../button";
 
 describe("Input (Text Field)", () => {
 	test("renders correctly", () => {
@@ -58,7 +58,9 @@ describe("Input (Text Field)", () => {
 			<Input
 				label="Label"
 				endContent={
-					<ButtonSquare icon={PeopleIcon} onPress={onButtonPressFn} />
+					<NewButton shape="square" onPress={onButtonPressFn}>
+						<PeopleIcon size={18} />
+					</NewButton>
 				}
 			/>,
 		);

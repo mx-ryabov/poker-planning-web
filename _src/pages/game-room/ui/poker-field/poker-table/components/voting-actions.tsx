@@ -8,7 +8,7 @@ import {
 	useVotingAsyncState,
 } from "@/_src/pages/game-room/model";
 import { GameVotingStatus } from "@/_src/shared/api";
-import { Button, NewButton } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { CardsIcon, RefreshIcon } from "@/_src/shared/ui/components/icon";
 import { TicketLink } from "../../ticket-link";
 import { useCallback } from "react";
@@ -145,20 +145,22 @@ export function VotingActions() {
 			)}
 			{votingProcess.status === GameVotingStatus.Revealed && (
 				<div className="flex flex-row gap-2">
-					<Button
-						title="Finish Voting"
+					<NewButton
 						className="w-max"
 						onPress={finishVoting}
 						isPending={isFinishVotingPending}
-					/>
-					<Button
-						title="Revote"
-						contentLeft={<RefreshIcon size={24} />}
+					>
+						Finish Voting
+					</NewButton>
+					<NewButton
 						variant="outline"
 						className="border"
 						onPress={onRevote}
 						isPending={isStartVotingPending}
-					/>
+					>
+						<RefreshIcon size={24} />
+						Revote
+					</NewButton>
 				</div>
 			)}
 		</>

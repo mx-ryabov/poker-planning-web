@@ -1,4 +1,4 @@
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import {
 	ToastProvider,
 	useGlobalToast,
@@ -36,8 +36,7 @@ function ToastTrigger() {
 
 	return (
 		<div className="absolute top-1/2 left-1/2 grid -translate-x-1/2 -translate-y-1/2 grid-flow-row grid-cols-3 gap-2">
-			<Button
-				title="Neutral!"
+			<NewButton
 				appearance="neutral"
 				onPress={() => {
 					toastState?.add({
@@ -48,9 +47,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
-			<Button
-				title="Info!"
+			>
+				Neutral!
+			</NewButton>
+			<NewButton
 				appearance="info"
 				onPress={() => {
 					toastState?.add({
@@ -61,9 +61,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
-			<Button
-				title="Warning!"
+			>
+				Info!
+			</NewButton>
+			<NewButton
 				appearance="warning"
 				onPress={() => {
 					toastState?.add({
@@ -74,9 +75,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
-			<Button
-				title="Error!"
+			>
+				Warning!
+			</NewButton>
+			<NewButton
 				appearance="danger"
 				onPress={() => {
 					toastState?.add({
@@ -87,9 +89,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
-			<Button
-				title="Success!"
+			>
+				Error!
+			</NewButton>
+			<NewButton
 				appearance="success"
 				onPress={() => {
 					toastState?.add({
@@ -100,9 +103,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
-			<Button
-				title="Dismissable!"
+			>
+				Success!
+			</NewButton>
+			<NewButton
 				onPress={() => {
 					toastState?.add(
 						{
@@ -115,9 +119,10 @@ function ToastTrigger() {
 					);
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
-			<Button
-				title="Toast with timeout"
+			>
+				Dismissable!
+			</NewButton>
+			<NewButton
 				variant="outline"
 				onPress={() => {
 					setTimeout(() => {
@@ -129,7 +134,9 @@ function ToastTrigger() {
 						setIncrement((prev) => prev + 1);
 					}, 2000);
 				}}
-			/>
+			>
+				Toast with timeout
+			</NewButton>
 		</div>
 	);
 }

@@ -3,7 +3,7 @@
 import { GameSchemaBuildersMap } from "@/_src/entities/game";
 import { ApiError } from "@/_src/shared/lib";
 import { useApi } from "@/_src/shared/providers";
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { FullSizeFormTextInput } from "@/_src/shared/ui/components/full-size-form-text-field";
 import { PlayIcon } from "@/_src/shared/ui/components/icon/svg/play.icon";
 import { ProfileIcon } from "@/_src/shared/ui/components/icon/svg/profile.icon";
@@ -116,17 +116,18 @@ export function GameJoinForm({ gameId }: Props) {
 					</p>
 				</section>
 				<section className="flex flex-row gap-4">
-					<Button
+					<NewButton
 						type="submit"
 						aria-label="Enter the game button"
-						title="Enter the Game"
 						data-testid="enter-game-btn"
 						isDisabled={
 							!!error || !formState.dirtyFields.displayName
 						}
 						isPending={isPending}
-						contentRight={PlayIcon({ size: 18 })}
-					/>
+					>
+						Enter the Game
+						<PlayIcon size={18}  />
+					</NewButton>
 				</section>
 			</div>
 		</form>

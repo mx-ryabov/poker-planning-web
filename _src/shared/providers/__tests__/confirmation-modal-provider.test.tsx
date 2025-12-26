@@ -1,7 +1,7 @@
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
 
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import {
 	ConfirmationModalProvider,
 	useConfirmationModal,
@@ -21,8 +21,7 @@ function ModalController({
 }: Props) {
 	const { open } = useConfirmationModal();
 	return (
-		<Button
-			title="Open Modal"
+		<NewButton
 			data-testid="opener"
 			onPress={() =>
 				open({
@@ -32,7 +31,9 @@ function ModalController({
 					onConfirm,
 				})
 			}
-		/>
+		>
+			Open Modal
+		</NewButton>
 	);
 }
 function getComponent(props: Props) {

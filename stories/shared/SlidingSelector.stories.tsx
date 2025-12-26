@@ -3,7 +3,7 @@ import {
 	PeopleIcon,
 	SettingsIcon,
 } from "@/_src/shared/ui/components/icon";
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
 import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
@@ -26,21 +26,27 @@ export const SlidingSelectorRow = () => {
 			containerClassName="flex flex-row gap-2"
 			selectorClassName="bg-primary-100 rounded-lg mix-blend-multiply"
 		>
-			<ButtonSquare
-				icon={ListIcon}
+			<NewButton
+				shape="square"
 				variant="ghost"
 				className="bg-opacity-0 data-[sliding-selector-element-active=true]:text-primary-500"
-			/>
-			<ButtonSquare
-				icon={SettingsIcon}
+			>
+				<ListIcon size={18} />
+			</NewButton>
+			<NewButton
+				shape="square"
 				variant="ghost"
 				className="bg-opacity-0 data-[sliding-selector-element-active=true]:text-primary-500"
-			/>
-			<ButtonSquare
-				icon={PeopleIcon}
+			>
+				<SettingsIcon size={18} />
+			</NewButton>
+			<NewButton
+				shape="square"
 				variant="ghost"
 				className="bg-opacity-0 data-[sliding-selector-element-active=true]:text-primary-500"
-			/>
+			>
+				<PeopleIcon size={18} />
+			</NewButton>
 		</SlidingSelector>
 	);
 };
@@ -51,9 +57,15 @@ export const SlidingSelectorCol = () => {
 			containerClassName="flex flex-col gap-2"
 			selectorClassName="bg-primary-200/50 rounded-lg"
 		>
-			<ButtonSquare icon={ListIcon} variant="ghost" />
-			<ButtonSquare icon={SettingsIcon} variant="ghost" />
-			<ButtonSquare icon={PeopleIcon} variant="ghost" />
+			<NewButton shape="square" variant="ghost">
+				<ListIcon size={18} />
+			</NewButton>
+			<NewButton shape="square" variant="ghost">
+				<SettingsIcon size={18} />
+			</NewButton>
+			<NewButton shape="square" variant="ghost">
+				<PeopleIcon size={18} />
+			</NewButton>
 		</SlidingSelector>
 	);
 };
@@ -64,9 +76,15 @@ export const SlidingSelectorWithDifferentSizes = () => {
 			containerClassName="flex flex-row gap-2"
 			selectorClassName="bg-primary-200 rounded-lg"
 		>
-			<ButtonSquare icon={ListIcon} variant="ghost" size="small" />
-			<ButtonSquare icon={SettingsIcon} variant="ghost" size="medium" />
-			<ButtonSquare icon={PeopleIcon} variant="ghost" size="large" />
+			<NewButton shape="square" variant="ghost" size="small">
+				<ListIcon size={16} />
+			</NewButton>
+			<NewButton shape="square" variant="ghost" size="medium">
+				<SettingsIcon size={18} />
+			</NewButton>
+			<NewButton shape="square" variant="ghost" size="large">
+				<PeopleIcon size={24} />
+			</NewButton>
 		</SlidingSelector>
 	);
 };
@@ -80,30 +98,36 @@ export const SlidingSelectorControllable = () => {
 			onSelectionReset={() => setActiveElement(null)}
 			selectorClassName="bg-primary-100 rounded-lg mix-blend-multiply"
 		>
-			<ButtonSquare
-				icon={ListIcon}
+			<NewButton
+				shape="square"
 				variant="ghost"
 				onPress={() =>
 					setActiveElement((prev) => (prev === 0 ? null : 0))
 				}
 				className="bg-opacity-0 data-[sliding-selector-element-active=true]:text-primary-500"
-			/>
-			<ButtonSquare
-				icon={SettingsIcon}
+			>
+				<ListIcon size={18} />
+			</NewButton>
+			<NewButton
+				shape="square"
 				variant="ghost"
 				onPress={() =>
 					setActiveElement((prev) => (prev === 1 ? null : 1))
 				}
 				className="bg-opacity-0 data-[sliding-selector-element-active=true]:text-primary-500"
-			/>
-			<ButtonSquare
-				icon={PeopleIcon}
+			>
+				<SettingsIcon size={18} />
+			</NewButton>
+			<NewButton
+				shape="square"
 				variant="ghost"
 				onPress={() =>
 					setActiveElement((prev) => (prev === 2 ? null : 2))
 				}
 				className="bg-opacity-0 data-[sliding-selector-element-active=true]:text-primary-500"
-			/>
+			>
+				<PeopleIcon size={18} />
+			</NewButton>
 		</SlidingSelector>
 	);
 };

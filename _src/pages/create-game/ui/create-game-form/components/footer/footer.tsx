@@ -1,4 +1,4 @@
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -53,48 +53,52 @@ export function FormFooter(props: Props) {
 			</section>
 			<section className="flex flex-row gap-4">
 				{hasGoBack && (
-					<Button
+					<NewButton
 						variant="ghost"
-						contentLeft={ArrowLeftIcon({ size: 18 })}
 						aria-label="Back button"
-						title="Back"
 						type="button"
 						onPress={goPrevStep}
 						data-testid="back-btn"
-					/>
+					>
+						<ArrowLeftIcon size={18} />
+						Back
+					</NewButton>
 				)}
 				{hasContinue && (
-					<Button
-						title="Continue"
+					<NewButton
 						aria-label="Continue button"
-						contentRight={ArrowRightIcon({ size: 18 })}
 						isDisabled={!isStepValid}
 						onPress={goNextStep}
 						type="button"
 						data-testid="continue-btn"
-					/>
+					>
+						Continue
+						<ArrowRightIcon size={18} />
+					</NewButton>
 				)}
 				{hasOpenAdvancedSettings && (
-					<Button
-						title="Advanced Settings"
+					<NewButton
 						variant="outline"
 						aria-label="Advanced Settings button"
-						contentRight={SettingsIcon({ size: 18 })}
 						onPress={goNextStep}
 						isDisabled={!isStepValid}
 						type="button"
 						data-testid="advanced-settings-btn"
-					/>
+					>
+						Advanced Settings
+						<SettingsIcon size={18} />
+					</NewButton>
 				)}
 				{hasStartGame && (
-					<Button
+					<NewButton
 						type="submit"
 						aria-label="Start Game button"
-						title="Start Game"
 						isDisabled={!isFormValid}
 						isPending={isPending}
 						data-testid="start-game-btn"
-					/>
+					>
+						Start Game
+					</NewButton>
 				)}
 			</section>
 		</div>

@@ -5,7 +5,7 @@ import { NextLinkButton } from "@/_src/shared/ui/next-components/next-link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ButtonSquare, NewButton } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { MenuIcon } from "@/_src/shared/ui/components/icon/svg/menu.icon";
 import { CloseIcon } from "@/_src/shared/ui/components/icon/svg/close.icon";
 import { Modal, ModalOverlay } from "react-aria-components";
@@ -131,13 +131,19 @@ export function Header({ containerRef }: HeaderProps) {
 					</Link>
 				</AnimatedFadeIn>
 
-				<ButtonSquare
-					icon={isMenuOpen ? CloseIcon : MenuIcon}
+				<NewButton
+					shape="square"
 					variant="ghost"
 					size="large"
 					className="z-20 bg-transparent xl:hidden"
 					onPress={isMenuOpen ? closeMenu : openMenu}
-				/>
+				>
+					{isMenuOpen ? (
+						<CloseIcon size={24} />
+					) : (
+						<MenuIcon size={24} />
+					)}
+				</NewButton>
 				<ModalOverlay
 					ref={modalRef}
 					isOpen={isMenuOpen}

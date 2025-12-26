@@ -20,7 +20,7 @@ import {
 	FieldError,
 } from "react-aria-components";
 import { useAutocompleteValue } from "../hooks/use-autocomplete-value";
-import { ButtonSquare } from "../../button";
+import { NewButton } from "../../button";
 import { ArrowDownIcon, WarningIcon } from "../../icon";
 import { Chip, ChipGroup } from "../../chip";
 import { cva } from "class-variance-authority";
@@ -56,14 +56,16 @@ function AutocompleteSingleValue() {
 					[ButtonContext, { isPressed: overlayTriggerState?.isOpen }],
 				]}
 			>
-				<ButtonSquare
-					icon={ArrowDownIcon}
+				<NewButton
+					shape="square"
 					size="small"
 					variant="ghost"
 					aria-label="autocomplete-toggle-button"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
-				/>
+				>
+					<ArrowDownIcon size={16} />
+				</NewButton>
 			</Provider>
 		);
 	}, [overlayTriggerState?.isOpen, toggleBtnProps]);
@@ -99,15 +101,17 @@ function AutocompleteMultipleValue() {
 					[ButtonContext, { isPressed: overlayTriggerState?.isOpen }],
 				]}
 			>
-				<ButtonSquare
-					icon={ArrowDownIcon}
+				<NewButton
+					shape="square"
 					size="small"
 					data-testid="trigger"
 					variant="ghost"
 					aria-label="autocomplete-toggle-button"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
-				/>
+				>
+					<ArrowDownIcon size={16} />
+				</NewButton>
 			</Provider>
 		);
 	}, [overlayTriggerState?.isOpen, toggleBtnProps]);

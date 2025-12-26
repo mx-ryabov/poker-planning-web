@@ -1,4 +1,4 @@
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { SettingsIcon } from "@/_src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { fn } from "storybook/test";
@@ -6,7 +6,7 @@ import { fn } from "storybook/test";
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
 	title: "Shared/ButtonSquare",
-	component: ButtonSquare,
+	component: NewButton,
 	parameters: {
 		// Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
 		layout: "centered",
@@ -16,16 +16,21 @@ const meta = {
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {},
 	// Use `fn` to spy on the onPress arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-	args: { onPress: fn() },
-} satisfies Meta<typeof ButtonSquare>;
+	args: { onPress: fn(), shape: "square" },
+} satisfies Meta<typeof NewButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Default: Story = {
 	args: {
-		icon: SettingsIcon,
+		shape: "square",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const DefaultLargeDisabled: Story = {
@@ -34,6 +39,11 @@ export const DefaultLargeDisabled: Story = {
 		size: "large",
 		isDisabled: true,
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const DefaultLargePending: Story = {
@@ -42,6 +52,11 @@ export const DefaultLargePending: Story = {
 		size: "large",
 		isPending: true,
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const DefaultLarge: Story = {
@@ -49,10 +64,19 @@ export const DefaultLarge: Story = {
 		...Default.args,
 		size: "large",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const DefaultMedium = () => {
-	return <ButtonSquare icon={SettingsIcon} />;
+	return (
+		<NewButton shape="square">
+			<SettingsIcon size={18} />
+		</NewButton>
+	);
 };
 
 export const DefaultSmall: Story = {
@@ -60,6 +84,11 @@ export const DefaultSmall: Story = {
 		...Default.args,
 		size: "small",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={16} />
+		</NewButton>
+	),
 };
 
 export const OutlineLargeDisabled: Story = {
@@ -69,6 +98,11 @@ export const OutlineLargeDisabled: Story = {
 		variant: "outline",
 		isDisabled: true,
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const OutlineLarge: Story = {
@@ -77,6 +111,11 @@ export const OutlineLarge: Story = {
 		size: "large",
 		variant: "outline",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const OutlineMedium: Story = {
@@ -85,6 +124,11 @@ export const OutlineMedium: Story = {
 		size: "medium",
 		variant: "outline",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const OutlineSmall: Story = {
@@ -93,6 +137,11 @@ export const OutlineSmall: Story = {
 		size: "small",
 		variant: "outline",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={16} />
+		</NewButton>
+	),
 };
 
 export const GhostLargeDisabled: Story = {
@@ -102,6 +151,11 @@ export const GhostLargeDisabled: Story = {
 		variant: "ghost",
 		isDisabled: true,
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const GhostLarge: Story = {
@@ -110,6 +164,11 @@ export const GhostLarge: Story = {
 		size: "large",
 		variant: "ghost",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const GhostMedium: Story = {
@@ -118,6 +177,11 @@ export const GhostMedium: Story = {
 		size: "medium",
 		variant: "ghost",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const GhostSmall: Story = {
@@ -126,6 +190,11 @@ export const GhostSmall: Story = {
 		size: "small",
 		variant: "ghost",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={16} />
+		</NewButton>
+	),
 };
 
 export const GrayedOutLargeDisabled: Story = {
@@ -135,6 +204,11 @@ export const GrayedOutLargeDisabled: Story = {
 		variant: "grayed-out",
 		isDisabled: true,
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const GrayedOutLarge: Story = {
@@ -143,6 +217,11 @@ export const GrayedOutLarge: Story = {
 		size: "large",
 		variant: "grayed-out",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={24} />
+		</NewButton>
+	),
 };
 
 export const GrayedOutMedium: Story = {
@@ -151,6 +230,11 @@ export const GrayedOutMedium: Story = {
 		size: "medium",
 		variant: "grayed-out",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={18} />
+		</NewButton>
+	),
 };
 
 export const GrayedOutSmall: Story = {
@@ -159,4 +243,9 @@ export const GrayedOutSmall: Story = {
 		size: "small",
 		variant: "grayed-out",
 	},
+	render: (args) => (
+		<NewButton {...args}>
+			<SettingsIcon size={16} />
+		</NewButton>
+	),
 };

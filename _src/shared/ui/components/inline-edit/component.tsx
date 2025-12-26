@@ -1,6 +1,6 @@
 import { ReactNode, useId, useMemo } from "react";
 import { useOverlayTriggerState } from "react-stately";
-import { ButtonSquare } from "../button";
+import { NewButton } from "../button";
 import { CheckIcon, CloseIcon } from "../icon";
 import { PopoverWithoutFocusManagment } from "./components/popover-without-focus-management";
 import { Button, Label } from "react-aria-components";
@@ -71,24 +71,28 @@ export const InlineEdit = (props: InlineEditProps) => {
 	const actionButtons = useMemo(() => {
 		return (
 			<div className="flex flex-row gap-1">
-				<ButtonSquare
+				<NewButton
+					shape="square"
 					variant={keepEditViewOpenOnBlur ? "outline" : "grayed-out"}
 					className={actionBtnStyles({
 						withShadow: !keepEditViewOpenOnBlur,
 					})}
-					icon={CheckIcon}
 					data-testid={`${id}-confirm-button`}
 					{...confirmBtnProps}
-				/>
-				<ButtonSquare
+				>
+					<CheckIcon size={18} />
+				</NewButton>
+				<NewButton
+					shape="square"
 					variant={keepEditViewOpenOnBlur ? "outline" : "grayed-out"}
 					className={actionBtnStyles({
 						withShadow: !keepEditViewOpenOnBlur,
 					})}
 					data-testid={`${id}-cancel-button`}
-					icon={CloseIcon}
 					{...cancelBtnProps}
-				/>
+				>
+					<CloseIcon size={18} />
+				</NewButton>
 			</div>
 		);
 	}, [confirmBtnProps, cancelBtnProps, id, keepEditViewOpenOnBlur]);

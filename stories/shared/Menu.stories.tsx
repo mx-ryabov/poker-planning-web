@@ -1,4 +1,4 @@
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import {
 	CardsIcon,
 	PeopleIcon,
@@ -20,7 +20,9 @@ export default meta;
 
 export const MenuDefault = () => (
 	<Menu>
-		<ButtonSquare icon={SettingsIcon} />
+		<NewButton shape="square">
+			<SettingsIcon size={18} />
+		</NewButton>
 		<Menu.Content>
 			<Menu.Section title="Dropdown Title">
 				<Menu.Item id={1}>

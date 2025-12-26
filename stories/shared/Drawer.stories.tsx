@@ -1,4 +1,4 @@
-import { Button } from "@/_src/shared/ui/components/button";
+import { NewButton } from "@/_src/shared/ui/components/button";
 import { Drawer } from "@/_src/shared/ui/components/drawer";
 import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
@@ -18,7 +18,7 @@ export const DrawerOverlay = () => {
 	return (
 		<div className="min-w-[500px] min-h-[300px]">
 			<Drawer.Trigger>
-				<Button title="Trigger" />
+				<NewButton>Trigger</NewButton>
 				<Drawer.Modal position="end">
 					<Drawer.Heading>Drawer Heading</Drawer.Heading>
 				</Drawer.Modal>
@@ -36,10 +36,11 @@ export const DrawerInlineWithPortal = () => {
 		<div className="flex flex-row w-full min-w-[500px] min-h-[300px] bg-neutral-100">
 			<div className="w-full">
 				<p>Some content</p>
-				<Button
-					title="Trigger"
+				<NewButton
 					onPress={() => setOpen((prev) => !prev)}
-				/>
+				>
+					Trigger
+				</NewButton>
 				<p>Some content</p>
 			</div>
 			<Drawer.Modal position="end" portal="in-same-place" isOpen={isOpen}>
@@ -56,10 +57,11 @@ export const DrawerInlineResizible = () => {
 		<div className="flex flex-row w-full min-w-[500px] h-[300px] bg-neutral-100">
 			<div className="w-full">
 				<p>Some content</p>
-				<Button
-					title="Trigger"
+				<NewButton
 					onPress={() => setOpen((prev) => !prev)}
-				/>
+				>
+					Trigger
+				</NewButton>
 				<p>Some content</p>
 			</div>
 			<Drawer.ModalWithSeparator
