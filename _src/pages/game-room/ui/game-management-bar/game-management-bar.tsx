@@ -5,7 +5,7 @@ import {
 	PeopleIcon,
 	SettingsIcon,
 } from "@/_src/shared/ui/components/icon";
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
 import { GameManagementTab, useGameManagementState } from "../../model";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
@@ -73,23 +73,28 @@ export function GameManagementBar({ className }: Props) {
 						onSelectionReset={() => setActiveTab(null)}
 					>
 						{Object.entries(TAB_BUTTON_OPTIONS).map(
-							([tabType, tabOptions], ind) => (
-								<Tooltip key={ind} delay={0}>
-									<ButtonSquare
-										icon={tabOptions.icon}
-										variant="ghost"
-										size="small"
-										aria-label={tabType}
-										className="group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400 bg-white/0 text-neutral-900 hover:text-neutral-600"
-										onPress={onPanelSelected(
-											tabType as GameManagementTab,
-										)}
-									/>
-									<Tooltip.Content>
-										{tabOptions.tooltipText}
-									</Tooltip.Content>
-								</Tooltip>
-							),
+							([tabType, tabOptions], ind) => {
+								const Icon = tabOptions.icon;
+								return (
+									<Tooltip key={ind} delay={0}>
+										<Button
+											shape="square"
+											variant="ghost"
+											size="small"
+											aria-label={tabType}
+											className="group-data-[sliding-selector-element-active=true]:text-primary-500 group-data-[sliding-selector-element-active=true]:hover:text-primary-400 bg-white/0 text-neutral-900 hover:text-neutral-600"
+											onPress={onPanelSelected(
+												tabType as GameManagementTab,
+											)}
+										>
+											<Icon size={16} />
+										</Button>
+										<Tooltip.Content>
+											{tabOptions.tooltipText}
+										</Tooltip.Content>
+									</Tooltip>
+								);
+							},
 						)}
 					</SlidingSelector>
 				</GameIntroOnboardingForMaster.Steps.ControlPanelStep>

@@ -38,18 +38,14 @@ export default function Error({
 				😔👉👈
 			</div>
 			<div className="flex flex-row gap-2">
-				<Button
-					title="Go Back"
-					variant="ghost"
-					contentLeft={ArrowLeftIcon({ size: 18 })}
-					onPress={() => router.back()}
-				/>
-				<Button
-					title="Try Again"
-					variant="outline"
-					contentLeft={RefreshBorderlessIcon({ size: 18 })}
-					onPress={reset}
-				/>
+				<Button variant="ghost" onPress={() => router.back()}>
+					<ArrowLeftIcon size={18} />
+					Go Back
+				</Button>
+				<Button variant="outline" onPress={reset}>
+					<RefreshBorderlessIcon size={18} />
+					Try Again
+				</Button>
 			</div>
 		</div>
 	);

@@ -55,46 +55,50 @@ export function FormFooter(props: Props) {
 				{hasGoBack && (
 					<Button
 						variant="ghost"
-						contentLeft={ArrowLeftIcon({ size: 18 })}
 						aria-label="Back button"
-						title="Back"
 						type="button"
 						onPress={goPrevStep}
 						data-testid="back-btn"
-					/>
+					>
+						<ArrowLeftIcon size={18} />
+						Back
+					</Button>
 				)}
 				{hasContinue && (
 					<Button
-						title="Continue"
 						aria-label="Continue button"
-						contentRight={ArrowRightIcon({ size: 18 })}
 						isDisabled={!isStepValid}
 						onPress={goNextStep}
 						type="button"
 						data-testid="continue-btn"
-					/>
+					>
+						Continue
+						<ArrowRightIcon size={18} />
+					</Button>
 				)}
 				{hasOpenAdvancedSettings && (
 					<Button
-						title="Advanced Settings"
 						variant="outline"
 						aria-label="Advanced Settings button"
-						contentRight={SettingsIcon({ size: 18 })}
 						onPress={goNextStep}
 						isDisabled={!isStepValid}
 						type="button"
 						data-testid="advanced-settings-btn"
-					/>
+					>
+						Advanced Settings
+						<SettingsIcon size={18} />
+					</Button>
 				)}
 				{hasStartGame && (
 					<Button
 						type="submit"
 						aria-label="Start Game button"
-						title="Start Game"
 						isDisabled={!isFormValid}
 						isPending={isPending}
 						data-testid="start-game-btn"
-					/>
+					>
+						Start Game
+					</Button>
 				)}
 			</section>
 		</div>

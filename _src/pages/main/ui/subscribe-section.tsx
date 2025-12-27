@@ -60,10 +60,11 @@ export function SubscribeSection() {
 								errors={error}
 							/>
 							<Button
-								title="Subscribe"
 								type="submit"
 								isPending={isPending}
-							/>
+							>
+								Subscribe
+							</Button>
 						</form>
 					)}
 					{successMsg && (

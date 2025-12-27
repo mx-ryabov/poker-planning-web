@@ -127,11 +127,12 @@ function VotingResultsApplierInner(props: InnerProps) {
 			</Select>
 
 			<Button
-				title="Apply"
 				data-testid="apply-voting-results-btn"
 				isDisabled={!selectedVoteId}
 				onPress={onApplyPress}
-			/>
+			>
+				Apply
+			</Button>
 		</div>
 	);
 }

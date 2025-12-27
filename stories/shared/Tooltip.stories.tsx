@@ -17,7 +17,7 @@ export default meta;
 export const TooltipDefault = () => {
 	return (
 		<Tooltip defaultOpen={true}>
-			<Button title="Trigger" />
+			<Button>Trigger</Button>
 			<Tooltip.Content>Content</Tooltip.Content>
 		</Tooltip>
 	);
@@ -26,7 +26,7 @@ export const TooltipDefault = () => {
 export const TooltipWithCustomClassName = () => {
 	return (
 		<Tooltip defaultOpen={true}>
-			<Button title="Trigger" />
+			<Button>Trigger</Button>
 			<Tooltip.Content className="bg-info-500 text-white">
 				Content
 			</Tooltip.Content>

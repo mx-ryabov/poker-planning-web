@@ -5,7 +5,7 @@ import {
 	useGameState,
 } from "../../../model";
 import { Menu } from "@/_src/shared/ui/components/menu";
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { MoreIcon } from "@/_src/shared/ui/components/icon";
 import { Avatar } from "@/_src/shared/ui/components/avatar";
 import { useMemo } from "react";
@@ -46,11 +46,13 @@ export function ParticipantListItem({
 				</div>
 				{options.length > 0 && (
 					<Menu>
-						<ButtonSquare
-							icon={MoreIcon}
+						<Button
+							shape="square"
 							variant="ghost"
 							className="shrink-0"
-						/>
+						>
+							<MoreIcon size={18} />
+						</Button>
 						<Menu.Content placement="bottom end">
 							<Menu.Section title="Options">
 								{options.map(({ title, icon, action }) => (

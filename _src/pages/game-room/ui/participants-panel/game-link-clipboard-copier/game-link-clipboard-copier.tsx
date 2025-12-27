@@ -1,4 +1,4 @@
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { CopyIcon, CopySuccessIcon } from "@/_src/shared/ui/components/icon";
 import { Input } from "@/_src/shared/ui/components/input";
 import { Tooltip } from "@/_src/shared/ui/components/tooltip";
@@ -34,12 +34,18 @@ export function GameLinkClipboardCopier() {
 				value={window.location.href}
 			/>
 			<Tooltip isOpen={isCopied}>
-				<ButtonSquare
-					icon={isCopied ? CopySuccessIcon : CopyIcon}
+				<Button
+					shape="square"
 					variant="ghost"
 					className={copyBtnStyles({ isCopied })}
 					onPress={copyToClipboard}
-				/>
+				>
+					{isCopied ? (
+						<CopySuccessIcon size={18} />
+					) : (
+						<CopyIcon size={18} />
+					)}
+				</Button>
 				<Tooltip.Content>Copied 🎉</Tooltip.Content>
 			</Tooltip>
 		</div>

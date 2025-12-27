@@ -27,14 +27,14 @@ export function TicketTypeSelector({
 	return (
 		<Menu>
 			<Button
-				title=""
 				className="px-2"
-				contentLeft={selectedTypeObj?.icon}
 				variant="ghost"
 				size="small"
 				data-testid="ticket-type-selector"
 				isDisabled={!isEditable}
-			/>
+			>
+				{selectedTypeObj?.icon}
+			</Button>
 			<Menu.Content
 				items={TASK_TYPES}
 				selectionMode="single"

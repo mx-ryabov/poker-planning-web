@@ -20,9 +20,9 @@ type Story = StoryObj<typeof meta>;
 
 const Default: Story = {
 	args: {
-		title: "Button",
-		form: "default",
+		children: "Button",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const DefaultLargeDisabled: Story = {
@@ -30,9 +30,14 @@ export const DefaultLargeDisabled: Story = {
 		...Default.args,
 		size: "large",
 		isDisabled: true,
-		contentLeft: SettingsIcon({ size: 18 }),
-		contentRight: ArrowRightIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<Button {...args}>
+			<SettingsIcon size={18} />
+			Button
+			<ArrowRightIcon size={18} />
+		</Button>
+	),
 };
 
 export const DefaultLargePending: Story = {
@@ -40,9 +45,14 @@ export const DefaultLargePending: Story = {
 		...Default.args,
 		size: "large",
 		isPending: true,
-		contentLeft: SettingsIcon({ size: 18 }),
-		contentRight: ArrowRightIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<Button {...args}>
+			<SettingsIcon size={18} />
+			Button
+			<ArrowRightIcon size={18} />
+		</Button>
+	),
 };
 
 export const DefaultLarge: Story = {
@@ -50,6 +60,7 @@ export const DefaultLarge: Story = {
 		...Default.args,
 		size: "large",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 		const button = canvas.getByRole("button");
@@ -64,19 +75,20 @@ export const DefaultMedium: Story = {
 		...Default.args,
 		size: "medium",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const DefaultMediumPending = () => {
 	const [isPending, setIsPending] = useState(false);
 	return (
 		<Button
-			title="Button"
-			form="default"
 			size="medium"
 			appearance="danger"
 			isPending={isPending}
 			onPress={() => setIsPending(true)}
-		/>
+		>
+			Button
+		</Button>
 	);
 };
 
@@ -85,6 +97,7 @@ export const DefaultSmall: Story = {
 		...Default.args,
 		size: "small",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const OutlineLargeDisabled: Story = {
@@ -94,6 +107,7 @@ export const OutlineLargeDisabled: Story = {
 		variant: "outline",
 		isDisabled: true,
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const OutlineLarge: Story = {
@@ -101,8 +115,13 @@ export const OutlineLarge: Story = {
 		...Default.args,
 		size: "large",
 		variant: "outline",
-		contentLeft: SettingsIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<Button {...args}>
+			<SettingsIcon size={18} />
+			Button
+		</Button>
+	),
 };
 
 export const OutlineMedium: Story = {
@@ -111,6 +130,7 @@ export const OutlineMedium: Story = {
 		size: "medium",
 		variant: "outline",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const OutlineMediumPending: Story = {
@@ -120,6 +140,7 @@ export const OutlineMediumPending: Story = {
 		variant: "outline",
 		isPending: true,
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const OutlineSmall: Story = {
@@ -128,6 +149,7 @@ export const OutlineSmall: Story = {
 		size: "small",
 		variant: "outline",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GhostLargeDisabled: Story = {
@@ -137,6 +159,7 @@ export const GhostLargeDisabled: Story = {
 		variant: "ghost",
 		isDisabled: true,
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GhostLarge: Story = {
@@ -145,6 +168,7 @@ export const GhostLarge: Story = {
 		size: "large",
 		variant: "ghost",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GhostMedium: Story = {
@@ -153,6 +177,7 @@ export const GhostMedium: Story = {
 		size: "medium",
 		variant: "ghost",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GhostMediumPending: Story = {
@@ -162,6 +187,7 @@ export const GhostMediumPending: Story = {
 		variant: "ghost",
 		isPending: true,
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GhostSmall: Story = {
@@ -170,6 +196,7 @@ export const GhostSmall: Story = {
 		size: "small",
 		variant: "ghost",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GrayedOutLargeDisabled: Story = {
@@ -179,6 +206,7 @@ export const GrayedOutLargeDisabled: Story = {
 		variant: "grayed-out",
 		isDisabled: true,
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GrayedOutLarge: Story = {
@@ -186,8 +214,13 @@ export const GrayedOutLarge: Story = {
 		...Default.args,
 		size: "large",
 		variant: "grayed-out",
-		contentRight: ArrowRightIcon({ size: 18 }),
 	},
+	render: (args) => (
+		<Button {...args}>
+			Button
+			<ArrowRightIcon size={18} />
+		</Button>
+	),
 };
 
 export const GrayedOutMedium: Story = {
@@ -196,6 +229,7 @@ export const GrayedOutMedium: Story = {
 		size: "medium",
 		variant: "grayed-out",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GrayedOutMediumPending: Story = {
@@ -205,6 +239,7 @@ export const GrayedOutMediumPending: Story = {
 		variant: "grayed-out",
 		isPending: true,
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };
 
 export const GrayedOutSmall: Story = {
@@ -213,4 +248,5 @@ export const GrayedOutSmall: Story = {
 		size: "small",
 		variant: "grayed-out",
 	},
+	render: (args) => <Button {...args}>Button</Button>,
 };

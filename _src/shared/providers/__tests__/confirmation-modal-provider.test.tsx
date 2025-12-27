@@ -22,7 +22,6 @@ function ModalController({
 	const { open } = useConfirmationModal();
 	return (
 		<Button
-			title="Open Modal"
 			data-testid="opener"
 			onPress={() =>
 				open({
@@ -32,7 +31,9 @@ function ModalController({
 					onConfirm,
 				})
 			}
-		/>
+		>
+			Open Modal
+		</Button>
 	);
 }
 function getComponent(props: Props) {

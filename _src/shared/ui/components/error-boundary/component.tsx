@@ -1,6 +1,6 @@
 "use client";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { NewButton } from "../button";
+import { Button } from "../button";
 import { RefreshBorderlessIcon } from "../icon/svg/refresh-borderless.icon";
 import { ReactNode } from "react";
 import { logger } from "@/_src/shared/lib";
@@ -24,14 +24,14 @@ export function InternalErrorBoundary(props: InternalErrorBoundaryProps) {
 							<p className="text-sm">Something went wrong...</p>
 						</div>
 
-						<NewButton
+						<Button
 							onPress={props.resetErrorBoundary}
 							size="small"
 							variant="grayed-out"
 						>
 							<RefreshBorderlessIcon size={14} />
 							Try again
-						</NewButton>
+						</Button>
 					</div>
 				);
 			}}

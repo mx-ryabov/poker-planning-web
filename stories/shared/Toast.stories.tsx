@@ -37,7 +37,6 @@ function ToastTrigger() {
 	return (
 		<div className="absolute top-1/2 left-1/2 grid -translate-x-1/2 -translate-y-1/2 grid-flow-row grid-cols-3 gap-2">
 			<Button
-				title="Neutral!"
 				appearance="neutral"
 				onPress={() => {
 					toastState?.add({
@@ -48,9 +47,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
+			>
+				Neutral!
+			</Button>
 			<Button
-				title="Info!"
 				appearance="info"
 				onPress={() => {
 					toastState?.add({
@@ -61,9 +61,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
+			>
+				Info!
+			</Button>
 			<Button
-				title="Warning!"
 				appearance="warning"
 				onPress={() => {
 					toastState?.add({
@@ -74,9 +75,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
+			>
+				Warning!
+			</Button>
 			<Button
-				title="Error!"
 				appearance="danger"
 				onPress={() => {
 					toastState?.add({
@@ -87,9 +89,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
+			>
+				Error!
+			</Button>
 			<Button
-				title="Success!"
 				appearance="success"
 				onPress={() => {
 					toastState?.add({
@@ -100,9 +103,10 @@ function ToastTrigger() {
 					});
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
+			>
+				Success!
+			</Button>
 			<Button
-				title="Dismissable!"
 				onPress={() => {
 					toastState?.add(
 						{
@@ -115,9 +119,10 @@ function ToastTrigger() {
 					);
 					setIncrement((prev) => prev + 1);
 				}}
-			/>
+			>
+				Dismissable!
+			</Button>
 			<Button
-				title="Toast with timeout"
 				variant="outline"
 				onPress={() => {
 					setTimeout(() => {
@@ -129,7 +134,9 @@ function ToastTrigger() {
 						setIncrement((prev) => prev + 1);
 					}, 2000);
 				}}
-			/>
+			>
+				Toast with timeout
+			</Button>
 		</div>
 	);
 }

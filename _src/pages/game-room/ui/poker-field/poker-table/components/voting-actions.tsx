@@ -8,7 +8,7 @@ import {
 	useVotingAsyncState,
 } from "@/_src/pages/game-room/model";
 import { GameVotingStatus } from "@/_src/shared/api";
-import { Button, NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { CardsIcon, RefreshIcon } from "@/_src/shared/ui/components/icon";
 import { TicketLink } from "../../ticket-link";
 import { useCallback } from "react";
@@ -72,10 +72,10 @@ export function VotingActions() {
 						Start from creating tickets 👇
 					</p>
 					<Highlighter id="start-creating-tickets">
-						<NewButton onPress={onTicketListLinkPress}>
+						<Button onPress={onTicketListLinkPress}>
 							<CardsIcon size={18} />
 							Open Tickets Panel
-						</NewButton>
+						</Button>
 					</Highlighter>
 				</div>
 			)}
@@ -90,10 +90,10 @@ export function VotingActions() {
 						</span>
 					</p>
 					<Highlighter id="start-creating-tickets">
-						<NewButton onPress={voteForFirstTicket}>
+						<Button onPress={voteForFirstTicket}>
 							<CardsIcon size={18} />
 							Vote for {firstUnestimatedTicket.identifier}
-						</NewButton>
+						</Button>
 					</Highlighter>
 				</div>
 			)}
@@ -109,22 +109,22 @@ export function VotingActions() {
 			{votingProcess.status === GameVotingStatus.InProgress && (
 				<div className="flex flex-col items-center gap-2">
 					<div className="flex flex-row gap-2">
-						<NewButton
+						<Button
 							onPress={revealCards}
 							isPending={isRevealCardsPending}
 							className="min-w-max"
 						>
 							<CardsIcon size={24} />
 							Reveal Cards
-						</NewButton>
-						<NewButton
+						</Button>
+						<Button
 							onPress={cancelVoting}
 							variant="outline"
 							isPending={isCancelVotingPending}
 							className="min-w-max"
 						>
 							Cancel Voting
-						</NewButton>
+						</Button>
 					</div>
 					{votingProcess.ticket === null ? (
 						<p className="text-sm text-neutral-900">
@@ -146,19 +146,21 @@ export function VotingActions() {
 			{votingProcess.status === GameVotingStatus.Revealed && (
 				<div className="flex flex-row gap-2">
 					<Button
-						title="Finish Voting"
 						className="w-max"
 						onPress={finishVoting}
 						isPending={isFinishVotingPending}
-					/>
+					>
+						Finish Voting
+					</Button>
 					<Button
-						title="Revote"
-						contentLeft={<RefreshIcon size={24} />}
 						variant="outline"
 						className="border"
 						onPress={onRevote}
 						isPending={isStartVotingPending}
-					/>
+					>
+						<RefreshIcon size={24} />
+						Revote
+					</Button>
 				</div>
 			)}
 		</>

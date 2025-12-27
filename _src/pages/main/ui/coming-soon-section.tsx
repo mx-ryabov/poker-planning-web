@@ -37,26 +37,29 @@ export function ComingSoonSection() {
 					selectorClassName="bg-white rounded-xl md:rounded-full z-10! drop-shadow-sm border-neutral-200 duration-400"
 				>
 					<Button
-						contentLeft={<LinkIcon size={16} thikness="bold" />}
-						title="Jira Integration"
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onPress={() => setActiveTabInd(0)}
-					/>
+					>
+						<LinkIcon size={16} thikness="bold" />
+						Jira Integration
+					</Button>
 					<Button
-						contentLeft={<ClockIcon size={16} thikness="bold" />}
-						title="Asynchronous Estimation"
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onPress={() => setActiveTabInd(1)}
-					/>
+					>
+						<ClockIcon size={16} thikness="bold" />
+						Asynchronous Estimation
+					</Button>
 					<Button
-						contentLeft={<MagicPenIcon size={16} thikness="bold" />}
-						title="AI Assistant"
 						variant="ghost"
 						className="flex h-fit flex-col rounded-xl bg-transparent py-1 md:h-10 md:flex-row lg:rounded-full"
 						onPress={() => setActiveTabInd(2)}
-					/>
+					>
+						<MagicPenIcon size={16} thikness="bold" />
+						AI Assistant
+					</Button>
 				</SlidingSelector>
 				{tabContent && (
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[310px]">

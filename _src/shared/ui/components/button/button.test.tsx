@@ -1,12 +1,12 @@
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Button, ButtonSquare } from "./component";
+import { Button } from "./component";
 import { CheckIcon } from "../icon";
 
 describe("Button", () => {
 	test("renders correctly", async () => {
-		const wrapper = render(<Button title="Click me!" />);
+		const wrapper = render(<Button>Click me!</Button>);
 
 		expect(() => wrapper.unmount()).not.toThrow();
 	});
@@ -14,7 +14,7 @@ describe("Button", () => {
 	test("is pressable", async () => {
 		const onPressFn = vi.fn();
 		const { user, getByRole } = render(
-			<Button title="Click me!" onPress={onPressFn} />,
+			<Button onPress={onPressFn}>Click me!</Button>,
 		);
 		const button = getByRole("button");
 
@@ -26,7 +26,9 @@ describe("Button", () => {
 	test("isn't pressable when disabled", async () => {
 		const onPressFn = vi.fn();
 		const { user, getByRole } = render(
-			<Button title="Click me!" isDisabled onPress={onPressFn} />,
+			<Button isDisabled onPress={onPressFn}>
+				Click me!
+			</Button>,
 		);
 		const button = getByRole("button");
 
@@ -36,24 +38,28 @@ describe("Button", () => {
 	});
 
 	test("doesn't violate any accessiblity rules", async () => {
-		const { container } = render(<Button title="Click me!" />);
+		const { container } = render(<Button>Click me!</Button>);
 		const results = await axe(container);
 
 		expect(results).toHaveNoViolations();
 	});
-});
 
-describe("Button Square", () => {
-	test("renders correctly", async () => {
-		const wrapper = render(<ButtonSquare icon={CheckIcon} />);
+	test("renders square button correctly", async () => {
+		const wrapper = render(
+			<Button shape="square">
+				<CheckIcon size={18} />
+			</Button>,
+		);
 
 		expect(() => wrapper.unmount()).not.toThrow();
 	});
 
-	test("is pressable", async () => {
+	test("square button is pressable", async () => {
 		const onPressFn = vi.fn();
 		const { user, getByRole } = render(
-			<ButtonSquare icon={CheckIcon} onPress={onPressFn} />,
+			<Button shape="square" onPress={onPressFn}>
+				<CheckIcon size={18} />
+			</Button>,
 		);
 		const button = getByRole("button");
 
@@ -62,10 +68,12 @@ describe("Button Square", () => {
 		expect(onPressFn).toHaveBeenCalled();
 	});
 
-	test("isn't pressable when disabled", async () => {
+	test("square button isn't pressable when disabled", async () => {
 		const onPressFn = vi.fn();
 		const { user, getByRole } = render(
-			<ButtonSquare icon={CheckIcon} isDisabled onPress={onPressFn} />,
+			<Button shape="square" isDisabled onPress={onPressFn}>
+				<CheckIcon size={18} />
+			</Button>,
 		);
 		const button = getByRole("button");
 
@@ -74,14 +82,12 @@ describe("Button Square", () => {
 		expect(onPressFn).not.toHaveBeenCalled();
 	});
 
-	test("isn't pressable when isPending", async () => {
+	test("square button isn't pressable when isPending", async () => {
 		const onPressFn = vi.fn();
 		const { user, getByRole } = render(
-			<ButtonSquare
-				icon={CheckIcon}
-				isPending={true}
-				onPress={onPressFn}
-			/>,
+			<Button shape="square" isPending={true} onPress={onPressFn}>
+				<CheckIcon size={18} />
+			</Button>,
 		);
 		const button = getByRole("button");
 
@@ -90,8 +96,12 @@ describe("Button Square", () => {
 		expect(onPressFn).not.toHaveBeenCalled();
 	});
 
-	test("doesn't violate any accessiblity rules", async () => {
-		const { container } = render(<ButtonSquare icon={CheckIcon} />);
+	test("square button doesn't violate any accessiblity rules", async () => {
+		const { container } = render(
+			<Button shape="square">
+				<CheckIcon size={18} />
+			</Button>,
+		);
 		const results = await axe(container);
 
 		expect(results).toHaveNoViolations();

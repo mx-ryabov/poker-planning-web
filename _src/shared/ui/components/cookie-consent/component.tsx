@@ -1,7 +1,7 @@
 "use client";
 import { ConsentStatus, useCookieConsentState } from "@/_src/shared/providers";
 import { NextLink } from "../../next-components/next-link";
-import { NewButton } from "../button";
+import { Button } from "../button";
 
 export function CookieConsent() {
 	const { consentStatus, giveConsent, rejectConsent } =
@@ -24,10 +24,10 @@ export function CookieConsent() {
 			</div>
 
 			<div className="flex flex-row justify-end gap-4">
-				<NewButton onPress={giveConsent}>Accept All Cookeis</NewButton>
-				<NewButton variant="ghost" onPress={rejectConsent}>
+				<Button onPress={giveConsent}>Accept All Cookeis</Button>
+				<Button variant="ghost" onPress={rejectConsent}>
 					Reject
-				</NewButton>
+				</Button>
 			</div>
 		</div>
 	);

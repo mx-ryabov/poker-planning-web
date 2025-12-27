@@ -119,14 +119,15 @@ export function GameJoinForm({ gameId }: Props) {
 					<Button
 						type="submit"
 						aria-label="Enter the game button"
-						title="Enter the Game"
 						data-testid="enter-game-btn"
 						isDisabled={
 							!!error || !formState.dirtyFields.displayName
 						}
 						isPending={isPending}
-						contentRight={PlayIcon({ size: 18 })}
-					/>
+					>
+						Enter the Game
+						<PlayIcon size={18}  />
+					</Button>
 				</section>
 			</div>
 		</form>

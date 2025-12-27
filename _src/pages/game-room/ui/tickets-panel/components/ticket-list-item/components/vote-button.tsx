@@ -5,7 +5,7 @@ import {
 	useVotingAsyncState,
 } from "@/_src/pages/game-room/model";
 import { GameTicket, GameVotingStatus } from "@/_src/shared/api";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { Highlighter } from "@/_src/shared/ui/components/highlighter";
 import { CardsIcon } from "@/_src/shared/ui/components/icon";
 import { useCallback } from "react";
@@ -29,7 +29,7 @@ export function VoteButton({ ticket }: Props) {
 	if (status === "ready-to-vote") {
 		return (
 			<Highlighter id="vote-button-in-the-ticket">
-				<NewButton
+				<Button
 					variant="outline"
 					className="border-neutral-300 drop-shadow-none"
 					data-testid={`vote-button-test-${ticket.id}`}
@@ -38,7 +38,7 @@ export function VoteButton({ ticket }: Props) {
 				>
 					<CardsIcon size={16} />
 					VOTE
-				</NewButton>
+				</Button>
 			</Highlighter>
 		);
 	}

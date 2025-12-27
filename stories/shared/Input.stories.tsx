@@ -1,4 +1,4 @@
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { ArrowDownIcon, PeopleIcon } from "@/_src/shared/ui/components/icon";
 import { Input } from "@/_src/shared/ui/components/input";
 import type { Meta, StoryObj } from "@storybook/nextjs";
@@ -43,13 +43,15 @@ export const InputWithEndContent: Story = {
 		label: "Label",
 		placeholder: "Placeholder",
 		endContent: (
-			<ButtonSquare
-				icon={ArrowDownIcon}
+			<Button
+				shape="square"
 				size="small"
 				variant="ghost"
 				aria-label="autocomplete-toggle-button"
 				excludeFromTabOrder={true}
-			/>
+			>
+				<ArrowDownIcon size={16} />
+			</Button>
 		),
 	},
 };

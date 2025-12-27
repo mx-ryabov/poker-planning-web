@@ -1,5 +1,5 @@
 "use client";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { List } from "@/_src/shared/ui/components/list";
 import { Popover } from "@/_src/shared/ui/components/popover";
 import { useCallback, useRef, useState } from "react";
@@ -28,9 +28,9 @@ export function OnboardingHelper(props: Props) {
 				<div ref={containerRef}>
 					<Popover>
 						<Highlighter id="quick-guide">
-							<NewButton>
+							<Button>
 								<FlashWithLinesIcon size={18} /> Quick Guide
-							</NewButton>
+							</Button>
 						</Highlighter>
 						<Popover.Content
 							triggerRef={containerRef}
@@ -47,7 +47,7 @@ export function OnboardingHelper(props: Props) {
 											Onboarding List
 										</h1>
 										<Tooltip>
-											<NewButton
+											<Button
 												shape="square"
 												size="small"
 												variant="ghost"
@@ -56,7 +56,7 @@ export function OnboardingHelper(props: Props) {
 												onPress={dismiss}
 											>
 												<CloseIcon size={20} />
-											</NewButton>
+											</Button>
 											<Tooltip.Content>
 												Dismiss
 											</Tooltip.Content>

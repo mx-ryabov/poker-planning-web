@@ -18,7 +18,7 @@ export const DrawerOverlay = () => {
 	return (
 		<div className="min-w-[500px] min-h-[300px]">
 			<Drawer.Trigger>
-				<Button title="Trigger" />
+				<Button>Trigger</Button>
 				<Drawer.Modal position="end">
 					<Drawer.Heading>Drawer Heading</Drawer.Heading>
 				</Drawer.Modal>
@@ -37,9 +37,10 @@ export const DrawerInlineWithPortal = () => {
 			<div className="w-full">
 				<p>Some content</p>
 				<Button
-					title="Trigger"
 					onPress={() => setOpen((prev) => !prev)}
-				/>
+				>
+					Trigger
+				</Button>
 				<p>Some content</p>
 			</div>
 			<Drawer.Modal position="end" portal="in-same-place" isOpen={isOpen}>
@@ -57,9 +58,10 @@ export const DrawerInlineResizible = () => {
 			<div className="w-full">
 				<p>Some content</p>
 				<Button
-					title="Trigger"
 					onPress={() => setOpen((prev) => !prev)}
-				/>
+				>
+					Trigger
+				</Button>
 				<p>Some content</p>
 			</div>
 			<Drawer.ModalWithSeparator

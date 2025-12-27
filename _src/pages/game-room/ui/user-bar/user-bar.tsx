@@ -47,8 +47,9 @@ export function UserBar({ onLogout }: Props) {
 		<Menu>
 			<Button
 				className="w-10 h-10 rounded-full shadow-lg shadow-primary-200 drop-shadow-xl"
-				title={initials}
-			/>
+			>
+				{initials}
+			</Button>
 			<Menu.Content placement="bottom end">
 				<Menu.Section title={currentParticipant.displayName}>
 					{/* <Menu.Item isDisabled>

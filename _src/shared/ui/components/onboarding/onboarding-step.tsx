@@ -2,7 +2,7 @@ import { cloneElement, ReactElement, useEffect, useRef } from "react";
 import throttle from "lodash.throttle";
 import { Dialog, Heading, ModalOverlay, Popover } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
-import { NewButton } from "../button";
+import { Button } from "../button";
 import { OnboardingState, useOnboardingState } from "./use-onboarding-state";
 import { useOnboardingActions } from "./use-onboarding-actions";
 import { Placement } from "react-aria";
@@ -172,21 +172,21 @@ function OnboardingStepInner({
 								</span>
 								<div className="flex flex-row gap-2">
 									{!isLastStep && (
-										<NewButton
+										<Button
 											onPress={onDismissPressed}
 											variant="ghost"
 											size="small"
 											className="text-white"
 										>
 											Dismiss
-										</NewButton>
+										</Button>
 									)}
-									<NewButton
+									<Button
 										onPress={onNextPressed}
 										size="small"
 									>
 										{isLastStep ? "Done" : "Next"}
-									</NewButton>
+									</Button>
 								</div>
 							</div>
 						</div>

@@ -1,4 +1,4 @@
-import { ButtonSquare } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { MoreIcon } from "@/_src/shared/ui/components/icon/svg/more.icon";
 import { Menu } from "@/_src/shared/ui/components/menu";
 import { twMerge } from "tailwind-merge";
@@ -19,13 +19,15 @@ export function TicketItemMenu(props: Props) {
 
 	return (
 		<Menu>
-			<ButtonSquare
-				icon={MoreIcon}
+			<Button
+				shape="square"
 				variant="ghost"
 				className={twMerge("shrink-0", className)}
 				size="small"
 				data-testid="ticket-item-menu"
-			/>
+			>
+				<MoreIcon size={16} />
+			</Button>
 			<Menu.Content placement="bottom end">
 				{options.map((option) => (
 					<Menu.Item

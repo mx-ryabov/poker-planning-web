@@ -11,7 +11,7 @@ import { TicketLink } from "../../ticket-link";
 import { GameVotingStatus } from "@/_src/shared/api";
 import { Link, LinkButton } from "@/_src/shared/ui/components/link";
 import { Modal } from "@/_src/shared/ui/components/modal";
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import { CloseIcon } from "@/_src/shared/ui/components/icon";
 import { ReactNode } from "react";
 
@@ -98,13 +98,13 @@ function LearnMoreDialog({ children }: { children: ReactNode }) {
 					<>
 						<Modal.Header>
 							<Modal.Title>What&apos;s going on?</Modal.Title>
-							<NewButton
+							<Button
 								variant="ghost"
 								onPress={close}
 								shape="square"
 							>
 								<CloseIcon size={20} />
-							</NewButton>
+							</Button>
 						</Modal.Header>
 						<Modal.Body>
 							<p className="">
@@ -141,7 +141,7 @@ function LearnMoreDialog({ children }: { children: ReactNode }) {
 						</Modal.Body>
 						<Modal.Footer>
 							{({ close }) => (
-								<NewButton onPress={close}>Ok</NewButton>
+								<Button onPress={close}>Ok</Button>
 							)}
 						</Modal.Footer>
 					</>

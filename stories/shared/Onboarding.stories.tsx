@@ -1,4 +1,4 @@
-import { NewButton } from "@/_src/shared/ui/components/button";
+import { Button } from "@/_src/shared/ui/components/button";
 import {
 	OnboardingProvider,
 	OnboardingStep,
@@ -35,7 +35,7 @@ function Screen() {
 	const { startOnboarding } = useOnboardingActions();
 	return (
 		<div className="relative w-full h-full min-h-[400px] p-4">
-			<NewButton
+			<Button
 				onPress={() =>
 					startOnboarding({
 						id: MODEL_ID,
@@ -44,7 +44,7 @@ function Screen() {
 				}
 			>
 				Start Onboarding
-			</NewButton>
+			</Button>
 			<OnboardingStep
 				modelId={MODEL_ID}
 				stepId={FIRST_STEP_ID}
