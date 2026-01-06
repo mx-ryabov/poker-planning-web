@@ -1,4 +1,4 @@
-import { Select } from "@/_src/shared/ui/components/select";
+import { Select } from "@/src/shared/ui/components/select";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {

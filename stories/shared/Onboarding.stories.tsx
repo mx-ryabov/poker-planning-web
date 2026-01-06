@@ -1,10 +1,10 @@
-import { Button } from "@/_src/shared/ui/components/button";
+import { Button } from "@/src/shared/ui/components/button";
 import {
 	OnboardingProvider,
 	OnboardingStep,
 	OnboardingStepData,
 	useOnboardingActions,
-} from "@/_src/shared/ui/components/onboarding";
+} from "@/src/shared/ui/components/onboarding";
 import type { Meta } from "@storybook/nextjs";
 
 const meta = {

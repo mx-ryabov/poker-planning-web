@@ -1,6 +1,6 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { ArrowDownIcon, PeopleIcon } from "@/_src/shared/ui/components/icon";
-import { Input } from "@/_src/shared/ui/components/input";
+import { Button } from "@/src/shared/ui/components/button";
+import { ArrowDownIcon, PeopleIcon } from "@/src/shared/ui/components/icon";
+import { Input } from "@/src/shared/ui/components/input";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { fn } from "storybook/test";
 

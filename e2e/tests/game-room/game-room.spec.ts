@@ -1,4 +1,4 @@
-import { NEWLY_CREATED_GAME } from "@/_src/shared/mocks/game";
+import { generateGame } from "@/__mocks__/game/generators";
 import {
 	test,
 	expect,
@@ -35,7 +35,7 @@ test.use({
 	mswHandlers: [
 		[
 			http.get(`${HOST}/api/games/${GAME_ID}`, () => {
-				return HttpResponse.json(NEWLY_CREATED_GAME);
+				return HttpResponse.json(generateGame());
 			}),
 			http.all("*", () => {
 				return passthrough();

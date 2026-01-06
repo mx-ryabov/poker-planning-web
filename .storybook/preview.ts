@@ -1,8 +1,8 @@
 import type { Preview } from "@storybook/nextjs";
-import "../app/globals.css";
+import "../src/app/globals.css";
 
 const preview: Preview = {
-    parameters: {
+	parameters: {
 		controls: {
 			matchers: {
 				color: /(background|color)$/i,
@@ -11,7 +11,7 @@ const preview: Preview = {
 		},
 	},
 
-    tags: ["autodocs", "autodocs"]
+	tags: ["autodocs", "autodocs"],
 };
 
 export default preview;

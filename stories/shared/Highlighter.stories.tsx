@@ -1,6 +1,6 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { Highlighter } from "@/_src/shared/ui/components/highlighter";
-import { PeopleIcon } from "@/_src/shared/ui/components/icon";
+import { Button } from "@/src/shared/ui/components/button";
+import { Highlighter } from "@/src/shared/ui/components/highlighter";
+import { PeopleIcon } from "@/src/shared/ui/components/icon";
 import type { Meta } from "@storybook/nextjs";
 
 const meta = {

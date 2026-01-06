@@ -1,4 +1,4 @@
-import { Autocomplete } from "@/_src/shared/ui/components/autocomplete";
+import { Autocomplete } from "@/src/shared/ui/components/autocomplete";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { useState } from "react";
 

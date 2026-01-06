@@ -1,5 +1,5 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { Drawer } from "@/_src/shared/ui/components/drawer";
+import { Button } from "@/src/shared/ui/components/button";
+import { Drawer } from "@/src/shared/ui/components/drawer";
 import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
 
@@ -36,9 +36,7 @@ export const DrawerInlineWithPortal = () => {
 		<div className="flex flex-row w-full min-w-[500px] min-h-[300px] bg-neutral-100">
 			<div className="w-full">
 				<p>Some content</p>
-				<Button
-					onPress={() => setOpen((prev) => !prev)}
-				>
+				<Button onPress={() => setOpen((prev) => !prev)}>
 					Trigger
 				</Button>
 				<p>Some content</p>
@@ -57,9 +55,7 @@ export const DrawerInlineResizible = () => {
 		<div className="flex flex-row w-full min-w-[500px] h-[300px] bg-neutral-100">
 			<div className="w-full">
 				<p>Some content</p>
-				<Button
-					onPress={() => setOpen((prev) => !prev)}
-				>
+				<Button onPress={() => setOpen((prev) => !prev)}>
 					Trigger
 				</Button>
 				<p>Some content</p>
