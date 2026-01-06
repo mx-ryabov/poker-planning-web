@@ -4,7 +4,7 @@
 import { test, describe, expect, beforeEach } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { CookieConsent } from "./component";
+import { CookieConsent } from "./cookie-consent";
 import {
 	ConsentStatus,
 	CookieConsentStateProvider,

@@ -1,2 +1,2 @@
 "use client";
-export { Chip, ChipGroup } from "./component";
+export { Chip, ChipGroup } from "./chip";

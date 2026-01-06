@@ -1,1 +1,1 @@
-export { SlidingSelector } from "./component";
+export { SlidingSelector } from "./sliding-selector";

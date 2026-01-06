@@ -1,1 +1,1 @@
-export { InlineEditableTextField } from "./component";
+export { InlineEditableTextField } from "./inline-editable-text-field";

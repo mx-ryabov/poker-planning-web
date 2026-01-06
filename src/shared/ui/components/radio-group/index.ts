@@ -1,3 +1,3 @@
 "use client";
-export { RadioGroup } from "./component";
+export { RadioGroup } from "./radio-group";
 export * from "./skeleton";

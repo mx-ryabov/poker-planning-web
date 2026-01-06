@@ -1,2 +1,2 @@
 "use client";
-export { Autocomplete } from "./component";
+export { Autocomplete } from "./autocomplete";

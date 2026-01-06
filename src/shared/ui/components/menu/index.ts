@@ -1,2 +1,2 @@
 "use client";
-export { Menu } from "./component";
+export { Menu } from "./menu";

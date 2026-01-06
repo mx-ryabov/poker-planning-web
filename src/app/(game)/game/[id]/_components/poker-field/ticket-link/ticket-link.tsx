@@ -4,7 +4,7 @@ import {
 	GameManagementTab,
 	useGameManagementState,
 } from "@/src/app/(game)/game/[id]/_store";
-import { LinkButtonProps } from "@/src/shared/ui/components/link/component";
+import { LinkButtonProps } from "@/src/shared/ui/components/link/link";
 
 type Props = {
 	ticketId: string;

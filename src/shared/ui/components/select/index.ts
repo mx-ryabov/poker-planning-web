@@ -1,2 +1,2 @@
 "use client";
-export { Select } from "./component";
+export { Select } from "./select";

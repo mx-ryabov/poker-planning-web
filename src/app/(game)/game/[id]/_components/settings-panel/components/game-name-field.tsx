@@ -1,5 +1,5 @@
 import { InlineEditableTextField } from "@/src/shared/ui/components/inline-editable-fields";
-import { InlineEditableTextFieldProps } from "@/src/shared/ui/components/inline-editable-fields/inline-editable-text-field/component";
+import { InlineEditableTextFieldProps } from "@/src/shared/ui/components/inline-editable-fields/inline-editable-text-field/inline-editable-text-field";
 
 type Props = {
 	isReadonly: boolean;

@@ -4,7 +4,7 @@
 import { test, describe, expect } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { InlineEdit } from "./component";
+import { InlineEdit } from "./inline-edit";
 import { useState } from "react";
 import { Input } from "../input";
 

@@ -1,2 +1,2 @@
 "use client";
-export { Switch } from "./component";
+export { Switch } from "./switch";

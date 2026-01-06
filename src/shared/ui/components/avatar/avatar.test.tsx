@@ -1,7 +1,7 @@
 import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Avatar } from "./component";
+import { Avatar } from "./avatar";
 import { Color } from "../../colors";
 
 describe("Avatar", () => {

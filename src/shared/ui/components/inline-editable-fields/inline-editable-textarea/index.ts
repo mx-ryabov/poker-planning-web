@@ -1,1 +1,1 @@
-export { InlineEditableTextarea } from "./component";
+export { InlineEditableTextarea } from "./inline-editable-textarea";

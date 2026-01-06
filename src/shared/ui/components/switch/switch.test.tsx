@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { test, describe, expect } from "vitest";
-import { Switch } from "./component";
+import { Switch } from "./switch";
 import { render, screen, waitFor } from "@/test/utilities";
 import { axe } from "jest-axe";
 

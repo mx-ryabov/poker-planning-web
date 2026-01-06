@@ -1,1 +1,1 @@
-export * from "./component";
+export * from "./mobile-blocker-screen";

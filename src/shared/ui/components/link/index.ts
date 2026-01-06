@@ -1,2 +1,2 @@
 "use client";
-export { Link, LinkButton } from "./component";
+export { Link, LinkButton } from "./link";

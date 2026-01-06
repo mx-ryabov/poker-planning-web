@@ -1,2 +1,2 @@
 "use client";
-export { List } from "./component";
+export { List } from "./list";

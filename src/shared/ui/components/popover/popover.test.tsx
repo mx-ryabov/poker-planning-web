@@ -4,7 +4,7 @@
 import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Popover } from "./component";
+import { Popover } from "./popover";
 import { Button } from "../button";
 import { CloseIcon } from "../icon";
 

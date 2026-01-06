@@ -1,5 +1,5 @@
 import { DrawerModal } from "./components/drawer-content";
-import { DrawerModalWithSeparator } from "./components/drawer-content-with-separartor";
+import { DrawerModalWithSeparator } from "./components/drawer-content-with-separator";
 import { DrawerHeading } from "./components/drawer-heading";
 import { DrawerTrigger } from "./components/drawer-trigger";
 

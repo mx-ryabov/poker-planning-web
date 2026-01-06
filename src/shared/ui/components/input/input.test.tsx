@@ -1,5 +1,5 @@
 import { describe, test, vi, expect } from "vitest";
-import { Input } from "./component";
+import { Input } from "./input";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
 import { PeopleIcon } from "../icon";
