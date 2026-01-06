@@ -22,6 +22,7 @@ export function DrawerModalWithSeparator(props: ModalPropsWithSeparator) {
 		stateKey,
 		minWidth,
 		maxWidth,
+		"aria-label": ariaLabel = "Drawer",
 	} = props;
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const orientation = "vertical";
@@ -119,7 +120,7 @@ export function DrawerModalWithSeparator(props: ModalPropsWithSeparator) {
 	return (
 		<div
 			className={inlineDrawerStyles({ orientation })}
-			aria-label="Drawer Dialog"
+			aria-label={ariaLabel}
 		>
 			<Separator
 				contentRef={contentRef}

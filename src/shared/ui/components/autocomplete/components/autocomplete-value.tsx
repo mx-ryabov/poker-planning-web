@@ -60,7 +60,7 @@ function AutocompleteSingleValue() {
 					shape="square"
 					size="small"
 					variant="ghost"
-					aria-label="autocomplete-toggle-button"
+					aria-label="Toggle suggestions"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
 				>
@@ -106,7 +106,7 @@ function AutocompleteMultipleValue() {
 					size="small"
 					data-testid="trigger"
 					variant="ghost"
-					aria-label="autocomplete-toggle-button"
+					aria-label="Toggle suggestions"
 					excludeFromTabOrder={true}
 					{...toggleBtnProps}
 				>
@@ -215,7 +215,6 @@ function AutocompleteMultipleValue() {
 				className={multipleValueLabelStyles({
 					isDisabled: isDisabled,
 				})}
-				aria-label="Label"
 				htmlFor="multiple-autocomplete-input"
 			>
 				{inputProps.label}

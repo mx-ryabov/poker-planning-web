@@ -153,7 +153,7 @@ const MultipleSelectionValue = () => {
 			<AriaButton
 				isDisabled={ctx.isDisabled}
 				onPress={ctx.overlayTriggerState.toggle}
-				aria-label="Add Items"
+				aria-label={`Add ${ctx.placeholder?.toLowerCase() || "items"}`}
 				className="flex max-h-[21px] flex-row items-center gap-2 rounded-sm bg-neutral-300 px-2 py-1 text-xs text-neutral-900 hover:disabled:cursor-not-allowed"
 				{...ctx.fieldProps}
 			>

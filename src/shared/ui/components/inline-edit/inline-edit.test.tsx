@@ -22,7 +22,12 @@ function InlineEditRenderer({ isDisabled, isInvalid }: Props) {
 				value={value}
 				id="inline-edit"
 				editView={(renderProps) => (
-					<Input label="" {...renderProps} autoFocus />
+					<Input
+						label=""
+						aria-label="Inline Edit Label input"
+						{...renderProps}
+						autoFocus
+					/>
 				)}
 				readView={() => <p className="border p-2">Value: {value}</p>}
 				onConfirm={setValue}

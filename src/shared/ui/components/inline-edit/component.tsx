@@ -78,6 +78,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 						withShadow: !keepEditViewOpenOnBlur,
 					})}
 					data-testid={`${id}-confirm-button`}
+					aria-label="Confirm changes"
 					{...confirmBtnProps}
 				>
 					<CheckIcon size={18} />
@@ -89,6 +90,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 						withShadow: !keepEditViewOpenOnBlur,
 					})}
 					data-testid={`${id}-cancel-button`}
+					aria-label="Cancel changes"
 					{...cancelBtnProps}
 				>
 					<CloseIcon size={18} />
@@ -104,7 +106,10 @@ export const InlineEdit = (props: InlineEditProps) => {
 		>
 			<div ref={viewContainerRef} className="flex flex-col gap-1">
 				{label && (
-					<Label className="px-1 text-xs font-medium text-neutral-900">
+					<Label
+						aria-label={`${label} label`}
+						className="px-1 text-xs font-medium text-neutral-900"
+					>
 						{label}
 					</Label>
 				)}
@@ -114,6 +119,7 @@ export const InlineEdit = (props: InlineEditProps) => {
 						className="outline-primary-500 rounded-lg text-left"
 						isDisabled={isDisabled}
 						data-testid={`${id}-read-view`}
+						aria-label={`${label} read view`}
 					>
 						{readView({ value: state.editorValue })}
 					</AriaButton>

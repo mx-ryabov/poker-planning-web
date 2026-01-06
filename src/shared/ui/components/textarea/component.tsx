@@ -1,7 +1,7 @@
 import {
 	FormEvent,
 	FormEventHandler,
-	forwardRef,
+	RefObject,
 	useCallback,
 	useEffect,
 	useRef,
@@ -29,109 +29,111 @@ type TextAreaProps = {
 	isPending?: boolean;
 	maxHeight?: number;
 	rows?: number;
+	ref?: RefObject<HTMLTextAreaElement | null>;
 } & TextFieldProps;
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-	function (props, ref) {
-		const {
-			label,
-			error,
-			withErrorIcon,
-			className,
-			isPending,
-			maxHeight,
-			rows = 4,
-			...restProps
-		} = props;
+export function TextArea(props: TextAreaProps) {
+	const {
+		label,
+		error,
+		withErrorIcon,
+		className,
+		isPending,
+		maxHeight,
+		rows = 4,
+		ref,
+		...restProps
+	} = props;
 
-		// Computed values to reduce complexity
-		const isFieldDisabled = !!restProps.isDisabled || !!isPending;
-		const hasError = !!error?.length;
-		const isInvalid = !!error || !!restProps.isInvalid;
-		const hasLabel = !!label;
-		const maxHeightStyle = maxHeight ? `${maxHeight}px` : "inherit";
+	// Computed values to reduce complexity
+	const isFieldDisabled = !!restProps.isDisabled || !!isPending;
+	const hasError = !!error?.length;
+	const isInvalid = !!error || !!restProps.isInvalid;
+	const hasLabel = !!label;
+	const maxHeightStyle = maxHeight ? `${maxHeight}px` : "inherit";
 
-		const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+	const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
-		useEffect(() => {
-			const textAreaEl = textAreaRef.current;
-			if (!textAreaEl) return;
+	useEffect(() => {
+		const textAreaEl = textAreaRef.current;
+		if (!textAreaEl) return;
 
-			textAreaEl.style.height = "auto";
-			textAreaEl.style.height = `${textAreaEl.scrollHeight}px`;
-		}, [textAreaRef]);
+		textAreaEl.style.height = "auto";
+		textAreaEl.style.height = `${textAreaEl.scrollHeight}px`;
+	}, [textAreaRef]);
 
-		const onInternalInput: FormEventHandler<HTMLTextAreaElement> =
-			useCallback((ev: FormEvent<HTMLTextAreaElement>) => {
-				const el = ev.currentTarget;
-				el.style.height = "auto";
-				el.style.height = `${el.scrollHeight}px`;
-			}, []);
+	const onInternalInput: FormEventHandler<HTMLTextAreaElement> = useCallback(
+		(ev: FormEvent<HTMLTextAreaElement>) => {
+			const el = ev.currentTarget;
+			el.style.height = "auto";
+			el.style.height = `${el.scrollHeight}px`;
+		},
+		[],
+	);
 
-		return (
-			<TextField
-				className="group flex w-full flex-col"
-				{...mergeProps(restProps, { onInput: onInternalInput })}
-				isDisabled={isFieldDisabled}
-				data-testid="text-field-container"
-				isInvalid={isInvalid}
-			>
-				<Label aria-label="Label">
-					<span
-						className={labelStyles({
+	return (
+		<TextField
+			className="group flex w-full flex-col"
+			{...mergeProps(restProps, { onInput: onInternalInput })}
+			isDisabled={isFieldDisabled}
+			data-testid="text-field-container"
+			isInvalid={isInvalid}
+		>
+			<Label>
+				<span
+					className={labelStyles({
+						isDisabled: isFieldDisabled,
+						hasContent: hasLabel,
+					})}
+				>
+					{label}
+				</span>
+
+				<Group
+					className={twMerge(
+						textAreaStyles({
+							hasError,
 							isDisabled: isFieldDisabled,
-							hasContent: hasLabel,
-						})}
-					>
-						{label}
-					</span>
-
-					<Group
-						className={twMerge(
-							textAreaStyles({
-								hasError,
-								isDisabled: isFieldDisabled,
-							}),
-							className as string,
-						)}
-						onClick={() => {
-							textAreaRef.current?.focus();
+						}),
+						className as string,
+					)}
+					onClick={() => {
+						textAreaRef.current?.focus();
+					}}
+				>
+					<AriaTextArea
+						className="h-full w-full overflow-hidden bg-white/0 outline-hidden placeholder:text-neutral-600"
+						aria-label={label || undefined}
+						rows={rows}
+						ref={setRefs(textAreaRef, ref)}
+						style={{
+							maxHeight: maxHeightStyle,
 						}}
-					>
-						<AriaTextArea
-							className="h-full w-full overflow-hidden bg-white/0 outline-hidden placeholder:text-neutral-600"
-							aria-label="textarea"
-							rows={rows}
-							ref={setRefs(textAreaRef, ref)}
-							style={{
-								maxHeight: maxHeightStyle,
-							}}
-						/>
-						<div className="absolute top-2 right-2 flex flex-col items-center gap-1">
-							{withErrorIcon && (
-								<FieldErrorIcon
-									errorMsg={error}
-									placement="top end"
-									size={16}
-								/>
-							)}
-							{isPending && (
-								<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-500" />
-							)}
-						</div>
-					</Group>
-				</Label>
+					/>
+					<div className="absolute top-2 right-2 flex flex-col items-center gap-1">
+						{withErrorIcon && (
+							<FieldErrorIcon
+								errorMsg={error}
+								placement="top end"
+								size={16}
+							/>
+						)}
+						{isPending && (
+							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-neutral-500" />
+						)}
+					</div>
+				</Group>
+			</Label>
 
-				{!withErrorIcon && (
-					<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
-						<WarningIcon size={12} thikness="bold" />
-						{error}
-					</FieldError>
-				)}
-			</TextField>
-		);
-	},
-);
+			{!withErrorIcon && (
+				<FieldError className="text-error-700 flex w-full flex-row items-center gap-1 p-1 text-xs font-medium">
+					<WarningIcon size={12} thikness="bold" />
+					{error}
+				</FieldError>
+			)}
+		</TextField>
+	);
+}
 
 const textAreaStyles = cva(
 	[
