@@ -6,8 +6,6 @@ export default function GameLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	console.log("GameLayout");
-
 	return (
 		<DomainProvider>
 			<ConfirmationModalProvider>{children}</ConfirmationModalProvider>

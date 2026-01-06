@@ -1,6 +1,5 @@
 "use client";
 import {
-	forwardRef,
 	ReactNode,
 	RefObject,
 	useCallback,
@@ -34,131 +33,128 @@ type _InputProps = {
 	endContent?: ReactNode;
 	isPending?: boolean;
 	"data-testid"?: string;
+	ref?:
+		| RefObject<HTMLInputElement | null>
+		| ((instance: HTMLInputElement | null) => void);
 } & TextFieldProps &
 	Omit<AriaInputProps, "onChange" | "onKeyDown" | "onKeyUp" | "disabled">;
 
-export const Input = forwardRef<HTMLInputElement, _InputProps>(
-	function (props, ref) {
-		const {
-			label,
-			startIcon,
-			errors,
-			withErrorIcon,
-			endContent,
-			className,
-			isPending,
-			errorDefaultOpen,
-			validate,
-			...restProps
-		} = props;
+export function Input(props: _InputProps) {
+	const {
+		label,
+		startIcon,
+		errors,
+		withErrorIcon,
+		endContent,
+		className,
+		isPending,
+		errorDefaultOpen,
+		validate,
+		ref,
+		...restProps
+	} = props;
 
-		const inputRef: RefObject<HTMLInputElement | null> =
-			useRef<HTMLInputElement>(null);
+	const inputRef: RefObject<HTMLInputElement | null> =
+		useRef<HTMLInputElement>(null);
 
-		const [innerError, setInnerError] = useState<string | true | null>(
-			null,
-		);
-		const onValidationCheck = useCallback(
-			(value: string) => {
-				if (!validate) return;
-				const error = validate(value) || null;
-				setInnerError(Array.isArray(error) ? error[0] : error);
-			},
-			[validate],
-		);
+	const [innerError, setInnerError] = useState<string | true | null>(null);
+	const onValidationCheck = useCallback(
+		(value: string) => {
+			if (!validate) return;
+			const error = validate(value) || null;
+			setInnerError(Array.isArray(error) ? error[0] : error);
+		},
+		[validate],
+	);
 
-		const error = useMemo(() => {
-			const outerError =
-				typeof errors === "string"
-					? errors
-					: Array.isArray(errors)
-						? errors[0]
-						: undefined;
+	const error = useMemo(() => {
+		const outerError =
+			typeof errors === "string"
+				? errors
+				: Array.isArray(errors)
+					? errors[0]
+					: undefined;
 
-			return outerError || innerError;
-		}, [errors, innerError]);
+		return outerError || innerError;
+	}, [errors, innerError]);
 
-		const mergedProps = mergeProps(restProps, {
-			onChange: onValidationCheck,
-		});
+	const mergedProps = mergeProps(restProps, {
+		onChange: onValidationCheck,
+	});
 
-		return (
-			<TextField
-				className="group flex w-full flex-col"
-				{...mergedProps}
-				isDisabled={restProps.isDisabled || isPending}
-				data-testid="text-field-container"
-				validationBehavior="aria"
-				isInvalid={!!errors || restProps.isInvalid}
-			>
-				<Label aria-label="Label">
-					<span
-						className={labelStyles({
+	return (
+		<TextField
+			className="group flex w-full flex-col"
+			{...mergedProps}
+			isDisabled={restProps.isDisabled || isPending}
+			data-testid="text-field-container"
+			validationBehavior="aria"
+			isInvalid={!!errors || restProps.isInvalid}
+		>
+			<Label aria-label={`${label} label`}>
+				<span
+					className={labelStyles({
+						isDisabled: !!restProps.isDisabled || !!isPending,
+						hasContent: !!label,
+					})}
+				>
+					{label}
+				</span>
+
+				<Group
+					className={twMerge(
+						inputStyles({
+							hasError: !!errors?.length,
+							hasEndContent: !!endContent,
 							isDisabled: !!restProps.isDisabled || !!isPending,
-							hasContent: !!label,
-						})}
-					>
-						{label}
-					</span>
-
-					<Group
-						className={twMerge(
-							inputStyles({
-								hasError: !!errors?.length,
-								hasEndContent: !!endContent,
-								isDisabled:
-									!!restProps.isDisabled || !!isPending,
-							}),
-							className as string,
-						)}
-					>
-						{startIcon && (
-							<span className="text-neutral-500">
-								{startIcon({ size: 12, thikness: "bold" })}
-							</span>
-						)}
-						<AriaInput
-							className="h-full w-full bg-white/0 outline-hidden placeholder:text-neutral-600"
-							aria-label="input"
-							data-testid={restProps["data-testid"]}
-							ref={setRefs(inputRef, ref)}
+						}),
+						className as string,
+					)}
+				>
+					{startIcon && (
+						<span className="text-neutral-500">
+							{startIcon({ size: 12, thikness: "bold" })}
+						</span>
+					)}
+					<AriaInput
+						className="h-full w-full bg-white/0 outline-hidden placeholder:text-neutral-600"
+						aria-label={label || undefined}
+						data-testid={restProps["data-testid"]}
+						ref={setRefs(inputRef, ref)}
+					/>
+					{endContent}
+					{withErrorIcon && typeof error === "string" && (
+						<FieldErrorIcon
+							errorMsg={error}
+							placement="top end"
+							defaultOpen={errorDefaultOpen}
 						/>
-						{endContent}
-						{withErrorIcon && typeof error === "string" && (
-							<FieldErrorIcon
-								errorMsg={error}
-								placement="top end"
-								defaultOpen={errorDefaultOpen}
-							/>
-						)}
-						{isPending && (
-							<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-y-neutral-200 border-l-neutral-200" />
-						)}
-					</Group>
-				</Label>
+					)}
+					{isPending && (
+						<div className="border-r-primary-500 animate-rotation-linear aspect-square w-4 rounded-full border-2 border-y-neutral-200 border-l-neutral-200" />
+					)}
+				</Group>
+			</Label>
 
-				{!withErrorIcon && (
-					<FieldError className="text-error-700 flex w-full flex-row items-center gap-2 p-1 text-start text-xs font-medium">
-						{(renderProps) => {
-							if (!error && !renderProps.isInvalid) return null;
+			{!withErrorIcon && (
+				<FieldError className="text-error-700 flex w-full flex-row items-center gap-2 p-1 text-start text-xs font-medium">
+					{(renderProps) => {
+						if (!error && !renderProps.isInvalid) return null;
 
-							return (
-								<>
-									<WarningIcon size={14} thikness="bold" />
-									{error || renderProps.validationErrors[0]}
-								</>
-							);
-						}}
-					</FieldError>
-				)}
-			</TextField>
-		);
-	},
-);
+						return (
+							<>
+								<WarningIcon size={14} thikness="bold" />
+								{error || renderProps.validationErrors[0]}
+							</>
+						);
+					}}
+				</FieldError>
+			)}
+		</TextField>
+	);
+}
 
-export type InputProps = _InputProps & {
-	ref?: RefObject<HTMLInputElement>;
-};
+export type InputProps = _InputProps;
 
 const inputStyles = cva(
 	[

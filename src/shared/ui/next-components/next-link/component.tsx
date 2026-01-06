@@ -1,6 +1,5 @@
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
-import { CSSProperties, ForwardedRef, forwardRef, ReactNode } from "react";
-import { forwardRefType } from "@react-types/shared/src/refs";
+import { CSSProperties, ReactNode, RefObject } from "react";
 import {
 	RenderProps,
 	useRenderProps,
@@ -40,28 +39,28 @@ export type NextLinkButtonProps = LinkButtonProps &
 	Omit<AriaLinkOptions, "elementType"> &
 	HoverEvents &
 	RenderProps<LinkRenderProps> &
-	SlotProps;
+	SlotProps & {
+		ref?: RefObject<HTMLAnchorElement | null>;
+	};
 
-function NextLinkButton(
-	props: NextLinkButtonProps,
-	ref: ForwardedRef<HTMLAnchorElement>,
-) {
-	[props, ref] = useContextProps(props, ref, LinkContext);
+export function NextLinkButton(props: NextLinkButtonProps) {
+	let { ref, ...restProps } = props;
+	[restProps, ref] = useContextProps(restProps, ref, LinkContext);
 	const {
 		size = "medium",
 		variant = "default",
 		appearance = "primary",
-	} = props;
+	} = restProps;
 
-	const isDisabled = props.isDisabled || false;
-	const slotValue = props.slot || undefined;
+	const isDisabled = restProps.isDisabled || false;
+	const slotValue = restProps.slot || undefined;
 
 	const { linkProps, isPressed } = useLink(
-		{ ...props, elementType: "a" },
+		{ ...restProps, elementType: "a" },
 		ref,
 	);
 
-	const { hoverProps, isHovered } = useHover(props);
+	const { hoverProps, isHovered } = useHover(restProps);
 	const { focusProps, isFocused, isFocusVisible } = useFocusRing();
 
 	const dataFocused = isFocused || undefined;
@@ -71,7 +70,7 @@ function NextLinkButton(
 	const dataDisabled = isDisabled || undefined;
 
 	const renderProps = useRenderProps({
-		...props,
+		...restProps,
 		defaultClassName: "",
 		values: {
 			isCurrent: false,
@@ -102,7 +101,7 @@ function NextLinkButton(
 			{...mergeProps(renderProps, linkProps, hoverProps, focusProps)}
 			style={COLOR_SCHEMES[appearance] as CSSProperties}
 			className={btnStyles()}
-			href={props.href}
+			href={restProps.href}
 			slot={slotValue}
 			data-focused={dataFocused}
 			data-hovered={dataHovered}
@@ -115,36 +114,33 @@ function NextLinkButton(
 	);
 }
 
-const _NextLinkButton = (forwardRef as forwardRefType)(NextLinkButton);
-export { _NextLinkButton as NextLinkButton };
-
 export type NextPlainLinkProps = LinkProps &
 	NextLinkProps &
 	Omit<AriaLinkOptions, "elementType"> &
 	HoverEvents &
 	RenderProps<LinkRenderProps> &
-	SlotProps;
+	SlotProps & {
+		ref?: RefObject<HTMLAnchorElement | null>;
+	};
 
-function NextCustomLink(
-	props: NextPlainLinkProps,
-	ref: ForwardedRef<HTMLAnchorElement>,
-) {
-	[props, ref] = useContextProps(props, ref, LinkContext);
+export function NextLink_(props: NextPlainLinkProps) {
+	let { ref, ...restProps } = props;
+	[restProps, ref] = useContextProps(restProps, ref, LinkContext);
 
 	const { linkProps, isPressed } = useLink(
-		{ ...props, elementType: "a" },
+		{ ...restProps, elementType: "a" },
 		ref,
 	);
 
-	const { hoverProps, isHovered } = useHover(props);
+	const { hoverProps, isHovered } = useHover(restProps);
 	const { focusProps, isFocused, isFocusVisible } = useFocusRing();
 
 	const renderProps = useRenderProps({
-		...props,
+		...restProps,
 		defaultClassName: "",
 		values: {
 			isCurrent: false,
-			isDisabled: props.isDisabled || false,
+			isDisabled: restProps.isDisabled || false,
 			isPressed,
 			isHovered,
 			isFocused,
@@ -163,18 +159,18 @@ function NextCustomLink(
 			ref={ref}
 			{...mergeProps(renderProps, linkProps, hoverProps, focusProps)}
 			className={linkStyles()}
-			href={props.href}
-			slot={props.slot || undefined}
+			href={restProps.href}
+			slot={restProps.slot || undefined}
 			data-focused={isFocused || undefined}
 			data-hovered={isHovered || undefined}
 			data-pressed={isPressed || undefined}
 			data-focus-visible={isFocusVisible || undefined}
-			data-disabled={props.isDisabled || undefined}
+			data-disabled={restProps.isDisabled || undefined}
 		>
 			{renderProps.children}
 		</NextLink>
 	);
 }
 
-const _NextLink = (forwardRef as forwardRefType)(NextCustomLink);
-export { _NextLink as NextLink };
+// Export with the original name for backward compatibility
+export { NextLink_ as NextLink };

@@ -14,6 +14,7 @@ export type ModalBaseProps = {
 	isOpen?: boolean;
 	onOpenChange?: (_isOpen: boolean) => void;
 	className?: string;
+	"aria-label"?: string;
 };
 
 type ModalProps = {
@@ -27,6 +28,7 @@ export function DrawerModal(props: ModalProps) {
 		isOpen,
 		onOpenChange,
 		className,
+		"aria-label": ariaLabel = "Drawer",
 	} = props;
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const orientation = "vertical";
@@ -43,7 +45,7 @@ export function DrawerModal(props: ModalProps) {
 				<Modal className={modalStyles({ type: "overlay", position })}>
 					<Dialog
 						className={dialogStyles({ orientation })}
-						aria-label="Drawer Dialog"
+						aria-label={ariaLabel}
 					>
 						<div
 							className={twMerge(

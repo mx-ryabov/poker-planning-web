@@ -1,7 +1,7 @@
 import { buildProvider } from "@/src/shared/lib";
 import { mergeClassNames } from "@/src/shared/lib/utils/merge-class-names";
 import { cva } from "class-variance-authority";
-import { forwardRef, useMemo } from "react";
+import { RefObject, useMemo } from "react";
 import {
 	RadioGroup as RadioGroupAria,
 	RadioGroupProps as RadioGroupAriaProps,
@@ -17,14 +17,16 @@ import { twMerge } from "tailwind-merge";
 type RadioGrouProps = {
 	variant?: "default" | "content-inside";
 	size?: "default" | "large";
+	ref?: RefObject<HTMLDivElement | null>;
 } & RadioGroupAriaProps;
 
-const _RadioGroup = forwardRef<HTMLDivElement, RadioGrouProps>((props, ref) => {
+function RadioGroupInner(props: RadioGrouProps) {
 	const {
 		children,
 		variant = "default",
 		size = "default",
 		className,
+		ref,
 		...restProps
 	} = props;
 
@@ -44,7 +46,7 @@ const _RadioGroup = forwardRef<HTMLDivElement, RadioGrouProps>((props, ref) => {
 			</RadioGroupAria>
 		</RadioGroupProvider>
 	);
-});
+}
 
 export const radioStyles = cva(["text-neutral-900", "transition-colors"], {
 	variants: {
@@ -151,7 +153,7 @@ const Description = (props: TextProps) => {
 	);
 };
 
-export const RadioGroup = Object.assign(_RadioGroup, {
+export const RadioGroup = Object.assign(RadioGroupInner, {
 	Radio,
 	Label,
 	Description,

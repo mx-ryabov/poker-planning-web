@@ -1,11 +1,17 @@
-import { ForwardedRef, forwardRef, JSX } from "react";
+import { JSX, RefObject } from "react";
 import { AriaListBoxOptions } from "react-aria";
 import { ListBox, ListBoxProps } from "react-aria-components";
 
-export const ListWrapper = forwardRef<
-	HTMLDivElement,
-	ListBoxProps<object> & AriaListBoxOptions<object>
->(({ children, className, renderEmptyState, ...restProps }, ref) => {
+export type ListProps<TItemData extends object> = ListBoxProps<TItemData> &
+	AriaListBoxOptions<TItemData> & {
+		ref?: RefObject<HTMLDivElement | null>;
+	};
+
+function _ListWrapper(
+	props: ListBoxProps<object> &
+		AriaListBoxOptions<object> & { ref?: RefObject<HTMLDivElement | null> },
+) {
+	const { children, className, renderEmptyState, ref, ...restProps } = props;
 	const defaultEmptyState = () => (
 		<span className="text-sm text-neutral-800">No results found.</span>
 	);
@@ -20,11 +26,8 @@ export const ListWrapper = forwardRef<
 			{children}
 		</ListBox>
 	);
-}) as unknown as <TItemData extends object>(
+}
+
+export const ListWrapper = _ListWrapper as <TItemData extends object>(
 	props: ListProps<TItemData>,
 ) => JSX.Element;
-
-export type ListProps<TItemData extends object> = ListBoxProps<TItemData> &
-	AriaListBoxOptions<TItemData> & {
-		ref?: ForwardedRef<HTMLDivElement>;
-	};
