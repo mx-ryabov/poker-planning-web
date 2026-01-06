@@ -1,2 +1,2 @@
 "use client";
-export { Button } from "./component";
+export { Button } from "./button";

@@ -1,7 +1,7 @@
 import { test, describe, expect, vi } from "vitest";
 import { render, within } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Select } from "./component";
+import { Select } from "./select";
 import { Key, Selection } from "@react-types/shared";
 
 /**

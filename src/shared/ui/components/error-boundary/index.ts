@@ -1,1 +1,1 @@
-export { InternalErrorBoundary as ErrorBoundary } from "./component";
+export { InternalErrorBoundary as ErrorBoundary } from "./error-boundary";

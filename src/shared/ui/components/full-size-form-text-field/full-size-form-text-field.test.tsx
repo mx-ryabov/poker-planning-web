@@ -1,6 +1,6 @@
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
-import { FullSizeFormTextInput } from "./component";
+import { FullSizeFormTextInput } from "./full-size-form-text-field";
 
 describe("FullSizeFormTextInput", () => {
 	test("renders", async () => {

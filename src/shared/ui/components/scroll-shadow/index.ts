@@ -1,1 +1,1 @@
-export { ScrollShadow } from "./component";
+export { ScrollShadow } from "./scroll-shadow";

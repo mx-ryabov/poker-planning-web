@@ -1,1 +1,1 @@
-export { FieldErrorIcon } from "./component";
+export { FieldErrorIcon } from "./field-error-icon";

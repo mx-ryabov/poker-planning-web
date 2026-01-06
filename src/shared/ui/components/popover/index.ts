@@ -1,2 +1,2 @@
 "use client";
-export { Popover } from "./component";
+export { Popover } from "./popover";

@@ -4,7 +4,7 @@
 import { test, describe, expect, vi } from "vitest";
 import { render, waitFor, within } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Autocomplete } from "./component";
+import { Autocomplete } from "./autocomplete";
 import { Key } from "react-aria";
 
 function renderAutocompleteSingle({

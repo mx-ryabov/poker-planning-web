@@ -1,7 +1,7 @@
 import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { InternalErrorBoundary } from "./component";
+import { InternalErrorBoundary } from "./error-boundary";
 import { useEffect } from "react";
 
 function ThrowError() {

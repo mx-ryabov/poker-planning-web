@@ -1,7 +1,7 @@
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Chip, ChipGroup } from "./component";
+import { Chip, ChipGroup } from "./chip";
 
 describe("Chip Group", () => {
 	test("renders correctly", async () => {

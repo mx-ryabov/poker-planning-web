@@ -1,7 +1,7 @@
 import { test, describe, expect, vi } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Button } from "./component";
+import { Button } from "./button";
 import { CheckIcon } from "../icon";
 
 describe("Button", () => {

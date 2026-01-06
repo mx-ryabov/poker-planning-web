@@ -1,4 +1,4 @@
-import { radioStyles } from "./component";
+import { radioStyles } from "./radio-group";
 
 type Props = {
 	count: number;

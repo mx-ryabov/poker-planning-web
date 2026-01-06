@@ -1,4 +1,4 @@
-import { InlineEdit } from "@/src/shared/ui/components/inline-edit/component";
+import { InlineEdit } from "@/src/shared/ui/components/inline-edit/inline-edit";
 import { Input } from "@/src/shared/ui/components/input";
 import { TextArea } from "@/src/shared/ui/components/textarea";
 import type { Meta } from "@storybook/nextjs";

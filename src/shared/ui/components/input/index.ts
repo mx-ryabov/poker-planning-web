@@ -1,3 +1,3 @@
 "use client";
-export { Input } from "./component";
-export type { InputProps } from "./component";
+export { Input } from "./input";
+export type { InputProps } from "./input";

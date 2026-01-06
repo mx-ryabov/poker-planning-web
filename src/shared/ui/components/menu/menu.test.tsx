@@ -1,7 +1,7 @@
 import { test, describe, expect } from "vitest";
 import { render } from "@/test/utilities";
 import { axe } from "jest-axe";
-import { Menu } from "./component";
+import { Menu } from "./menu";
 import { Button } from "../button";
 import { CardsIcon, PeopleIcon, SettingsIcon } from "../icon";
 
