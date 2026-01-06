@@ -1,5 +1,5 @@
 import { setRefs, useEnterAnimation, useExitAnimation } from "@/src/shared/lib";
-import { forwardRef, ReactNode, RefObject, useRef } from "react";
+import { ReactNode, RefObject, useRef } from "react";
 import { usePopover } from "react-aria";
 import { PopoverProps as AriaPopoverProps } from "react-aria-components";
 import { OverlayTriggerState } from "react-stately";
@@ -45,12 +45,18 @@ interface PopoverInnerProps extends AriaPopoverProps {
 	triggerRef: RefObject<HTMLDivElement | null>;
 	className?: string;
 	id: string;
+	ref?: RefObject<HTMLDivElement | null>;
 }
 
-const PopoverWithoutFocusManagmentInner = forwardRef<
-	HTMLDivElement,
-	PopoverInnerProps
->(({ children, state, offset = 8, className, isExiting, ...props }, ref) => {
+function PopoverWithoutFocusManagmentInner({
+	children,
+	state,
+	offset = 8,
+	className,
+	isExiting,
+	ref,
+	...props
+}: PopoverInnerProps) {
 	const popoverRef = useRef<HTMLDivElement | null>(null);
 	const isEntering =
 		useEnterAnimation(popoverRef, !!props.placement) ||
@@ -79,4 +85,4 @@ const PopoverWithoutFocusManagmentInner = forwardRef<
 			{children}
 		</div>
 	);
-});
+}

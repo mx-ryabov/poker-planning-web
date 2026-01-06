@@ -50,7 +50,7 @@ export function Separator({
 			/>
 			<Button
 				className={collapseBtnStyles({ orientation: "vertical" })}
-				aria-label="collapse-button"
+				aria-label="Collapse drawer"
 				onPress={onCollapse}
 			>
 				<ArrowRightSimpleIcon size={14} thikness="bold" />

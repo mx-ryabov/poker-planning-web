@@ -21,6 +21,7 @@ type SelectProps<TItemData extends object> = {
 	description?: string;
 	isDisabled?: boolean;
 	errorMessages?: string[];
+	"aria-label"?: string;
 } & UseSelectProps<TItemData> &
 	AriaFieldProps;
 
@@ -34,6 +35,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 		children,
 		items,
 		id: externalId,
+		"aria-label": ariaLabel,
 		...restProps
 	} = props;
 	const internalId = useId();
@@ -130,7 +132,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 				ref={popoverRef}
 				widthType="equalToTrigger"
 				placement="bottom left"
-				aria-label="Select Items"
+				aria-label={ariaLabel || label || "Select options"}
 				maxHeight={300}
 				shouldCloseOnInteractOutside={() => false}
 				isNonModal
