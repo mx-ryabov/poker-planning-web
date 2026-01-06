@@ -1,5 +1,5 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { SettingsIcon } from "@/_src/shared/ui/components/icon";
+import { Button } from "@/src/shared/ui/components/button";
+import { SettingsIcon } from "@/src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { fn } from "storybook/test";
 

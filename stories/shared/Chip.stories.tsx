@@ -1,4 +1,4 @@
-import { Chip, ChipGroup } from "@/_src/shared/ui/components/chip";
+import { Chip, ChipGroup } from "@/src/shared/ui/components/chip";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { useListData } from "react-stately";
 
@@ -85,9 +85,7 @@ const ChipDisabledComponent = () => {
 			aria-label="The list who can change the game's settings"
 			onRemove={(keys) => list.remove(...keys)}
 		>
-			{(item) => (
-				<Chip isDisabled textValue={item.name} key={item.id} />
-			)}
+			{(item) => <Chip isDisabled textValue={item.name} key={item.id} />}
 		</ChipGroup>
 	);
 };
@@ -108,9 +106,7 @@ const ChipOutlinedDisabledComponent = () => {
 			aria-label="The list who can change the game's settings"
 			onRemove={(keys) => list.remove(...keys)}
 		>
-			{(item) => (
-				<Chip isDisabled textValue={item.name} key={item.id} />
-			)}
+			{(item) => <Chip isDisabled textValue={item.name} key={item.id} />}
 		</ChipGroup>
 	);
 };

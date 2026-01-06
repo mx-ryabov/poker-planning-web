@@ -1,7 +1,7 @@
 import {
 	InlineEditableTextarea,
 	InlineEditableTextField,
-} from "@/_src/shared/ui/components/inline-editable-fields";
+} from "@/src/shared/ui/components/inline-editable-fields";
 import { useState } from "react";
 
 const meta = {

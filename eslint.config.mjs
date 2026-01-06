@@ -47,13 +47,13 @@ export default [
 				alias: {
 					map: [
 						["@/*", "./*"],
-						["@ui/*", "./_src/shared/ui/*"],
+						["@ui/*", "./src/shared/ui/*"],
 					],
 					extensions: [".ts", ".tsx"],
 				},
 			},
 
-			dirs: ["_src"],
+			dirs: ["src"],
 		},
 
 		rules: {
@@ -69,7 +69,7 @@ export default [
 		},
 	},
 	{
-		files: ["_src/**", "app/**"],
+		files: ["src/**", "app/**"],
 		ignores: [
 			"**/*.test.{ts,tsx}",
 			"**/*.spec.{ts,tsx}",

@@ -35,7 +35,9 @@ const nextConfig = withPlugins([withBundleAnalyzer], {
 		testProxy: true,
 		serverComponentsHmrCache: false,
 		optimizePackageImports: [
-			"@/_src/shared/ui",
+			"@/src/shared/ui",
+			"@/src/domain",
+			"@/src/shared/lib",
 			"react-aria",
 			"react-aria-components",
 			"@react-aria/selection",

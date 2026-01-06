@@ -1,4 +1,4 @@
-import { FieldErrorIcon } from "@/_src/shared/ui/components/field-error-icon";
+import { FieldErrorIcon } from "@/src/shared/ui/components/field-error-icon";
 import type { Meta } from "@storybook/nextjs";
 
 const meta = {

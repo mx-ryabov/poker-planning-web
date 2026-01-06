@@ -1,6 +1,6 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { CloseIcon } from "@/_src/shared/ui/components/icon";
-import { Popover } from "@/_src/shared/ui/components/popover";
+import { Button } from "@/src/shared/ui/components/button";
+import { CloseIcon } from "@/src/shared/ui/components/icon";
+import { Popover } from "@/src/shared/ui/components/popover";
 import type { Meta } from "@storybook/nextjs";
 import { Placement } from "react-aria";
 
@@ -38,11 +38,7 @@ export const PopoverList = () => (
 					<Popover.Content placement={variant.placement}>
 						<div className="flex flex-row gap-2 items-center p-2 bg-white border border-neutral-100 rounded-lg drop-shadow-lg">
 							{variant.title} content!
-							<Button
-								shape="square"
-								size="small"
-								slot="close"
-							>
+							<Button shape="square" size="small" slot="close">
 								<CloseIcon size={16} />
 							</Button>
 						</div>

@@ -1,13 +1,13 @@
-import { DeepPartial } from "@/_src/shared/lib";
+import { DeepPartial } from "@/src/shared/lib";
 import {
-	API,
-	ApiContext,
-	ApiContextProps,
-} from "@/_src/shared/providers/api-provider";
+	DOMAIN_API,
+	DomainApiContext,
+	DomainApiContextProps,
+} from "@/src/domain/providers/api-provider";
 import { ReactNode } from "react";
 import { vi } from "vitest";
 
-export type FakeApi = DeepPartial<ApiContextProps>;
+export type FakeApi = DeepPartial<DomainApiContextProps>;
 type ApiFakeProviderProps = {
 	children: ReactNode;
 	fakeApi?: FakeApi;
@@ -15,15 +15,17 @@ type ApiFakeProviderProps = {
 
 export function ApiFakeProvider({ children, fakeApi }: ApiFakeProviderProps) {
 	return (
-		<ApiContext.Provider
-			value={mergeDeep(FAKE_API, fakeApi || {}) as ApiContextProps}
+		<DomainApiContext.Provider
+			value={mergeDeep(FAKE_API, fakeApi || {}) as DomainApiContextProps}
 		>
 			{children}
-		</ApiContext.Provider>
+		</DomainApiContext.Provider>
 	);
 }
 
-const FAKE_API: ApiContextProps = mockApi(API) as ApiContextProps;
+const FAKE_API: DomainApiContextProps = mockApi(
+	DOMAIN_API,
+) as DomainApiContextProps;
 
 function mockApi(apiObj: PlainObject<unknown>) {
 	const result: PlainObject<unknown> = {};

@@ -2,9 +2,9 @@ import {
 	ListIcon,
 	PeopleIcon,
 	SettingsIcon,
-} from "@/_src/shared/ui/components/icon";
-import { Button } from "@/_src/shared/ui/components/button";
-import { SlidingSelector } from "@/_src/shared/ui/components/sliding-selector";
+} from "@/src/shared/ui/components/icon";
+import { Button } from "@/src/shared/ui/components/button";
+import { SlidingSelector } from "@/src/shared/ui/components/sliding-selector";
 import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
 

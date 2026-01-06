@@ -1,5 +1,5 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { ArrowRightIcon, SettingsIcon } from "@/_src/shared/ui/components/icon";
+import { Button } from "@/src/shared/ui/components/button";
+import { ArrowRightIcon, SettingsIcon } from "@/src/shared/ui/components/icon";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { fn, within, expect } from "storybook/test";
 import { useState } from "react";

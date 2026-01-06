@@ -1,6 +1,6 @@
-import { Button } from "@/_src/shared/ui/components/button";
-import { CloseIcon } from "@/_src/shared/ui/components/icon";
-import { Modal } from "@/_src/shared/ui/components/modal";
+import { Button } from "@/src/shared/ui/components/button";
+import { CloseIcon } from "@/src/shared/ui/components/icon";
+import { Modal } from "@/src/shared/ui/components/modal";
 import type { Meta } from "@storybook/nextjs";
 
 const meta = {
@@ -37,16 +37,10 @@ export const DialogDefault = () => {
 				<Modal.Footer>
 					{({ close }) => (
 						<>
-							<Button
-								onPress={close}
-								variant="ghost"
-							>
+							<Button onPress={close} variant="ghost">
 								Cancel
 							</Button>
-							<Button
-								onPress={close}
-								appearance="danger"
-							>
+							<Button onPress={close} appearance="danger">
 								Delete
 							</Button>
 						</>

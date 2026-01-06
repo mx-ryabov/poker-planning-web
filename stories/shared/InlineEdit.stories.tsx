@@ -1,6 +1,6 @@
-import { InlineEdit } from "@/_src/shared/ui/components/inline-edit/component";
-import { Input } from "@/_src/shared/ui/components/input";
-import { TextArea } from "@/_src/shared/ui/components/textarea";
+import { InlineEdit } from "@/src/shared/ui/components/inline-edit/component";
+import { Input } from "@/src/shared/ui/components/input";
+import { TextArea } from "@/src/shared/ui/components/textarea";
 import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
 

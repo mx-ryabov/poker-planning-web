@@ -1,18 +1,18 @@
-# ADR-002: Frontend Architecture Design choice
+# ADR-002: Frontend Architecture Design Choice
 
-**Status** Maintenance
+**Status:** Accepted
 
-**Date** December 2025
+**Date:** December 2025
 
-**Last Review Date** December 2025
+**Last Review Date:** January 2026
 
 ## Context
 
 Before starting this project, I had several goals, but one of the main ones was to try as many new technologies, approaches, and architectures as possible (not only on the frontend but also on the backend). Later, through practice, I would learn from my mistakes and, most importantly, draw my own conclusions—invaluable experience that I could experience firsthand, not just read about in articles. Choosing this path, I realized that at some point, I would need to abandon my previous decisions in favor of something more suitable and meaningful.
 
-## What I tried: FSD
+## What I Tried: FSD
 
-When choosing an architectural approach for the frontend project, I initially had little choice (let's be honest, there are no many of them). I was already familiar with classic modular architecture, but I was interested in trying out FSD (Feature-Sliced Design). Beyond the hype surrounding this architectural methodology, I was drawn to their ideas for reducing coupling and increasing cohesion by introducing the following rules and concepts:
+When choosing an architectural approach for the frontend project, I initially had little choice (let's be honest, there aren't many of them). I was already familiar with classic modular architecture, but I was interested in trying out FSD (Feature-Sliced Design). Beyond the hype surrounding this architectural methodology, I was drawn to their ideas for reducing coupling and increasing cohesion by introducing the following rules and concepts:
 
 -   Separating domain entities and features into separate layers;
 -   Introducing restrictions related to cross-imports at the layer level;
@@ -35,37 +35,59 @@ To summarize. Perhaps this structure works well for some specific projects with 
 
 From the FSD experiment, we're keeping:
 
--   Public API pattern (barrel files) for module boundaries within pages
--   Restriction of cross-imports within pages
--   Slices within pages and "models" (ex. entities)
--   Segments within pages, but they will be re-worked
--   Shared layer but we allow direct imports for UI-kit
--   Other "ideas" from articles and their docs that are not rules but mostly good practices of the complexity management
+-   Public API pattern (barrel files) for module boundaries
+-   Restriction of cross-imports between layers
+-   Separation of domain entities from infrastructure code
+-   Shared layer for reusable non-business code
+-   Co-location principle for page-specific code
 
 We're abandoning:
 
 -   Rigid layer hierarchy (entities/features/widgets)
+-   Overly strict import rules that don't fit real-world scenarios
 
 ## Decision
 
-Ultimately, I came to the conclusion that there's no need to adhere to any specific methodology, but rather to start from basic architectural principles such as:
+We adopt a **custom three-layer architecture** that takes the best ideas from FSD while avoiding its pitfalls:
 
--   SOLID
--   Low Coupling and High Cohesion from GRASP
--   KISS, DRY, YAGNI, but with certain caveats. For example, don't create abstractions ahead of time (WET code from Dan Abramov).
-    Besides this I want to follow:
--   A standard modular architecture with co-located modules
--   For UI-kit I split a specific component on state (local component's state without touching DOM at all), behvaior (everything about interactivity, i.e. where I need to interact with DOM) and UI where it's needed.
+```
+shared → domain → app
+```
 
-## Migration Plan
+### Core Principles
 
-Since initially I tried to follow FSD, I've created \_src folder with entities, pages and shared directories inside. Now I want to move to the custom modular approach, but still applying some principles from FSD. For this I need the following:
+-   **SOLID**
+-   **Low Coupling and High Cohesion** from GRASP
+-   **KISS, DRY, YAGNI** with caveats (e.g., WET code principle from Dan Abramov — don't create abstractions ahead of time)
+-   **Co-location:** page-specific code lives with its page
+-   **Unidirectional dependencies:** shared → domain → app
 
-1. Move all the \_src/pages to the App Router directories.
-2. Put shared directory to the root.
-3. Move entities to the shared directory. Consider renaming it to "models".
-4. Re-structure and standartize the individual page directory.
+### Layer Overview
 
-## Notes
+| Layer     | Purpose                                               | Import Rule                               |
+| --------- | ----------------------------------------------------- | ----------------------------------------- |
+| `shared/` | Non-business logic (UI-kit, hooks, utils)             | Importable anywhere                       |
+| `domain/` | Shareable business logic (entities, state, providers) | Importable in app/, infrastructure, tests |
+| `app/`    | Next.js App Router pages with co-located code         | Not importable (except tests)             |
 
--   This document will evolve as migration progresses
+### Enforcement
+
+Import rules are enforced via **dependency-cruiser** in the pre-commit hook, ensuring architectural violations are caught before code is committed.
+
+## Consequences
+
+### Positive
+
+-   Clear, enforceable boundaries between layers
+-   Flexibility for page-specific code without over-engineering
+-   Familiar modular structure with added discipline
+
+### Negative
+
+-   Requires discipline to decide when code should move from `app/` to `domain/`
+-   Custom approach means less community documentation compared to established methodologies
+
+## Related Documents
+
+-   **[Frontend Architectural Design](../architecture/frontend-architectural-design.md)** — Detailed specification of project structure, import rules, and enforcement
+-   **[Permission System](../architecture/permission-system.md)** — Permission system architecture

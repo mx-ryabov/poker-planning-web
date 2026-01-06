@@ -1,4 +1,4 @@
-import { Link } from "@/_src/shared/ui/components/link";
+import { Link } from "@/src/shared/ui/components/link";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

@@ -1,8 +1,8 @@
-import { Button } from "@/_src/shared/ui/components/button";
+import { Button } from "@/src/shared/ui/components/button";
 import {
 	ToastProvider,
 	useGlobalToast,
-} from "@/_src/shared/ui/components/toast";
+} from "@/src/shared/ui/components/toast";
 import type { Meta } from "@storybook/nextjs";
 import { useState } from "react";
 

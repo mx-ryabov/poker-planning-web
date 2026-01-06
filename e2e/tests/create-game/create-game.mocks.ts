@@ -1,5 +1,5 @@
-import { CreateGameResponse } from "@/_src/shared/api/game-api";
-import { VotingSystem } from "@/_src/shared/api/voting-system-api";
+import { CreateGameResponse } from "@/src/domain/entities/game";
+import { VotingSystem } from "@/src/domain/entities/voting-system";
 
 export const GET_VOTING_SYSTEMS: VotingSystem[] = [
 	{

@@ -23,7 +23,7 @@ export default defineConfig({
 		pool: "threads",
 		setupFiles: path.resolve(__dirname, "test/setup.ts"),
 		environment: "jsdom",
-		include: ["./_src/**/*test.{ts,tsx}", "./app/**/*test.{ts,tsx}"],
+		include: ["./src/**/*test.{ts,tsx}", "./app/**/*test.{ts,tsx}"],
 		exclude: [...configDefaults.exclude, "**/*.spec.ts"],
 		// browser: {
 		// 	enabled: true,
@@ -40,7 +40,7 @@ export default defineConfig({
 			// },
 			enabled: true,
 			reporter: ["html"],
-			include: ["./_src/**/*test.{ts,tsx}", "./app/**/*test.{ts,tsx}"],
+			include: ["./src/**/*test.{ts,tsx}", "./app/**/*test.{ts,tsx}"],
 			exclude: [
 				"**/index.ts",
 				"**/dto/**",

@@ -2,7 +2,7 @@ import { ApiFakeProvider, FakeApi } from "@/__mocks__/api-fake-provider";
 import {
 	ConfirmationModalContext,
 	ConfirmationModalContextProps,
-} from "@/_src/shared/providers";
+} from "@/src/shared/providers";
 
 import { ReactNode } from "react";
 import { vi } from "vitest";

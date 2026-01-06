@@ -1,5 +1,5 @@
-import { RadioGroup } from "@/_src/shared/ui/components/radio-group";
-import { InfoIcon } from "@/_src/shared/ui/components/icon";
+import { RadioGroup } from "@/src/shared/ui/components/radio-group";
+import { InfoIcon } from "@/src/shared/ui/components/icon";
 import type { Meta } from "@storybook/nextjs";
 
 const meta = {
