@@ -1,0 +1,176 @@
+---
+globs: src/shared/ui/**/*.tsx,src/shared/ui/**/*.ts
+alwaysApply: false
+---
+
+# UI Kit Component Conventions
+
+**Full documentation:** `docs/guides/ui-kit-conventions.md`
+
+## Component Structure
+
+```
+component-name/
+├── component-name.tsx       # Main implementation
+├── component-name.test.tsx  # Unit tests
+├── index.ts                 # Barrel export with "use client"
+├── components/              # Sub-components (optional)
+├── hooks/                   # Component-specific hooks (optional)
+├── contexts/                # Context providers (optional)
+└── utils/                   # Utilities (optional)
+```
+
+## React Aria Integration
+
+This project uses React Aria for accessibility:
+
+-   Use React Aria hooks: `useButton`, `useFocusRing`, `useHover`, `useKeyboard`
+-   Use React Aria Components when available: `Button`, `TextField`, `Select`, etc.
+-   Always prefer React Aria and React Stately hooks over React Aria Components if possible
+-   Merge props from multiple hooks with `mergeProps` from `react-aria`
+-   Always include proper ARIA attributes and roles
+
+### Example: Interactive Component
+
+```typescript
+import { mergeProps, useButton, useFocusRing, useHover } from "react-aria";
+
+export function Button(props: ButtonProps) {
+	const ref = useRef<HTMLButtonElement>(null);
+	const { buttonProps, isPressed } = useButton(props, ref);
+	const { hoverProps, isHovered } = useHover(props);
+	const { focusProps, isFocusVisible } = useFocusRing(props);
+
+	return (
+		<button
+			ref={ref}
+			{...mergeProps(buttonProps, focusProps, hoverProps)}
+			className={styles({ isPressed, isHovered, isFocusVisible })}
+		>
+			{props.children}
+		</button>
+	);
+}
+```
+
+## Styling with CVA + Tailwind
+
+Use Class Variance Authority (CVA) for variant-based styling:
+
+```typescript
+import { cva, type VariantProps } from "class-variance-authority";
+import { twMerge } from "tailwind-merge";
+
+const styles = cva("base-classes flex items-center", {
+	variants: {
+		size: {
+			small: "h-8 px-3 text-sm",
+			medium: "h-10 px-4 text-base",
+		},
+		variant: {
+			default: "bg-primary-600 text-white",
+			outline: "border border-neutral-300 text-neutral-900",
+		},
+		isDisabled: {
+			true: "cursor-not-allowed opacity-50",
+			false: "cursor-pointer",
+		},
+	},
+	compoundVariants: [
+		{ variant: "default", isDisabled: true, className: "bg-neutral-200" },
+	],
+	defaultVariants: {
+		size: "medium",
+		variant: "default",
+	},
+});
+```
+
+### Style Application
+
+-   Always use `twMerge` to combine CVA output with custom className
+-   Place shared styles in `src/shared/ui/styles/`
+-   Use Tailwind v4 theme tokens (`primary-600`, `neutral-300`) over hardcoded values
+
+```typescript
+<div className={twMerge(styles({ size, variant }), className)} />
+```
+
+## Props Typing
+
+-   Use `type` for props definitions (not `interface`)
+-   Extend native element props with `React.ComponentPropsWithoutRef<"element">`
+-   Use intersection types for combining props
+
+```typescript
+type ButtonProps = {
+	isPending?: boolean;
+	children: ReactNode;
+} & VariantProps<typeof buttonStyles> &
+	ButtonHTMLAttributes<HTMLButtonElement>;
+```
+
+## Barrel Exports
+
+Always add `"use client"` directive in `index.ts` for client components:
+
+```typescript
+// index.ts
+"use client";
+export { Button } from "./button";
+export type { ButtonProps } from "./button";
+```
+
+## Compound Components
+
+-   Base component should be called with "Internal" postfix like in the example below
+-   For components with related sub-components, use `Object.assign`:
+
+```typescript
+export const Select = Object.assign(SelectInternal, {
+	Item: Item,
+	Section: Section,
+});
+```
+
+## Context Providers
+
+Use `buildProvider` utility for creating context providers:
+
+```typescript
+import { buildProvider } from "@/src/shared/lib";
+
+type ChipGroupContext = { outlined?: boolean };
+
+export const [useChipGroupContext, ChipGroupContextProvider] =
+	buildProvider<ChipGroupContext>();
+```
+
+## Complex Component Architecture
+
+For components with complex state/interactions, separate concerns:
+
+| Layer         | Purpose                          | File naming                |
+| ------------- | -------------------------------- | -------------------------- |
+| State hook    | Manage component state logic     | `use-{component}-state.ts` |
+| Behavior hook | Handle interactions, ARIA, focus | `use-{component}.ts`       |
+| Component     | Render UI with styles            | `{component}.tsx`          |
+
+Use this pattern when a component has:
+
+-   Complex keyboard navigation
+-   Focus management
+-   Multiple interactive states
+
+For simple components (Button, Avatar, Chip), keep everything in one file.
+
+## Ref Handling
+
+-   Use `RefObject<HTMLElement | null>` type for refs
+-   Use `setRefs` utility when combining multiple refs
+
+```typescript
+import { setRefs } from "@/src/shared/lib";
+
+ref={setRefs(internalRef, externalRef)}
+```

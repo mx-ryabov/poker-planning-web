@@ -1,0 +1,125 @@
+---
+globs:
+alwaysApply: true
+---
+
+# Poker Planning Web - Project Rules
+
+## AI Collaboration Guidelines
+
+-   If a request contradicts existing rules or documentation, warn me and ask for confirmation before proceeding. Suggest updating the rules if the context is appropriate.
+-   Remind me to update documentation when code changes make existing docs outdated.
+
+## Tech Stack
+
+-   Next.js 16 (App Router) + React 19
+-   TypeScript (strict mode)
+-   React Aria / React Aria Components for accessible UI
+-   Zustand for client state management
+-   Zod for validation schemas
+-   CVA + Tailwind CSS v4 for styling
+-   Vitest + Testing Library for unit tests
+-   Playwright for E2E tests
+
+## Architecture
+
+This project follows a **three-layer architecture** with unidirectional dependency flow:
+
+```
+shared → domain → app
+```
+
+| Layer     | Purpose                                     | Can be imported by   |
+| --------- | ------------------------------------------- | -------------------- |
+| `shared/` | Non-business logic (UI kit, hooks, utils)   | Anywhere             |
+| `domain/` | Business logic (entities, state, providers) | `app/`, tests, infra |
+| `app/`    | Next.js pages with co-located code          | Only tests           |
+
+**Full details:** `docs/architecture/frontend-architectural-design.md`
+
+## Import Rules (STRICTLY ENFORCED)
+
+These rules are enforced by dependency-cruiser on every commit:
+
+-   ❌ `shared/` cannot import from `domain/` or `app/`
+-   ❌ `domain/` cannot import from `app/`
+-   ❌ `app/` cannot be imported anywhere except tests
+-   ❌ `domain/ui/` and `domain/providers/` cannot be imported within domain
+-   ✅ Internal imports within the same layer are allowed
+
+## Folder Structure
+
+```
+src/
+├── shared/          # UI kit, hooks, utils, generic providers
+├── domain/          # entities/, state/, ui/, providers/, _utility/
+└── app/             # Next.js routes with _components/, _state/, _store/, _events/
+```
+
+## Naming Conventions
+
+| Type             | Convention                  | Example                       |
+| ---------------- | --------------------------- | ----------------------------- |
+| Folders          | kebab-case                  | `inline-edit/`, `game-room/`  |
+| Components       | PascalCase                  | `Button`, `GameCard`          |
+| Hooks            | camelCase with `use` prefix | `useGameState`, `useMutation` |
+| Types/Interfaces | PascalCase                  | `GameProps`, `UserState`      |
+| Files            | Match folder name           | `button/button.tsx`           |
+
+## TypeScript Conventions
+
+-   Prefer `type` over `interface` for props and simple types
+-   Explicitly type function parameters, return types, and object literals
+-   Avoid `any` — use `unknown` and narrow types instead
+-   Never use `// @ts-ignore` or `// @ts-expect-error` without explanatory comments
+-   Use `readonly` modifiers for immutable properties and arrays
+-   Use `satisfies` for type checking without widening
+-   Leverage utility types (`Partial`, `Required`, `Pick`, `Omit`, `Record`, etc.)
+-   Use discriminated unions with exhaustiveness checking for type narrowing
+-   Use `const` assertions for literal types when needed
+-   Document complex types with JSDoc comments
+
+## Type Validation with Zod
+
+-   **NEVER** use type assertions (`as`) for external data, API responses, or user inputs
+-   **ALWAYS** use Zod schemas to validate and parse external data
+-   Define schemas near related types or in dedicated schema files
+-   Use `schema.safeParse()` for non-throwing validation with error handling
+-   Use `schema.parse()` only when you want to throw on invalid data
+-   Infer types with `z.infer<typeof Schema>` — don't duplicate type definitions
+-   Add meaningful error messages with `.refine()` when validation logic is complex
+
+## File Organization
+
+-   Co-locate tests with source files: `component.test.tsx`
+-   Use barrel exports (`index.ts`) for public APIs
+-   Prefix private folders with underscore: `_components/`, `_state/`
+-   Add `"use client"` directive in `index.ts` for client components
+
+## Error Handling
+
+-   Prefer returned errors over throwing exceptions for business logic
+-   Use Zod's `safeParse` for validation
+-   Handle errors at component boundaries with Error Boundaries
+
+## Protected Configuration Files
+
+Do NOT modify these files without explicit approval:
+
+-   `eslint.config.mjs` — ESLint configuration
+-   `.dependency-cruiser.js` — Architecture enforcement rules
+
+## Development Workflow
+
+When changing application code, always verify changes:
+
+-   Run tests: `pnpm test`
+-   Check lint errors: `pnpm lint`
+-   Check type errors: `pnpm type-check`
+
+## Documentation References
+
+-   **Architecture:** `docs/architecture/frontend-architectural-design.md`
+-   **UI Kit conventions:** `docs/guides/ui-kit-conventions.md`
+-   **ADRs:** `docs/adr/`
+-   **Testing rules:** `.cursor/rules/unit-testing.mdc`
