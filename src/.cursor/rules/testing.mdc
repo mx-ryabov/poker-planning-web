@@ -1,27 +1,15 @@
 ---
-globs: *.test.tsx,*test.ts
+globs: *.test.tsx,*.test.ts
 alwaysApply: false
 ---
 
-# TESTING RULES FOR THE PROJECT COMPONENTS AND HOOKS
+# Project Testing Patterns
 
-## Rules the AI must follow
+This file contains project-specific testing patterns. For general testing philosophy, see `.cursor/rules/unit-testing.mdc`.
 
--   Use `@/test/utilities` (render, act, within, waitFor, user-event) instead of raw React Testing Library APIs
--   Always take `user` from the returned object of `render(...)` and use it for interactions
--   Always define a dedicated `renderComponent`/`renderHook` helper per test file to pass wrapper and mocks
--   Include an a11y test with `jest-axe`: expect results to `toHaveNoViolations()`
--   If IntersectionObserver is required, import `"@/__mocks__/intersection-observer"` at the top
--   Prefer `vi.useFakeTimers({ shouldAdvanceTime: true })` and restore timers/mocks in `beforeEach/afterEach` where timing is involved
--   Path aliases observed in existing tests must be preserved: `@/test/utilities`, `@/src/shared/api`, and local `../__mocks__`, `../__tests__/...`
--   Prefer `within(...)` for scoping queries and `data-testid` values consistent with UI components
--   Name the a11y test: "doesn't violate any accessibility rules" (typo-free)
--   Use `renderComponent`/`renderWithStore` helpers; keep them at the bottom of the test file for readability
--   If a tested component uses `useLocalStorageState` hook under the hood then use `__clearStorageCache__TestOnly()` in `beforeEach`.
+## Required Imports
 
-## Patterns
-
-### Good imports
+Always use project utilities instead of raw Testing Library APIs:
 
 ```typescript
 import { test, describe, expect, vi, beforeEach, afterEach } from "vitest";
@@ -29,11 +17,13 @@ import { act, render, within, waitFor } from "@/test/utilities";
 import { axe } from "jest-axe";
 ```
 
-### Example: Component test with wrapper and a11y
+## Render Helper Pattern
+
+Always define a `renderComponent` helper at the **bottom** of each test file:
 
 ```typescript
-describe("TestComponent", () => {
-	test("renders successfully", async () => {
+describe("MyComponent", () => {
+	test("renders successfully", () => {
 		const { unmount } = renderComponent();
 		expect(() => unmount()).not.toThrow();
 	});
@@ -44,9 +34,56 @@ describe("TestComponent", () => {
 		expect(results).toHaveNoViolations();
 	});
 });
+
+// Helper at the bottom of the file
+function renderComponent(props: Partial<MyComponentProps> = {}) {
+	const defaultProps: MyComponentProps = {
+		// default props
+	};
+	return render(<MyComponent {...defaultProps} {...props} />);
+}
 ```
 
-### Example: Timers in tests
+## Accessibility Testing
+
+Every component MUST have an a11y test:
+
+```typescript
+test("doesn't violate any accessibility rules", async () => {
+	const { container } = renderComponent();
+	const results = await axe(container);
+	expect(results).toHaveNoViolations();
+});
+```
+
+-   Use exact test name: `"doesn't violate any accessibility rules"`
+-   Import `axe` from `jest-axe`
+
+## User Interactions
+
+Always take `user` from the render result:
+
+```typescript
+test("handles click", async () => {
+	const { user } = renderComponent();
+	const button = screen.getByRole("button");
+	await user.click(button);
+	// assertions
+});
+```
+
+## Scoped Queries
+
+Use `within(...)` for scoping queries to specific containers:
+
+```typescript
+const card = screen.getByTestId("user-card");
+const name = within(card).getByText("John");
+```
+
+## Timer Handling
+
+When tests involve timers:
 
 ```typescript
 beforeEach(() => {
@@ -57,5 +94,68 @@ afterEach(() => {
 	vi.runOnlyPendingTimers();
 	vi.useRealTimers();
 	vi.restoreAllMocks();
+});
+```
+
+## Browser API Mocks
+
+### IntersectionObserver
+
+```typescript
+import "@/__mocks__/intersection-observer";
+```
+
+### LocalStorage
+
+If component uses `useLocalStorageState`:
+
+```typescript
+import { __clearStorageCache__TestOnly } from "@/src/shared/lib";
+
+beforeEach(() => {
+	__clearStorageCache__TestOnly();
+});
+```
+
+## Path Aliases
+
+Use consistent path aliases:
+
+| Alias              | Usage                                 |
+| ------------------ | ------------------------------------- |
+| `@/test/utilities` | Testing utilities (render, act, etc.) |
+| `@/src/shared/`    | Shared layer imports                  |
+| `@/__mocks__/`     | Global mocks                          |
+| `../__mocks__/`    | Local mocks relative to test          |
+
+## Store Testing (Zustand)
+
+For components with Zustand stores, use `renderWithStore` helper:
+
+```typescript
+function renderWithStore(
+	props: Partial<Props> = {},
+	storeOverrides: Partial<StoreState> = {}
+) {
+	// Setup store with overrides
+	return render(<Component {...props} />);
+}
+```
+
+## Hook Testing
+
+Use `renderHook` for testing hooks in isolation:
+
+```typescript
+import { renderHook, act } from "@/test/utilities";
+
+test("updates state correctly", () => {
+	const { result } = renderHook(() => useMyHook());
+
+	act(() => {
+		result.current.updateValue("new");
+	});
+
+	expect(result.current.value).toBe("new");
 });
 ```

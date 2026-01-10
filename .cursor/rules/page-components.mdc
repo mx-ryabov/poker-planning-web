@@ -1,0 +1,161 @@
+---
+globs: src/app/**/*.tsx,src/app/**/*.ts
+alwaysApply: false
+---
+
+# Page-Level Component Conventions
+
+## Folder Structure
+
+Page-specific code goes in private folders (prefixed with `_`):
+
+```
+app/(route)/
+├── _components/      # Page-specific UI components
+├── _state/           # Page-specific hooks
+├── _store/           # Page-specific Zustand stores
+├── _events/          # Page-specific event handlers
+├── _permissions/     # Page-specific permission checks
+├── page.tsx          # Page component (Server Component by default)
+├── page.provider.tsx # Client-side providers wrapper
+└── layout.tsx        # Layout component
+```
+
+## Import Rules
+
+-   ✅ Import from `@/src/shared/ui/` for UI kit components
+-   ✅ Import from `@/src/shared/lib/` for hooks and utilities
+-   ✅ Import from `@/src/domain/` for business logic
+-   ❌ Never import from other pages (`app/` cannot be imported outside)
+
+## Page Provider Pattern
+
+Wrap client-side providers in a dedicated `page.provider.tsx`:
+
+```typescript
+// page.provider.tsx
+"use client";
+
+import { ReactNode } from "react";
+import { SomeProvider } from "./_store";
+
+type Props = {
+	initialData: SomeData;
+	children: ReactNode;
+};
+
+export function PageProvider({ initialData, children }: Props) {
+	return (
+		<SomeProvider initialData={initialData}>
+			{children}
+		</SomeProvider>
+	);
+}
+```
+
+```typescript
+// page.tsx (Server Component)
+import { PageProvider } from "./page.provider";
+
+export default async function Page() {
+	const data = await fetchData();
+
+	return (
+		<PageProvider initialData={data}>
+			<PageContent />
+		</PageProvider>
+	);
+}
+```
+
+## Page-Specific Components
+
+Components in `_components/` are page-specific and should:
+
+-   Be co-located with the page that uses them
+-   Use shared UI kit components from `@/src/shared/ui/`
+-   Access page state via Zustand stores in `_store/`
+-   NOT be exported or imported by other pages
+-   The component must be easy to test
+
+```typescript
+// _components/feature-card/feature-card.tsx
+"use client";
+
+import { Button } from "@/src/shared/ui/components/button";
+import { usePageStore } from "../_store";
+
+export function FeatureCard() {
+	const data = usePageStore((s) => s.data);
+	return (
+		<div>
+			<h2>{data.title}</h2>
+			<Button>Action</Button>
+		</div>
+	);
+}
+```
+
+## Zustand Stores (\_store/)
+
+Page-specific stores follow this pattern:
+
+```typescript
+// _store/page-store.ts
+import { create } from "zustand";
+
+type PageState = {
+	data: SomeData;
+	actions: {
+		updateData: (data: SomeData) => void;
+	};
+};
+
+export const usePageStore = create<PageState>((set) => ({
+	data: initialData,
+	actions: {
+		updateData: (data) => set({ data }),
+	},
+}));
+```
+
+## State Hooks (\_state/)
+
+Page-specific hooks for derived state or complex logic:
+
+```typescript
+// _state/use-page-state.ts
+import { usePageStore } from "../_store";
+
+export function usePageState() {
+	const data = usePageStore((s) => s.data);
+	const { updateData } = usePageStore((s) => s.actions);
+
+	const derivedValue = useMemo(() => computeValue(data), [data]);
+
+	return { data, derivedValue, updateData };
+}
+```
+
+## Server vs Client Components
+
+-   `page.tsx` and `layout.tsx` are **Server Components** by default
+-   Add `"use client"` directive for interactive components
+-   Keep data fetching in Server Components when possible
+-   Pass server data to client components via props or providers
+
+## Barrel Exports
+
+For `_components/` folder, create an `index.ts` to simplify imports:
+
+```typescript
+// _components/index.ts
+export { FeatureCard } from "./feature-card/feature-card";
+export { Header } from "./header/header";
+```
+
+Then import in page:
+
+```typescript
+import { FeatureCard, Header } from "./_components";
+```

@@ -1,24 +1,17 @@
 ---
-globs: *.test.tsx,*test.ts
+globs: *.test.tsx,*.test.ts
 alwaysApply: false
 ---
 
-# Persona
-
-You are an expert developer with deep knowledge of Vitest, Testing Library, and TypeScript, tasked with creating unit tests for JavaScript/TypeScript applications with a focus on frontend testing.
-
-# Auto-detect TypeScript Usage
-
-Check for TypeScript in the project through tsconfig.json or package.json dependencies.
-Adjust syntax based on this detection (types, interfaces, proper imports).
-
 # Unit Testing Philosophy
+
+## Core Principles
 
 **Test behavior, not implementation**
 
 -   Focus on what the code does from a user's perspective
 -   Test inputs and outputs, not internal state or private methods
--   Use Testing Library principles: query by text, labels, roles rather than implementation details
+-   Use Testing Library principles: query by text, labels, roles
 
 **Gray box approach**
 
@@ -26,76 +19,48 @@ Adjust syntax based on this detection (types, interfaces, proper imports).
 -   Use implementation knowledge to identify edge cases and critical paths
 -   Don't assert on internal state, private methods, or specific function calls
 
-# Unit Testing Focus
-
-Create unit tests that focus on:
+## What to Test
 
 -   Critical functionality (business logic, utility functions, user interactions)
 -   Component behavior and user-facing outputs
 -   Complex hooks (if reusable or containing significant logic)
 -   Error states and edge cases
+-   Various data scenarios (valid, invalid, edge cases, empty states)
 
-Mock dependencies (API calls, external modules, timers) before imports using vi.mock
+## Best Practices
 
-Test various data scenarios (valid inputs, invalid inputs, edge cases, empty states, loading states)
+**1. AAA Pattern**: Structure tests with Arrange (setup), Act (execute), Assert (verify)
 
-Write maintainable tests with descriptive names grouped in describe blocks
+**2. Descriptive Naming**: Describe expected behavior, not implementation
 
-# Best Practices
+-   ✅ Good: "displays error message when API call fails"
+-   ❌ Bad: "calls handleError function"
 
-**1. Critical Functionality**: Prioritize testing business logic, user interactions, and utility functions
+**3. Test Organization**: Group related tests in `describe` blocks with clear hierarchy
 
-**2. Dependency Mocking**: Always mock external dependencies before imports with vi.mock()
+**4. Test Independence**: Each test should run in isolation
 
--   Mock API calls, external services, and browser APIs
--   Keep mocks simple and focused on test needs
-
-**3. Data Scenarios**: Test valid inputs, invalid inputs, edge cases, empty states, and error conditions
-
-**4. Descriptive Naming**: Use clear test names that describe the expected behavior, not implementation
-
--   Good: "displays error message when API call fails"
--   Bad: "calls handleError function"
-
-**5. Test Organization**: Group related tests in describe/context blocks with clear hierarchy
-
-**6. Edge Cases**: Include tests for:
+**5. Edge Cases**: Always include tests for:
 
 -   Undefined/null values
--   Type mismatches
 -   Boundary values
 -   Empty arrays/objects
 -   Loading and error states
 
-**7. AAA Pattern**: Structure tests with Arrange (setup), Act (execute), Assert (verify)
+**6. Dependency Mocking**: Mock external dependencies with `vi.mock()`
 
-**8. Test Independence**: Each test should run in isolation and not depend on other tests
+-   Mock API calls, external services, browser APIs
+-   Keep mocks simple and focused
+-   Don't over-mock — test your own code
 
-**9. Component Testing**:
+**7. test.each for repetitive tests**: Use `test.each` for multiple scenarios, NOT `forEach` inside a single test
 
--   Use Testing Library to interact with components as users would
--   Query elements by accessible roles, labels, or text content
--   Verify rendered output, not component state
+**8. Unimplemented scenarios**: If implementation doesn't handle a scenario, write the test with `.todo()` or `.skip()` and a comment
 
-**10. Hook Testing**:
-
--   Test complex or reusable hooks separately using renderHook
--   Test simple, component-specific hooks through the component
--   Use @testing-library/react-hooks when appropriate
-
-**11. Avoid Over-Mocking**: Don't mock everything - mock external dependencies but test your own code
-
-**12. Fast Tests**: Keep tests fast by avoiding unnecessary renders and using appropriate cleanup
-
-**13. More Specific Testing Rules**: Use more specific testing rules (cursor rules \*.mdc) when available
-
-**14. Testing Goal**: Define what the component/function should do and write tests based on that contract. If a test fails because the implementation doesn't account for a scenario, create the test anyway with a `.todo()` or `.skip()` and a comment explaining the missing functionality.
-
-# Test Structure Template
+## Test Structure Template
 
 ```typescript
 describe("ComponentName or functionName", () => {
-	// Setup shared across tests
 	beforeEach(() => {
 		// Reset mocks, clear storage, etc.
 	});
@@ -116,13 +81,16 @@ describe("ComponentName or functionName", () => {
 });
 ```
 
-**15. test.each for repeatitive tests**: If you have several test scenarios that can be checked in a loop then use test.each but NOT forEach inside a single test.
-
-# Anti-Patterns to Avoid
+## Anti-Patterns to Avoid
 
 -   Testing implementation details (internal state, private methods)
--   Using CSS selectors or test IDs when accessible queries are available
+-   Using CSS selectors when accessible queries are available
 -   Writing tests that pass when they should fail
--   100% coverage as a goal rather than meaningful test cases
--   Duplicate test logic across similar tests (use test.each or helper functions)
+-   100% coverage as a goal rather than meaningful tests
+-   Duplicate test logic (use `test.each` or helper functions)
 -   Overly complex test setup that obscures what's being tested
+
+## Project-Specific Rules
+
+For project-specific testing patterns (imports, helpers, a11y), see:
+`src/.cursor/rules/testing.mdc`
