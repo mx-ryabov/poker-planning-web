@@ -1,78 +1,19 @@
 import { Color } from "@/src/shared/ui/colors";
 import { Drawer } from "@/src/shared/ui/components/drawer";
-import {
-	ListIcon,
-	PeopleIcon,
-	SettingsIcon,
-} from "@/src/shared/ui/components/icon";
-import {
-	GameManagementTab,
-	selectParticipantsCount,
-	selectParticipantsOnlineCount,
-	selectTicketsCount,
-	useGameManagementState,
-	useGameState,
-} from "@/src/app/(game)/game/[id]/_store";
-import { useMemo } from "react";
-import { cva } from "class-variance-authority";
+import { GameDrawerPanelHeader } from "./game-management-drawer";
 
-const headerStyles = cva(
-	[
-		"absolute top-0 flex flex-row gap-1 items-center transition-all duration-300",
-	],
-	{
-		variants: {
-			active: {
-				true: ["translate-y-0 opacity-100"],
-				false: ["translate-y-11 opacity-0"],
-			},
-		},
-	},
-);
-
-export function DrawerHeader() {
-	const activeTab = useGameManagementState((state) => state.activeTab);
-	const participantsCount = useGameState(selectParticipantsCount);
-	const participantsOnlineCount = useGameState(selectParticipantsOnlineCount);
-	const ticketsCount = useGameState(selectTicketsCount);
-
-	const headers = useMemo(
-		() => [
-			{
-				title: "Participants",
-				subTitle: `${participantsCount} in the list. ${participantsOnlineCount} online`,
-				icon: PeopleIcon,
-				tab: GameManagementTab.ParticipantList,
-			},
-			{
-				title: "Tickets",
-				subTitle: `${ticketsCount} in the list`,
-				icon: ListIcon,
-				tab: GameManagementTab.TaskList,
-			},
-			{
-				title: "Settings",
-				icon: SettingsIcon,
-				tab: GameManagementTab.Settings,
-			},
-		],
-		[participantsCount, ticketsCount, participantsOnlineCount],
-	);
-
+type NewProps = {
+	header: GameDrawerPanelHeader;
+};
+export function DrawerHeader({ header }: NewProps) {
 	return (
 		<header
 			className="mx-6 mt-6 h-12"
 			data-testid="game-management-drawer-header"
 		>
-			<div className="relative flex h-full w-full flex-col overflow-hidden">
-				{headers.map((header) => (
-					<div
-						key={header.tab}
-						className={headerStyles({
-							active: header.tab === activeTab,
-						})}
-						aria-hidden={header.tab !== activeTab}
-					>
+			<div className="flex h-full w-full flex-row justify-between items-center">
+				<div className="relative flex h-full w-full flex-col overflow-hidden">
+					<div className="flex flex-row gap-1 items-center">
 						{header.icon({
 							size: 42,
 							thikness: "light",
@@ -87,7 +28,8 @@ export function DrawerHeader() {
 							)}
 						</div>
 					</div>
-				))}
+				</div>
+				{header.rightSlot}
 			</div>
 		</header>
 	);

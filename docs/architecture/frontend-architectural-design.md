@@ -121,11 +121,11 @@ flowchart LR
 
 ### Summary
 
-| Layer | Can be imported by |
-|-------|-------------------|
-| `shared/` | Anywhere |
-| `domain/` | `app/`, infrastructure files, tests, storybook |
-| `app/` | Only tests (internal imports within app allowed) |
+| Layer     | Can be imported by                               |
+| --------- | ------------------------------------------------ |
+| `shared/` | Anywhere                                         |
+| `domain/` | `app/`, infrastructure files, tests, storybook   |
+| `app/`    | Only tests (internal imports within app allowed) |
 
 ---
 
@@ -268,8 +268,8 @@ Each page may have private folders (prefixed with `_`) for co-located code:
 
 When the number of folders (parts + nested routes) exceeds ~9:
 
-- Group nested routes into route groups `(group-name)/`
-- Keep page parts (`_components/`, `_state/`, etc.) at the page level
+-   Group nested routes into route groups `(group-name)/`
+-   Keep page parts (`_components/`, `_state/`, etc.) at the page level
 
 ---
 
@@ -301,17 +301,17 @@ pnpm lint:deps
 
 ### Enforced Rules
 
-| Rule Name | Description |
-|-----------|-------------|
-| `shared-not-to-domain` | shared/ cannot import from domain/ |
-| `app-not-importable` | Code outside app/ cannot import from app/ (except tests) |
-| `domain-ui-not-in-domain` | domain/ui/ cannot be imported within domain/ |
-| `domain-providers-not-in-domain` | domain/providers/ cannot be imported within domain/ |
+| Rule Name                              | Description                                                 |
+| -------------------------------------- | ----------------------------------------------------------- |
+| `shared-not-to-domain`                 | shared/ cannot import from domain/                          |
+| `app-not-importable`                   | Code outside app/ cannot import from app/ (except tests)    |
+| `domain-ui-not-in-domain`              | domain/ui/ cannot be imported within domain/                |
+| `domain-providers-not-in-domain`       | domain/providers/ cannot be imported within domain/         |
 | `domain-state-not-in-entities-utility` | domain/state/ cannot be imported by entities/ or \_utility/ |
-| `domain-utility-internal-only` | domain/\_utility/ cannot be imported from shared/ or app/ |
-| `domain-entities-isolation` | entities/ cannot import from state/, ui/, or providers/ |
-| `domain-state-isolation` | state/ cannot import from ui/ or providers/ |
-| `domain-utility-isolation` | \_utility/ cannot import from other domain sublayers |
+| `domain-utility-internal-only`         | domain/\_utility/ cannot be imported from shared/ or app/   |
+| `domain-entities-isolation`            | entities/ cannot import from state/, ui/, or providers/     |
+| `domain-state-isolation`               | state/ cannot import from ui/ or providers/                 |
+| `domain-utility-isolation`             | \_utility/ cannot import from other domain sublayers        |
 
 ---
 
@@ -319,8 +319,8 @@ pnpm lint:deps
 
 ### Test File Location
 
-- Test files should be co-located with the files they test
-- When there are more than 5 test files in a directory, create a `__tests__/` folder
+-   Test files should be co-located with the files they test
+-   When there are more than 5 test files in a directory, create a `__tests__/` folder
 
 ### Server and Client Components
 
@@ -333,4 +333,3 @@ Root-level infrastructure files (`instrumentation.ts`, `sentry.*.config.ts`, etc
 ### Mocks and Test Utilities
 
 The `__mocks__/` folder at the project root can import from anywhere for testing purposes.
-

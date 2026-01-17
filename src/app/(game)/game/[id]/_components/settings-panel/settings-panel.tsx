@@ -4,8 +4,12 @@ import { GameMasterSelector } from "./components/game-master-selector";
 import { AutoRevealCardsField } from "./components/auto-reveal-cards-field";
 import { useSettingsPanelState } from "./state/use-settings-panel-state";
 import { GameNameField } from "./components/game-name-field";
+import { SettingsIcon } from "@/src/shared/ui/components/icon";
+import { GameManagementTab } from "../../_store";
+import { GameDrawerPanel } from "../game-management-drawer";
+import { GameIntroOnboardingForParticipant } from "../onboardings";
 
-export function SettingsPanel() {
+function SettingsPanelBody() {
 	const isEditable = useGamePermissions(GameActions.ChangeGameSettings);
 	const { data, mutate, validator } = useSettingsPanelState();
 
@@ -40,3 +44,17 @@ export function SettingsPanel() {
 		</div>
 	);
 }
+
+export const SettingsPanel: GameDrawerPanel = {
+	tab: GameManagementTab.Settings,
+	header: {
+		title: "Settings",
+		icon: SettingsIcon,
+	},
+	body: <SettingsPanelBody />,
+	wrapper: ({ children }) => (
+		<GameIntroOnboardingForParticipant.Steps.SettingsPanelStep>
+			{children}
+		</GameIntroOnboardingForParticipant.Steps.SettingsPanelStep>
+	),
+};

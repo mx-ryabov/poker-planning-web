@@ -417,16 +417,21 @@ function renderComponent({
 	if (settings) {
 		game.settings = { ...game.settings, ...settings };
 	}
-	return render(<SettingsPanel />, {
-		wrapper: GameRoomFakeProviderWrapper({
-			apiProps: {
-				game: { updateSettings },
-			},
-			gameStateProps: {
-				game,
-				currentParticipant:
-					currentParticipant || defaultCurrentParticipant,
-			},
-		}),
-	});
+	return render(
+		<>
+			<>{SettingsPanel.body} </>
+		</>,
+		{
+			wrapper: GameRoomFakeProviderWrapper({
+				apiProps: {
+					game: { updateSettings },
+				},
+				gameStateProps: {
+					game,
+					currentParticipant:
+						currentParticipant || defaultCurrentParticipant,
+				},
+			}),
+		},
+	);
 }

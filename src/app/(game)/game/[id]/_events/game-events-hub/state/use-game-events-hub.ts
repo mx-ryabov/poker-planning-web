@@ -33,7 +33,7 @@ export function useGameEventsHub({ gameId, accessTokenFactory }: Props) {
 		<TType extends GameEventType>(
 			eventType: TType,
 			handler: GameEventListenerCallback<GameEventTypeMap[TType]>,
-			 
+
 			options?: AddEventListenerOptions | boolean,
 		) => {
 			(gameEventTarget.addEventListener as GameEventListener["add"])(

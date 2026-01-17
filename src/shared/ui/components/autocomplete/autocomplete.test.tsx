@@ -1150,7 +1150,9 @@ describe("Autocomplete", () => {
 
 				const trigger = getByTestId("trigger");
 				await user.click(trigger);
-				const items = within(getByRole("listbox")).getAllByRole("option");
+				const items = within(getByRole("listbox")).getAllByRole(
+					"option",
+				);
 				await user.click(items[0]);
 				await user.click(items[1]);
 				await user.keyboard("[ArrowLeft]");

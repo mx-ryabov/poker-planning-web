@@ -5,8 +5,18 @@ import { GameActions } from "@/src/domain/entities/game";
 import { TicketCreator, TicketList, TicketListItem } from "./components";
 import { useScrollToListBottom } from "./behavior";
 import { useTicketItemOpenerState } from "./state";
+import { GameDrawerPanel } from "../game-management-drawer";
+import {
+	GameManagementTab,
+	selectTicketsCount,
+	useGameState,
+} from "../../_store";
+import { ListIcon, SortIcon } from "@/src/shared/ui/components/icon";
+import { Button } from "@/src/shared/ui/components/button";
+import { TicketsFilter } from "./components/tickets-filter/tickets-filter";
+import { GameIntroOnboardingForParticipant } from "../onboardings";
 
-export function TicketsPanel() {
+function TicketsPanelBody() {
 	const isCreationAllowed = useGamePermissions(GameActions.CreateTicket);
 
 	const listRef = useRef<HTMLDivElement | null>(null);
@@ -37,10 +47,47 @@ export function TicketsPanel() {
 	);
 }
 
+function TicketsPanelSubTitle() {
+	const ticketsCount = useGameState(selectTicketsCount);
+	return `${ticketsCount} in the list`;
+}
+
+function TicketsPanelRightSlot() {
+	return (
+		<div className="flex flex-row gap-2">
+			<Button
+				variant="outline"
+				shape="square"
+				size="small"
+				className="border-neutral-300"
+			>
+				<SortIcon size={16} thikness="regular" />
+			</Button>
+			<TicketsFilter />
+		</div>
+	);
+}
+
+export const TicketsPanel: GameDrawerPanel = {
+	tab: GameManagementTab.TaskList,
+	body: <TicketsPanelBody />,
+	header: {
+		title: "Tickets",
+		subTitle: <TicketsPanelSubTitle />,
+		icon: ListIcon,
+		rightSlot: <TicketsPanelRightSlot />,
+	},
+	wrapper: ({ children }) => (
+		<GameIntroOnboardingForParticipant.Steps.TicketsPanelStep>
+			{children}
+		</GameIntroOnboardingForParticipant.Steps.TicketsPanelStep>
+	),
+};
+
 const ticketCreatorStyles = cva("bottom-0 right-0 max-w-full", {
 	variants: {
 		state: {
-			button: "fixed",
+			button: "sticky",
 			form: "sticky",
 		},
 	},

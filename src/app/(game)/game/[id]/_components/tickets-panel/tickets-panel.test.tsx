@@ -93,37 +93,42 @@ const createTicket = vi.fn(
 );
 
 function renderComponent() {
-	return render(<TicketsPanel />, {
-		wrapper: GameRoomFakeProviderWrapper({
-			apiProps: {
-				game: { ticket: { createTicket } },
-			},
-			gameStateProps: {
-				game: generateGame({
-					id: "test-game-id",
-					tickets: [
-						generateTicket({
-							id: "ticket-id-1",
-							title: "Ticket Name",
-						}),
-						generateTicket({
-							id: "ticket-id-2",
-							title: "Ticket Name 2",
-						}),
-						generateTicket({
-							id: "ticket-id-3",
-							title: "Ticket Name 3",
-						}),
-						generateTicket({
-							id: "ticket-id-4",
-							title: "Ticket Name 4",
-						}),
-					],
-				}),
-				currentParticipant: generateParticipant({
-					role: ParticipantRole.Master,
-				}),
-			},
-		}),
-	});
+	return render(
+		<>
+			<>{TicketsPanel.body} </>
+		</>,
+		{
+			wrapper: GameRoomFakeProviderWrapper({
+				apiProps: {
+					game: { ticket: { createTicket } },
+				},
+				gameStateProps: {
+					game: generateGame({
+						id: "test-game-id",
+						tickets: [
+							generateTicket({
+								id: "ticket-id-1",
+								title: "Ticket Name",
+							}),
+							generateTicket({
+								id: "ticket-id-2",
+								title: "Ticket Name 2",
+							}),
+							generateTicket({
+								id: "ticket-id-3",
+								title: "Ticket Name 3",
+							}),
+							generateTicket({
+								id: "ticket-id-4",
+								title: "Ticket Name 4",
+							}),
+						],
+					}),
+					currentParticipant: generateParticipant({
+						role: ParticipantRole.Master,
+					}),
+				},
+			}),
+		},
+	);
 }
