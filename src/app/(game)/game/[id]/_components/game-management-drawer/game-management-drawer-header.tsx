@@ -8,11 +8,11 @@ type NewProps = {
 export function DrawerHeader({ header }: NewProps) {
 	return (
 		<header
-			className="mx-6 mt-6 h-12"
+			className="mx-6 mt-6 flex flex-col gap-2"
 			data-testid="game-management-drawer-header"
 		>
-			<div className="flex h-full w-full flex-row justify-between items-center">
-				<div className="relative flex h-full w-full flex-col overflow-hidden">
+			<div className="flex h-fit w-full flex-row justify-between items-center">
+				<div className="relative flex h-full flex-col overflow-hidden">
 					<div className="flex flex-row gap-1 items-center">
 						{header.icon({
 							size: 42,
@@ -31,6 +31,9 @@ export function DrawerHeader({ header }: NewProps) {
 				</div>
 				{header.rightSlot}
 			</div>
+			{header.bottomSlot && (
+				<div className="w-full h-fit flex">{header.bottomSlot}</div>
+			)}
 		</header>
 	);
 }

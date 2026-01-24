@@ -59,14 +59,14 @@ describe("useLocalStorageState", () => {
 
 		test("returns stored value from localStorage when available", () => {
 			const key = getUniqueKey();
-			localStorageMock[key] = "stored-value";
+			localStorageMock[key] = '"stored-value"';
 			const { result } = renderHook(() => useLocalStorageState(key));
 			expect(result.current[0]).toBe("stored-value");
 		});
 
 		test("returns stored value from localStorage even when defaultValue is provided", () => {
 			const key = getUniqueKey();
-			localStorageMock[key] = "stored-value";
+			localStorageMock[key] = '"stored-value"';
 			const { result } = renderHook(() =>
 				useLocalStorageState(key, { defaultValue: "default" }),
 			);
@@ -85,8 +85,11 @@ describe("useLocalStorageState", () => {
 				result.current[1]("new-value");
 			});
 
-			expect(localStorage.setItem).toHaveBeenCalledWith(key, "new-value");
-			expect(localStorageMock[key]).toBe("new-value");
+			expect(localStorage.setItem).toHaveBeenCalledWith(
+				key,
+				'"new-value"',
+			);
+			expect(localStorageMock[key]).toBe('"new-value"');
 			expect(result.current[0]).toBe("new-value");
 		});
 
@@ -162,6 +165,65 @@ describe("useLocalStorageState", () => {
 			});
 			expect(result.current[0]).toBe("value3");
 		});
+
+		test("supports functional updates based on previous value", () => {
+			const key = getUniqueKey();
+			const { result } = renderHook(() =>
+				useLocalStorageState<number>(key, { defaultValue: 1 }),
+			);
+
+			act(() => {
+				result.current[1](
+					(prevValue: number | undefined) => (prevValue ?? 0) + 2,
+				);
+			});
+
+			expect(result.current[0]).toBe(3);
+			expect(localStorage.setItem).toHaveBeenCalledWith(
+				key,
+				JSON.stringify(3),
+			);
+		});
+
+		test("functional update handles undefined previous value", () => {
+			const key = getUniqueKey();
+			const { result } = renderHook(() =>
+				useLocalStorageState<number>(key),
+			);
+
+			act(() => {
+				result.current[1](
+					(prevValue: number | undefined) => (prevValue ?? 0) + 1,
+				);
+			});
+
+			expect(result.current[0]).toBe(1);
+			expect(localStorage.setItem).toHaveBeenCalledWith(
+				key,
+				JSON.stringify(1),
+			);
+		});
+
+		test("functional update stores raw string values", () => {
+			const key = getUniqueKey();
+			const { result } = renderHook(() =>
+				useLocalStorageState<string>(key, { defaultValue: "start" }),
+			);
+
+			act(() => {
+				result.current[1](
+					(prevValue: string | undefined) =>
+						`${prevValue ?? ""}-next`,
+				);
+			});
+
+			expect(result.current[0]).toBe("start-next");
+			expect(localStorage.setItem).toHaveBeenCalledWith(
+				key,
+				'"start-next"',
+			);
+			expect(localStorageMock[key]).toBe('"start-next"');
+		});
 	});
 
 	describe("resetState", () => {
@@ -181,7 +243,7 @@ describe("useLocalStorageState", () => {
 
 		test("returns defaultValue after reset when defaultValue is provided", () => {
 			const key = getUniqueKey();
-			localStorageMock[key] = "stored-value";
+			localStorageMock[key] = '"stored-value"';
 			const { result } = renderHook(() =>
 				useLocalStorageState(key, { defaultValue: "default" }),
 			);
@@ -197,7 +259,7 @@ describe("useLocalStorageState", () => {
 
 		test("returns undefined after reset when no defaultValue is provided", () => {
 			const key = getUniqueKey();
-			localStorageMock[key] = "stored-value";
+			localStorageMock[key] = '"stored-value"';
 			const { result } = renderHook(() =>
 				useLocalStorageState<string>(key),
 			);
@@ -343,7 +405,7 @@ describe("useLocalStorageState", () => {
 
 			// Simulate storage event from another tab
 			act(() => {
-				localStorageMock[key] = "changed-in-another-tab";
+				localStorageMock[key] = '"changed-in-another-tab"';
 				const storageEvent = new StorageEvent("storage", {
 					key: key,
 					newValue: "changed-in-another-tab",
@@ -405,7 +467,7 @@ describe("useLocalStorageState", () => {
 
 		test("handles storage event when item is removed (null newValue)", () => {
 			const key = getUniqueKey();
-			localStorageMock[key] = "initial-value";
+			localStorageMock[key] = '"initial-value"';
 
 			const { result } = renderHook(() =>
 				useLocalStorageState(key, {
@@ -436,7 +498,7 @@ describe("useLocalStorageState", () => {
 		test("handles empty string value", () => {
 			const key = getUniqueKey();
 			// Set empty string explicitly in localStorage
-			localStorageMock[key] = "";
+			localStorageMock[key] = '""';
 
 			const { result } = renderHook(() =>
 				useLocalStorageState<string>(key),
@@ -455,7 +517,7 @@ describe("useLocalStorageState", () => {
 				result.current[1]("");
 			});
 
-			expect(localStorageMock[key]).toBe("");
+			expect(localStorageMock[key]).toBe('""');
 			expect(result.current[0]).toBe("");
 		});
 
@@ -521,7 +583,7 @@ describe("useLocalStorageState", () => {
 			global.localStorage = undefined;
 
 			const { result } = renderHook(() =>
-				useLocalStorageState(key, { defaultValue: "default" }),
+				useLocalStorageState<string>(key, { defaultValue: "default" }),
 			);
 
 			expect(result.current[0]).toBe("default");
@@ -538,7 +600,7 @@ describe("useLocalStorageState", () => {
 			global.localStorage = originalLocalStorage;
 		});
 
-		test("falls back to raw string when JSON.parse fails without custom parse", () => {
+		test("falls back to undefined value when JSON.parse fails without custom parse and the defaultValue is undefined", () => {
 			const key = getUniqueKey();
 			// Store invalid JSON
 			localStorageMock[key] = "not-valid-json{";
@@ -548,7 +610,20 @@ describe("useLocalStorageState", () => {
 			);
 
 			// Should fallback to raw string value
-			expect(result.current[0]).toBe("not-valid-json{");
+			expect(result.current[0]).toBeUndefined();
+		});
+
+		test("falls back to defaultValue value when JSON.parse fails without custom parse and the defaultValue is provided", () => {
+			const key = getUniqueKey();
+			// Store invalid JSON
+			localStorageMock[key] = "not-valid-json{";
+
+			const { result } = renderHook(() =>
+				useLocalStorageState<string>(key, { defaultValue: "default" }),
+			);
+
+			// Should fallback to defaultValue value
+			expect(result.current[0]).toBe("default");
 		});
 
 		test("handles parse function that throws an error", () => {
@@ -610,7 +685,7 @@ describe("useLocalStorageState", () => {
 			});
 
 			expect(result.current[0]).toBe(largeString);
-			expect(localStorageMock[key]).toBe(largeString);
+			expect(localStorageMock[key]).toBe(`"${largeString}"`);
 		});
 
 		test("handles special characters in values", () => {
@@ -694,13 +769,13 @@ describe("useLocalStorageState", () => {
 		test("updates all hooks sharing the same fieldName", () => {
 			const key = getUniqueKey();
 			const { result: result1 } = renderHook(() =>
-				useLocalStorageState(key, { defaultValue: "initial" }),
+				useLocalStorageState<string>(key, { defaultValue: "initial" }),
 			);
 			const { result: result2 } = renderHook(() =>
-				useLocalStorageState(key, { defaultValue: "initial" }),
+				useLocalStorageState<string>(key, { defaultValue: "initial" }),
 			);
 			const { result: result3 } = renderHook(() =>
-				useLocalStorageState(key, { defaultValue: "initial" }),
+				useLocalStorageState<string>(key, { defaultValue: "initial" }),
 			);
 
 			expect(result1.current[0]).toBe("initial");
@@ -719,10 +794,10 @@ describe("useLocalStorageState", () => {
 		test("reset affects all hooks sharing the same fieldName", () => {
 			const key = getUniqueKey();
 			const { result: result1 } = renderHook(() =>
-				useLocalStorageState(key, { defaultValue: "default" }),
+				useLocalStorageState<string>(key, { defaultValue: "default" }),
 			);
 			const { result: result2 } = renderHook(() =>
-				useLocalStorageState(key, { defaultValue: "default" }),
+				useLocalStorageState<string>(key, { defaultValue: "default" }),
 			);
 
 			act(() => {

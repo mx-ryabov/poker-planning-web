@@ -22,13 +22,11 @@ export function CookieConsentStateProvider({
 }: Readonly<{
 	children: ReactNode;
 }>) {
-	const [consentStatus, setConsentStatus] = useLocalStorageState(
-		"cookieConsent",
-		{
+	const [consentStatus, setConsentStatus] =
+		useLocalStorageState<ConsentStatus>("cookieConsent", {
 			defaultValue: ConsentStatus.Unknown,
 			defaultServerValue: ConsentStatus.UnInitialized,
-		},
-	);
+		});
 
 	const giveConsent = useCallback(() => {
 		setConsentStatus(ConsentStatus.Given);

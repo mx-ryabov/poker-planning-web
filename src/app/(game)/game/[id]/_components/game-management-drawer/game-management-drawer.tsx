@@ -17,6 +17,7 @@ export type GameDrawerPanelHeader = {
 	subTitle?: ReactNode;
 	icon: IconType;
 	rightSlot?: ReactNode;
+	bottomSlot?: ReactNode;
 };
 
 export type GameDrawerPanel = {
@@ -81,4 +82,3 @@ function Panel({ panel }: { panel: GameDrawerPanel }) {
 		</Wrapper>
 	);
 }
-
