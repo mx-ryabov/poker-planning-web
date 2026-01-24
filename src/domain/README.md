@@ -4,20 +4,20 @@ Shareable **business logic** that can be imported in `app/`, infrastructure file
 
 ## What Goes Here
 
-- Business models and TypeScript interfaces
-- Zod/validation schemas
-- Server actions
-- Permission definitions
-- Shared business state (across multiple pages)
-- Business-specific UI components (shared across pages)
-- Business providers (API, auth)
-- Internal utilities (`_utility/`)
+-   Business models and TypeScript interfaces
+-   Zod/validation schemas
+-   Server actions
+-   Permission definitions
+-   Shared business state (across multiple pages)
+-   Business-specific UI components (shared across pages)
+-   Business providers (API, auth)
+-   Internal utilities (`_utility/`)
 
 ## What Doesn't Go Here
 
-- Generic UI components (use `shared/ui`)
-- Page-specific code (co-locate with the page in `app/`)
-- Non-business utilities (use `shared/lib`)
+-   Generic UI components (use `shared/ui`)
+-   Page-specific code (co-locate with the page in `app/`)
+-   Non-business utilities (use `shared/lib`)
 
 ## Folder Structure
 
@@ -32,12 +32,11 @@ domain/
 
 ## Import Rules
 
-- `entities/` → foundation, can be imported anywhere in domain and app
-- `state/` → can be imported by ui/, providers/, and app
-- `ui/`, `providers/` → exit points, can only be imported in app (not within domain)
-- `_utility/` → internal, can be imported within domain only
+-   `entities/` → foundation, can be imported anywhere in domain and app
+-   `state/` → can be imported by ui/, providers/, and app
+-   `ui/`, `providers/` → exit points, can only be imported in app (not within domain)
+-   `_utility/` → internal, can be imported within domain only
 
 ## Documentation
 
 See [Frontend Architectural Design](../../docs/architecture/frontend-architectural-design.md) for detailed import rules and constraints.
-

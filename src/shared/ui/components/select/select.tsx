@@ -58,6 +58,7 @@ function Select<TItemData extends object>(props: SelectProps<TItemData>) {
 			selectionMode,
 			children,
 			items,
+			"aria-label": ariaLabel,
 			...restProps,
 		},
 		listState,

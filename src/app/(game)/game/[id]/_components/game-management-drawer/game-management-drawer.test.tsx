@@ -30,10 +30,12 @@ describe("Game Management Drawer", () => {
 		const gameManagementDrawer = getByTestId(
 			"game-management-drawer-content",
 		);
-		within(gameManagementDrawer).getByTestId(
+		within(gameManagementDrawer).getAllByTestId(
 			"game-management-drawer-header",
 		);
-		within(gameManagementDrawer).getByTestId("game-management-drawer-body");
+		within(gameManagementDrawer).getAllByTestId(
+			"game-management-drawer-body",
+		);
 
 		expect(() => unmount()).not.toThrow();
 	});
@@ -95,7 +97,7 @@ describe("Game Management Drawer", () => {
 					.getState()
 					.setActiveTab(GameManagementTab.ParticipantList),
 			);
-			const header = getByRole("banner");
+			let header = getByRole("banner");
 			expect(header).toHaveTextContent(/participants/i);
 			expect(
 				within(header).queryByTestId(/peopleicon/i),
@@ -106,6 +108,7 @@ describe("Game Management Drawer", () => {
 					.getState()
 					.setActiveTab(GameManagementTab.TaskList),
 			);
+			header = getByRole("banner");
 			expect(header).toHaveTextContent(/tickets/i);
 			expect(
 				within(header).queryByTestId(/listicon/i),
@@ -116,6 +119,7 @@ describe("Game Management Drawer", () => {
 					.getState()
 					.setActiveTab(GameManagementTab.Settings),
 			);
+			header = getByRole("banner");
 			expect(header).toHaveTextContent(/settings/i);
 			expect(
 				within(header).queryByTestId(/settingsicon/i),
@@ -132,7 +136,7 @@ describe("Game Management Drawer", () => {
 					.getState()
 					.setActiveTab(GameManagementTab.ParticipantList),
 			);
-			const body = getByTestId("game-management-drawer-body");
+			const body = getByTestId("game-management-drawer-content");
 			within(body).getByTestId(
 				`game-management-panel-${GameManagementTab.ParticipantList}`,
 			);
@@ -172,7 +176,7 @@ describe("Game Management Drawer", () => {
 
 		await waitFor(() => {
 			expect(
-				queryByTestId("game-management-drawer-body"),
+				queryByTestId("game-management-drawer-content"),
 			).not.toBeInTheDocument();
 		});
 		expect(gameStateStore.getState().activeTab).toBe(null);
@@ -187,13 +191,13 @@ describe("Game Management Drawer", () => {
 				.setActiveTab(GameManagementTab.ParticipantList),
 		);
 		expect(
-			queryByTestId("game-management-drawer-body"),
+			queryByTestId("game-management-drawer-content"),
 		).toBeInTheDocument();
 
 		act(() => gameStateStore.getState().setActiveTab(null));
 		await waitFor(() => {
 			expect(
-				queryByTestId("game-management-drawer-body"),
+				queryByTestId("game-management-drawer-content"),
 			).not.toBeInTheDocument();
 		});
 	});

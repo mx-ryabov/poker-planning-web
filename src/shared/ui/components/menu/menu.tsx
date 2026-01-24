@@ -17,6 +17,7 @@ import {
 import { ArrowRightSimpleIcon, CheckIcon } from "../icon";
 import { listItemStyles } from "../list/components/list-item";
 import { twMerge } from "tailwind-merge";
+import { mergeClassNames } from "@/src/shared/lib/utils/merge-class-names";
 
 type MenuContentProps<T> = AriaMenuProps<T> &
 	Pick<PopoverProps, "placement" | "offset"> & { className?: string };
@@ -28,12 +29,12 @@ export function MenuContent<TDataItem extends object>(
 		<Popover
 			placement={props.placement}
 			offset={props.offset}
-			className="data-entering:animate-popup data-exiting:animate-popup-reverse min-w-[150px]"
+			className="data-entering:animate-popup data-exiting:animate-popup-reverse"
 		>
 			<AriaMenu
 				{...props}
 				className={twMerge(
-					"no-scrollbar overflow-auto rounded-lg border border-neutral-300 bg-white px-1 py-2 outline-0 drop-shadow-sm",
+					"min-w-[150px] no-scrollbar overflow-auto rounded-lg border border-neutral-300 bg-white px-1 py-2 outline-0 drop-shadow-sm",
 					props.className,
 				)}
 			/>
@@ -88,7 +89,10 @@ export function MenuItem(props: MenuItemProps) {
 		<AriaMenuItem
 			{...props}
 			className={(renderProps) =>
-				listItemStyles({
+				mergeClassNames(
+					listItemStyles,
+					props.className,
+				)({
 					...renderProps,
 					isFocused: renderProps.isFocusVisible,
 				})

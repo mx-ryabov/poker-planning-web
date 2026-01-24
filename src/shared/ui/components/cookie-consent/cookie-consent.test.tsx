@@ -25,7 +25,10 @@ describe("CookieConsent", () => {
 	});
 
 	test("does not render when consentStatus is Given", () => {
-		localStorage.setItem("cookieConsent", ConsentStatus.Given);
+		localStorage.setItem(
+			"cookieConsent",
+			JSON.stringify(ConsentStatus.Given),
+		);
 		const { queryByText } = renderComponent();
 		expect(
 			queryByText(
@@ -35,7 +38,10 @@ describe("CookieConsent", () => {
 	});
 
 	test("does not render when consentStatus is Rejected", () => {
-		localStorage.setItem("cookieConsent", ConsentStatus.Rejected);
+		localStorage.setItem(
+			"cookieConsent",
+			JSON.stringify(ConsentStatus.Rejected),
+		);
 		const { queryByText } = renderComponent();
 		expect(
 			queryByText(

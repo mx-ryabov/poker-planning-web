@@ -10,4 +10,3 @@ export function createSimplePermission<TRole = string>(
 ): RolePermission<TRole>[] {
 	return authorizedRoles.map((authorizedRole) => ({ authorizedRole }));
 }
-

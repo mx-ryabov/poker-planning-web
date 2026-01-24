@@ -1,5 +1,5 @@
 import { GameTicket, ParticipantRole } from "@/src/domain/entities/game";
-import { ReactNode, Ref } from "react";
+import { ReactNode, Ref, useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 import {
 	selectCurrentRole,
@@ -7,6 +7,8 @@ import {
 	useGameState,
 } from "@/src/app/(game)/game/[id]/_store";
 import { ScrollShadow } from "@/src/shared/ui/components/scroll-shadow";
+import { useSortedTickets } from "../tickets-sorting";
+import { useFilteredTickets } from "../tickets-filter";
 
 type Props = {
 	className?: string;
@@ -16,6 +18,18 @@ type Props = {
 
 export function TicketList({ className, ref, children }: Props) {
 	const tickets = useGameState(selectTickets);
+	const filteredTickets = useFilteredTickets(tickets);
+	const resultedTickets = useSortedTickets(filteredTickets);
+
+	const emptyReason = useMemo(() => {
+		if (tickets.length === 0) {
+			return "no-tickets";
+		}
+		if (resultedTickets.length === 0) {
+			return "no-filtered-tickets";
+		}
+		return "unknown";
+	}, [resultedTickets, tickets]);
 
 	return (
 		<ScrollShadow
@@ -23,24 +37,19 @@ export function TicketList({ className, ref, children }: Props) {
 			ref={ref}
 			data-testid="ticket-list"
 		>
-			{tickets.length > 0 ? (
-				// <Virtualizer
-				// 	layout={ListLayout}
-				// 	layoutOptions={{
-				// 		rowHeight: 78,
-				// 		padding: 4,
-				// 		gap: 4,
-				// 	}}
-				// >
-				tickets.map(children)
+			{resultedTickets.length > 0 ? (
+				resultedTickets.map(children)
 			) : (
-				<TicketListEmptyState />
+				<TicketListEmptyState emptyReason={emptyReason} />
 			)}
 		</ScrollShadow>
 	);
 }
 
-function TicketListEmptyState() {
+type EmptyStateProps = {
+	emptyReason: "no-tickets" | "no-filtered-tickets" | "unknown";
+};
+function TicketListEmptyState({ emptyReason }: EmptyStateProps) {
 	const currentRole = useGameState(selectCurrentRole);
 
 	if (
@@ -50,10 +59,16 @@ function TicketListEmptyState() {
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-2">
 				<h3 className="text-center text-lg font-bold text-neutral-900">
-					No tickets in your game yet
+					{emptyReason === "no-tickets" &&
+						"No tickets in your game yet"}
+					{emptyReason === "no-filtered-tickets" &&
+						"🔍 No tickets found for the selected filters"}
 				</h3>
 				<p className="text-center text-sm text-neutral-700">
-					Start creating them right now below 👇
+					{emptyReason === "no-tickets" &&
+						"Start creating them right now below 👇"}
+					{emptyReason === "no-filtered-tickets" &&
+						"Try different filters to find the tickets you're looking for"}
 				</p>
 			</div>
 		);
@@ -61,10 +76,15 @@ function TicketListEmptyState() {
 	return (
 		<div className="flex h-full flex-col items-center justify-center gap-2">
 			<h3 className="text-center text-lg font-bold text-neutral-900">
-				No tickets in your game yet
+				{emptyReason === "no-tickets" && "No tickets in your game yet"}
+				{emptyReason === "no-filtered-tickets" &&
+					"🔍 No tickets found for the selected filters"}
 			</h3>
 			<p className="text-center text-sm text-neutral-700">
-				Your game master works hard to start gambling 🗿
+				{emptyReason === "no-tickets" &&
+					"Your game master works hard to start gambling 🗿"}
+				{emptyReason === "no-filtered-tickets" &&
+					"Try different filters to find the tickets you're looking for"}
 			</p>
 		</div>
 	);

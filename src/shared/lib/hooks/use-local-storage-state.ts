@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { ZodSchema } from "zod";
 
 type Options<
 	TValue,
@@ -26,31 +27,43 @@ type Options<
 	defaultServerValue?: TDefaultValue;
 	/** Whether to sync the value with localStorage. If true, the value will be synced with localStorage and updated when localStorage changes on another tab. */
 	syncWithStorage?: boolean;
+	schema?: ZodSchema<TValue>;
 };
 
-type UseLocalStorageStateResult<TValue> = [
+type JsonPrimitive = string | number | boolean | null | Date;
+type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+type JsonObject = { readonly [key: string]: JsonValue };
+type JsonArray = readonly JsonValue[];
+type SetStateValue<TValue extends JsonValue> =
+	| TValue
+	| ((prevValue: TValue | undefined) => TValue);
+export type SetLocalStorageStateFunction<TValue extends JsonValue> = (
+	newValue: SetStateValue<TValue>,
+) => void;
+
+type UseLocalStorageStateResult<TValue extends JsonValue> = [
 	TValue | undefined,
-	(newValue: TValue) => void,
+	SetLocalStorageStateFunction<TValue>,
 	() => void,
 ];
 
 // #1 Overloading: If the defaultValue is provided the value is always should be of type TValue
-export function useLocalStorageState<TValue>(
+export function useLocalStorageState<TValue extends JsonValue>(
 	fieldName: string,
 	options?: Options<TValue, TValue> & { defaultValue: TValue },
-): [TValue, (newValue: TValue) => void, () => void];
+): [TValue, SetLocalStorageStateFunction<TValue>, () => void];
 // #2 Overloading: If the defaultValue is not provided the value should be of type TValue | undefined
-export function useLocalStorageState<TValue>(
+export function useLocalStorageState<TValue extends JsonValue>(
 	fieldName: string,
 	options?: Options<TValue, undefined>,
-): [TValue | undefined, (newValue: TValue) => void, () => void];
+): [TValue | undefined, SetLocalStorageStateFunction<TValue>, () => void];
 /**
  * The hook to use localStorage state. It's a wrapper around the localStorage API that provides a more convenient way to use localStorage together with useState.
  * @param fieldName - The name of the key to store the value in localStorage.
  * @param options - The options for the hook.
  * @returns A tuple with the value, the setter function and the reset function.
  */
-export function useLocalStorageState<TValue>(
+export function useLocalStorageState<TValue extends JsonValue>(
 	fieldName: string,
 	options: Options<TValue, TValue | undefined> = {},
 ): UseLocalStorageStateResult<TValue> {
@@ -85,7 +98,7 @@ export function useLocalStorageState<TValue>(
 	return [value, setState, resetState];
 }
 
-class LocalStorageState<TValue> {
+class LocalStorageState<TValue extends JsonValue> {
 	private fieldName: string;
 	private value?: TValue;
 	private options: Options<TValue>;
@@ -102,24 +115,30 @@ class LocalStorageState<TValue> {
 		this.listeners = new Set();
 	}
 
-	setState(newValue: TValue) {
+	setState(newValue: SetStateValue<TValue>, notifyListeners = true) {
 		if (isSsr()) {
 			return;
 		}
+
 		const valueToSet =
-			typeof newValue === "string" ? newValue : JSON.stringify(newValue);
-		localStorage.setItem(this.fieldName, valueToSet);
-		this.value = newValue;
-		this.notifyListeners();
+			typeof newValue === "function" ? newValue(this.value) : newValue;
+		const valueToStorage = JSON.stringify(valueToSet);
+		localStorage.setItem(this.fieldName, valueToStorage);
+		this.value = valueToSet;
+		if (notifyListeners) {
+			this.notifyListeners();
+		}
 	}
 
-	resetState() {
+	resetState(notifyListeners = true) {
 		if (isSsr()) {
 			return;
 		}
 		localStorage.removeItem(this.fieldName);
 		this.value = this.options.defaultValue;
-		this.notifyListeners();
+		if (notifyListeners) {
+			this.notifyListeners();
+		}
 	}
 
 	subscribe(callback: () => void) {
@@ -169,16 +188,39 @@ class LocalStorageState<TValue> {
 			this.value = this.options.defaultValue;
 			return;
 		}
+
+		let parseResult: { ok: true } | { ok: false; error: string } = {
+			ok: true,
+		};
+		let parsedValue: TValue | undefined = this.options.defaultValue;
+
 		if (this.options.parse) {
-			this.value = this.options.parse(value);
+			parsedValue = this.options.parse(value);
 		} else {
 			try {
-				const parsedValue = JSON.parse(value) as TValue;
-				this.value = parsedValue;
-			} catch {
-				this.value = value as TValue;
+				parsedValue = JSON.parse(value) as TValue;
+			} catch (e) {
+				parseResult = { ok: false, error: String(e) };
 			}
 		}
+		// if (this.options.schema) {
+		// 	const result = this.options.schema.safeParse(parsedValue);
+		// 	if (!result.success) {
+		// 		parseResult = { ok: false, error: result.error.message };
+		// 	}
+		// }
+		if (!parseResult.ok) {
+			console.warn(
+				`useLocalStorageState: Failed to parse value "${value}" for key "${this.fieldName}": ${parseResult.error}`,
+			);
+			parsedValue = this.options.defaultValue;
+			if (parsedValue !== undefined) {
+				this.setState(parsedValue, false);
+			} else {
+				this.resetState(false);
+			}
+		}
+		this.value = parsedValue;
 	}
 
 	private onStorageChange(event: StorageEvent) {
@@ -195,14 +237,14 @@ class LocalStorageState<TValue> {
 	}
 }
 
-class LocalStorageStateCacheManager {
-	private statesCache = new Map<string, LocalStorageState<unknown>>();
+class LocalStorageStateCacheManager<TValue extends JsonValue> {
+	private statesCache = new Map<string, LocalStorageState<TValue>>();
 
 	getState(fieldName: string) {
 		return this.statesCache.get(fieldName);
 	}
 
-	setState(fieldName: string, state: LocalStorageState<unknown>) {
+	setState(fieldName: string, state: LocalStorageState<TValue>) {
 		this.statesCache.set(fieldName, state);
 	}
 
@@ -215,14 +257,20 @@ const cacheManager = new LocalStorageStateCacheManager();
 export const __clearStorageCache__TestOnly =
 	cacheManager.clearCache.bind(cacheManager);
 
-function buildState<TValue>(fieldName: string, options?: Options<TValue>) {
+function buildState<TValue extends JsonValue>(
+	fieldName: string,
+	options?: Options<TValue>,
+) {
 	let state = cacheManager.getState(fieldName) as
 		| LocalStorageState<TValue>
 		| undefined;
 
-	if (!state) {
+	if (state === undefined) {
 		state = new LocalStorageState<TValue>(fieldName, options);
-		cacheManager.setState(fieldName, state);
+		cacheManager.setState(
+			fieldName,
+			state as unknown as LocalStorageState<JsonValue>,
+		);
 	} else {
 		if (JSON.stringify(state.storedOptions) !== JSON.stringify(options)) {
 			console.warn(
