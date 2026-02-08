@@ -1,12 +1,14 @@
 # Dependencies
-/node_modules
+**/node_modules
 /.pnp
 .pnp.js
 
 # Build artifacts
-/.next
-/out
-*.tsbuildinfo
+**/.next
+**/out
+**/*.tsbuildinfo
+**/dist
+**/build
 
 # Testing
 **/__tests__/**
@@ -15,22 +17,22 @@
 **/*test.tsx
 **/*.spec.ts
 **/*.spec.tsx
-/test/**
-/e2e/**
-/coverage/**
-/test-results/
-/playwright-report/
+**/test/**
+**/e2e/**
+**/coverage/**
+**/test-results/
+**/playwright-report/
 
 # Storybook
-/stories/**
-/.storybook/**
+**/stories/**
+**/.storybook/**
 *storybook.log
 
 # Development
 /.github/**
 /.husky/**
-/.cursor/**
-/.vscode/**
+**/.cursor/**
+**/.vscode/**
 .git
 .gitattributes
 
@@ -52,3 +54,6 @@ yarn-error.log*
 # CI/CD
 /.prettierignore
 .eslintcache
+
+# Turbo
+.turbo

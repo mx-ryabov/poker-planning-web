@@ -1,0 +1,11 @@
+{
+  "name": "@poker-planning/backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotnet watch --project ./src/PokerPlanning.Api",
+    "build": "dotnet build ./poker-planning.sln",
+    "start": "dotnet run --project ./src/PokerPlanning.Api",
+    "test": "dotnet test ./poker-planning.sln"
+  }
+}

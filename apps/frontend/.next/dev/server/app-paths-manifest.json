@@ -1,0 +1,5 @@
+{
+  "/(game)/create-game/page": "app/(game)/create-game/page.js",
+  "/(game)/game/[id]/page": "app/(game)/game/[id]/page.js",
+  "/(landing)/page": "app/(landing)/page.js"
+}

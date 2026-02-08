@@ -1,27 +1,27 @@
 name: Deploy
 
 on:
-    push:
-        branches: ["master"]
+  push:
+    branches: ["master"]
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Set up SSH
-              run: |
-                  mkdir -p ~/.ssh
-                  echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-                  chmod 600 ~/.ssh/id_rsa
-                  ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DO_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
 
-            - name: Deploy via SSH
-              run: |
-                  ssh deploy-user@${{ secrets.DO_HOST }} << 'EOF'
+      - name: Deploy via SSH
+        run: |
+          ssh deploy-user@${{ secrets.DO_HOST }} << 'EOF'
 
                     # Pull the latest code
                     cd ~/app/poker-planning-web
@@ -31,9 +31,10 @@ jobs:
                     docker stop poker-planning-web 2>/dev/null || true
                     docker rm poker-planning-web 2>/dev/null || true
                     
-                    # Build the new image
+                    # Build the new image from monorepo root with turbo prune
                     DOCKER_BUILDKIT=1 docker build \
                       --build-arg BUILDKIT_INLINE_CACHE=1 \
+                      -f ./apps/frontend/Dockerfile \
                       -t poker-planning-web .
 
                     # Run the new container
@@ -41,9 +42,9 @@ jobs:
                       --name poker-planning-web \
                       --restart unless-stopped \
                       -p 3000:3000 \
-                      --env-file .env \
+                      --env-file ./apps/frontend/.env \
                       poker-planning-web
                     
                     # Clean up old images
                     docker image prune -f
-                  EOF
+          EOF

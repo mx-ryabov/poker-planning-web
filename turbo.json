@@ -1,0 +1,91 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "globalEnv": [
+    "USE_*",
+    "NEXT_PUBLIC_*",
+    "API_HOST",
+    "SENTRY_AUTH_TOKEN",
+    "NEXT_RUNTIME"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "public/**",
+        "*.config.*",
+        "*.json",
+        "*.csproj",
+        "*.sln"
+      ],
+      "outputs": [".next/**", "!.next/cache/**", "bin/**", "obj/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev-https": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "inputs": ["**/*.ts", "**/*.tsx", "**/*.js", "eslint.config.*"],
+      "outputs": []
+    },
+    "lint:deps": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "**/src/app/**/*.ts",
+        "**/src/app/**/*.tsx",
+        "**/src/domain/**/*.ts",
+        "**/src/domain/**/*.tsx",
+        "**/src/shared/**/*.ts",
+        "**/src/shared/**/*.tsx"
+      ],
+      "outputs": []
+    },
+    "type-check": {
+      "dependsOn": ["^build"],
+      "outputs": ["*.tsbuildinfo"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["NODE_ENV"]
+    },
+    "coverage": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["NODE_ENV"]
+    },
+    "test:browser": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["NODE_ENV"]
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "test-storybook": {
+      "dependsOn": ["build-storybook"],
+      "outputs": []
+    },
+    "analyze": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

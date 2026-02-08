@@ -1,0 +1,305 @@
+{
+  "node": {
+    "40b1c2359128306131d10f0ba852d540fa2ddf5ccc": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getGameById",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "getGameById",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "606ea6f89fae04201ad92a60be802295f1d7efd370": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "joinAsGuest",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "joinAsGuest",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "40217e05fd5c8b3dac45a5e0c3f81f1dafe25ae098": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createGameAsGuest",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "createGameAsGuest",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "60fb2037755b672a34c17c4f1d3fbdfe6a951ad914": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "startVoting",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "startVoting",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "40f511ba85bc80e5a7d0c7f1a434171a2405997675": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "revealCards",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "revealCards",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "40360e6040f988c0c083d5f59d5a06cb2c9b18386d": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "finishVoting",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "finishVoting",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "400d9247eb0b2a85f85fadc20b2055395b42ec311b": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "cancelVoting",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "cancelVoting",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "00924f13952cdc87cd2a639f595e0447f57a5a2d76": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "revalidateGame",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "revalidateGame",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "60f1c0275912343eb096d6114a962eb10c0dddb1ae": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "vote",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "vote",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "6010c3c45e0b28f2a486b3989944760c0f1d2a2343": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateSettings",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "updateSettings",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "60848f38dbd73a843cbca78681cc3caa2be7c681d9": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createTicket",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "createTicket",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "7076daaf442ecb166496ed431c4e3b602022d29303": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateTicketById",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "updateTicketById",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "6078d39c0c50ef79f2024518c0364d7f823b623303": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteTicketById",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "deleteTicketById",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "4059c49a59db22d95f0480c73457d409fa357c89a5": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getCurrentParticipant",
+          "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "getCurrentParticipant",
+      "filename": "apps/frontend/src/domain/entities/game/actions/server-actions.ts"
+    },
+    "40b6e35543277973386cacac5cd40d1374379ff7d6": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "collectEmail",
+          "filename": "apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "action-browser"
+      },
+      "exportedName": "collectEmail",
+      "filename": "apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts"
+    },
+    "00daae36b273ae861780f9a3b55ca939adb143ff73": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getVotingSystems",
+          "filename": "apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "rsc"
+      },
+      "exportedName": "getVotingSystems",
+      "filename": "apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts"
+    },
+    "409ffadc53e9a98b4b6852c37161ef20ebef0b7e99": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "appFetchDelete",
+          "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "rsc"
+      },
+      "exportedName": "appFetchDelete",
+      "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+    },
+    "70043f99784e197a4c71cb24f28e954db18fd61859": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "appFetchGet",
+          "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "rsc"
+      },
+      "exportedName": "appFetchGet",
+      "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+    },
+    "700c305dd75361e464cad67fc6bf28feac7fa3247b": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "appFetchPost",
+          "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "rsc"
+      },
+      "exportedName": "appFetchPost",
+      "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+    },
+    "707d8b9d651de5f795522b655dcd5aedaed2ffdc84": {
+      "workers": {
+        "app/(game)/create-game/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(game)/create-game/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/game/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/apps/frontend/src/domain/entities/voting-system/actions/server-actions.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/apps/frontend/src/shared/lib/utils/app-fetch.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "appFetchPut",
+          "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+        }
+      },
+      "layer": {
+        "app/(game)/create-game/page": "rsc"
+      },
+      "exportedName": "appFetchPut",
+      "filename": "apps/frontend/src/shared/lib/utils/app-fetch.ts"
+    }
+  },
+  "edge": {}
+}
