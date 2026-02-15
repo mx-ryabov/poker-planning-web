@@ -25,6 +25,8 @@
 **/blob-report/
 **/playwright/.cache/
 
+# Storybook
+**/storybook-static/
 # Env files (keep examples)
 .env*
 !.env.example

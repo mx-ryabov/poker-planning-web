@@ -1,2 +1,2 @@
+pnpm exec lint-staged
 pnpm --filter @poker-planning/frontend lint:deps
-pnpm lint
