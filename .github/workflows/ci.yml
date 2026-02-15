@@ -39,7 +39,7 @@ jobs:
           fi
 
           npx turbo-ignore @poker-planning/backend --fallback=$TARGET_BRANCH_SHA --task=test || EXIT_CODE=$?
-          if [ $? -eq 1 ]; then
+          if [ $EXIT_CODE -eq 1 ]; then
             echo "isBackendAffected=true" >> $GITHUB_OUTPUT
           else
             echo "isBackendAffected=false" >> $GITHUB_OUTPUT
