@@ -9,6 +9,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  CI: true
 jobs:
   check-if-affected:
     runs-on: ubuntu-latest
@@ -69,7 +71,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run the tests
         run: pnpm test --filter=@poker-planning/frontend
@@ -93,7 +95,14 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
+
+      - name: Build the frontend
+        run: pnpm build --filter=@poker-planning/frontend
+
+      - name: Run the frontend architecture dependency linting
+        working-directory: apps/frontend
+        run: pnpm lint:deps
 
       - name: Run the linting
         run: pnpm lint --filter=@poker-planning/frontend
@@ -120,12 +129,14 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Install Playwright
+        working-directory: apps/frontend
         run: pnpm exec playwright install --with-deps
 
       - name: Build Storybook
+        working-directory: apps/frontend
         run: pnpm run build-storybook --quiet
 
       - name: Serve Storybook and run tests
