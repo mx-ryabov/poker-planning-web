@@ -9,6 +9,10 @@
 # Turborepo
 .turbo/
 
+# Devbox (but track init.sh)
+.devbox/*
+!.devbox/init.sh
+
 # Next.js / React build output
 **/.next/
 **/out/
@@ -80,3 +84,6 @@ certificates/
 
 # Local docs / notes
 **/PROJECT_RUN.md
+
+# GitHub Actions runner
+act.exe

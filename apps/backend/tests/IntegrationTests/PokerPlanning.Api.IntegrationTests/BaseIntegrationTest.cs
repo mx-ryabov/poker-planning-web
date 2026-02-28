@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using PokerPlanning.Infrastructure.src.Persistence;
 
 namespace PokerPlanning.Api.IntegrationTests;

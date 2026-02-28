@@ -1,0 +1,17 @@
+version: "3"
+
+tasks:
+  test-ci:
+    cmds:
+      - |
+        act pull_request \
+          --workflows .github/workflows/ci.yml \
+          --secret JWTSETTINGS__SECRET="${JWTSETTINGS__SECRET:-poker-planning-local-secret-32bytes-minimum!!}"
+
+  test-ci-backend:
+    cmds:
+      - |
+        act workflow_dispatch \
+          --workflows .github/workflows/ci.yml \
+          --job 'backend-tests' \
+          --secret JWTSETTINGS__SECRET="${JWTSETTINGS__SECRET:-poker-planning-local-secret-32bytes-minimum!!}"
