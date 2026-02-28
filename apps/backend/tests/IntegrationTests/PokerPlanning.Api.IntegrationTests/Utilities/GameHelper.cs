@@ -6,15 +6,11 @@ using PokerPlanning.Domain.src.Common.DTO;
 using PokerPlanning.Domain.src.Models.TicketAggregate.Enums;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
 
 namespace PokerPlanning.Api.IntegrationTests.Utilities;
 
 public class GameHelper
 {
-    private const string DebugLogPath = "debug-b687c2.log";
-    private const string DebugSessionId = "b687c2";
     private Random random = new Random();
     private HttpClient _client;
     public GameHelper(HttpClient httpClient)
@@ -84,34 +80,7 @@ public class GameHelper
     public async Task<VotingSystemResult?> GetVotingSystem()
     {
         var response = await _client.GetAsync("/api/voting-systems");
-        var responseBody = await response.Content.ReadAsStringAsync();
-        #region agent log
-        WriteDebugLog(
-            hypothesisId: "H_JSON",
-            message: "GetVotingSystem response",
-            data: new
-            {
-                StatusCode = (int)response.StatusCode,
-                ReasonPhrase = response.ReasonPhrase,
-                BodyPreview = responseBody.Length > 500 ? responseBody[..500] : responseBody,
-            });
-        #endregion
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new InvalidOperationException(
-                $"GetVotingSystem failed with {(int)response.StatusCode} {response.ReasonPhrase}. Body: {responseBody}");
-        }
-
-        List<VotingSystemResult>? matchResponse;
-        try
-        {
-            matchResponse = JsonSerializer.Deserialize<List<VotingSystemResult>>(responseBody);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(
-                $"GetVotingSystem response is not valid JSON array. Body: {responseBody}", ex);
-        }
+        var matchResponse = await response.Content.ReadFromJsonAsync<List<VotingSystemResult>>();
 
         return matchResponse?.ToList()[0];
     }
@@ -131,56 +100,5 @@ public class GameHelper
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         return new string(Enumerable.Repeat(chars, length)
             .Select(s => s[random.Next(s.Length)]).ToArray());
-    }
-
-    private static void WriteDebugLog(
-        string hypothesisId,
-        string message,
-        object? data = null,
-        string runId = "post-fix",
-        [CallerFilePath] string sourceFilePath = "",
-        [CallerLineNumber] int sourceLineNumber = 0)
-    {
-        try
-        {
-            var location = $"{Path.GetFileName(sourceFilePath)}:{sourceLineNumber}";
-            var payload = new
-            {
-                sessionId = DebugSessionId,
-                runId,
-                hypothesisId,
-                location,
-                message,
-                data,
-                timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-            };
-            File.AppendAllText(ResolveLogPath(), JsonSerializer.Serialize(payload) + Environment.NewLine);
-        }
-        catch
-        {
-            // No-op: diagnostics only.
-        }
-    }
-
-    private static string ResolveLogPath()
-    {
-        var current = Directory.GetCurrentDirectory();
-        for (var i = 0; i < 8; i++)
-        {
-            if (Directory.Exists(Path.Combine(current, ".git")))
-            {
-                return Path.Combine(current, DebugLogPath);
-            }
-
-            var parent = Directory.GetParent(current);
-            if (parent is null)
-            {
-                break;
-            }
-
-            current = parent.FullName;
-        }
-
-        return Path.Combine(Directory.GetCurrentDirectory(), DebugLogPath);
     }
 }
