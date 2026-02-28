@@ -146,9 +146,12 @@ jobs:
             "pnpm dlx http-server storybook-static --port 6006 --silent" \
             "pnpm dlx wait-on tcp:6006 && pnpm run test-storybook"
 
-  backend-unit-tests:
+  backend-tests:
     needs: check-if-affected
     if: ${{ needs.check-if-affected.outputs.isBackendAffected == 'true' }}
+    env:
+      TESTCONTAINERS_HOST_OVERRIDE: "host.docker.internal"
+      TESTCONTAINERS_RYUK_DISABLED: "true"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
