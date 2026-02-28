@@ -5,16 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using PokerPlanning.Infrastructure.src.Persistence;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
 using Testcontainers.PostgreSql;
 
 namespace PokerPlanning.Api.IntegrationTests;
 
 public class PokerPlanningWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private const string DebugLogPath = "debug-b687c2.log";
-    private const string DebugSessionId = "b687c2";
     private readonly PostgreSqlContainer _dbContainer;
 
     public PokerPlanningWebApplicationFactory()
@@ -76,18 +72,6 @@ public class PokerPlanningWebApplicationFactory : WebApplicationFactory<Program>
         var isAct = IsTruthy(Environment.GetEnvironmentVariable("ACT"));
         if (!isAct)
         {
-            #region agent log
-            WriteDebugLog(
-                hypothesisId: "H_HOST",
-                message: "Using raw Testcontainers connection string",
-                data: new
-                {
-                    IsAct = isAct,
-                    Ci = Environment.GetEnvironmentVariable("CI"),
-                    RyukDisabled = Environment.GetEnvironmentVariable("TESTCONTAINERS_RYUK_DISABLED"),
-                    RawConnectionString = raw,
-                });
-            #endregion
             return raw;
         }
 
@@ -97,71 +81,7 @@ public class PokerPlanningWebApplicationFactory : WebApplicationFactory<Program>
             Port = _dbContainer.GetMappedPublicPort(5432),
         };
 
-        #region agent log
-        WriteDebugLog(
-            hypothesisId: "H_HOST",
-            message: "Using ACT host override connection string",
-            data: new
-            {
-                IsAct = isAct,
-                Ci = Environment.GetEnvironmentVariable("CI"),
-                RyukDisabled = Environment.GetEnvironmentVariable("TESTCONTAINERS_RYUK_DISABLED"),
-                RawConnectionString = raw,
-                SelectedConnectionString = builder.ConnectionString,
-            });
-        #endregion
         return builder.ConnectionString;
-    }
-
-    private static void WriteDebugLog(
-        string hypothesisId,
-        string message,
-        object? data = null,
-        string runId = "post-fix",
-        [CallerFilePath] string sourceFilePath = "",
-        [CallerLineNumber] int sourceLineNumber = 0)
-    {
-        try
-        {
-            var location = $"{Path.GetFileName(sourceFilePath)}:{sourceLineNumber}";
-            var payload = new
-            {
-                sessionId = DebugSessionId,
-                runId,
-                hypothesisId,
-                location,
-                message,
-                data,
-                timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-            };
-            File.AppendAllText(ResolveLogPath(), JsonSerializer.Serialize(payload) + Environment.NewLine);
-        }
-        catch
-        {
-            // Keep diagnostics side-effect free.
-        }
-    }
-
-    private static string ResolveLogPath()
-    {
-        var current = Directory.GetCurrentDirectory();
-        for (var i = 0; i < 8; i++)
-        {
-            if (Directory.Exists(Path.Combine(current, ".git")))
-            {
-                return Path.Combine(current, DebugLogPath);
-            }
-
-            var parent = Directory.GetParent(current);
-            if (parent is null)
-            {
-                break;
-            }
-
-            current = parent.FullName;
-        }
-
-        return Path.Combine(Directory.GetCurrentDirectory(), DebugLogPath);
     }
 }
 
