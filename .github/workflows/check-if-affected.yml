@@ -1,0 +1,59 @@
+name: "Check if affected"
+on:
+  workflow_call:
+    inputs:
+      target-branch:
+        type: string
+        description: "The branch to compare the changes against"
+        required: true
+        default: "master"
+
+    outputs:
+      frontend:
+        description: "Whether the frontend is affected by the changes"
+        value: ${{ jobs.check-if-affected.outputs.is-frontend-affected }}
+      backend:
+        description: "Whether the backend is affected by the changes"
+        value: ${{ jobs.check-if-affected.outputs.is-backend-affected }}
+
+jobs:
+  check-if-affected:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          node-version: 20
+
+      - name: Check if affected
+        id: affected
+        run: |
+          EXIT_CODE=0
+
+          # Get the last commit SHA of the target branch
+          TARGET_BRANCH_SHA=$(git rev-parse origin/${inputs.target-branch})
+
+          npx turbo-ignore @poker-planning/frontend --fallback=$TARGET_BRANCH_SHA --task=test || EXIT_CODE=$?
+          if [ $EXIT_CODE -eq 1 ]; then
+            echo "is-frontend-affected=true" >> $GITHUB_OUTPUT
+          else
+            echo "is-frontend-affected=false" >> $GITHUB_OUTPUT
+          fi
+
+          EXIT_CODE=0
+
+          npx turbo-ignore @poker-planning/backend --fallback=$TARGET_BRANCH_SHA --task=test || EXIT_CODE=$?
+          if [ $EXIT_CODE -eq 1 ]; then
+            echo "is-backend-affected=true" >> $GITHUB_OUTPUT
+          else
+            echo "is-backend-affected=false" >> $GITHUB_OUTPUT
+          fi
+
+    outputs:
+      is-frontend-affected: ${{ steps.affected.outputs.is-frontend-affected }}
+      is-backend-affected: ${{ steps.affected.outputs.is-backend-affected }}
