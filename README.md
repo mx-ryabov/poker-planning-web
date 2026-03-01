@@ -1,32 +1,81 @@
-# Poker Planning Web (Frontend Part)
+# Poker Planning - Monorepo
 
 A real-time collaborative planning poker application for agile teams.
 
-🔗 **[Live Demo](httpd://poker-planning.io)**
+🔗 **[Live Demo](https://poker-planning.io)**
 
-![Game Preview](public/game-preview.webp)
+![Game Preview](apps/frontend/public/game-preview.webp)
 
-## Features (on Dec 2025)
+## Monorepo Structure
+
+This repository uses **Turborepo** to manage a monorepo containing both frontend and backend applications.
+
+```
+poker-planning/
+├── apps/
+│   ├── frontend/    # Next.js 16 + React 19
+│   └── backend/     # .NET 9 API
+├── turbo.json       # Turborepo configuration
+└── package.json     # Root workspace configuration
+```
+
+## Tech Stack
+
+### Frontend
+- Next.js 16 (App Router) + React 19
+- TypeScript, Zustand, SignalR
+- React Aria, Tailwind CSS v4, GSAP
+- Vitest, Playwright, Storybook
+
+### Backend
+- .NET 9, ASP.NET Core
+- Entity Framework Core, PostgreSQL
+- SignalR for real-time communication
+
+A more up-to-date version of the stack can be found in each app's `package.json` or project file.
+
+## Getting Started
+
+### Prerequisites
+- Node.js >= 20
+- pnpm >= 10
+- .NET 9 SDK (for backend)
+
+### Installation
+
+```bash
+# Install dependencies for all apps
+pnpm install
+
+# Start all apps in development mode
+pnpm dev
+
+# Start specific app
+pnpm --filter @poker-planning/frontend dev
+```
+
+### Available Commands
+
+```bash
+pnpm dev          # Start all apps in dev mode
+pnpm build        # Build all apps
+pnpm test         # Run all tests
+pnpm lint         # Lint all apps
+pnpm type-check   # Type check all apps
+```
+
+## Features
 
 -   🎯 Real-time voting updates
 -   📊 Voting results visualization
 -   🎨 Accessible UI with React Aria
 -   ✨ Easy issue management
 
-## Tech Stack (on Dec 2025)
-
--   Next.js 16 (App Router) + React 19
--   TypeScript, Zustand, SignalR
--   React Aria, Tailwind CSS v4, GSAP
--   Vitest, Playwright, Storybook
-
-A more up-to-date version of the stack can be found in [package.json](package.json)
-
 ## Motivation
 
-Please, check out my [post on LinkedIn](https://www.linkedin.com/pulse/solo-field-part-i-why-decided-one-man-band-maxim-ryabov-pvsnf/).
+Please check out my [post on LinkedIn](https://www.linkedin.com/pulse/solo-field-part-i-why-decided-one-man-band-maxim-ryabov-pvsnf/).
 
-You can also find more details about this project and my decisions in it in the [ADR section](docs/adr/).
+You can also find more details about this project and my decisions in the [ADR section](docs/adr/).
 
 ## Development Workflow
 
@@ -35,10 +84,7 @@ All changes go through feature branches with CI checks (unit tests, accessibilit
 ## CI/CD and Infrastructure
 
 -   Docker, Github Actions, Digital Ocean VPS
-
-## Links
-
-🔗 [Backend Part](https://github.com/mx-ryabov/poker-planning-backend) (.NET 9, EF Core, PostgreSQL, SignalR)
+-   Turborepo for build caching and task orchestration
 
 ## License
 

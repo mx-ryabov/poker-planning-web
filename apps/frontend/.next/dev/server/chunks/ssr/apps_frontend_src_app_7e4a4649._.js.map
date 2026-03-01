@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "debugId": "7ca8d4eb-4cda-32bf-787a-cff73b314edf",
+  "sections": [
+    {"offset": {"line": 8, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/mxrya/personal-projects/poker-planning/apps/frontend/src/app/icon.svg.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 42, height: 42 }\n"],"names":[],"mappings":";;;;AAAA;;uCACe;IAAE,KAAA,2JAAG;IAAE,OAAO;IAAI,QAAQ;AAAG"}}]
+}

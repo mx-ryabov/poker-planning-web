@@ -1,0 +1,20 @@
+{
+  "node": {
+    "40b6e35543277973386cacac5cd40d1374379ff7d6": {
+      "workers": {
+        "app/(landing)/page": {
+          "moduleId": "[project]/apps/frontend/.next-internal/server/app/(landing)/page/actions.js { ACTIONS_MODULE0 => \"[project]/apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "collectEmail",
+          "filename": "apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts"
+        }
+      },
+      "layer": {
+        "app/(landing)/page": "action-browser"
+      },
+      "exportedName": "collectEmail",
+      "filename": "apps/frontend/src/domain/entities/email-to-notify/actions/server-actions.ts"
+    }
+  },
+  "edge": {}
+}

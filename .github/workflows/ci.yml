@@ -1,0 +1,140 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - "*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+
+jobs:
+  check-if-affected:
+    name: Check if affected
+    uses: ./.github/workflows/check-if-affected.yml
+    with:
+      target-branch: ${{ github.event.pull_request.base.ref }}
+
+  frontend-unit-tests:
+    needs: check-if-affected
+    if: ${{ needs.check-if-affected.outputs.frontend == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.2
+
+      - name: Setup Frontend
+        uses: ./.github/actions/setup-frontend
+
+      - name: Run the tests
+        run: pnpm test --filter=@poker-planning/frontend
+
+  frontend-linting:
+    needs: check-if-affected
+    if: ${{ needs.check-if-affected.outputs.frontend == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.2
+
+      - name: Setup Frontend
+        uses: ./.github/actions/setup-frontend
+
+      - name: Build the frontend
+        run: pnpm build --filter=@poker-planning/frontend
+
+      - name: Run the frontend architecture dependency linting
+        working-directory: apps/frontend
+        run: pnpm lint:deps
+
+      - name: Run the linting
+        run: pnpm lint --filter=@poker-planning/frontend
+
+      - name: Run the type-checking
+        run: pnpm type-check --filter=@poker-planning/frontend
+
+  frontend-interaction-and-accessibility-tests:
+    needs: check-if-affected
+    if: ${{ needs.check-if-affected.outputs.frontend == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.2
+
+      - name: Setup Frontend
+        uses: ./.github/actions/setup-frontend
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('apps/frontend/pnpm-lock.yaml') }}
+
+      - name: Install Playwright
+        working-directory: apps/frontend
+        if: ${{ steps.playwright-cache.outputs.cache-hit != 'true' }}
+        run: pnpm exec playwright install --with-deps
+
+      - name: Install Playwright system dependencies
+        working-directory: apps/frontend
+        if: ${{ steps.playwright-cache.outputs.cache-hit == 'true' }}
+        run: pnpm exec playwright install-deps
+
+      - name: Build Storybook
+        working-directory: apps/frontend
+        run: pnpm run build-storybook --quiet
+
+      - name: Serve Storybook and run tests
+        working-directory: apps/frontend
+        run: |
+          pnpm dlx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "pnpm dlx http-server storybook-static --port 6006 --silent" \
+            "pnpm dlx wait-on tcp:6006 && pnpm run test-storybook"
+
+  backend-tests:
+    needs: check-if-affected
+    if: ${{ needs.check-if-affected.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.2
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.1.0
+        with:
+          dotnet-version: "9.0.x"
+          cache: true
+          cache-dependency-path: apps/backend/**/packages.lock.json
+
+      - name: Cache NuGet packages
+        id: cache-packages
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('apps/backend/**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Install dependencies
+        working-directory: apps/backend
+        if: ${{ steps.cache-packages.outputs.cache-hit != 'true' }}
+        run: dotnet restore --locked-mode
+
+      - name: Build
+        working-directory: apps/backend
+        run: dotnet build
+
+      - name: Run the tests
+        working-directory: apps/backend
+        env:
+          JWTSETTINGS__SECRET: ${{ secrets.JWTSETTINGS__SECRET }}
+        run: dotnet test --no-build

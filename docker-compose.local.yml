@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - ./apps/frontend/.env.docker.local
+    depends_on:
+      - backend
+    networks:
+      - poker-planning-network
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
+    ports:
+      - 5011:5011
+    env_file:
+      - ./apps/backend/.env
+    networks:
+      - poker-planning-network
+
+networks:
+  poker-planning-network:
+    driver: bridge

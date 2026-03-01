@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "debugId": "0cd54fab-1b5b-19ef-3cf8-076856a01ade",
+  "sections": [
+    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/mxrya/personal-projects/poker-planning/apps/frontend/src/app/%28game%29/game/%5Bid%5D/loading.tsx"],"sourcesContent":["export default function Loading() {\r\n\treturn (\r\n\t\t<div className=\"flex h-screen w-full items-center justify-center\">\r\n\t\t\t<div className=\"border-r-primary-500! animate-rotation-linear aspect-square w-10 rounded-full border-4 border-neutral-200\" />\r\n\t\t</div>\r\n\t);\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACvB,qBACC,6VAAC;QAAI,WAAU;kBACd,cAAA,6VAAC;YAAI,WAAU;;;;;;;;;;;AAGlB"}}]
+}
