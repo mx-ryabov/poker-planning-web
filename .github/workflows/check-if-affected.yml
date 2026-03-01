@@ -6,7 +6,6 @@ on:
         type: string
         description: "The branch to compare the changes against"
         required: true
-        default: "master"
 
     outputs:
       frontend:
@@ -36,7 +35,7 @@ jobs:
           EXIT_CODE=0
 
           # Get the last commit SHA of the target branch
-          TARGET_BRANCH_SHA=$(git rev-parse origin/${inputs.target-branch})
+          TARGET_BRANCH_SHA=$(git rev-parse origin/${{ inputs.target-branch }})
 
           npx turbo-ignore @poker-planning/frontend --fallback=$TARGET_BRANCH_SHA --task=test || EXIT_CODE=$?
           if [ $EXIT_CODE -eq 1 ]; then
